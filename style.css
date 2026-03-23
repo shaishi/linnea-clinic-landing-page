@@ -169,8 +169,19 @@ a {
   letter-spacing: -0.02em;
   position: relative;
   display: flex;
-  align-items: center;
-  gap: 0.2rem;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.brand-subtitle {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  opacity: 0.8;
+  color: inherit;
+  transform: translateY(-4px); /* Minor optical adjustment for baseline */
 }
 
 .nav-links {
