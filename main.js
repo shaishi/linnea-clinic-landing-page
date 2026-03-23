@@ -84,7 +84,46 @@ document.addEventListener('DOMContentLoaded', () => {
       "opt-contouring": "Facial Contouring",
       "opt-other": "Other / Not Sure",
       "btn-submit": "Submit Request",
-      "alert-success": "Thank you for booking a consultation! Our team will contact you shortly."
+      "alert-success": "Thank you for booking a consultation! Our team will contact you shortly.",
+      "nav-accessibility": "Accessibility Statement",
+      "nav-privacy": "Privacy Policy",
+      "nav-terms": "Terms of Use",
+      "footer-legal": "Legal",
+      "cookie-text": "We use cookies to improve your browsing experience. By using our site, you agree to our use of cookies.",
+      "cookie-accept": "Accept",
+      "cookie-decline": "Decline",
+      "acc-title": "Accessibility Options",
+      "acc-increase-font": "Increase Font Size",
+      "acc-decrease-font": "Decrease Font Size",
+      "acc-high-contrast": "High Contrast",
+      "acc-light-bg": "Light Background",
+      "acc-links-underline": "Highlight Links",
+      "acc-reset": "Reset Settings",
+      "accessibility-stmt-content": "We view accessibility as fundamentally important. This website has been adapted to the accessibility requirements according to Israeli law. If you encounter any accessibility issues, please contact our accessibility coordinator.",
+      "privacy-content": "Your privacy is important to us. We collect only necessary information to provide our aesthetic services and do not share your data with unauthorized third parties. By using this website, you agree to our data handling practices.",
+      "terms-content": "By browsing and using this website, you agree to comply with and be bound by the following terms of use. The contents of this website are for general information and aesthetic service booking purposes only.",
+      "nav-articles": "Articles",
+      "articles-title": "Insights & Science",
+      "articles-desc": "Explore our expert articles on aesthetic medicine, treatments, and the science of longevity.",
+      "read-more": "Read More",
+      "article1-title": "The Art of Botox",
+      "article1-subtitle": "A deep dive into neuromodulators and natural expression.",
+      "article1-desc": "Discover how precise neuromodulator treatments can smooth wrinkles while maintaining your natural expressions.",
+      "article1-p1": "Botox, or botulinum toxin, has revolutionized the field of aesthetic medicine. When administered by experts, it is not about freezing the face, but rather relaxing the specific hyperactive muscles that cause deep dynamic wrinkles.",
+      "article1-p2": "At Linnéa, our philosophy centers around the \"micro-dosing\" technique. By using tiny, precise amounts of neuromodulators, we soften crow's feet, frown lines, and forehead creases while preserving your beautiful, natural micro-expressions.",
+      "article1-p3": "The procedure is minimally invasive, with no downtime. Most clients start noticing a gentle softening within 3-5 days, peaking at two weeks. The results typically last 3-4 months, offering a continually refreshed, well-rested appearance.",
+      "article2-title": "Mastering Dermal Fillers",
+      "article2-subtitle": "The art of facial contouring and elegant volume restoration.",
+      "article2-desc": "Learn about the subtleties of facial contouring and restoring volume for a youthful, balanced appearance.",
+      "article2-p1": "As we age, our face naturally loses volume, specifically in the delicate fat pads beneath our skin. Dermal fillers, primarily composed of hyaluronic acid—a naturally occurring substance in our bodies—are designed to gracefully restore this lost volume and provide structural support.",
+      "article2-p2": "Our approach is strictly anatomical and highly personalized. Whether subtly enhancing the lips, restoring cheekbones, or structuring the jawline, our goal is to harmonize your features, never to distort them. We carefully analyze your facial proportions to ensure a balanced, sophisticated outcome.",
+      "article2-p3": "Treatments are quick and results are visible immediately, with full integration into the tissue occurring over a few weeks. The hyaluronic acid binds with water, keeping your skin continuously hydrated and plump from within.",
+      "article3-title": "The Science of Longevity",
+      "article3-subtitle": "Evidence-based approaches to cellular health and graceful aging.",
+      "article3-desc": "Delve into our evidence-based approach combining aesthetic treatments with cellular health and graceful aging.",
+      "article3-p1": "True aesthetic beauty radiates from within, reflecting optimal cellular health. At Linnéa, we look beyond the surface, integrating cutting-edge longevity science with our aesthetic treatments to ensure age-defying results that last.",
+      "article3-p2": "Our scientific approach focuses on bio-stimulation and regenerative medicine. By triggering the body's natural collagen and elastin production through advanced technologies like microneedling, laser therapies, and polynucleotides, we effectively repair the skin at a molecular level.",
+      "article3-p3": "We are committed to educating our clients on how lifestyle, nutrition, and advanced aesthetics go hand-in-hand. Embracing longevity means investing in treatments that not only refine your appearance today but also build resilient, healthy skin architecture for years to come."
     },
     he: {
       "nav-about": "אודות",
@@ -130,7 +169,46 @@ document.addEventListener('DOMContentLoaded', () => {
       "opt-contouring": "פיסול פנים",
       "opt-other": "אחר / לא בטוח",
       "btn-submit": "שליחת בקשה",
-      "alert-success": "תודה על פנייתך! צוות הקליניקה ייצור איתך קשר בהקדם."
+      "alert-success": "תודה על פנייתך! צוות הקליניקה ייצור איתך קשר בהקדם.",
+      "nav-accessibility": "הצהרת נגישות",
+      "nav-privacy": "מדיניות פרטיות",
+      "nav-terms": "תנאי שימוש באתר",
+      "footer-legal": "משפטי",
+      "cookie-text": "אנו משתמשים בעוגיות (Cookies) כדי לשפר את חוויית הגלישה שלך. המשך הגלישה באתר מהווה הסכמה לשימוש בהן.",
+      "cookie-accept": "אישור",
+      "cookie-decline": "דחייה",
+      "acc-title": "תפריט נגישות",
+      "acc-increase-font": "הגדלת טקסט",
+      "acc-decrease-font": "הקטנת טקסט",
+      "acc-high-contrast": "ניגודיות גבוהה",
+      "acc-light-bg": "רקע בהיר",
+      "acc-links-underline": "הדגשת קישורים",
+      "acc-reset": "איפוס הגדרות",
+      "accessibility-stmt-content": "אנו רואים חשיבות עליונה בהנגשת האתר. אתר זה הונגש בהתאם לתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), תשע\"ג. במידה ונתקלתם בבעיית נגישות, אנא צרו עמנו קשר.",
+      "privacy-content": "הפרטיות שלך חשובה לנו. אנו אוספים רק מידע הכרחי למתן השירותים האסתטיים שלנו ואיננו משתפים את הנתונים שלך עם צדדים שלישיים ללא הרשאה. בעצם השימוש באתר זה, הנך מסכים למדיניות זו.",
+      "terms-content": "הגלישה והשימוש באתר זה כפופים לתנאי השימוש הבאים. תכני האתר נועדו למידע כללי בלבד ולצורך הזמנת תורים אלינו.",
+      "nav-articles": "מאמרים",
+      "articles-title": "תובנות ומדע",
+      "articles-desc": "חקרו את המאמרים המקצועיים שלנו על רפואה אסתטית, טיפולים ומדע אריכות הימים.",
+      "read-more": "קראו עוד",
+      "article1-title": "אמנות הבוטוקס",
+      "article1-subtitle": "צלילה עמוקה אל עולם הנוירומודולטורים והבעות הפנים הטבעיות.",
+      "article1-desc": "גלו כיצד טיפולי נוירומודולטורים מדויקים יכולים להחליק קמטים תוך שמירה על ההבעות הטבעיות שלכם.",
+      "article1-p1": "בוטוקס, או רעלן הבוטולינום, חולל מהפכה בתחום הרפואה האסתטית. בטיפול של מומחים, המטרה אינה 'להקפיא' את הפנים, אלא להרפות את השרירים הספציפיים שגורמים לקמטי הבעה עמוקים.",
+      "article1-p2": "בלינאה, הפילוסופיה שלנו מבוססת על טכניקת ה-'מיקרו-דוזינג'. בעזרת כמויות זעירות ומדויקות של החומר, אנו מרככים את קמטי הדאגה והמצח תוך שמירה על המיקרו-הבעות הטבעיות והיפות שלך.",
+      "article1-p3": "ההליך הוא זעיר-פולשני ואינו דורש זמן החלמה. רוב המטופלים ירגישו בריכוך עדין תוך 3-5 ימים, והתוצאה המלאה תופיע לאחר שבועיים. התוצאות נשמרות לרוב 3-4 חודשים, ומעניקות מראה רענן ונינוח.",
+      "article2-title": "שליטה בחומרי מילוי (פילרים)",
+      "article2-subtitle": "האמנות של פיסול פנים ושחזור נפחים אלגנטי.",
+      "article2-desc": "למדו על הדקויות של פיסול פנים והשבת נפח למראה נעורים מאוזן טבעי.",
+      "article2-p1": "ככל שאנו מתבגרים, הפנים מאבדות באופן טבעי מנפחן, במיוחד בכריות השומן העדינות שמתחת לעורנו. חומרי מילוי עוריים (פילרים), המורכבים לרוב מחומצה היאלורונית - חומר טבעי הקיים בגופנו - נועדו לשחזר באלגנטיות את הנפח שאבד ולהעניק תמיכה מבנית.",
+      "article2-p2": "הגישה שלנו היא אנטומית לחלוטין ומותאמת אישית. בין אם מדובר בהדגשה עדינה של השפתיים, שחזור צורת הלחיים או עיצוב קו הלסת, המטרה שלנו היא ליצור הרמוניה בין תווי הפנים ולא לעוות אותם. אנו מנתחים בקפידה את פרופורציות הפנים שלך כדי להבטיח תוצאה מאוזנת ומתוחכמת.",
+      "article2-p3": "הטיפולים מהירים והתוצאות נראות מיד, עם שילוב מלא ברקמות העור שמתרחש לאורך מספר שבועות. החומצה ההיאלורונית קושרת מים, ובכך שומרת על עורך לח וקורן מבפנים באופן רציף.",
+      "article3-title": "מדע אריכות הימים",
+      "article3-subtitle": "גישות מבוססות-ראיות לבריאות התא והזדקנות בחן.",
+      "article3-desc": "חקרו את הגישה המדעית שלנו המשלבת טיפולים אסתטיים עם בריאות תאית לאריכות ימים.",
+      "article3-p1": "יופי אסתטי אמיתי זוהר מבפנים ומשקף בריאות תאית אופטימלית. בלינאה, אנו מסתכלים מעבר לפני השטח ומשלבים מדע מתקדם של אריכות ימים עם טיפולי האסתטיקה שלנו כדי להבטיח תוצאות המחזיקות לאורך זמן ומאטות את תהליך ההזדקנות.",
+      "article3-p2": "הגישה המדעית שלנו מתמקדת בביו-סטימולציה ורפואה רנרטיבית. על ידי גירוי ייצור הקולגן והאלסטין הטבעי של הגוף באמצעות טכנולוגיות מתקדמות כמו מיקרונידלינג, טיפולי לייזר ופולינוקלאוטידים, אנו מתקנים את העור ברמה המולקולרית.",
+      "article3-p3": "אנו מחויבים לחנך את המטופלים שלנו לראות כיצד אורח חיים, תזונה וטיפולים אסתטיים מתקדמים הולכים יד ביד. יישום מדע אריכות הימים משמעו השקעה בטיפולים שלא רק יעניקו מראה נהדר היום, אלא גם יבנו ארכיטקטורת עור חזקה ובריאה לשנים הבאות."
     }
   };
 
@@ -165,52 +243,158 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeModal = document.getElementById('close-modal');
   const form = document.getElementById('booking-form');
 
-  openModalBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      modal.classList.add('active');
+  if (modal) {
+    openModalBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.add('active');
+      });
     });
-  });
 
-  closeModal.addEventListener('click', () => {
-    modal.classList.remove('active');
-  });
-
-  // Close on click outside
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.remove('active');
-    }
-  });
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const formData = new FormData(form);
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = '...';
-    submitBtn.disabled = true;
-
-    fetch(form.action, {
-      method: "POST",
-      body: formData,
-      headers: {
-          'Accept': 'application/json'
-      }
-    }).then(response => {
-      if(response.ok) {
-        alert(translations[currentLang]['alert-success']);
+    if (closeModal) {
+      closeModal.addEventListener('click', () => {
         modal.classList.remove('active');
-        form.reset();
-      } else {
-        alert("Oops! There was a problem submitting your form. Please try again or contact us directly.");
+      });
+    }
+
+    // Close on click outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
       }
-    }).catch(error => {
-      alert("Oops! There was a problem submitting your form. Please try again or contact us directly.");
-    }).finally(() => {
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
+    });
+  }
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = '...';
+      submitBtn.disabled = true;
+
+      fetch(form.action, {
+        method: "POST",
+        body: formData,
+        headers: {
+            'Accept': 'application/json'
+        }
+      }).then(response => {
+        if(response.ok) {
+          alert(translations[currentLang]['alert-success']);
+          if (modal) modal.classList.remove('active');
+          form.reset();
+        } else {
+          alert("Oops! There was a problem submitting your form. Please try again or contact us directly.");
+        }
+      }).catch(error => {
+        alert("Oops! There was a problem submitting your form. Please try again or contact us directly.");
+      }).finally(() => {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      });
+    });
+  }
+
+  // Legal Modals
+  const legalLinks = document.querySelectorAll('.legal-link');
+  const legalCloseBtns = document.querySelectorAll('.legal-close');
+  const legalModals = document.querySelectorAll('.legal-modal-overlay');
+
+  legalLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('data-target');
+      document.getElementById(targetId).classList.add('active');
     });
   });
+
+  legalCloseBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-close');
+      document.getElementById(targetId).classList.remove('active');
+    });
+  });
+
+  legalModals.forEach(m => {
+    m.addEventListener('click', (e) => {
+      if (e.target === m) {
+        m.classList.remove('active');
+      }
+    });
+  });
+
+  // Cookie Banner
+  const cookieBanner = document.getElementById('cookie-banner');
+  const cookieAccept = document.getElementById('cookie-accept');
+  const cookieDecline = document.getElementById('cookie-decline');
+
+  if (cookieBanner && !localStorage.getItem('cookieConsent')) {
+    setTimeout(() => {
+      cookieBanner.classList.remove('hidden');
+    }, 2000);
+  }
+
+  const handleCookie = (status) => {
+    localStorage.setItem('cookieConsent', status);
+    cookieBanner.classList.add('hidden');
+  };
+
+  if (cookieAccept && cookieDecline) {
+    cookieAccept.addEventListener('click', () => handleCookie('accepted'));
+    cookieDecline.addEventListener('click', () => handleCookie('declined'));
+  }
+
+  // Accessibility Widget
+  const accToggle = document.getElementById('accessibility-toggle');
+  const accPanel = document.getElementById('accessibility-panel');
+  const accClose = document.getElementById('acc-close');
+
+  if (accToggle && accPanel) {
+    accToggle.addEventListener('click', () => {
+      accPanel.classList.toggle('active');
+    });
+
+    if (accClose) {
+      accClose.addEventListener('click', () => {
+        accPanel.classList.remove('active');
+      });
+    }
+
+    const getAccBtn = (id) => document.getElementById(id);
+    const toggleBodyClass = (className, btnId) => {
+      const btn = getAccBtn(btnId);
+      if (btn) {
+        btn.addEventListener('click', () => {
+          document.body.classList.toggle(className);
+          btn.classList.toggle('active');
+        });
+      }
+    };
+
+    toggleBodyClass('acc-font-large', 'acc-increase-font');
+    toggleBodyClass('acc-high-contrast', 'acc-high-contrast');
+    toggleBodyClass('acc-light-bg', 'acc-light-bg');
+    toggleBodyClass('acc-links-underline', 'acc-links-underline');
+
+    const decreaseFontBtn = getAccBtn('acc-decrease-font');
+    if (decreaseFontBtn) {
+      decreaseFontBtn.addEventListener('click', () => {
+        document.body.classList.remove('acc-font-large');
+        const increaseBtn = getAccBtn('acc-increase-font');
+        if (increaseBtn) increaseBtn.classList.remove('active');
+      });
+    }
+
+    const resetBtn = getAccBtn('acc-reset');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        document.body.className = '';
+        document.querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
+      });
+    }
+  }
+
 });

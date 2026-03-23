@@ -18,10 +18,11 @@
         <a href="#" class="brand-logo">Linnéa</a>
         <!-- Using a star SVg to match the branding -->
         <nav class="nav-links">
-          <a href="#about" data-i18n="nav-about">About</a>
-          <a href="#treatments" data-i18n="nav-treatments">Treatments</a>
-          <a href="#location" data-i18n="nav-directions">Directions</a>
-          <a href="#contact" data-i18n="nav-contact">Contact</a>
+          <a href="index.html#about" data-i18n="nav-about">About</a>
+          <a href="index.html#treatments" data-i18n="nav-treatments">Treatments</a>
+          <a href="index.html#articles" data-i18n="nav-articles">Articles</a>
+          <a href="index.html#location" data-i18n="nav-directions">Directions</a>
+          <a href="index.html#contact" data-i18n="nav-contact">Contact</a>
         </nav>
         <div class="nav-actions">
           <button id="lang-toggle" class="btn btn-secondary lang-btn">HE</button>
@@ -89,6 +90,42 @@
       </div>
     </section>
 
+    <!-- Articles Section -->
+    <section class="articles section" id="articles">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title" data-i18n="articles-title">Insights & Science</h2>
+          <p class="section-description" data-i18n="articles-desc">Explore our expert articles on aesthetic medicine, treatments, and the science of longevity.</p>
+        </div>
+        
+        <div class="treatments-grid">
+          <div class="treatment-card article-card">
+            <img src="./images/botox_article.png" alt="Botox Guide" class="treatment-img">
+            <div class="treatment-content">
+              <h3 data-i18n="article1-title">The Art of Botox</h3>
+              <p data-i18n="article1-desc">Discover how precise neuromodulator treatments can smooth wrinkles while maintaining your natural expressions.</p>
+              <a href="article-botox.html" class="btn btn-secondary mt-4" data-i18n="read-more" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read More</a>
+            </div>
+          </div>
+          <div class="treatment-card article-card">
+            <img src="./images/fillers_article.png" alt="Dermal Fillers" class="treatment-img">
+            <div class="treatment-content">
+              <h3 data-i18n="article2-title">Mastering Dermal Fillers</h3>
+              <p data-i18n="article2-desc">Learn about the subtleties of facial contouring and restoring volume for a youthful, balanced appearance.</p>
+              <a href="article-fillers.html" class="btn btn-secondary mt-4" data-i18n="read-more" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read More</a>
+            </div>
+          </div>
+          <div class="treatment-card article-card">
+            <img src="./images/scientific_article.png" alt="Scientific Approach" class="treatment-img">
+            <div class="treatment-content">
+              <h3 data-i18n="article3-title">The Science of Longevity</h3>
+              <p data-i18n="article3-desc">Delve into our evidence-based approach combining aesthetic treatments with cellular health and graceful aging.</p>
+              <a href="article-scientific.html" class="btn btn-secondary mt-4" data-i18n="read-more" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- Location & Directions -->
     <section class="location section" id="location">
       <div class="container location-container">
@@ -140,6 +177,12 @@
           <a href="#about" data-i18n="nav-about">About Us</a>
           <a href="#treatments" data-i18n="nav-treatments">Treatments</a>
           <a href="#location" data-i18n="nav-directions">Directions</a>
+        </div>
+        <div class="footer-links">
+          <h4 data-i18n="footer-legal">Legal</h4>
+          <a href="#" class="legal-link" data-target="accessibility-stmt-modal" data-i18n="nav-accessibility">Accessibility Statement</a>
+          <a href="#" class="legal-link" data-target="privacy-modal" data-i18n="nav-privacy">Privacy Policy</a>
+          <a href="#" class="legal-link" data-target="terms-modal" data-i18n="nav-terms">Terms of Use</a>
         </div>
         <div class="footer-contact">
           <h4 data-i18n="footer-contact">Contact Us</h4>
@@ -195,6 +238,69 @@
           </div>
           <button type="submit" class="btn btn-primary w-100" data-i18n="btn-submit">Submit Request</button>
         </form>
+      </div>
+    </div>
+
+    <!-- Legal Modals -->
+    <div class="modal-overlay legal-modal-overlay" id="accessibility-stmt-modal">
+      <div class="modal-content legal-modal-content">
+        <button class="close-modal legal-close" data-close="accessibility-stmt-modal">&times;</button>
+        <h2 class="modal-title" data-i18n="nav-accessibility">Accessibility Statement</h2>
+        <div class="modal-body">
+          <p data-i18n="accessibility-stmt-content">We view accessibility as fundamentally important. This website has been adapted to the accessibility requirements according to Israeli law. If you encounter any accessibility issues, please contact our accessibility coordinator.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay legal-modal-overlay" id="privacy-modal">
+      <div class="modal-content legal-modal-content">
+        <button class="close-modal legal-close" data-close="privacy-modal">&times;</button>
+        <h2 class="modal-title" data-i18n="nav-privacy">Privacy Policy</h2>
+        <div class="modal-body">
+          <p data-i18n="privacy-content">Your privacy is important to us. We collect only necessary information to provide our aesthetic services and do not share your data with unauthorized third parties. By using this website, you agree to our data handling practices.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay legal-modal-overlay" id="terms-modal">
+      <div class="modal-content legal-modal-content">
+        <button class="close-modal legal-close" data-close="terms-modal">&times;</button>
+        <h2 class="modal-title" data-i18n="nav-terms">Terms of Use</h2>
+        <div class="modal-body">
+          <p data-i18n="terms-content">By browsing and using this website, you agree to comply with and be bound by the following terms of use. The contents of this website are for general information and aesthetic service booking purposes only.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner hidden">
+      <div class="cookie-content">
+        <p data-i18n="cookie-text">We use cookies to improve your browsing experience. By using our site, you agree to our use of cookies.</p>
+      </div>
+      <div class="cookie-actions">
+        <button id="cookie-accept" class="btn btn-primary cookie-btn" data-i18n="cookie-accept">Accept</button>
+        <button id="cookie-decline" class="btn btn-secondary cookie-btn" data-i18n="cookie-decline">Decline</button>
+      </div>
+    </div>
+
+    <!-- Accessibility Widget -->
+    <div class="accessibility-widget" id="accessibility-widget">
+      <button class="accessibility-toggle" id="accessibility-toggle" aria-label="Accessibility Options" title="Accessibility">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="acc-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="4" r="1"></circle><path d="m18 19 1-7-6.1-1.7a3 3 0 0 0-3.3 1.3l-2.6 4.4A3 3 0 0 0 8 20.6l2.1-.7c1.3-.4 2.2-1.5 2.5-2.8L13 14"></path><path d="M3 11a7 7 0 1 0 10.6-5.9"></path></svg>
+      </button>
+      <div class="accessibility-panel" id="accessibility-panel">
+        <div class="acc-header">
+          <h3 data-i18n="acc-title">Accessibility Options</h3>
+          <button class="acc-close" id="acc-close">&times;</button>
+        </div>
+        <div class="acc-body">
+          <button class="acc-btn" id="acc-increase-font" data-i18n="acc-increase-font">Increase Font Size</button>
+          <button class="acc-btn" id="acc-decrease-font" data-i18n="acc-decrease-font">Decrease Font Size</button>
+          <button class="acc-btn" id="acc-high-contrast" data-i18n="acc-high-contrast">High Contrast</button>
+          <button class="acc-btn" id="acc-light-bg" data-i18n="acc-light-bg">Light Background</button>
+          <button class="acc-btn" id="acc-links-underline" data-i18n="acc-links-underline">Highlight Links</button>
+          <button class="acc-btn acc-reset" id="acc-reset" data-i18n="acc-reset">Reset Settings</button>
+        </div>
       </div>
     </div>
 
