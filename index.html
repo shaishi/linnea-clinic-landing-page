@@ -40,8 +40,13 @@
       href="./images/hero-bg.jpg"
       fetchpriority="high"
     />
-    <script type="module" crossorigin src="/linnea-clinic-landing-page/assets/main-CAkBBHyt.js"></script>
-    <link rel="stylesheet" crossorigin href="/linnea-clinic-landing-page/assets/main-k30YNJdF.css">
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23617d78'/><text x='50' y='70' font-family='serif' font-size='60' fill='%23f4efdf' text-anchor='middle'>L</text></svg>"
+    />
+    <script type="module" crossorigin src="/linnea-clinic-landing-page/assets/main-BOW8Q171.js"></script>
+    <link rel="stylesheet" crossorigin href="/linnea-clinic-landing-page/assets/main-D4vIiDv4.css">
   </head>
   <body>
     <!-- Navbar -->
@@ -80,7 +85,7 @@
     <main>
       <!-- Hero Section -->
       <section class="hero" id="home">
-        <div class="container hero-content">
+        <div class="container hero-content reveal">
           <h1 class="hero-title" data-i18n="hero-title">
             Discover Your Natural Radiance
           </h1>
@@ -96,7 +101,7 @@
 
       <!-- About Section -->
       <section class="about section" id="about">
-        <div class="container about-grid">
+        <div class="about-grid container reveal">
           <div class="about-text">
             <h2 class="section-title" data-i18n="about-title">
               Cultivating Aesthetic Harmony
@@ -122,60 +127,55 @@
       </section>
 
       <!-- Treatments Section -->
-      <section class="treatments section" id="treatments">
-        <div class="container">
-          <div class="section-header text-center">
-            <h2 class="section-title" data-i18n="treatments-title">
-              Our Treatments
-            </h2>
-            <p class="section-description" data-i18n="treatments-desc">
-              A curated selection of high-end procedures designed to rejuvenate
-              and refine.
-            </p>
+      <section class="treatments container" id="treatments">
+        <h2 class="section-title reveal" data-i18n="nav-treatments">
+          Treatments
+        </h2>
+        <p class="section-description reveal" data-i18n="treatments-desc">
+          A curated selection of high-end procedures designed to rejuvenate and
+          refine.
+        </p>
+        <div class="treatments-grid reveal">
+          <div class="treatment-card">
+            <img
+              src="/linnea-clinic-landing-page/images/skin.png"
+              alt="Skin Rejuvenation"
+              class="treatment-img"
+            />
+            <div class="treatment-content">
+              <h3 data-i18n="skin-title">Skin Rejuvenation</h3>
+              <p data-i18n="skin-desc">
+                Advanced therapies using the latest luminescence technology to
+                restore your skin's youthful glow and texture.
+              </p>
+            </div>
           </div>
-
-          <div class="treatments-grid">
-            <div class="treatment-card">
-              <img
-                src="/linnea-clinic-landing-page/images/skin.png"
-                alt="Skin Rejuvenation"
-                class="treatment-img"
-              />
-              <div class="treatment-content">
-                <h3 data-i18n="skin-title">Skin Rejuvenation</h3>
-                <p data-i18n="skin-desc">
-                  Advanced therapies using the latest luminescence technology to
-                  restore your skin's youthful glow and texture.
-                </p>
-              </div>
+          <div class="treatment-card">
+            <img
+              src="/linnea-clinic-landing-page/images/botox.png"
+              alt="Injectables"
+              class="treatment-img"
+            />
+            <div class="treatment-content">
+              <h3 data-i18n="botox-title">Injectables</h3>
+              <p data-i18n="botox-desc">
+                Precise, natural-looking enhancements performed by our master
+                injectors for a refreshed appearance.
+              </p>
             </div>
-            <div class="treatment-card">
-              <img
-                src="/linnea-clinic-landing-page/images/botox.png"
-                alt="Injectables"
-                class="treatment-img"
-              />
-              <div class="treatment-content">
-                <h3 data-i18n="botox-title">Injectables</h3>
-                <p data-i18n="botox-desc">
-                  Precise, natural-looking enhancements performed by our master
-                  injectors for a refreshed appearance.
-                </p>
-              </div>
-            </div>
-            <div class="treatment-card">
-              <img
-                src="/linnea-clinic-landing-page/images/contouring.png"
-                alt="Facial Contouring"
-                class="treatment-img"
-              />
-              <div class="treatment-content">
-                <h3 data-i18n="contouring-title">Facial Contouring</h3>
-                <p data-i18n="contouring-desc">
-                  Tailored structural treatments to define, lift, and harmonize
-                  your natural facial proportions.
-                </p>
-              </div>
+          </div>
+          <div class="treatment-card">
+            <img
+              src="/linnea-clinic-landing-page/images/contouring.png"
+              alt="Facial Contouring"
+              class="treatment-img"
+            />
+            <div class="treatment-content">
+              <h3 data-i18n="contouring-title">Facial Contouring</h3>
+              <p data-i18n="contouring-desc">
+                Tailored structural treatments to define, lift, and harmonize
+                your natural facial proportions.
+              </p>
             </div>
           </div>
         </div>
@@ -184,17 +184,14 @@
       <!-- Articles Section -->
       <section class="articles section" id="articles">
         <div class="container">
-          <div class="section-header text-center">
-            <h2 class="section-title" data-i18n="articles-title">
-              Insights & Science
-            </h2>
-            <p class="section-description" data-i18n="articles-desc">
-              Explore our expert articles on aesthetic medicine, treatments, and
-              the science of longevity.
-            </p>
-          </div>
-
-          <div class="treatments-grid">
+          <h2 class="section-title reveal" data-i18n="articles-title">
+            Insights & Science
+          </h2>
+          <p class="section-description reveal" data-i18n="articles-desc">
+            Explore our expert articles on aesthetic medicine, treatments, and
+            the science of longevity.
+          </p>
+          <div class="articles-grid reveal">
             <div class="treatment-card article-card">
               <img
                 src="./images/botox_article.png"
@@ -263,7 +260,7 @@
       </section>
       <!-- Location & Directions -->
       <section class="location section" id="location">
-        <div class="container location-container">
+        <div class="container location-container reveal">
           <div class="location-info">
             <h2 class="section-title" data-i18n="location-title">
               Visit Our Clinic
@@ -315,7 +312,7 @@
 
     <!-- Contact & Footer -->
     <footer class="footer" id="contact">
-      <div class="container footer-grid">
+      <div class="container footer-grid reveal">
         <div class="footer-brand">
           <a href="#" class="brand-logo footer-logo">Linnéa</a>
           <p class="footer-tagline" data-i18n="footer-tagline">
@@ -448,13 +445,7 @@
             name="_subject"
             value="New Consultation Request!"
           />
-          <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="table" />
-          <input
-            type="hidden"
-            name="_next"
-            value="https://shaishi.github.io/linnea-clinic-landing-page/"
-          />
           <!-- We can bypass their thank you page via JS, or let it redirect. We will handle via JS. -->
           <div class="form-group">
             <label for="name" data-i18n="label-name">Full Name</label>
@@ -680,5 +671,23 @@
       </div>
     </div>
 
+    <!-- WhatsApp Widget -->
+    <a
+      href="https://wa.me/972500000000"
+      class="whatsapp-btn"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Contact us on WhatsApp"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+      >
+        <path
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.22 5.22 0 0 0-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.82 11.82 0 0 0 12.051 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.8 11.8 0 0 0-3.48-8.413Z"
+        />
+      </svg>
+    </a>
   </body>
 </html>
