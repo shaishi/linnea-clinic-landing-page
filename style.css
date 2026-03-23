@@ -328,6 +328,10 @@ html[dir="rtl"] .nav-container {
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   position: relative;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
+  filter: contrast(1.05) saturate(1.05);
 }
 
 /* Treatments Section */
@@ -351,6 +355,10 @@ html[dir="rtl"] .nav-container {
   width: 100%;
   height: 240px;
   object-fit: cover;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
+  filter: contrast(1.05) saturate(1.05);
 }
 
 .treatment-content {
