@@ -452,21 +452,30 @@
         <p class="modal-desc" data-i18n="modal-desc">
           Take the first step towards your natural radiance.
         </p>
-        <!-- FormSubmit.co integration: replace the action URL with your real email -->
+        <!-- Web3Forms integration -->
         <form
           class="booking-form"
           id="booking-form"
-          action="https://formsubmit.co/linneaclinic+1@gmail.com"
+          action="https://api.web3forms.com/submit"
           method="POST"
         >
-          <!-- FormSubmit Configuration -->
+          <!-- Web3Forms Configuration -->
           <input
             type="hidden"
-            name="_subject"
+            name="access_key"
+            value="bca92b9b-baac-4310-b928-30a07b87720d"
+          />
+          <input
+            type="hidden"
+            name="subject"
             value="New Consultation Request!"
           />
-          <input type="hidden" name="_template" value="table" />
-          <!-- We can bypass their thank you page via JS, or let it redirect. We will handle via JS. -->
+          <input 
+            type="hidden" 
+            name="from_name" 
+            value="Linnéa Website form"
+          />
+          <!-- We can bypass their thank you page via JS, or let it redirect. We handle via JS. -->
           <div class="form-group">
             <label for="name" data-i18n="label-name">Full Name</label>
             <input
