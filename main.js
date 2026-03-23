@@ -277,6 +277,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (form) {
+    // TEMPORARILY DISABLED TO ALLOW FORMSUBMIT ACTIVATION
+    /*
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       
@@ -307,6 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = false;
       });
     });
+    */
   }
 
   // Legal Modals
