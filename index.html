@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Linnéa - Premium Aesthetic Clinic" />
+    <title>Linnéa | Aesthetic Clinic</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&family=Heebo:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="/linnea-clinic-landing-page/assets/index-K-GIwquv.js"></script>
+    <link rel="stylesheet" crossorigin href="/linnea-clinic-landing-page/assets/index-CGRMrr0t.css">
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="container nav-container">
+        <a href="#" class="brand-logo">Linnéa</a>
+        <!-- Using a star SVg to match the branding -->
+        <nav class="nav-links">
+          <a href="#about" data-i18n="nav-about">About</a>
+          <a href="#treatments" data-i18n="nav-treatments">Treatments</a>
+          <a href="#location" data-i18n="nav-directions">Directions</a>
+          <a href="#contact" data-i18n="nav-contact">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <button id="lang-toggle" class="btn btn-secondary lang-btn">HE</button>
+          <button class="btn btn-primary nav-btn" id="nav-book-btn" data-i18n="btn-book">Book Consultation</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="container hero-content">
+        <h1 class="hero-title" data-i18n="hero-title">Discover Your Natural Radiance</h1>
+        <p class="hero-subtitle" data-i18n="hero-subtitle">High-end aesthetic treatments tailored to enhance your unique beauty in a soothing, professional environment.</p>
+        <button class="btn btn-primary hero-btn" data-i18n="btn-book">Book a Consultation</button>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about section" id="about">
+      <div class="container about-grid">
+        <div class="about-text">
+          <h2 class="section-title" data-i18n="about-title">Cultivating Aesthetic Harmony</h2>
+          <p data-i18n="about-p1">At Linnéa, we believe that aesthetic enhancement isn't about altering your appearance, but rather cultivating the harmony that already exists within you. Our boutique clinic provides an inviting, human-centered experience where advanced science meets customized care.</p>
+          <p data-i18n="about-p2">Every treatment is precisely tailored, leaving you looking luminous, pure, and naturally balanced.</p>
+        </div>
+        <div class="about-image">
+          <div class="image-placeholder">
+             <!-- Placeholder for clinic interior or aesthetics visual -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Treatments Section -->
+    <section class="treatments section" id="treatments">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 class="section-title" data-i18n="treatments-title">Our Treatments</h2>
+          <p class="section-description" data-i18n="treatments-desc">A curated selection of high-end procedures designed to rejuvenate and refine.</p>
+        </div>
+        
+        <div class="treatments-grid">
+          <div class="treatment-card">
+            <img src="/linnea-clinic-landing-page/images/skin.png" alt="Skin Rejuvenation" class="treatment-img">
+            <div class="treatment-content">
+              <h3 data-i18n="skin-title">Skin Rejuvenation</h3>
+              <p data-i18n="skin-desc">Advanced therapies using the latest luminescence technology to restore your skin's youthful glow and texture.</p>
+            </div>
+          </div>
+          <div class="treatment-card">
+            <img src="/linnea-clinic-landing-page/images/botox.png" alt="Injectables" class="treatment-img">
+            <div class="treatment-content">
+              <h3 data-i18n="botox-title">Injectables</h3>
+              <p data-i18n="botox-desc">Precise, natural-looking enhancements performed by our master injectors for a refreshed appearance.</p>
+            </div>
+          </div>
+          <div class="treatment-card">
+            <img src="/linnea-clinic-landing-page/images/contouring.png" alt="Facial Contouring" class="treatment-img">
+            <div class="treatment-content">
+              <h3 data-i18n="contouring-title">Facial Contouring</h3>
+              <p data-i18n="contouring-desc">Tailored structural treatments to define, lift, and harmonize your natural facial proportions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Location & Directions -->
+    <section class="location section" id="location">
+      <div class="container location-container">
+        <div class="location-info">
+          <h2 class="section-title" data-i18n="location-title">Visit Our Clinic</h2>
+          <p data-i18n="location-desc">Located in the heart of the city, Linnéa offers a hygienic, soothing sanctuary away from the bustle. We invite you to step into our luxurious space.</p>
+          
+          <div class="contact-details">
+            <div class="detail-item">
+              <strong data-i18n="address-label">Address:</strong>
+              <p data-i18n="address-val">116 Herzl Blvd<br>Jerusalem, Israel</p>
+            </div>
+            <div class="detail-item">
+              <strong data-i18n="hours-label">Hours:</strong>
+              <p>Monday - Friday: 9am - 6pm<br>Saturday: 10am - 4pm</p>
+            </div>
+            <div class="detail-item">
+              <strong data-i18n="phone-label">Phone:</strong>
+              <p>+1 (555) 123-4567</p>
+            </div>
+          </div>
+          
+          <button class="btn btn-secondary mt-4" data-i18n="get-directions">Get Directions</button>
+        </div>
+        <div class="location-map">
+          <!-- Live Google Map Embed -->
+          <iframe 
+            src="https://maps.google.com/maps?q=Herzl%20Blvd%20116,%20Jerusalem&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <footer class="footer" id="contact">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="brand-logo footer-logo">Linnéa</a>
+          <p class="footer-tagline" data-i18n="footer-tagline">Warm, luxurious, inviting, human.</p>
+        </div>
+        <div class="footer-links">
+          <h4 data-i18n="footer-explore">Explore</h4>
+          <a href="#about" data-i18n="nav-about">About Us</a>
+          <a href="#treatments" data-i18n="nav-treatments">Treatments</a>
+          <a href="#location" data-i18n="nav-directions">Directions</a>
+        </div>
+        <div class="footer-links">
+          <h4 data-i18n="footer-legal">Legal</h4>
+          <a href="#" class="legal-link" data-target="accessibility-stmt-modal" data-i18n="nav-accessibility">Accessibility Statement</a>
+          <a href="#" class="legal-link" data-target="privacy-modal" data-i18n="nav-privacy">Privacy Policy</a>
+          <a href="#" class="legal-link" data-target="terms-modal" data-i18n="nav-terms">Terms of Use</a>
+        </div>
+        <div class="footer-contact">
+          <h4 data-i18n="footer-contact">Contact Us</h4>
+          <a href="mailto:hello@linnea.com">hello@linnea.com</a>
+          <p data-i18n="footer-discuss">Let's discuss your journey.</p>
+          <div class="social-links mt-4">
+            <a href="#" class="social-icon" aria-label="Facebook">
+              <svg xmlns="http://www.2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="Instagram">
+              <svg xmlns="http://www.2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="#" class="social-icon" aria-label="WhatsApp">
+              <svg xmlns="http://www.2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom container">
+        <p data-i18n="footer-rights">&copy; 2026 Linnéa Aesthetic Clinic. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Book Consultation Modal -->
+    <div class="modal-overlay" id="booking-modal">
+      <div class="modal-content">
+        <button class="close-modal" id="close-modal">&times;</button>
+        <h2 class="modal-title" data-i18n="modal-title">Book a Consultation</h2>
+        <p class="modal-desc" data-i18n="modal-desc">Take the first step towards your natural radiance.</p>
+        <!-- FormSubmit.co integration: replace the action URL with your real email -->
+        <form class="booking-form" id="booking-form" action="https://formsubmit.co/hello@linnea.com" method="POST">
+          <!-- FormSubmit Configuration -->
+          <input type="hidden" name="_subject" value="New Consultation Request!">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <!-- We can bypass their thank you page via JS, or let it redirect. We will handle via JS. -->
+          <div class="form-group">
+            <label for="name" data-i18n="label-name">Full Name</label>
+            <input type="text" id="name" name="name" required placeholder="Jane Doe" data-i18n-placeholder="placeholder-name">
+          </div>
+          <div class="form-group">
+            <label for="email" data-i18n="label-email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="jane@example.com" data-i18n-placeholder="placeholder-email">
+          </div>
+          <div class="form-group">
+            <label for="interest" data-i18n="label-interest">Area of Interest</label>
+            <select id="interest" name="interest">
+              <option value="rejuvenation" data-i18n="opt-rejuvenation">Skin Rejuvenation</option>
+              <option value="injectables" data-i18n="opt-injectables">Injectables</option>
+              <option value="contouring" data-i18n="opt-contouring">Facial Contouring</option>
+              <option value="other" data-i18n="opt-other">Other / Not Sure</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary w-100" data-i18n="btn-submit">Submit Request</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Legal Modals -->
+    <div class="modal-overlay legal-modal-overlay" id="accessibility-stmt-modal">
+      <div class="modal-content legal-modal-content">
+        <button class="close-modal legal-close" data-close="accessibility-stmt-modal">&times;</button>
+        <h2 class="modal-title" data-i18n="nav-accessibility">Accessibility Statement</h2>
+        <div class="modal-body">
+          <p data-i18n="accessibility-stmt-content">We view accessibility as fundamentally important. This website has been adapted to the accessibility requirements according to Israeli law. If you encounter any accessibility issues, please contact our accessibility coordinator.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay legal-modal-overlay" id="privacy-modal">
+      <div class="modal-content legal-modal-content">
+        <button class="close-modal legal-close" data-close="privacy-modal">&times;</button>
+        <h2 class="modal-title" data-i18n="nav-privacy">Privacy Policy</h2>
+        <div class="modal-body">
+          <p data-i18n="privacy-content">Your privacy is important to us. We collect only necessary information to provide our aesthetic services and do not share your data with unauthorized third parties. By using this website, you agree to our data handling practices.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay legal-modal-overlay" id="terms-modal">
+      <div class="modal-content legal-modal-content">
+        <button class="close-modal legal-close" data-close="terms-modal">&times;</button>
+        <h2 class="modal-title" data-i18n="nav-terms">Terms of Use</h2>
+        <div class="modal-body">
+          <p data-i18n="terms-content">By browsing and using this website, you agree to comply with and be bound by the following terms of use. The contents of this website are for general information and aesthetic service booking purposes only.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div id="cookie-banner" class="cookie-banner hidden">
+      <div class="cookie-content">
+        <p data-i18n="cookie-text">We use cookies to improve your browsing experience. By using our site, you agree to our use of cookies.</p>
+      </div>
+      <div class="cookie-actions">
+        <button id="cookie-accept" class="btn btn-primary cookie-btn" data-i18n="cookie-accept">Accept</button>
+        <button id="cookie-decline" class="btn btn-secondary cookie-btn" data-i18n="cookie-decline">Decline</button>
+      </div>
+    </div>
+
+    <!-- Accessibility Widget -->
+    <div class="accessibility-widget" id="accessibility-widget">
+      <button class="accessibility-toggle" id="accessibility-toggle" aria-label="Accessibility Options" title="Accessibility">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="acc-icon" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="4" r="1"></circle><path d="m18 19 1-7-6.1-1.7a3 3 0 0 0-3.3 1.3l-2.6 4.4A3 3 0 0 0 8 20.6l2.1-.7c1.3-.4 2.2-1.5 2.5-2.8L13 14"></path><path d="M3 11a7 7 0 1 0 10.6-5.9"></path></svg>
+      </button>
+      <div class="accessibility-panel" id="accessibility-panel">
+        <div class="acc-header">
+          <h3 data-i18n="acc-title">Accessibility Options</h3>
+          <button class="acc-close" id="acc-close">&times;</button>
+        </div>
+        <div class="acc-body">
+          <button class="acc-btn" id="acc-increase-font" data-i18n="acc-increase-font">Increase Font Size</button>
+          <button class="acc-btn" id="acc-decrease-font" data-i18n="acc-decrease-font">Decrease Font Size</button>
+          <button class="acc-btn" id="acc-high-contrast" data-i18n="acc-high-contrast">High Contrast</button>
+          <button class="acc-btn" id="acc-light-bg" data-i18n="acc-light-bg">Light Background</button>
+          <button class="acc-btn" id="acc-links-underline" data-i18n="acc-links-underline">Highlight Links</button>
+          <button class="acc-btn acc-reset" id="acc-reset" data-i18n="acc-reset">Reset Settings</button>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
