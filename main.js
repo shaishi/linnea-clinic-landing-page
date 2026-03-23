@@ -242,6 +242,13 @@ document.addEventListener('DOMContentLoaded', () => {
         el.placeholder = translations[lang][key];
       }
     });
+
+    // Re-trigger scroll animations whenever the language is switched
+    const activeReveals = document.querySelectorAll('.reveal.active');
+    activeReveals.forEach(el => {
+      el.classList.remove('active');
+      setTimeout(() => el.classList.add('active'), 100);
+    });
   };
 
   applyLanguage(currentLang);
