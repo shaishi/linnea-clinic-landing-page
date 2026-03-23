@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const langToggle = document.getElementById('lang-toggle');
-  let currentLang = 'en';
+  let currentLang = localStorage.getItem('linneaLang') || 'en';
 
   const translations = {
     en: {
@@ -212,28 +212,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  const applyLanguage = (lang) => {
+    if (langToggle) langToggle.textContent = lang === 'en' ? 'HE' : 'EN';
+    document.documentElement.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
+    document.documentElement.setAttribute('lang', lang);
+    
+    // Update texts
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (translations[lang] && translations[lang][key]) {
+        el.textContent = translations[lang][key];
+      }
+    });
+
+    // Update placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (translations[lang] && translations[lang][key]) {
+        el.placeholder = translations[lang][key];
+      }
+    });
+  };
+
+  applyLanguage(currentLang);
+
   if (langToggle) {
     langToggle.addEventListener('click', () => {
       currentLang = currentLang === 'en' ? 'he' : 'en';
-      langToggle.textContent = currentLang === 'en' ? 'HE' : 'EN';
-      document.documentElement.setAttribute('dir', currentLang === 'en' ? 'ltr' : 'rtl');
-      document.documentElement.setAttribute('lang', currentLang);
-      
-      // Update texts
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (translations[currentLang][key]) {
-          el.textContent = translations[currentLang][key];
-        }
-      });
-
-      // Update placeholders
-      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-        const key = el.getAttribute('data-i18n-placeholder');
-        if (translations[currentLang][key]) {
-          el.placeholder = translations[currentLang][key];
-        }
-      });
+      localStorage.setItem('linneaLang', currentLang);
+      applyLanguage(currentLang);
     });
   }
 
