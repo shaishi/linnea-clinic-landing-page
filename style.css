@@ -696,7 +696,9 @@ body.acc-high-contrast .article-content {
 .reveal {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal.active {
@@ -719,7 +721,9 @@ body.acc-high-contrast .article-content {
   justify-content: center;
   box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
   z-index: 100;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .whatsapp-btn:hover {
@@ -774,6 +778,16 @@ html[dir="rtl"] .hero-title {
   }
   .nav-links {
     display: none; /* simple mobile approach for now */
+  }
+  .nav-actions .nav-btn {
+    display: none; /* preserve space for language toggle */
+  }
+  .brand-logo {
+    font-size: 1.8rem;
+  }
+  .brand-subtitle {
+    font-size: 0.65rem;
+    transform: translateY(-2px);
   }
 }
 
