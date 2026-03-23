@@ -290,6 +290,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (form) {
+    // TEMPORARILY DISABLED AJAX TO ALLOW EMAIL VERIFICATION
+    /*
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       
@@ -323,6 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = false;
       });
     });
+    */
   }
 
   // Legal Modals
