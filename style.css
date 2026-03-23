@@ -221,6 +221,7 @@ html[dir="rtl"] .nav-container {
   display: flex;
   gap: 1rem;
   align-items: center;
+  direction: ltr;
 }
 
 .lang-btn {
