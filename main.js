@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Reveal elements on scroll
-  const revealElements = document.querySelectorAll('.treatment-card, .about-text, .about-image, .location-info, .location-map');
+  const revealElements = document.querySelectorAll('.reveal, .treatment-card, .about-text, .about-image, .location-info, .location-map');
   
   // Add reveal class to these elements
   revealElements.forEach(el => el.classList.add('reveal'));
@@ -109,6 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "articles-title": "Insights & Science",
       "articles-desc": "Explore our expert articles on aesthetic medicine, treatments, and the science of longevity.",
       "read-more": "Read More",
+      "success-title": "Thank You!",
+      "success-msg": "Your request has been received. We will contact you shortly.",
       "article1-title": "The Art of Botox",
       "article1-subtitle": "A deep dive into neuromodulators and natural expression.",
       "article1-desc": "Discover how precise neuromodulator treatments can smooth wrinkles while maintaining your natural expressions.",
@@ -197,6 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "articles-title": "תובנות ומדע",
       "articles-desc": "חקרו את המאמרים המקצועיים שלנו על רפואה אסתטית, טיפולים ומדע אריכות הימים.",
       "read-more": "קראו עוד",
+      "success-title": "תודה רבה!",
+      "success-msg": "פנייתך התקבלה. ניצור קשר בקרוב.",
       "article1-title": "אמנות הבוטוקס",
       "article1-subtitle": "צלילה עמוקה אל עולם הנוירומודולטורים והבעות הפנים הטבעיות.",
       "article1-desc": "גלו כיצד טיפולי נוירומודולטורים מדויקים יכולים להחליק קמטים תוך שמירה על ההבעות הטבעיות שלכם.",
@@ -279,8 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (form) {
-    // TEMPORARILY DISABLED TO ALLOW FORMSUBMIT ACTIVATION
-    /*
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       
@@ -298,20 +300,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }).then(response => {
         if(response.ok) {
-          alert(translations[currentLang]['alert-success']);
-          if (modal) modal.classList.remove('active');
-          form.reset();
+          form.innerHTML = `
+            <div style="text-align: center; padding: 2.5rem 0;">
+              <h3 style="font-family: var(--font-serif); font-size: 2.5rem; color: var(--clinique-teal-dark); margin-bottom: 1rem;" data-i18n="success-title">Thank You!</h3>
+              <p style="font-size: 1.1rem; color: var(--text-dark);" data-i18n="success-msg">Your request has been received. We will contact you shortly.</p>
+            </div>
+          `;
+          applyLanguage(currentLang);
         } else {
-          alert("Oops! There was a problem submitting your form. Please try again or contact us directly.");
+          submitBtn.textContent = 'Error, please try again.';
+          submitBtn.disabled = false;
         }
       }).catch(error => {
-        alert("Oops! There was a problem submitting your form. Please try again or contact us directly.");
-      }).finally(() => {
-        submitBtn.textContent = originalText;
+        submitBtn.textContent = 'Error, please try again.';
         submitBtn.disabled = false;
       });
     });
-    */
   }
 
   // Legal Modals
