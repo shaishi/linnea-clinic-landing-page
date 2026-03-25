@@ -688,7 +688,8 @@ body.acc-high-contrast .article-content {
 }
 
 .form-group input,
-.form-group select {
+.form-group select,
+.form-group textarea {
   width: 100%;
   padding: 0.875rem 1rem;
   border: 1px solid rgba(160, 189, 184, 0.5);
@@ -700,7 +701,8 @@ body.acc-high-contrast .article-content {
 }
 
 .form-group input:focus,
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
   outline: none;
   border-color: var(--clinique-teal);
   box-shadow: 0 0 0 3px rgba(160, 189, 184, 0.2);
