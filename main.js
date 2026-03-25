@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "contouring-pain-val": "Mild (Contains Lidocaine)",
       "contouring-mat-val": "High-Density Hyaluronic Acid Fillers",
       "doc-title": "Our Doctors",
-      "doc-name": "Dr. Shiloh DMD MSc",
+      "doc-name": "Dr. Shiloh DMD, MSc",
       "doc-p1": "Dr. Shiiloh, the clinic’s lead dentist, is a graduate of the Hebrew University of Jerusalem and Hadassah Medical Center, holding both a DMD degree and an MSc in Medical Big Data. His unique background combines advanced clinical training with technological expertise from Unit 8200, enabling a refined, data-driven approach to high-end aesthetic dentistry.",
       "doc-p2": "Dr. Shiiloh’s philosophy is rooted in precise minimalism - clean, aesthetic, and natural treatments that preserve harmony and authenticity. Each treatment is carefully tailored, with meticulous attention to detail and close, personalized guidance throughout the entire journey. At the clinic, only FDA-approved materials are used, reflecting an uncompromising commitment to excellence, safety, and long-term results."
     },
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "contouring-pain-val": "קלה (מכיל חומר הרדמה)",
       "contouring-mat-val": "חומרי צפיפות גבוהה מבוססי חומצה היאלורונית",
       "doc-title": "הרופאים שלנו",
-      "doc-name": "ד\"ר שילה DMD MSc",
+      "doc-name": "ד\"ר שילה DMD, MSc",
       "doc-p1": "ד\"ר שילה, רופא השיניים הראשי במרפאה, הוא בוגר האוניברסיטה העברית והמרכז הרפואי הדסה, ובעל תואר DMD ותואר MSc בביג דאטה רפואי. הרקע הייחודי שלו, המשלב הכשרה קלינית מתקדמת עם ניסיון טכנולוגי מיחידת 8200, מאפשר גישה מדויקת, חדשנית ומבוססת נתונים לרפואת שיניים אסתטית ברמה הגבוהה ביותר.",
       "doc-p2": "הגישה של ד\"ר שילה מבוססת על מינימליזם מדויק - טיפולים נקיים, אסתטיים וטבעיים, השומרים על הרמוניה ואותנטיות. כל טיפול מותאם באופן אישי, תוך הקפדה על פרטים קטנים וליווי צמוד לאורך כל הדרך, מתוך הבנה שתוצאה מצוינת אינה רק אסתטית אלא גם חווייתית. במרפאה נעשה שימוש בלעדי בחומרים המאושרים על ידי ה-FDA, כחלק ממחויבות בלתי מתפשרת לאיכות, בטיחות ותוצאות ארוכות טווח."
     }
