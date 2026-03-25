@@ -144,6 +144,22 @@ document.addEventListener('DOMContentLoaded', () => {
       "article3-title": "The Science of Longevity",
       "article3-subtitle": "Evidence-based approaches to cellular health and graceful aging.",
       "article3-desc": "Delve into our evidence-based approach combining aesthetic treatments with cellular health and graceful aging.",
+      "alt-dr-shilo": "Dr. Shiloh DMD MSc, Lead Dentist at Linnéa Aesthetic Clinic Jerusalem",
+      "alt-skin": "Skin Rejuvenation aesthetic laser treatments at Linnea Clinic Jerusalem",
+      "alt-botox": "Professional Botox and Dermal Filler Injectable treatments in Jerusalem",
+      "alt-contouring": "Expert Facial Contouring and bespoke Aesthetic Sculpting Clinic",
+      "alt-article-botox": "The Art of Botox: Expert Neuromodulator Treatments and Wrinkle Smoothing",
+      "alt-article-fillers": "Mastering Dermal Fillers: Volume Restoration and Facial Balancing Techniques",
+      "alt-article-scientific": "The Science of Longevity and Cellular Health in Modern Aesthetic Medicine",
+      "alt-skin-after": "After skin rejuvenation",
+      "alt-skin-before": "Before skin rejuvenation",
+      "alt-lips-after": "After lip enhancement",
+      "alt-lips-before": "Before lip enhancement",
+      "alt-jawline-after": "After jawline contouring",
+      "alt-jawline-before": "Before jawline contouring",
+      "alt-article1-hero": "Premium Botox and Neuromodulator aesthetic medicine treatment in Jerusalem",
+      "alt-article2-hero": "Mastering High-End Dermal Fillers and Volume Restoration treatments in Israel",
+      "alt-article3-hero": "Scientific approach to longevity and aesthetic medicine using cutting-edge cellular treatments",
       "article3-p1": "True aesthetic beauty radiates from within, reflecting optimal cellular health. At Linnéa, we look beyond the surface, integrating cutting-edge longevity science with our aesthetic treatments to ensure age-defying results that last.",
       "article3-p2": "Our scientific approach focuses on bio-stimulation and regenerative medicine. By triggering the body's natural collagen and elastin production through advanced technologies like microneedling, laser therapies, and polynucleotides, we effectively repair the skin at a molecular level.",
       "article3-p3": "We are committed to educating our clients on how lifestyle, nutrition, and advanced aesthetics go hand-in-hand. Embracing longevity means investing in treatments that not only refine your appearance today but also build resilient, healthy skin architecture for years to come.",
@@ -268,6 +284,22 @@ document.addEventListener('DOMContentLoaded', () => {
       "article3-title": "מדע אריכות הימים",
       "article3-subtitle": "גישות מבוססות-ראיות לבריאות התא והזדקנות בחן.",
       "article3-desc": "חקרו את הגישה המדעית שלנו המשלבת טיפולים אסתטיים עם בריאות תאית לאריכות ימים.",
+      "alt-dr-shilo": "ד\"ר שילה DMD MSc, רופא ראשי במרפאת לינאה אסתטיקה ירושלים",
+      "alt-skin": "חידוש העור וטיפולי לייזר אסתטיים במרפאת לינאה ירושלים",
+      "alt-botox": "טיפולי בוטוקס וחומרי מילוי מקצועיים בירושלים",
+      "alt-contouring": "פיסול פנים מומחה ומרפאת פיסול אסתטי בהתאמה אישית",
+      "alt-article-botox": "אמנות הבוטוקס: טיפולי נוירומודולטורים מומחים והחלקת קמטים",
+      "alt-article-fillers": "מומחיות בחומרי מילוי: שחזור נפח וטכניקות איזון פנים",
+      "alt-article-scientific": "מדע אריכות הימים ובריאות תאית ברפואה אסתטית מודרנית",
+      "alt-skin-after": "אחרי חידוש עור",
+      "alt-skin-before": "לפני חידוש עור",
+      "alt-lips-after": "אחרי עיבוי שפתיים",
+      "alt-lips-before": "לפני עיבוי שפתיים",
+      "alt-jawline-after": "אחרי פיסול קו הלסת",
+      "alt-jawline-before": "לפני פיסול קו הלסת",
+      "alt-article1-hero": "טיפול בוטוקס ונוירומודולטורים פרימיום בירושלים",
+      "alt-article2-hero": "מומחיות בחומרי מילוי ושחזור נפח בישראל",
+      "alt-article3-hero": "גישה מדעית לאריכות ימים ורפואה אסתטית באמצעות טיפולים תאיים מתקדמים",
       "article3-p1": "יופי אסתטי אמיתי זוהר מבפנים ומשקף בריאות תאית אופטימלית. בלינאה, אנו מסתכלים מעבר לפני השטח ומשלבים מדע מתקדם של אריכות ימים עם טיפולי האסתטיקה שלנו כדי להבטיח תוצאות המחזיקות לאורך זמן ומאטות את תהליך ההזדקנות.",
       "article3-p2": "הגישה המדעית שלנו מתמקדת בביו-סטימולציה ורפואה רנרטיבית. על ידי גירוי ייצור הקולגן והאלסטין הטבעי של הגוף באמצעות טכנולוגיות מתקדמות כמו מיקרונידלינג, טיפולי לייזר ופולינוקלאוטידים, אנו מתקנים את העור ברמה המולקולרית.",
       "article3-p3": "אנו מחויבים לחנך את המטופלים שלנו לראות כיצד אורח חיים, תזונה וטיפולים אסתטיים מתקדמים הולכים יד ביד. יישום מדע אריכות הימים משמעו השקעה בטיפולים שלא רק יעניקו מראה נהדר היום, אלא גם יבנו ארכיטקטורת עור חזקה ובריאה לשנים הבאות.",
@@ -308,6 +340,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const key = el.getAttribute('data-i18n-placeholder');
       if (translations[lang] && translations[lang][key]) {
         el.placeholder = translations[lang][key];
+      }
+    });
+
+    // Update alt-text (accessibility)
+    document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+      const key = el.getAttribute('data-i18n-alt');
+      if (translations[lang] && translations[lang][key]) {
+        el.alt = translations[lang][key];
       }
     });
 
