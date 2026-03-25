@@ -392,14 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Before/After Slider Interaction
-  const sliders = document.querySelectorAll('.ba-slider');
-  sliders.forEach(slider => {
-    const input = slider.querySelector('.ba-range');
-    input.addEventListener('input', (e) => {
-      slider.style.setProperty('--position', `${e.target.value}%`);
-    });
-  });
 
   // Legal Modals
   const legalLinks = document.querySelectorAll('.legal-link');

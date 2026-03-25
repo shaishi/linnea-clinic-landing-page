@@ -1100,132 +1100,21 @@ body.acc-links-underline a {
   gap: 1.5rem;
 }
 
-.ba-slider {
-  --position: 50%;
-  position: relative;
+.ba-slider-wrapper {
   width: 100%;
   aspect-ratio: 4/3;
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  cursor: ew-resize;
-  container-type: inline-size; /* CRITICAL: Allows children to reference slider width */
+  background-color: #000; /* Placeholder while loading */
 }
 
-.ba-before, .ba-after {
-  position: absolute;
-  top: 0;
-  left: 0;
+/* Ensure OneType images cover the container */
+.ba-slider-wrapper img {
   width: 100%;
   height: 100%;
-  background-size: 200cqw auto; /* Lock size to 200% of the WHOLE slider */
-  background-repeat: no-repeat;
-  pointer-events: none;
+  object-fit: cover;
 }
-
-.ba-before {
-  z-index: 1;
-  background-position: left center;
-}
-
-.ba-after {
-  z-index: 2;
-  width: var(--position, 50%);
-  background-position: right center;
-  border-right: 2px solid var(--aura-cream);
-  overflow: hidden;
-}
-
-/* Treatment-specific backgrounds */
-.ba-skin .ba-before, .ba-skin .ba-after { background-image: url('./images/skin-slider.png'); }
-.ba-lips .ba-before, .ba-lips .ba-after { background-image: url('./images/lips-slider.png'); }
-.ba-jaw  .ba-before, .ba-jaw  .ba-after  { background-image: url('./images/jaw-slider.png'); }
-
-html[dir="rtl"] .ba-after {
-  left: auto;
-  right: 0;
-  border-right: none;
-  border-left: 2px solid var(--aura-cream);
-  background-position: right center; /* Stays matched with 'After' */
-}
-
-html[dir="rtl"] .ba-before {
-  background-position: left center; /* Stays matched with 'Before' */
-}
-
-.ba-handle {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--position);
-  width: 2px;
-  background-color: var(--aura-cream);
-  z-index: 5;
-  pointer-events: none;
-  transform: translateX(-50%);
-}
-
-html[dir="rtl"] .ba-handle {
-  left: auto;
-  right: var(--position);
-}
-
-.ba-handle-circle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 44px;
-  height: 44px;
-  background-color: var(--aura-cream);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  color: var(--clinique-teal-dark);
-}
-
-.ba-arrows {
-  display: flex;
-  gap: 4px;
-}
-
-.ba-arrow {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.ba-range {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  z-index: 10;
-  cursor: pointer;
-}
-
-.ba-label {
-  position: absolute;
-  bottom: 1rem;
-  padding: 0.4rem 0.8rem;
-  background-color: rgba(255, 255, 255, 0.8);
-  color: var(--text-dark);
-  font-size: 0.75rem;
-  font-weight: 600;
-  border-radius: 4px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.ba-label-before { right: 1rem; }
-.ba-label-after { left: 1rem; }
-
-[dir="rtl"] .ba-label-before { left: 1rem; right: auto; }
-[dir="rtl"] .ba-label-after { right: 1rem; left: auto; }
 
 /* Reviews Section */
 .reviews {
