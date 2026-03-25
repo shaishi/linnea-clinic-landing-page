@@ -1109,6 +1109,7 @@ body.acc-links-underline a {
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   cursor: ew-resize;
+  container-type: inline-size; /* CRITICAL: Allows children to reference slider width */
 }
 
 .ba-before, .ba-after {
@@ -1117,7 +1118,7 @@ body.acc-links-underline a {
   left: 0;
   width: 100%;
   height: 100%;
-  background-size: 200% auto;
+  background-size: 200cqw auto; /* Lock size to 200% of the WHOLE slider */
   background-repeat: no-repeat;
   pointer-events: none;
 }
