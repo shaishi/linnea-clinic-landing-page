@@ -397,10 +397,7 @@ document.addEventListener('DOMContentLoaded', () => {
   sliders.forEach(slider => {
     const input = slider.querySelector('.ba-range');
     input.addEventListener('input', (e) => {
-      const isRTL = document.documentElement.dir === 'rtl';
-      let value = e.target.value;
-      if (isRTL) value = 100 - value; // Normalize RTL slider direction
-      slider.style.setProperty('--position', `${value}%`);
+      slider.style.setProperty('--position', `${e.target.value}%`);
     });
   });
 
