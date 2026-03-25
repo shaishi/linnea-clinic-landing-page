@@ -94,6 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "transformations-desc": "Slide to explore our natural-looking results.",
       "before-label": "Before",
       "after-label": "After",
+      "slider-original": "Original",
+      "slider-edited": "Edited",
       "btn-submit": "Submit Request",
       "alert-success": "Thank you for booking a consultation! Our team will contact you shortly.",
       "nav-accessibility": "Accessibility Statement",
@@ -209,6 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "transformations-desc": "הזיזו את הסליידר כדי לחקור את התוצאות הטבעיות שלנו.",
       "before-label": "לפני",
       "after-label": "אחרי",
+      "slider-original": "מקור",
+      "slider-edited": "תוצאה",
       "btn-submit": "שליחת בקשה",
       "alert-success": "תודה על פנייתך! צוות הקליניקה ייצור איתך קשר בהקדם.",
       "nav-accessibility": "הצהרת נגישות",
@@ -299,6 +303,8 @@ document.addEventListener('DOMContentLoaded', () => {
       el.classList.remove('active');
       setTimeout(() => el.classList.add('active'), 100);
     });
+
+    // Slider labels are handled by data-i18n attributes on the label spans
   };
 
   applyLanguage(currentLang);
@@ -491,5 +497,76 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+
+  // ─── Before / After Slider ───────────────────────────────────────
+  document.querySelectorAll('.ba-slider').forEach(slider => {
+    const wrapper = slider.querySelector('.ba-image-wrapper');
+    const beforeClip = slider.querySelector('.ba-before-clip');
+    const beforeImg = slider.querySelector('.ba-before-img');
+    const handle = slider.querySelector('.ba-handle');
+    if (!wrapper || !beforeClip || !handle) return;
+
+    let isDragging = false;
+
+    const setPosition = (x) => {
+      const rect = wrapper.getBoundingClientRect();
+      let pos = ((x - rect.left) / rect.width) * 100;
+      pos = Math.max(0, Math.min(100, pos));
+      beforeClip.style.width = pos + '%';
+      handle.style.left = pos + '%';
+      // Make before image fill the full wrapper width regardless of clip
+      if (beforeImg) {
+        beforeImg.style.width = (rect.width) + 'px';
+      }
+    };
+
+    // Set initial image width on load
+    const initWidth = () => {
+      if (beforeImg) {
+        beforeImg.style.width = wrapper.getBoundingClientRect().width + 'px';
+      }
+    };
+    initWidth();
+    window.addEventListener('resize', initWidth);
+
+    // Mouse events
+    wrapper.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      isDragging = true;
+      wrapper.classList.add('active');
+      setPosition(e.clientX);
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      setPosition(e.clientX);
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        wrapper.classList.remove('active');
+      }
+    });
+
+    // Touch events
+    wrapper.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      wrapper.classList.add('active');
+      setPosition(e.touches[0].clientX);
+    }, { passive: true });
+
+    wrapper.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      setPosition(e.touches[0].clientX);
+    }, { passive: false });
+
+    wrapper.addEventListener('touchend', () => {
+      isDragging = false;
+      wrapper.classList.remove('active');
+    });
+  });
 
 });
