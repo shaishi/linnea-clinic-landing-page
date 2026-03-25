@@ -1114,20 +1114,15 @@ body.acc-links-underline a {
 .ba-image {
   position: absolute;
   top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
-  width: 200% !important;
-  max-width: none !important;
   object-fit: cover;
   pointer-events: none;
 }
 
 .ba-before {
-  width: 100%;
   z-index: 1;
-}
-
-.ba-before img {
-  left: 0;
 }
 
 .ba-after {
@@ -1135,14 +1130,15 @@ body.acc-links-underline a {
   top: 0;
   left: 0;
   height: 100%;
-  width: var(--position);
+  width: var(--position, 50%);
   z-index: 2;
   border-right: 2px solid var(--aura-cream);
   overflow: hidden;
 }
 
 .ba-after img {
-  right: 0;
+  width: 100%;
+  height: 100%;
 }
 
 html[dir="rtl"] .ba-after {
