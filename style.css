@@ -187,6 +187,7 @@ html[dir="rtl"] .nav-container {
   align-items: baseline;
   gap: 0.4rem;
   direction: ltr;
+  margin-top: 8px;
 }
 
 .brand-subtitle {
