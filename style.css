@@ -1130,6 +1130,55 @@ body.acc-links-underline a {
   border-right: 2px solid var(--aura-cream);
 }
 
+html[dir="rtl"] .ba-after {
+  border-right: none;
+  border-left: 2px solid var(--aura-cream);
+  width: calc(100% - var(--position));
+}
+
+.ba-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--position);
+  width: 2px;
+  background-color: var(--aura-cream);
+  z-index: 5;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+html[dir="rtl"] .ba-handle {
+  left: auto;
+  right: var(--position);
+}
+
+.ba-handle-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  background-color: var(--aura-cream);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  color: var(--clinique-teal-dark);
+}
+
+.ba-arrows {
+  display: flex;
+  gap: 4px;
+}
+
+.ba-arrow {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
 .ba-range {
   position: absolute;
   inset: 0;
