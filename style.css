@@ -184,7 +184,7 @@ html[dir="rtl"] .nav-container {
   letter-spacing: -0.02em;
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 0.4rem;
   direction: ltr;
   line-height: 1;
@@ -198,9 +198,6 @@ html[dir="rtl"] .nav-container {
   letter-spacing: 0.15em;
   opacity: 0.8;
   color: inherit;
-  transform: translateY(0);
-  align-self: flex-end;
-  padding-bottom: 0.3rem;
 }
 
 
