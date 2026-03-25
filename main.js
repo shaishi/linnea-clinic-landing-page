@@ -84,7 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
       "opt-rejuvenation": "Skin Rejuvenation",
       "opt-injectables": "Injectables",
       "opt-contouring": "Facial Contouring",
-      "opt-other": "Other / Not Sure",
+      "opt-other": "Other",
+      "label-other-details": "Please specify",
+      "placeholder-other-details": "Tell us more about what you're looking for...",
+      "reviews-title": "What Our Clients Say",
+      "reviews-subtitle": "Google Reviews",
+      "review-google-btn": "Rate us on Google",
+      "transformations-title": "Visible Transformations",
+      "transformations-desc": "Slide to explore our natural-looking results.",
+      "before-label": "Before",
+      "after-label": "After",
       "btn-submit": "Submit Request",
       "alert-success": "Thank you for booking a consultation! Our team will contact you shortly.",
       "nav-accessibility": "Accessibility Statement",
@@ -190,7 +199,16 @@ document.addEventListener('DOMContentLoaded', () => {
       "opt-rejuvenation": "הצערת העור",
       "opt-injectables": "הזרקות",
       "opt-contouring": "פיסול פנים",
-      "opt-other": "אחר / לא בטוח",
+      "opt-other": "אחר",
+      "label-other-details": "אנא פרטו",
+      "placeholder-other-details": "ספרו לנו עוד על מה שאתם מחפשים...",
+      "reviews-title": "מה הלקוחות שלנו אומרים",
+      "reviews-subtitle": "ביקורות גוגל",
+      "review-google-btn": "דרגו אותנו בגוגל",
+      "transformations-title": "שינויים נראים לעין",
+      "transformations-desc": "הזיזו את הסליידר כדי לחקור את התוצאות הטבעיות שלנו.",
+      "before-label": "לפני",
+      "after-label": "אחרי",
       "btn-submit": "שליחת בקשה",
       "alert-success": "תודה על פנייתך! צוות הקליניקה ייצור איתך קשר בהקדם.",
       "nav-accessibility": "הצהרת נגישות",
@@ -355,7 +373,33 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = false;
       });
     });
+
+    // Conditional "Other" field logic
+    const interestSelect = document.getElementById('interest');
+    const otherGroup = document.getElementById('other-message-group');
+    const otherInput = document.getElementById('other-details');
+
+    if (interestSelect && otherGroup && otherInput) {
+      interestSelect.addEventListener('change', () => {
+        if (interestSelect.value === 'other') {
+          otherGroup.style.display = 'block';
+          otherInput.required = true;
+        } else {
+          otherGroup.style.display = 'none';
+          otherInput.required = false;
+        }
+      });
+    }
   }
+
+  // Before/After Slider Interaction
+  const sliders = document.querySelectorAll('.ba-slider');
+  sliders.forEach(slider => {
+    const input = slider.querySelector('.ba-range');
+    input.addEventListener('input', (e) => {
+      slider.style.setProperty('--position', `${e.target.value}%`);
+    });
+  });
 
   // Legal Modals
   const legalLinks = document.querySelectorAll('.legal-link');

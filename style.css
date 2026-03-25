@@ -739,14 +739,14 @@ body.acc-high-contrast .article-content {
   right: 2rem;
   width: 60px;
   height: 60px;
-  background-color: #25d366;
-  color: #fff;
+  background-color: var(--aura-cream);
+  color: var(--clinique-teal);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-  z-index: 100;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 90;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -754,7 +754,7 @@ body.acc-high-contrast .article-content {
 
 .whatsapp-btn:hover {
   transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .whatsapp-btn svg {
@@ -1080,4 +1080,140 @@ body.acc-light-bg .treatment-card h3 {
 body.acc-links-underline a {
   text-decoration: underline !important;
   font-weight: bold;
+}
+/* Transformations / Before-After Slider */
+.transformations {
+  background-color: var(--clinique-teal-dark);
+}
+
+.ba-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.ba-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.ba-slider {
+  --position: 50%;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  cursor: ew-resize;
+}
+
+.ba-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ba-before {
+  width: 100%;
+}
+
+.ba-after {
+  width: var(--position);
+  z-index: 2;
+  border-right: 2px solid var(--aura-cream);
+}
+
+.ba-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.ba-label {
+  position: absolute;
+  bottom: 1rem;
+  padding: 0.4rem 0.8rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: var(--text-dark);
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.ba-label-before { right: 1rem; }
+.ba-label-after { left: 1rem; }
+
+[dir="rtl"] .ba-label-before { left: 1rem; right: auto; }
+[dir="rtl"] .ba-label-after { right: 1rem; left: auto; }
+
+/* Reviews Section */
+.reviews {
+  background-color: var(--aura-cream);
+  color: var(--text-dark);
+  padding: 6rem 0;
+}
+
+.reviews .section-title {
+  color: var(--clinique-teal-dark);
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.review-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  text-align: center;
+  border: 1px solid rgba(126, 156, 150, 0.1);
+}
+
+.review-stars {
+  color: #fbbc04; /* Google Gold */
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.review-text {
+  font-style: italic;
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  color: #4a5c59;
+}
+
+.review-author {
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--clinique-teal-dark);
+}
+
+.google-review-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  max-width: fit-content;
+  margin: 0 auto;
 }
