@@ -178,26 +178,28 @@ html[dir="rtl"] .nav-container {
 /* Creating the logo with text */
 .brand-logo {
   font-family: var(--font-serif);
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 400;
   color: var(--aura-cream);
   letter-spacing: -0.02em;
   position: relative;
   display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
   direction: ltr;
-  line-height: 1;
+  line-height: 1.1;
 }
 
 .brand-subtitle {
   font-family: var(--font-sans);
-  font-size: 0.85rem;
-  font-weight: 300;
+  font-size: 0.7rem;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  opacity: 0.8;
+  letter-spacing: 0.25em;
+  opacity: 0.75;
   color: inherit;
+  margin-top: 1px;
 }
 
 
