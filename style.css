@@ -184,10 +184,9 @@ html[dir="rtl"] .nav-container {
   letter-spacing: -0.02em;
   position: relative;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.4rem;
   direction: ltr;
-  margin-top: 8px;
 }
 
 .brand-subtitle {
