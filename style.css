@@ -1137,6 +1137,11 @@ body.acc-links-underline a {
   overflow: hidden;
 }
 
+html[dir="rtl"] .ba-before-clip {
+  left: auto;
+  right: 0;
+}
+
 .ba-before-img {
   display: block;
   width: 100%;
@@ -1146,6 +1151,11 @@ body.acc-links-underline a {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+html[dir="rtl"] .ba-before-img {
+  left: auto;
+  right: 0;
 }
 
 /* Handle */

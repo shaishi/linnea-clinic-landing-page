@@ -564,9 +564,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const setPosition = (x) => {
       const rect = wrapper.getBoundingClientRect();
+      const isRTL = document.documentElement.dir === 'rtl';
       let pos = ((x - rect.left) / rect.width) * 100;
       pos = Math.max(0, Math.min(100, pos));
-      beforeClip.style.width = pos + '%';
+      
+      if (isRTL) {
+        beforeClip.style.width = (100 - pos) + '%';
+      } else {
+        beforeClip.style.width = pos + '%';
+      }
       handle.style.left = pos + '%';
       // Make before image fill the full wrapper width regardless of clip
       if (beforeImg) {
