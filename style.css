@@ -187,6 +187,7 @@ html[dir="rtl"] .nav-container {
   align-items: center;
   gap: 0.4rem;
   direction: ltr;
+  line-height: 1;
 }
 
 .brand-subtitle {
@@ -197,8 +198,11 @@ html[dir="rtl"] .nav-container {
   letter-spacing: 0.15em;
   opacity: 0.8;
   color: inherit;
-  transform: translateY(-4px); /* Minor optical adjustment for baseline */
+  transform: translateY(0);
+  align-self: flex-end;
+  padding-bottom: 0.3rem;
 }
+
 
 .nav-links {
   display: flex;
