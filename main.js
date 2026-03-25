@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     en: {
       "nav-about": "About",
       "nav-treatments": "Treatments",
+      "nav-science": "Science",
       "nav-directions": "Directions",
       "nav-contact": "Contact",
       "btn-book": "Book Consultation",
@@ -166,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     he: {
       "nav-about": "אודות",
       "nav-treatments": "טיפולים",
+      "nav-science": "מדע",
       "nav-directions": "הגעה",
       "nav-contact": "צור קשר",
       "btn-book": "קביעת פגישה",
