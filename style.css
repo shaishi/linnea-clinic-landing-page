@@ -1114,20 +1114,48 @@ body.acc-links-underline a {
 .ba-image {
   position: absolute;
   top: 0;
-  left: 0;
-  width: 100%;
   height: 100%;
+  width: 200% !important;
+  max-width: none !important;
   object-fit: cover;
+  pointer-events: none;
 }
 
 .ba-before {
   width: 100%;
+  z-index: 1;
+}
+
+.ba-before img {
+  left: 0;
 }
 
 .ba-after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
   width: var(--position);
   z-index: 2;
   border-right: 2px solid var(--aura-cream);
+  overflow: hidden;
+}
+
+.ba-after img {
+  right: 0;
+}
+
+html[dir="rtl"] .ba-after {
+  left: auto;
+  right: 0;
+  border-right: none;
+  border-left: 2px solid var(--aura-cream);
+  width: calc(100% - var(--position));
+}
+
+html[dir="rtl"] .ba-after img {
+  left: 0;
+  right: auto;
 }
 
 html[dir="rtl"] .ba-after {
