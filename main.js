@@ -128,7 +128,19 @@ document.addEventListener('DOMContentLoaded', () => {
       "article3-desc": "Delve into our evidence-based approach combining aesthetic treatments with cellular health and graceful aging.",
       "article3-p1": "True aesthetic beauty radiates from within, reflecting optimal cellular health. At Linnéa, we look beyond the surface, integrating cutting-edge longevity science with our aesthetic treatments to ensure age-defying results that last.",
       "article3-p2": "Our scientific approach focuses on bio-stimulation and regenerative medicine. By triggering the body's natural collagen and elastin production through advanced technologies like microneedling, laser therapies, and polynucleotides, we effectively repair the skin at a molecular level.",
-      "article3-p3": "We are committed to educating our clients on how lifestyle, nutrition, and advanced aesthetics go hand-in-hand. Embracing longevity means investing in treatments that not only refine your appearance today but also build resilient, healthy skin architecture for years to come."
+      "article3-p3": "We are committed to educating our clients on how lifestyle, nutrition, and advanced aesthetics go hand-in-hand. Embracing longevity means investing in treatments that not only refine your appearance today but also build resilient, healthy skin architecture for years to come.",
+      "modal-time-lbl": "Time:",
+      "modal-pain-lbl": "Pain Level:",
+      "modal-mat-lbl": "Materials:",
+      "skin-time-val": "45-60 Minutes",
+      "skin-pain-val": "Minimal (Topical Anesthetic)",
+      "skin-mat-val": "Advanced Lasers, Polynucleotides, Bio-stimulators",
+      "botox-time-val": "15-30 Minutes",
+      "botox-pain-val": "Very Low (Micro-needles)",
+      "botox-mat-val": "Premium Neuromodulators (Botox, Dysport)",
+      "contouring-time-val": "30-60 Minutes",
+      "contouring-pain-val": "Mild (Contains Lidocaine)",
+      "contouring-mat-val": "High-Density Hyaluronic Acid Fillers"
     },
     he: {
       "nav-about": "אודות",
@@ -218,7 +230,19 @@ document.addEventListener('DOMContentLoaded', () => {
       "article3-desc": "חקרו את הגישה המדעית שלנו המשלבת טיפולים אסתטיים עם בריאות תאית לאריכות ימים.",
       "article3-p1": "יופי אסתטי אמיתי זוהר מבפנים ומשקף בריאות תאית אופטימלית. בלינאה, אנו מסתכלים מעבר לפני השטח ומשלבים מדע מתקדם של אריכות ימים עם טיפולי האסתטיקה שלנו כדי להבטיח תוצאות המחזיקות לאורך זמן ומאטות את תהליך ההזדקנות.",
       "article3-p2": "הגישה המדעית שלנו מתמקדת בביו-סטימולציה ורפואה רנרטיבית. על ידי גירוי ייצור הקולגן והאלסטין הטבעי של הגוף באמצעות טכנולוגיות מתקדמות כמו מיקרונידלינג, טיפולי לייזר ופולינוקלאוטידים, אנו מתקנים את העור ברמה המולקולרית.",
-      "article3-p3": "אנו מחויבים לחנך את המטופלים שלנו לראות כיצד אורח חיים, תזונה וטיפולים אסתטיים מתקדמים הולכים יד ביד. יישום מדע אריכות הימים משמעו השקעה בטיפולים שלא רק יעניקו מראה נהדר היום, אלא גם יבנו ארכיטקטורת עור חזקה ובריאה לשנים הבאות."
+      "article3-p3": "אנו מחויבים לחנך את המטופלים שלנו לראות כיצד אורח חיים, תזונה וטיפולים אסתטיים מתקדמים הולכים יד ביד. יישום מדע אריכות הימים משמעו השקעה בטיפולים שלא רק יעניקו מראה נהדר היום, אלא גם יבנו ארכיטקטורת עור חזקה ובריאה לשנים הבאות.",
+      "modal-time-lbl": "זמן טיפול:",
+      "modal-pain-lbl": "רמת כאב:",
+      "modal-mat-lbl": "חומרים:",
+      "skin-time-val": "45-60 דקות",
+      "skin-pain-val": "מינימלית (אלחוש מקומי)",
+      "skin-mat-val": "לייזר מתקדם, פולינוקלאוטידים, ביו-סטימולטורים",
+      "botox-time-val": "15-30 דקות",
+      "botox-pain-val": "נמוכה מאוד (מיקרו-מחטים)",
+      "botox-mat-val": "נוירומודולטורים פרימיום (בוטוקס, דיספורט)",
+      "contouring-time-val": "30-60 דקות",
+      "contouring-pain-val": "קלה (מכיל חומר הרדמה)",
+      "contouring-mat-val": "חומרי צפיפות גבוהה מבוססי חומצה היאלורונית"
     }
   };
 
