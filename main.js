@@ -325,11 +325,13 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const applyLanguage = (lang) => {
+    console.log('Applying language:', lang);
     langToggles.forEach(btn => {
       btn.textContent = lang === 'en' ? 'HE' : 'EN';
     });
     document.documentElement.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
     document.documentElement.setAttribute('lang', lang);
+    document.body.dir = lang === 'en' ? 'ltr' : 'rtl'; // Extra insurance
     
     // Update texts
     document.querySelectorAll('[data-i18n]').forEach(el => {

@@ -826,7 +826,8 @@ html[dir="rtl"] .hero-title {
   }
   .mobile-nav-toggle {
     display: flex !important;
-    order: 1 !important;
+    flex: 1 !important;
+    justify-content: flex-start !important;
     z-index: 1002;
     color: white;
     width: 44px;
@@ -836,20 +837,24 @@ html[dir="rtl"] .hero-title {
     cursor: pointer;
     padding: 0;
   }
+  /* Center logo using absolute positioning to avoid flex distribution issues */
   .brand-logo {
     position: absolute !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
     margin: 0 !important;
     z-index: 1001 !important;
     font-size: 1rem !important;
     white-space: nowrap !important;
+    pointer-events: auto !important;
   }
   .nav-actions {
     display: flex !important;
-    order: 2 !important;
+    flex: 1 !important;
+    justify-content: flex-end !important;
     align-items: center !important;
-    gap: 0.4rem !important;
+    gap: 0.5rem !important;
     z-index: 1002;
   }
   .nav-phone {
@@ -866,15 +871,19 @@ html[dir="rtl"] .hero-title {
     width: 100% !important;
     max-height: 0;
     overflow: hidden;
+    visibility: hidden; /* Hide completely when closed */
+    pointer-events: none;
     background: rgba(126, 156, 150, 0.98) !important;
     flex-direction: column !important;
-    transition: max-height 0.3s ease-in-out !important;
-    z-index: 99 !important;
+    transition: all 0.3s ease-in-out !important;
+    z-index: 2000 !important; /* High enough to be over everything */
     padding: 0 !important;
     border-top: 1px solid rgba(255,255,255,0.1);
   }
   .nav-links.active {
     max-height: 600px !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
     padding: 1.5rem 0 !important;
   }
   .nav-links a {
@@ -890,6 +899,13 @@ html[dir="rtl"] .hero-title {
     font-size: 0.7rem !important;
     margin: 0 !important;
     white-space: nowrap !important;
+  }
+  /* RTL specific overrides for alignment */
+  html[dir="rtl"] .mobile-nav-toggle {
+    justify-content: flex-start !important; /* Logical start is right */
+  }
+  html[dir="rtl"] .nav-actions {
+    justify-content: flex-end !important; /* Logical end is left */
   }
 
 }
