@@ -159,10 +159,11 @@ a {
 }
 
 .navbar.scrolled {
-  background: rgba(126, 156, 150, 0.95); /* Original greenish/teal */
+  background: rgba(126, 156, 150, 0.98); /* Restored greenish/teal */
   backdrop-filter: blur(10px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   height: 70px;
+  padding: 0.8rem 0;
 }
 
 .nav-container {
@@ -184,28 +185,32 @@ a {
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: baseline;
+  gap: 0.4rem;
   direction: ltr;
 }
 
 .brand-subtitle {
   font-family: var(--font-sans);
-  font-size: 0.7rem;
-  font-weight: 400;
+  font-size: 0.75rem;
+  font-weight: 300;
   text-transform: uppercase;
-}
-
-.navbar.scrolled {
-  background: rgba(126, 156, 150, 0.95) !important;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+  transform: translateY(-0.1em); /* Added for perfect alignment with Linnéa */
 }
 
 .navbar.scrolled .brand-logo,
 .navbar.scrolled .nav-links a,
 .navbar.scrolled .nav-phone,
-.navbar.scrolled .mobile-nav-toggle,
-.navbar.scrolled .nav-actions .nav-btn {
+.navbar.scrolled .mobile-nav-toggle {
   color: var(--aura-cream) !important;
+}
+
+.navbar.scrolled .nav-actions .nav-btn {
+  background: var(--aura-cream) !important;
+  color: #7e9c96 !important; /* Visible text on beige button when scrolled on greenish bg */
+  border: none !important;
 }
 
 .navbar.scrolled .lang-btn {
