@@ -869,16 +869,28 @@ html[dir="rtl"] .hero-title {
 
   .mobile-nav-toggle {
     display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
     cursor: pointer !important;
     padding: 0 !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    background: none !important; /* Remove box */
-    border: none !important;     /* Remove box */
+    background: transparent !important; /* Force no background box */
+    border: none !important;            /* Force no border */
+    box-shadow: none !important;        /* Force no shadow box */
     outline: none !important;
-    color: var(--aura-cream) !important;
-    width: 44px;
-    height: 44px;
+    width: 44px !important;
+    height: 44px !important;
+    z-index: 1002 !important;
+  }
+
+  .hamburger-line {
+    display: block !important;
+    width: 24px !important;
+    height: 2px !important;
+    background-color: var(--aura-cream) !important;
+    margin: 3px 0 !important;
+    border-radius: 2px !important;
+    transition: all 0.3s ease !important;
   }
   /* Flex Centered Logo - Participates in flow to prevent overlap */
   .brand-logo {
@@ -948,22 +960,28 @@ html[dir="rtl"] .hero-title {
     padding: 2rem 0 !important;
   }
 
-  /* Grid Stacking Fixes for Mobile Visibility */
-  .about-grid {
+  /* Grid Stacking Fixes for Mobile Visibility - High Specificity */
+  section.about .container.about-grid {
     display: flex !important;
     flex-direction: column-reverse !important; /* Image on top */
-    gap: 3rem !important;
+    gap: 2rem !important;
     padding: 0 1.5rem !important;
   }
 
-  .about-image {
+  .about-image, .about-text {
     width: 100% !important;
-    margin-bottom: 0 !important;
+    flex: 1 1 auto !important;
   }
 
   .about-text {
-    width: 100% !important;
     text-align: center !important;
+    padding: 0 !important;
+  }
+
+  .image-placeholder {
+    width: 100% !important;
+    aspect-ratio: 4/5 !important;
+    max-height: 400px !important;
   }
 
   .section-title {
