@@ -874,21 +874,29 @@ html[dir="rtl"] .hero-title {
     align-items: center !important;
     justify-content: flex-start !important;
   }
-  /* Absolute Center Logo - Removed from flex flow */
+  /* Flex Centered Logo - Participates in flow to prevent overlap */
   .brand-logo {
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
+    position: static !important;
+    transform: none !important;
+    left: auto !important;
+    top: auto !important;
     margin: 0 !important;
     z-index: 1001 !important;
-    font-size: 1rem !important;
+    font-size: 1.1rem !important; /* Reduced to prevent overflow */
     white-space: nowrap !important;
     text-align: center !important;
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 0 !important;
   }
   .brand-logo .brand-subtitle {
      display: block !important;
-     font-size: 0.6rem !important;
+     font-size: 0.55rem !important;
+     margin-top: -2px !important;
+     transform: none !important;
   }
   .nav-actions {
     display: flex !important;
