@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const langToggles = document.querySelectorAll('.lang-toggle');
+  const mobileNavToggle = document.getElementById('mobile-nav-toggle');
+  const navLinks = document.querySelector('.nav-links');
   let currentLang = localStorage.getItem('linneaLang') || 'he';
 
   const translations = {
@@ -373,6 +375,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  if (mobileNavToggle && navLinks) {
+    mobileNavToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+  }
+
   // Modal logic
   const modal = document.getElementById('booking-modal');
   const openModalBtns = document.querySelectorAll('.nav-btn, .hero-btn');
@@ -630,5 +645,24 @@ document.addEventListener('DOMContentLoaded', () => {
       wrapper.classList.remove('active');
     });
   });
+
+  // Back to Top Logic
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (backToTopBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('visible');
+      } else {
+        backToTopBtn.classList.remove('visible');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
 
 });
