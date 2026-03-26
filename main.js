@@ -325,14 +325,20 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const applyLanguage = (lang) => {
-    console.log('Applying language:', lang);
+    console.log('Final applyLanguage:', lang);
     langToggles.forEach(btn => {
       btn.textContent = lang === 'en' ? 'HE' : 'EN';
     });
     document.documentElement.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
     document.documentElement.setAttribute('lang', lang);
-    document.body.dir = lang === 'en' ? 'ltr' : 'rtl'; // Extra insurance
+    document.body.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
     
+    // Explicitly force direction for navbar container
+    const navContainer = document.querySelector('.nav-container');
+    if (navContainer) {
+      navContainer.style.direction = lang === 'en' ? 'ltr' : 'rtl';
+    }
+
     // Update texts
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
