@@ -202,6 +202,18 @@ html[dir="rtl"] .nav-container {
 }
 
 
+.navbar.scrolled .brand-logo,
+.navbar.scrolled .nav-links a,
+.navbar.scrolled .nav-phone,
+.navbar.scrolled .mobile-nav-toggle {
+  color: var(--clinique-teal-dark) !important;
+}
+
+.navbar.scrolled .lang-btn {
+  border-color: var(--clinique-teal-dark);
+  color: var(--clinique-teal-dark);
+}
+
 .nav-links {
   display: flex;
   gap: 1.5rem;
@@ -805,6 +817,22 @@ html[dir="rtl"] .hero-title {
     left: 2rem;
     right: auto;
   }
+  .navbar .container {
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+  .brand-logo {
+    flex-grow: 1;
+    font-size: 1.25rem;
+  }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-phone {
+    display: none !important; /* hide phone on mobile navbar to save space */
+  }
   .nav-links {
     position: fixed;
     top: 0;
@@ -837,23 +865,27 @@ html[dir="rtl"] .hero-title {
     color: var(--text-dark);
   }
   .mobile-nav-toggle {
-    display: block !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0;
     z-index: 1002;
-    color: white; /* contrast with teal bg */
-    width: 44px;
-    height: 44px;
-    margin-right: -0.5rem;
-  }
-  .navbar.scrolled .mobile-nav-toggle {
-    color: var(--clinique-teal-dark);
+    color: white;
+    width: 40px;
+    height: 40px;
+    order: 3; /* Always on the end */
   }
   html[dir="rtl"] .mobile-nav-toggle {
-    margin-right: 0;
-    margin-left: -0.5rem;
+    order: -1; /* On the right in RTL (actually depends on logo position) */
+  }
+  .nav-actions {
+    order: 2;
+  }
+  .brand-logo {
+    order: 1;
   }
   .nav-actions .nav-btn {
     display: none;
