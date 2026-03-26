@@ -36,8 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     revealObserver.observe(el);
   });
 
-  const langToggle = document.getElementById('lang-toggle');
-  let currentLang = localStorage.getItem('linneaLang') || 'en';
+  const langToggles = document.querySelectorAll('.lang-toggle');
+  let currentLang = localStorage.getItem('linneaLang') || 'he';
 
   const translations = {
     en: {
@@ -323,7 +323,9 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const applyLanguage = (lang) => {
-    if (langToggle) langToggle.textContent = lang === 'en' ? 'HE' : 'EN';
+    langToggles.forEach(btn => {
+      btn.textContent = lang === 'en' ? 'HE' : 'EN';
+    });
     document.documentElement.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
     document.documentElement.setAttribute('lang', lang);
     
@@ -363,13 +365,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   applyLanguage(currentLang);
 
-  if (langToggle) {
-    langToggle.addEventListener('click', () => {
+  langToggles.forEach(btn => {
+    btn.addEventListener('click', () => {
       currentLang = currentLang === 'en' ? 'he' : 'en';
       localStorage.setItem('linneaLang', currentLang);
       applyLanguage(currentLang);
     });
-  }
+  });
 
   // Modal logic
   const modal = document.getElementById('booking-modal');
