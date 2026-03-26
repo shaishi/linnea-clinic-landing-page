@@ -242,6 +242,10 @@ html[dir="rtl"] .nav-container {
   font-size: 0.8rem;
 }
 
+.mobile-nav-toggle {
+  display: none;
+}
+
 /* Hero Section */
 .hero {
   min-height: 100vh;
@@ -833,16 +837,23 @@ html[dir="rtl"] .hero-title {
     color: var(--text-dark);
   }
   .mobile-nav-toggle {
-    display: block;
+    display: block !important;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
     z-index: 1002;
-    color: var(--clinique-teal-dark);
+    color: white; /* contrast with teal bg */
+    width: 44px;
+    height: 44px;
+    margin-right: -0.5rem;
   }
   .navbar.scrolled .mobile-nav-toggle {
     color: var(--clinique-teal-dark);
+  }
+  html[dir="rtl"] .mobile-nav-toggle {
+    margin-right: 0;
+    margin-left: -0.5rem;
   }
   .nav-actions .nav-btn {
     display: none;
