@@ -159,8 +159,9 @@ a {
 }
 
 .navbar.scrolled {
-  background: rgba(255, 255, 255, 0.98);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  background: rgba(126, 156, 150, 0.95); /* Original greenish/teal */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   height: 70px;
 }
 
@@ -206,12 +207,12 @@ html[dir="rtl"] .nav-container {
 .navbar.scrolled .nav-links a,
 .navbar.scrolled .nav-phone,
 .navbar.scrolled .mobile-nav-toggle {
-  color: var(--clinique-teal-dark) !important;
+  color: var(--aura-cream) !important;
 }
 
 .navbar.scrolled .lang-btn {
-  border-color: var(--clinique-teal-dark);
-  color: var(--clinique-teal-dark);
+  border-color: var(--aura-cream);
+  color: var(--aura-cream);
 }
 
 .nav-links {
@@ -818,77 +819,90 @@ html[dir="rtl"] .hero-title {
     right: auto;
   }
   .navbar .container {
-    justify-content: flex-start;
-    gap: 1rem;
-  }
-  .brand-logo {
-    flex-grow: 1;
-    font-size: 1.25rem;
-  }
-  .nav-actions {
-    display: flex;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0.5rem 1rem !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 0.5rem;
-  }
-  .nav-phone {
-    display: none !important; /* hide phone on mobile navbar to save space */
-  }
-  .nav-links {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 80%;
-    height: 100vh;
-    background: white;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: var(--transition-smooth);
-    z-index: 1001;
-    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
-  }
-  html[dir="rtl"] .nav-links {
-    right: auto;
-    left: -100%;
-    box-shadow: 10px 0 30px rgba(0,0,0,0.1);
-  }
-  .nav-links.active {
-    right: 0;
-  }
-  html[dir="rtl"] .nav-links.active {
-    right: auto;
-    left: 0;
-  }
-  .nav-links a {
-    margin: 1.5rem 0;
-    font-size: 1.25rem;
-    color: var(--text-dark);
+    gap: 0;
   }
   .mobile-nav-toggle {
     display: flex !important;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
+    justify-content: flex-start; /* Start edge */
+    grid-column: 1;
     z-index: 1002;
     color: white;
     width: 40px;
     height: 40px;
-    order: 3; /* Always on the end */
-  }
-  html[dir="rtl"] .mobile-nav-toggle {
-    order: -1; /* On the right in RTL (actually depends on logo position) */
-  }
-  .nav-actions {
-    order: 2;
   }
   .brand-logo {
-    order: 1;
+    grid-column: 2;
+    font-size: 1.1rem;
+    white-space: nowrap;
+    justify-content: center;
+  }
+  .nav-actions {
+    grid-column: 3;
+    display: flex;
+    justify-content: flex-end; /* End edge */
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+  html[dir="rtl"] .mobile-nav-toggle {
+    justify-content: flex-start; /* Still logical start (right in Hebrew) */
+  }
+  html[dir="rtl"] .nav-actions {
+    justify-content: flex-end; /* Still logical end (left in Hebrew) */
+  }
+  .nav-phone {
+    display: block !important;
+    font-size: 0.8rem !important;
+    margin: 0 !important;
+    white-space: nowrap;
+    color: inherit;
+  }
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 0;
+    overflow: hidden;
+    background: rgba(126, 156, 150, 0.98); /* Match scrolled color */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    transition: max-height 0.4s ease-out;
+    z-index: 99;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 0;
+  }
+  .nav-links.active {
+    max-height: 500px;
+    padding: 2rem 0;
+    overflow-y: auto;
+  }
+  .nav-links a {
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    color: white;
   }
   .nav-actions .nav-btn {
-    display: none;
+    display: inline-flex !important;
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.75rem !important;
+  }
+  html[dir="rtl"] .mobile-nav-toggle {
+    order: 1; /* Keeps it on the physical start (right in Hebrew) */
+  }
+  html[dir="rtl"] .brand-logo {
+    order: 2;
+  }
+  html[dir="rtl"] .nav-actions {
+    order: 3;
   }
 }
 
