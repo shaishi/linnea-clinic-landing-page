@@ -816,82 +816,59 @@ html[dir="rtl"] .hero-title {
     left: 2rem;
     right: auto;
   }  .navbar .container {
+    display: flex !important;
+    flex-direction: row !important; /* Row flow */
+    justify-content: space-between !important;
+    align-items: center !important;
     width: 100% !important;
     max-width: 100% !important;
-    padding: 0.5rem 0.75rem !important;
-    display: grid !important;
-    grid-template-columns: 1fr auto 1fr !important;
-    align-items: center !important;
-    gap: 0 !important;
+    padding: 0.5rem 1rem !important;
     position: relative !important;
     margin: 0 !important;
+    height: 70px !important;
   }
   .mobile-nav-toggle {
-    grid-column: 1 !important;
     display: flex !important;
+    z-index: 1002 !important;
+    color: white !important;
+    width: 44px !important;
+    height: 44px !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    align-items: center !important;
     justify-content: flex-start !important;
-    align-items: center;
-    z-index: 1002;
-    color: white;
-    width: 44px;
-    height: 44px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
   }
+  /* Absolute Center Logo - Removed from flex flow */
   .brand-logo {
-    grid-column: 2 !important;
-    justify-self: center !important;
-    text-align: center !important;
-    z-index: 1001 !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
     margin: 0 !important;
-    font-size: 0.95rem !important;
+    z-index: 1001 !important;
+    font-size: 1rem !important;
     white-space: nowrap !important;
+    text-align: center !important;
+  }
+  .brand-logo .brand-subtitle {
+     display: block !important;
+     font-size: 0.6rem !important;
   }
   .nav-actions {
-    grid-column: 3 !important;
     display: flex !important;
-    justify-content: flex-end !important;
     align-items: center !important;
+    justify-content: flex-end !important;
     gap: 0.4rem !important;
-    z-index: 1002;
+    z-index: 1002 !important;
   }
   .nav-phone {
     display: block !important;
-    font-size: 0.7rem !important;
+    font-size: 0.75rem !important;
     margin: 0 !important;
     white-space: nowrap !important;
-    color: inherit;
-  }
-  .nav-links {
-    position: absolute !important;
-    top: 100% !important;
-    left: 0 !important;
-    width: 100% !important;
-    max-height: 0;
-    overflow: hidden;
-    visibility: hidden;
-    pointer-events: none;
-    background: rgba(126, 156, 150, 0.98) !important;
-    flex-direction: column !important;
-    transition: all 0.3s ease-in-out !important;
-    z-index: 2010 !important;
-    padding: 0 !important;
-    border-top: 1px solid rgba(255,255,255,0.1);
-  }
-  .nav-links.active {
-    max-height: 600px !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-    padding: 1.5rem 0 !important;
-  }
-  .nav-links a {
-    margin: 0.75rem 0 !important;
-    font-size: 1.1rem !important;
-    color: white !important;
-    display: block !important;
-    text-align: center !important;
+    color: inherit !important;
   }
   .nav-actions .nav-btn {
     display: inline-flex !important;
@@ -900,13 +877,35 @@ html[dir="rtl"] .hero-title {
     margin: 0 !important;
     white-space: nowrap !important;
   }
-  /* FORCE logical direction on grid container */
-  html[dir="rtl"] .navbar .container { direction: rtl !important; }
-  html[dir="ltr"] .navbar .container { direction: ltr !important; }
-  
-  /* Ensure flex items inside grid cells also respect direction */
-  html[dir="rtl"] .mobile-nav-toggle { justify-content: flex-start !important; }
-  html[dir="rtl"] .nav-actions { justify-content: flex-end !important; }
+  .nav-links {
+    position: absolute !important;
+    top: 70px !important; /* height of header */
+    left: 0 !important;
+    width: 100% !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    background: rgba(126, 156, 150, 0.98) !important;
+    flex-direction: column !important;
+    transition: all 0.3s ease-in-out !important;
+    z-index: 1000 !important;
+    padding: 0 !important;
+    border-top: 1px solid rgba(255,255,255,0.1) !important;
+  }
+  .nav-links.active {
+    max-height: 600px !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    padding: 2rem 0 !important;
+  }
+  .nav-links a {
+    margin: 0.75rem 0 !important;
+    font-size: 1.15rem !important;
+    color: white !important;
+    display: block !important;
+    text-align: center !important;
+  }
 
 }
 
