@@ -34,7 +34,7 @@
   /* Transitions */
   --transition-fast: 0.2s ease;
   --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-  --navbar-height: 80px;
+  --navbar-height: 85px;
 }
 
 /* Reset & Base */
@@ -161,19 +161,18 @@ a {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 1.5rem 0;
+  height: var(--navbar-height);
+  padding: 0.5rem 0; /* Consistent padding */
   z-index: 100;
   transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
 }
 
 .navbar.scrolled {
   background: rgba(126, 156, 150, 0.98); /* Restored greenish/teal */
   backdrop-filter: blur(10px);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  height: 85px; /* Increased from 70px */
-  padding: 0.5rem 0; /* Adjusted padding for better vertical balance */
-  display: flex;
-  align-items: center;
 }
 
 .nav-container {
