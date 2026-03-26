@@ -873,6 +873,12 @@ html[dir="rtl"] .hero-title {
     padding: 0 !important;
     align-items: center !important;
     justify-content: flex-start !important;
+    background: none !important; /* Remove box */
+    border: none !important;     /* Remove box */
+    outline: none !important;
+    color: var(--aura-cream) !important;
+    width: 44px;
+    height: 44px;
   }
   /* Flex Centered Logo - Participates in flow to prevent overlap */
   .brand-logo {
@@ -940,6 +946,35 @@ html[dir="rtl"] .hero-title {
     visibility: visible !important;
     pointer-events: auto !important;
     padding: 2rem 0 !important;
+  }
+
+  /* Grid Stacking Fixes for Mobile Visibility */
+  .about-grid {
+    display: flex !important;
+    flex-direction: column-reverse !important; /* Image on top */
+    gap: 3rem !important;
+    padding: 0 1.5rem !important;
+  }
+
+  .about-image {
+    width: 100% !important;
+    margin-bottom: 0 !important;
+  }
+
+  .about-text {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .section-title {
+    font-size: 2.2rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .doctors .container > div {
+    flex-direction: column !important; /* Stack doctor info */
+    gap: 2rem !important;
+    text-align: center !important;
   }
   .nav-links a {
     margin: 0.75rem 0 !important;
