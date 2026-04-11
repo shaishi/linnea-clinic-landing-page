@@ -201,18 +201,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1500); // 1.5 seconds minimum for premium feel
   };
 
-  // Preloader bypass
-  if (sessionStorage.getItem('preloaderShown')) {
-    initRemoval();
-  } else {
-    if (document.readyState === 'complete') {
-      initRemoval();
-    } else {
-      window.addEventListener('load', initRemoval);
-    }
-    // Maximum loading time fallback 
-    setTimeout(initRemoval, 3500);
-  }
+  // Call directly — do NOT use window.load (blocked by Maps iframe)
+  initRemoval();
+  setTimeout(initRemoval, 3500); // hard fallback
   const navbar = document.querySelector('.navbar');
   
   window.addEventListener('scroll', () => {
