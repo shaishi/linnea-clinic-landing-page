@@ -73,6 +73,17 @@
   <!-- Skip Navigation for Accessibility (IS 5568 / WCAG 2.0 AA) -->
   <a href="#main-content" class="skip-nav">Skip to main content</a>
 
+  <!-- Preloader visibility: controlled by inline script so it never flickers -->
+  <script>
+    // Runs synchronously before the preloader is painted.
+    // On first visit: leave body as-is (preloader visible via CSS).
+    // On repeat visits: immediately hide preloader before it ever renders.
+    if (sessionStorage.getItem('preloaderShown')) {
+      document.write('<style>#preloader{display:none!important}</style>');
+      document.documentElement.classList.add('preloader-done');
+    }
+  </script>
+
   <!-- Pre-loader -->
   <div class="loader-overlay" id="preloader">
     <div class="loader-content">

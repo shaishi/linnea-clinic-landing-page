@@ -170,40 +170,30 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- Pre-loader Removal ---
-  let isLoaderRemoved = false;
-  const initRemoval = () => {
-    if (isLoaderRemoved) return;
-    isLoaderRemoved = true;
-    
-    // Check if preloader was already shown this session
-    if (sessionStorage.getItem('preloaderShown')) {
-      const preloader = document.getElementById('preloader');
-      if (preloader) preloader.style.display = 'none';
-      document.body.classList.remove('loading');
-      document.body.classList.add('loaded');
-      heroTl.play();
-      ScrollTrigger.refresh();
-      return;
-    }
-    
+  // The inline script in HTML already hides preloader on repeat visits.
+  // Here we just handle the first-visit dismiss with a smooth animation.
+  if (!document.documentElement.classList.contains('preloader-done')) {
     sessionStorage.setItem('preloaderShown', 'true');
 
     setTimeout(() => {
       document.body.classList.remove('loading');
       document.body.classList.add('loaded');
-      
-      // Hero plays right as loader wipe-up finishes (matches 1.2s CSS transition)
+
+      // Hero plays once the loader wipes up (matches 1.2s CSS transition)
       setTimeout(() => {
         heroTl.play();
         ScrollTrigger.refresh();
       }, 1200);
-      
-    }, 1500); // 1.5 seconds minimum for premium feel
-  };
+    }, 1500);
 
-  // Call directly — do NOT use window.load (blocked by Maps iframe)
-  initRemoval();
-  setTimeout(initRemoval, 3500); // hard fallback
+  } else {
+    // Repeat visit — preloader already hidden by inline script, play hero immediately
+    document.body.classList.remove('loading');
+    document.body.classList.add('loaded');
+    heroTl.play();
+    ScrollTrigger.refresh();
+  }
+
   const navbar = document.querySelector('.navbar');
   
   window.addEventListener('scroll', () => {
