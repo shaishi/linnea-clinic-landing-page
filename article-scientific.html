@@ -37,10 +37,18 @@
       type="image/svg+xml"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23617d78'/><text x='50' y='70' font-family='serif' font-size='60' fill='%23f4efdf' text-anchor='middle'>L</text></svg>"
     />
-    <script type="module" crossorigin src="/linnea-clinic-landing-page/assets/main-zTb9OZPW.js"></script>
-    <link rel="stylesheet" crossorigin href="/linnea-clinic-landing-page/assets/main-i7fZuvnd.css">
+    <script type="module" crossorigin src="/linnea-clinic-landing-page/assets/main-D9Ym7Ur5.js"></script>
+    <link rel="stylesheet" crossorigin href="/linnea-clinic-landing-page/assets/main-CUGD1NXE.css">
   </head>
-  <body data-v="final-restored">
+  <body data-v="final-restored" class="loading">
+  <!-- Pre-loader -->
+  <div class="loader-overlay" id="preloader">
+    <div class="loader-content">
+      <div class="brand-logo loader-logo">Linn&eacute;a<span class="brand-subtitle">aesthetics</span></div>
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
     <header class="navbar scrolled">
       <div class="container nav-container">
       <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Menu">
@@ -51,7 +59,6 @@
         <a href="index.html#about" data-i18n="nav-about">About</a>
         <a href="index.html#treatments" data-i18n="nav-treatments">Treatments</a>
         <a href="index.html#articles" data-i18n="nav-science">Science</a>
-        <a href="index.html#location" data-i18n="nav-directions">Directions</a>
         <a href="index.html#contact" data-i18n="nav-contact">Contact</a>
         <button class="btn btn-secondary lang-btn lang-toggle" style="margin-top: 1rem;">
           EN
@@ -132,15 +139,15 @@
 
         <div class="article-links" style="margin-top: 3rem; padding: 2rem; background: rgba(244,239,223,0.03); border: 1px solid rgba(244,239,223,0.1); border-radius: var(--border-radius-lg);">
           <h4 data-i18n="related-treatments" style="margin-bottom: 1rem; font-size: 1.25rem; color: var(--aura-cream);">Explore Related Approaches</h4>
-          <a href="article-botox.html" data-i18n="link-precision" style="display:inline-block; margin-right:1.5rem; color:var(--clinique-teal); text-decoration:none; font-weight: 500;">&rarr; Precision Neuromodulators</a>
-          <a href="article-fillers.html" data-i18n="link-volume" style="display:inline-block; color:var(--clinique-teal); text-decoration:none; font-weight: 500;">&rarr; Volume Restoration</a>
+          <a href="article-botox.html" data-i18n="link-precision" style="display:inline-block; margin-right:1.5rem; color:var(--aura-cream); text-decoration:none; font-weight: 500;">&rarr; Precision Neuromodulators</a>
+          <a href="article-fillers.html" data-i18n="link-volume" style="display:inline-block; color:var(--aura-cream); text-decoration:none; font-weight: 500;">&rarr; Volume Restoration</a>
         </div>
 
         <div class="text-center mt-4" style="margin-top: 3rem;">
           <a
-            href="index.html#contact"
-            class="btn btn-primary"
-            data-i18n="nav-contact"
+            href="#"
+            class="btn btn-primary nav-btn"
+            data-i18n="btn-book"
             style="padding: 0.75rem 2rem; font-size: 1.1rem;"
             >Book a Consultation</a
           >
@@ -149,72 +156,255 @@
     </main>
 
     <footer class="footer" id="contact">
-      <div class="container footer-grid reveal">
+      <div class="container footer-grid">
+
         <div class="footer-brand">
-          <a href="index.html" class="brand-logo footer-logo">Linnéa</a>
-          <p class="footer-tagline" data-i18n="footer-tagline">
-            Warm, luxurious, inviting, human.
-          </p>
+          <a href="index.html" class="brand-logo footer-logo">Linn&eacute;a<span class="brand-subtitle">aesthetics</span></a>
+          <p class="footer-tagline" data-i18n="footer-tagline">Warm, luxurious, inviting, human.</p>
         </div>
+
         <div class="footer-links">
           <h3 class="footer-title" data-i18n="footer-explore">Explore</h3>
           <ul>
             <li><a href="index.html#about" data-i18n="nav-about">About Us</a></li>
             <li><a href="index.html#treatments" data-i18n="nav-treatments">Treatments</a></li>
-            <li><a href="index.html#location" data-i18n="nav-directions">Directions</a></li>
+            <li><a href="index.html#articles" data-i18n="nav-science">Science</a></li>
           </ul>
         </div>
+
         <div class="footer-links">
-          <h4 data-i18n="footer-legal">Legal</h4>
-          <a href="index.html#" class="legal-link" data-target="accessibility-stmt-modal" data-i18n="nav-accessibility">Accessibility Statement</a>
-          <a href="index.html#" class="legal-link" data-target="privacy-modal" data-i18n="nav-privacy">Privacy Policy</a>
-          <a href="index.html#" class="legal-link" data-target="terms-modal" data-i18n="nav-terms">Terms of Use</a>
+          <h3 class="footer-title" data-i18n="footer-legal">Legal</h3>
+          <a href="#" class="legal-link" data-target="accessibility-stmt-modal" data-i18n="nav-accessibility">Accessibility Statement</a>
+          <a href="#" class="legal-link" data-target="privacy-modal" data-i18n="nav-privacy">Privacy Policy</a>
+          <a href="#" class="legal-link" data-target="terms-modal" data-i18n="nav-terms">Terms of Use</a>
         </div>
+
         <div class="footer-contact">
           <h3 class="footer-title" data-i18n="footer-contact">Contact Us</h3>
           <p data-i18n="footer-address">116 Herzl Blvd, Jerusalem, Israel</p>
-          <a href="mailto:linneaclinic@gmail.com" style="margin-bottom:0.25rem;">linneaclinic@gmail.com</a>
-          <a href="tel:0501234567" dir="ltr" style="display:inline-block; margin-bottom:0.75rem;">050-123-4567</a>
+          <a href="mailto:linneaclinic@gmail.com">linneaclinic@gmail.com</a>
+          <a href="tel:0501234567" dir="ltr">050-123-4567</a>
           <p data-i18n="footer-discuss">Let's discuss your journey.</p>
           <div class="social-links mt-4">
             <a href="#" class="social-icon" aria-label="Facebook">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
             </a>
             <a href="#" class="social-icon" aria-label="Instagram">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
             </a>
             <a href="https://wa.me/972501234567" class="social-icon" aria-label="WhatsApp">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.22 5.22 0 0 0-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.82 9.82 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.82 11.82 0 0 0 12.051 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.88 11.88 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.8 11.8 0 0 0-3.48-8.413Z"/></svg>
             </a>
           </div>
         </div>
-        <div class="footer-map" style="width: 100%; border-radius: 8px; overflow: hidden; height: 200px;">
-          <iframe
+
+        <!-- Map embedded in its own column -->
+        <div class="footer-map">
+          <iframe title="Linn&eacute;a Clinic Map"
             src="https://maps.google.com/maps?q=116%20Herzl%20Blvd,%20Jerusalem&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            width="100%"
-            height="100%"
-            style="border: 0"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
+            width="100%" height="100%" style="border:0" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
+
       </div>
-      <div class="footer-bottom container" style="display: flex; justify-content: space-between; align-items: center;">
-        <p data-i18n="footer-rights" style="margin: 0;">&copy; 2025 Linnéa Aesthetic Clinic. All rights reserved.</p>
-        <button class="btn btn-secondary lang-btn lang-toggle" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
-          EN
-        </button>
+      <div class="footer-bottom container">
+        <p data-i18n="footer-rights">&copy; 2025 Linn&eacute;a Aesthetic Clinic. All rights reserved.</p>
+        <button class="btn btn-secondary lang-btn lang-toggle" style="padding:0.4rem 0.8rem;font-size:0.85rem;">EN</button>
       </div>
     </footer>
+
+  <!-- Book Consultation Modal -->
+  <div class="modal-overlay" id="booking-modal">
+    <div class="modal-content">
+      <button class="close-modal" id="close-modal">&times;</button>
+      <h2 class="modal-title" data-i18n="modal-title">Book a Consultation</h2>
+      <p class="modal-desc" data-i18n="modal-desc">
+        Take the first step towards your natural radiance.
+      </p>
+      <form class="booking-form" id="booking-form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="bca92b9b-baac-4310-b928-30a07b87720d" />
+        <input type="hidden" name="subject" value="New Consultation Request!" />
+        <input type="hidden" name="from_name" value="Linnéa Website form" />
+        <div class="form-group">
+          <label for="name" data-i18n="label-name">Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="Jane Doe" data-i18n-placeholder="placeholder-name" />
+        </div>
+        <div class="form-group">
+          <label for="email" data-i18n="label-email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="jane@example.com" data-i18n-placeholder="placeholder-email" />
+        </div>
+        <div class="form-group">
+          <label for="phone" data-i18n="label-phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" required placeholder="+1 234 567 8900" data-i18n-placeholder="placeholder-phone" />
+        </div>
+        <div class="form-group">
+          <label for="interest" data-i18n="label-interest">Area of Interest</label>
+          <select id="interest" name="interest">
+            <option value="rejuvenation" data-i18n="opt-rejuvenation">Skin Rejuvenation</option>
+            <option value="injectables" data-i18n="opt-injectables">Injectables</option>
+            <option value="contouring" data-i18n="opt-contouring">Facial Contouring</option>
+            <option value="other" data-i18n="opt-other">Other</option>
+          </select>
+        </div>
+        <div class="form-group" id="other-message-group" style="display: none;">
+          <label for="other-details" data-i18n="label-other-details">Please specify</label>
+          <textarea id="other-details" name="other_details" placeholder="Tell us more about what you're looking for..." data-i18n-placeholder="placeholder-other-details" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-100" data-i18n="btn-submit">Submit Request</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay legal-modal-overlay" id="accessibility-stmt-modal">
+    <div class="modal-content legal-modal-content">
+      <button class="close-modal legal-close" data-close="accessibility-stmt-modal">&times;</button>
+      <h2 class="modal-title" data-i18n="nav-accessibility">Accessibility Statement</h2>
+      <div class="modal-body">
+        <div data-lang="en">
+          <p><strong>Linn&eacute;a Aesthetic Clinic</strong> is committed to making its website accessible to all users, including those with disabilities, in accordance with the <strong>Israeli Standard IS 5568</strong> (Regulations on Equal Rights for Persons with Disabilities — Accessibility Adjustments for Service, 2013), based on <strong>WCAG 2.0 Level AA</strong>.</p>
+          <h4 style="margin:1.25rem 0 0.5rem;color:var(--clinique-teal);">Accessibility Status</h4>
+          <p>This website was made accessible according to Level AA of the WCAG 2.0 guidelines and IS 5568. Adjustments were last tested in <strong>April 2025</strong>.</p>
+          <h4 style="margin:1.25rem 0 0.5rem;color:var(--clinique-teal);">Known Limitations</h4>
+          <p>While we strive for full accessibility, some third-party components (like Google Maps) may have limitations beyond our control.</p>
+          <h4 style="margin:1.25rem 0 0.5rem;color:var(--clinique-teal);">Accessibility Coordinator</h4>
+          <ul style="list-style:none;padding:0;line-height:2;">
+            <li><strong>Name:</strong> Linn&eacute;a Accessibility Team</li>
+            <li><strong>Email:</strong> <a href="mailto:linneaclinic@gmail.com" style="color:var(--clinique-teal);">linneaclinic@gmail.com</a></li>
+            <li><strong>Phone:</strong> <a href="tel:0501234567" style="color:var(--clinique-teal);">050-123-4567</a></li>
+            <li><strong>Response Time:</strong> Up to 5 business days</li>
+          </ul>
+          <h4 style="margin:1.25rem 0 0.5rem;color:var(--clinique-teal);">Reporting an Accessibility Issue</h4>
+          <p>If you encounter difficulties, please contact our coordinator with a description of the problem and the page it appeared on.</p>
+          <p style="margin-top:1rem;font-size:0.9rem;color:var(--text-muted);">This statement was prepared on April 11, 2025 per IS 5568 requirements.</p>
+        </div>
+        <div data-lang="he" style="display:none;" dir="rtl">
+          <p><strong>קליניקת לינאה האסתטית</strong> מחויבת להנגשת אתר האינטרנט שלה לכלל המשתמשים, לרבות אנשים עם מוגבלות, בהתאם ל<strong>תקן ישראלי IS 5568</strong> (תקנות שוויון זכויות לאנשים עם מוגבלות — התאמות נגישות לשירות, תשע&quot;ג-2013), המבוסס על <strong>WCAG 2.0 ברמה AA</strong>.</p>
+          <h4 style="margin:1.25rem 0 0.5rem;color:var(--clinique-teal);">מצב הנגישות</h4>
+          <p>אתר זה הונגש בהתאם לרמה AA של הנחיות WCAG 2.0 ותקן ישראלי IS 5568. ההתאמות נבדקו לאחרונה ב<strong>אפריל 2025</strong>.</p>
+          <h4 style="margin:1.25rem 0 0.5rem;color:var(--clinique-teal);">מגבלות ידועות</h4>
+          <p>בעוד שאנו שואפים לנגישות מלאה, רכיבי צד שלישי מסוימים (כמו גוגל מפות) עשויים לכלול מגבלות שאינן בשליטתנו.</p>
+          <h4 style="margin:1.25rem 0 0.5rem;color:var(--clinique-teal);">רכז נגישות</h4>
+          <ul style="list-style:none;padding:0;line-height:2;">
+            <li><strong>שם:</strong> רכז הנגישות של קליניקת לינאה</li>
+            <li><strong>דוא&quot;ל:</strong> <a href="mailto:linneaclinic@gmail.com" style="color:var(--clinique-teal);">linneaclinic@gmail.com</a></li>
+            <li><strong>טלפון:</strong> <a href="tel:0501234567" style="color:var(--clinique-teal);">050-123-4567</a></li>
+            <li><strong>זמן תגובה:</strong> עד 5 ימי עסקים</li>
+          </ul>
+          <h4 style="margin:1.25rem 0 0.5rem;color:var(--clinique-teal);">דיווח על בעיית נגישות</h4>
+          <p>אם נתקלתם בקשיי נגישות באתר, אנא פנו לרכז הנגישות שלנו עם תיאור הבעיה והדף שבו היא הופיעה.</p>
+          <p style="margin-top:1rem;font-size:0.9rem;color:var(--text-muted);">הצהרה זו הוכנה ב-11 באפריל 2025 בהתאם לדרישות תקן ישראלי IS 5568.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay legal-modal-overlay" id="privacy-modal">
+    <div class="modal-content legal-modal-content">
+      <button class="close-modal legal-close" data-close="privacy-modal">&times;</button>
+      <h2 class="modal-title" data-i18n="nav-privacy">Privacy Policy</h2>
+      <div class="modal-body">
+        <div data-lang="en">
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Last updated: April 11, 2025 | Protection of Privacy Law 5741-1981 &amp; Amendment No. 13 (2024)</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">1. Who We Are</h4>
+          <p><strong>Linn&eacute;a Aesthetic Clinic</strong>, 116 Herzl Blvd, Jerusalem. Contact: <a href="mailto:linneaclinic@gmail.com" style="color:var(--clinique-teal);">linneaclinic@gmail.com</a> | 050-123-4567.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">2. What Data We Collect</h4>
+          <p>When you submit a consultation request, we collect: <strong>full name, email address, phone number,</strong> and your <strong>area of treatment interest</strong>. We also collect standard server logs (IP address, browser type) for technical operation.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">3. Purpose of Collection</h4>
+          <p>Your data is collected solely to <strong>contact you regarding your consultation request</strong>.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">4. Legal Basis</h4>
+          <p>Processing is based on your <strong>informed consent</strong>, given when you submit the contact form.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">5. Third-Party Data Processor</h4>
+          <p>Form submissions are processed by <strong>Web3Forms</strong> (web3forms.com) for email delivery only. They do not sell your data. View their policy at <a href="https://web3forms.com/privacy" target="_blank" rel="noopener" style="color:var(--clinique-teal);">web3forms.com/privacy</a>.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">6. Data Retention</h4>
+          <p>Contact information is retained for a maximum of <strong>24 months</strong> from submission date.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">7. Cookies</h4>
+          <p>This website uses <strong>functional cookies only</strong> (language preference). No tracking or advertising cookies are used.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">8. Your Rights</h4>
+          <ul style="padding-right:1.5rem;line-height:1.9;">
+            <li><strong>Access</strong> &mdash; request a copy of your personal data</li>
+            <li><strong>Correct</strong> &mdash; request correction of inaccurate data</li>
+            <li><strong>Delete</strong> &mdash; request deletion of your data</li>
+            <li><strong>Object</strong> &mdash; object to processing of your data</li>
+          </ul>
+          <p>Contact: <a href="mailto:linneaclinic@gmail.com" style="color:var(--clinique-teal);">linneaclinic@gmail.com</a>. Response within <strong>30 days</strong>.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">9. Data Security</h4>
+          <p>We implement appropriate technical and organizational measures per the Protection of Privacy Regulations (Data Security), 5777-2017.</p>
+        </div>
+        <div data-lang="he" style="display:none;" dir="rtl">
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">עודכן לאחרונה: 11 באפריל 2025 | חוק הגנת הפרטיות תשמ&quot;א-1981 ותיקון מס&apos; 13 (2024)</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">1. מי אנחנו</h4>
+          <p><strong>קליניקת לינאה האסתטית</strong>, רחוב הרצל 116, ירושלים. יצירת קשר: <a href="mailto:linneaclinic@gmail.com" style="color:var(--clinique-teal);">linneaclinic@gmail.com</a> | 050-123-4567.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">2. איזה מידע אנו אוספים</h4>
+          <p>בעת הגשת בקשת ייעוץ אנו אוספים: <strong>שם מלא, כתובת דואר אלקטרוני, מספר טלפון</strong> ותחום <strong>עניין הטיפול</strong> שבחרתם. כמו כן נאספים יומני שרת סטנדרטיים (כתובת IP, סוג דפדפן) לצורכי הפעלה טכנית.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">3. מטרת האיסוף</h4>
+          <p>המידע נאסף אך ורק <strong>ליצירת קשר בנוגע לבקשת הייעוץ שלכם</strong>.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">4. הבסיס המשפטי</h4>
+          <p>העיבוד מבוסס על <strong>הסכמתכם המפורשת</strong>, הניתנת בעת הגשת הטופס.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">5. גורם עיבוד נתונים צד שלישי</h4>
+          <p>טפסי הפנייה מועברים לעיבוד על ידי <strong>Web3Forms</strong> (web3forms.com) לצורך משלוח דואר אלקטרוני בלבד. הם אינם מוכרים את נתוניכם. ראו את מדיניות הפרטיות שלהם בכתובת <a href="https://web3forms.com/privacy" target="_blank" rel="noopener" style="color:var(--clinique-teal);">web3forms.com/privacy</a>.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">6. שמירת מידע</h4>
+          <p>פרטי הקשר נשמרים לתקופה מרבית של <strong>24 חודשים</strong> ממועד הגשת הטופס.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">7. עוגיות (Cookies)</h4>
+          <p>אתר זה משתמש <strong>בעוגיות פונקציונליות בלבד</strong> (שמירת העדפת שפה). לא נעשה שימוש בעוגיות מעקב או פרסום.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">8. זכויותיכם</h4>
+          <ul style="padding-right:1.5rem;line-height:1.9;">
+            <li><strong>גישה</strong> &mdash; לבקש עותק של המידע האישי שלכם</li>
+            <li><strong>תיקון</strong> &mdash; לבקש תיקון של מידע שגוי</li>
+            <li><strong>מחיקה</strong> &mdash; לבקש מחיקת המידע שלכם</li>
+            <li><strong>התנגדות</strong> &mdash; להתנגד לעיבוד המידע שלכם</li>
+          </ul>
+          <p>פנו אלינו: <a href="mailto:linneaclinic@gmail.com" style="color:var(--clinique-teal);">linneaclinic@gmail.com</a>. נשיב תוך <strong>30 יום</strong>.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">9. אבטחת מידע</h4>
+          <p>אנו מיישמים אמצעים טכניים וארגוניים מתאימים בהתאם לתקנות הגנת הפרטיות (אבטחת מידע), תשע&quot;ז-2017.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay legal-modal-overlay" id="terms-modal">
+    <div class="modal-content legal-modal-content">
+      <button class="close-modal legal-close" data-close="terms-modal">&times;</button>
+      <h2 class="modal-title" data-i18n="nav-terms">Terms of Use</h2>
+      <div class="modal-body">
+        <div data-lang="en">
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">Last updated: April 11, 2025</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">1. Acceptance of Terms</h4>
+          <p>By accessing and using this website, you accept and agree to be bound by these Terms of Use.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">2. Medical Disclaimer</h4>
+          <p><strong>The content on this website is for informational purposes only and does not constitute medical advice, diagnosis, or treatment.</strong> All aesthetic treatments carry risks. Results may vary. Consult a qualified medical professional before undergoing any aesthetic procedure.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">3. Purpose of Website</h4>
+          <p>This website provides general information about our services and enables appointment booking requests. It is not a substitute for professional medical consultation.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">4. Intellectual Property</h4>
+          <p>All content &mdash; text, images, articles, logos, and design &mdash; is the intellectual property of Linn&eacute;a Aesthetic Clinic, protected under Israeli copyright law. Unauthorized reproduction is prohibited.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">5. Limitation of Liability</h4>
+          <p>Linn&eacute;a Aesthetic Clinic shall not be liable for any damages arising from reliance on information published on this website.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">6. Governing Law</h4>
+          <p>These Terms are governed by the laws of the <strong>State of Israel</strong>. Disputes shall be resolved exclusively in the courts of <strong>Jerusalem, Israel</strong>.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">7. Contact</h4>
+          <p><a href="mailto:linneaclinic@gmail.com" style="color:var(--clinique-teal);">linneaclinic@gmail.com</a></p>
+        </div>
+        <div data-lang="he" style="display:none;" dir="rtl">
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1rem;">עודכן לאחרונה: 11 באפריל 2025</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">1. קבלת תנאי השימוש</h4>
+          <p>בגישה לאתר זה ובשימוש בו, הנכם מקבלים על עצמכם ומסכימים להיות כפופים לתנאי שימוש אלה.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">2. כתב ויתור רפואי</h4>
+          <p><strong>תוכן האתר מיועד למידע כללי בלבד ואינו מהווה ייעוץ רפואי, אבחנה או טיפול.</strong> כל הטיפולים האסתטיים כרוכים בסיכונים. התוצאות עשויות להשתנות. יש להתייעץ עם איש מקצוע רפואי מוסמך לפני עריכת כל הליך אסתטי.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">3. מטרת האתר</h4>
+          <p>אתר זה מספק מידע כללי על שירותינו ומאפשר הגשת בקשות לתורים. הוא אינו תחליף לייעוץ רפואי מקצועי.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">4. קניין רוחני</h4>
+          <p>כל תוכן האתר &mdash; טקסט, תמונות, מאמרים, לוגואים ועיצוב &mdash; הינו קניינה הרוחני של קליניקת לינאה האסתטית ומוגן בחוק זכויות יוצרים הישראלי. העתקה או הפצה ללא אישור אסורה.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">5. הגבלת אחריות</h4>
+          <p>קליניקת לינאה לא תישא באחריות לכל נזק הנובע מהסתמכות על מידע המפורסם באתר זה.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">6. הדין החל וסמכות שיפוט</h4>
+          <p>תנאים אלה כפופים לדיני <strong>מדינת ישראל</strong>. כל מחלוקת תידון באופן בלעדי בבתי המשפט של <strong>ירושלים, ישראל</strong>.</p>
+          <h4 style="margin:1rem 0 0.5rem;color:var(--clinique-teal);">7. יצירת קשר</h4>
+          <p><a href="mailto:linneaclinic@gmail.com" style="color:var(--clinique-teal);">linneaclinic@gmail.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
 
     <!-- WhatsApp Widget -->
