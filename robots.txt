@@ -1,8 +1,0 @@
-User-agent: *
-Allow: /
-
-# Block access to any potential build artifacts
-Disallow: /node_modules/
-Disallow: /.git/
-
-Sitemap: https://shaishi.github.io/linnea-clinic-landing-page/sitemap.xml
