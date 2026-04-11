@@ -57,22 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Hero Intro Animation ---
   const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.5 } });
-  
+
   heroTl
-    .fromTo('.hero-title',   { opacity: 0, y: 30 }, { opacity: 1, y: 0, delay: 0.3 })
-    .fromTo('.hero-subtitle',{ opacity: 0, y: 30 }, { opacity: 1, y: 0 }, '-=1.2')
-    .fromTo('.hero-btn',     { opacity: 0, y: 30 }, { opacity: 1, y: 0 }, '-=1.2');
+    .fromTo('.hero-title', { opacity: 0, y: 30 }, { opacity: 1, y: 0, delay: 0.3 })
+    .fromTo('.hero-subtitle', { opacity: 0, y: 30 }, { opacity: 1, y: 0 }, '-=1.2')
+    .fromTo('.hero-btn', { opacity: 0, y: 30 }, { opacity: 1, y: 0 }, '-=1.2');
 
   // --- Pre-loader Removal (GSAP block removed in favor of CSS transition below) ---
 
   // --- GSAP Scroll Reveals ---
   const revealSections = document.querySelectorAll('section');
-  
+
   revealSections.forEach(section => {
     const sectionTitle = section.querySelector('.section-title');
     const sectionDesc = section.querySelector('.section-description');
-    const cards = section.querySelectorAll('.treatment-card, .article-card, .review-card, .ba-container');
-    
+    const cards = Array.from(section.querySelectorAll('.treatment-card, .article-card, .review-card, .ba-container, .article-hero-img, .reveal, .article-content p'))
+      .filter(el => !el.classList.contains('section-title') && !el.classList.contains('section-description'));
+
     const sectionTl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -82,31 +83,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (sectionTitle) {
-      sectionTl.fromTo(sectionTitle, 
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+      sectionTl.fromTo(sectionTitle,
+        { opacity: 0, y: -50 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
       );
     }
-    
+
     if (sectionDesc) {
-      sectionTl.fromTo(sectionDesc, 
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 
-        '-=0.7'
+      sectionTl.fromTo(sectionDesc,
+        { opacity: 0, y: -30 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+        '-=0.6'
       );
     }
 
     if (cards.length > 0) {
-      sectionTl.fromTo(cards, 
-        { opacity: 0, y: 60 },
-        { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: 'power3.out' }, 
-        '-=0.7'
+      sectionTl.fromTo(cards,
+        { opacity: 0, y: -60 },
+        { opacity: 1, y: 0, duration: 1.0, stagger: 0.15, ease: 'power3.out' },
+        '-=0.6'
       );
     }
   });
 
   // Specific about-section parallax/reveal
-  gsap.fromTo('.about-text p', 
+  gsap.fromTo('.about-text p',
     {
       opacity: 0,
       x: document.documentElement.dir === 'rtl' ? 50 : -50,
@@ -124,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-  gsap.fromTo('.about-image', 
+  gsap.fromTo('.about-image',
     {
       opacity: 0,
       scale: 0.9,
@@ -144,13 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Magnetic Buttons ---
   const magneticBtns = document.querySelectorAll('.btn-primary, .btn-secondary, .social-icon');
-  
+
   magneticBtns.forEach(btn => {
     btn.addEventListener('mousemove', (e) => {
       const rect = btn.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
-      
+
       gsap.to(btn, {
         x: x * 0.3,
         y: y * 0.3,
@@ -158,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ease: 'power2.out'
       });
     });
-    
+
     btn.addEventListener('mouseleave', () => {
       gsap.to(btn, {
         x: 0,
@@ -170,32 +171,52 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- Pre-loader Removal ---
-  // The inline script in HTML already hides preloader on repeat visits.
-  // Here we just handle the first-visit dismiss with a smooth animation.
-  if (!document.documentElement.classList.contains('preloader-done')) {
+  let isLoaderRemoved = false;
+  const initRemoval = () => {
+    if (isLoaderRemoved) return;
+    isLoaderRemoved = true;
+
+    // Check if preloader was already shown this session
+    if (sessionStorage.getItem('preloaderShown')) {
+      const preloader = document.getElementById('preloader');
+      if (preloader) preloader.style.display = 'none';
+      document.body.classList.remove('loading');
+      document.body.classList.add('loaded');
+      heroTl.play();
+      ScrollTrigger.refresh();
+      return;
+    }
+
     sessionStorage.setItem('preloaderShown', 'true');
 
     setTimeout(() => {
       document.body.classList.remove('loading');
       document.body.classList.add('loaded');
 
-      // Hero plays once the loader wipes up (matches 1.2s CSS transition)
+      // Hero plays right as loader wipe-up finishes (matches 1.8s CSS transition)
       setTimeout(() => {
         heroTl.play();
         ScrollTrigger.refresh();
-      }, 1200);
-    }, 1500);
+      }, 1800);
 
+    }, 2500); // 2.5 seconds slowest for a more patient brand feel
+  };
+
+  // Preloader bypass
+  if (sessionStorage.getItem('preloaderShown')) {
+    initRemoval();
   } else {
-    // Repeat visit — preloader already hidden by inline script, play hero immediately
-    document.body.classList.remove('loading');
-    document.body.classList.add('loaded');
-    heroTl.play();
-    ScrollTrigger.refresh();
+    if (document.readyState === 'complete') {
+      initRemoval();
+    } else {
+      window.addEventListener('load', initRemoval);
+    }
+    // Maximum loading time fallback 
+    setTimeout(initRemoval, 3500);
   }
 
   const navbar = document.querySelector('.navbar');
-  
+
   window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
       navbar.classList.add('scrolled');
@@ -210,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const langToggles = document.querySelectorAll('.lang-toggle');
   const mobileNavToggle = document.getElementById('mobile-nav-toggle');
   const navLinks = document.querySelector('.nav-links');
-  let currentLang = localStorage.getItem('linneaLang') || 'he';
+  let currentLang = localStorage.getItem('linneaLang') || 'en';
 
   const translations = {
     en: {
@@ -219,8 +240,13 @@ document.addEventListener('DOMContentLoaded', () => {
       "nav-science": "Science",
       "nav-directions": "Directions",
       "nav-contact": "Contact",
-      "btn-book": "Book Consultation",
-      "hero-title": "Discover Your Natural Radiance",
+      "page-title": "Linnéa | High-End Aesthetic Clinic",
+      "article-botox-title": "Linnéa | The Art of Botox",
+      "article-fillers-title": "Linnéa | Mastering Dermal Fillers",
+      "article-scientific-title": "Linnéa | The Science of Longevity",
+      "nav-home": "Home",
+      "nav-articles": "Articles",
+      "hero-title": "Your Natural Radiance, Effortlessly Refined",
       "hero-subtitle": "High-end aesthetic treatments tailored to enhance your unique beauty in a soothing, professional environment.",
       "about-title": "Cultivating Aesthetic Harmony",
       "about-p1": "At Linnéa, we believe that aesthetic enhancement isn't about altering your appearance, but rather cultivating the harmony that already exists within you. Our boutique clinic provides an inviting, human-centered experience where advanced science meets customized care.",
@@ -451,13 +477,15 @@ document.addEventListener('DOMContentLoaded', () => {
       "accessibility-stmt-content": "אנו רואים חשיבות עליונה בהנגשת האתר. אתר זה הונגש בהתאם לתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), תשע\"ג. במידה ונתקלתם בבעיית נגישות, אנא צרו עמנו קשר.",
       "privacy-content": "הפרטיות שלך חשובה לנו. אנו אוספים רק מידע הכרחי למתן השירותים האסתטיים שלנו ואיננו משתפים את הנתונים שלך עם צדדים שלישיים ללא הרשאה. בעצם השימוש באתר זה, הנך מסכים למדיניות זו.",
       "terms-content": "הגלישה והשימוש באתר זה כפופים לתנאי השימוש הבאים. תכני האתר נועדו למידע כללי בלבד ולצורך הזמנת תורים אלינו.",
+      "page-title": "Linnéa | קליניקה אסתטית יוקרתית",
+      "article-botox-title": "Linnéa | אמנות הבוטוקס",
+      "article-fillers-title": "Linnéa | שליטה בחומרי מילוי",
+      "article-scientific-title": "Linnéa | מדע אריכות הימים",
       "nav-home": "עמוד הבית",
       "nav-articles": "מאמרים",
       "articles-title": "תובנות ומדע",
       "articles-desc": "חקרו את המאמרים המקצועיים שלנו על רפואה אסתטית, טיפולים ומדע אריכות הימים.",
       "read-more": "קראו עוד",
-      "success-title": "תודה רבה!",
-      "success-msg": "פנייתך התקבלה. ניצור קשר בקרוב.",
       "article1-title": "אמנות הבוטוקס",
       "article1-subtitle": "צלילה עמוקה אל עולם הנוירומודולטורים והבעות הפנים הטבעיות.",
       "article1-desc": "גלו כיצד טיפולי נוירומודולטורים מדויקים יכולים להחליק קמטים תוך שמירה על ההבעות הטבעיות שלכם.",
@@ -531,7 +559,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
     document.documentElement.setAttribute('lang', lang);
     document.body.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
-    
+
     // Explicitly force direction for navbar container
     const navContainer = document.querySelector('.nav-container');
     if (navContainer) {
@@ -574,6 +602,22 @@ document.addEventListener('DOMContentLoaded', () => {
       el.classList.remove('active');
       setTimeout(() => el.classList.add('active'), 100);
     });
+
+    // Update Page Title
+    if (translations[lang]["page-title"]) {
+      let newTitle = translations[lang]["page-title"];
+
+      // If we are on an article page, use the specific article title
+      if (window.location.pathname.includes('article-botox')) {
+        newTitle = translations[lang]["article-botox-title"];
+      } else if (window.location.pathname.includes('article-fillers')) {
+        newTitle = translations[lang]["article-fillers-title"];
+      } else if (window.location.pathname.includes('article-scientific')) {
+        newTitle = translations[lang]["article-scientific-title"];
+      }
+
+      document.title = newTitle;
+    }
 
     // Slider labels are handled by data-i18n attributes on the label spans
   };
@@ -621,7 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-      // Close on click outside
+    // Close on click outside
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.classList.remove('active');
@@ -635,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      
+
       const formData = new FormData(form);
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalText = submitBtn.textContent;
@@ -646,10 +690,10 @@ document.addEventListener('DOMContentLoaded', () => {
         method: "POST",
         body: formData,
         headers: {
-            'Accept': 'application/json'
+          'Accept': 'application/json'
         }
       }).then(response => {
-        if(response.ok) {
+        if (response.ok) {
           form.innerHTML = `
             <div style="text-align: center; padding: 2.5rem 0;">
               <h3 style="font-family: var(--font-serif); font-size: 2.5rem; color: var(--clinique-teal-dark); margin-bottom: 1rem;" data-i18n="success-title">Thank You!</h3>
@@ -800,7 +844,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isRTL = document.documentElement.dir === 'rtl';
       let pos = ((x - rect.left) / rect.width) * 100;
       pos = Math.max(0, Math.min(100, pos));
-      
+
       if (isRTL) {
         beforeClip.style.width = (100 - pos) + '%';
       } else {
