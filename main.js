@@ -5,29 +5,82 @@ import Lenis from 'lenis'
 
 gsap.registerPlugin(ScrollTrigger);
 
+// --- Pre-loader Logic (Highest Priority for Reliability) ---
+let isLoaderRemoved = false;
+let globalHeroTl = null;
+
+const initRemoval = () => {
+  if (isLoaderRemoved) return;
+  isLoaderRemoved = true;
+
+  try {
+    // Check if preloader was already shown this session
+    if (sessionStorage.getItem('preloaderShown')) {
+      const preloader = document.getElementById('preloader');
+      if (preloader) preloader.style.display = 'none';
+      document.body.classList.remove('loading');
+      document.body.classList.add('loaded');
+      if (globalHeroTl) globalHeroTl.play();
+      ScrollTrigger.refresh();
+      return;
+    }
+
+    sessionStorage.setItem('preloaderShown', 'true');
+
+    setTimeout(() => {
+      document.body.classList.remove('loading');
+      document.body.classList.add('loaded');
+
+      // Hero plays right as loader wipe-up finishes (matches 1.8s CSS transition)
+      setTimeout(() => {
+        if (globalHeroTl) globalHeroTl.play();
+        ScrollTrigger.refresh();
+      }, 1800);
+
+    }, 2500); 
+  } catch (err) {
+    console.error('Preloader error, forcing show:', err);
+    document.body.classList.remove('loading');
+    document.body.classList.add('loaded');
+  }
+};
+
+// Immediate listeners for preloader
+if (sessionStorage.getItem('preloaderShown')) {
+  initRemoval();
+} else {
+  if (document.readyState === 'complete') {
+    initRemoval();
+  } else {
+    window.addEventListener('load', initRemoval);
+  }
+  // Hard fallback: Force show site after 3.5s regardless of JS state
+  setTimeout(initRemoval, 3500);
+}
+
 // Initialize Smooth Scrolling (Lenis)
-const lenis = new Lenis({
-  duration: 1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  orientation: 'vertical',
-  gestureOrientation: 'vertical',
-  smoothWheel: true,
-  wheelMultiplier: 1,
-  smoothTouch: false,
-  touchMultiplier: 2,
-  infinite: false,
-});
+let lenis;
+try {
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    orientation: 'vertical',
+    gestureOrientation: 'vertical',
+    smoothWheel: true,
+    wheelMultiplier: 1,
+    smoothTouch: false,
+    touchMultiplier: 2,
+    infinite: false,
+  });
 
-// Removed duplicate requestAnimationFrame loop; GSAP ticker handles it below
-
-// Connect Lenis to ScrollTrigger
-lenis.on('scroll', ScrollTrigger.update);
-
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
-});
-
-gsap.ticker.lagSmoothing(0);
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => {
+    lenis.raf(time * 1000);
+  });
+  gsap.ticker.lagSmoothing(0);
+} catch (err) {
+  console.error('Lenis initialization failed:', err);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   // --- Custom Cursor Logic ---
@@ -57,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Hero Intro Animation ---
   const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.5 } });
+  globalHeroTl = heroTl;
 
   heroTl
     .fromTo('.hero-title', { opacity: 0, y: 30 }, { opacity: 1, y: 0, delay: 0.3 })
@@ -170,50 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Pre-loader Removal ---
-  let isLoaderRemoved = false;
-  const initRemoval = () => {
-    if (isLoaderRemoved) return;
-    isLoaderRemoved = true;
-
-    // Check if preloader was already shown this session
-    if (sessionStorage.getItem('preloaderShown')) {
-      const preloader = document.getElementById('preloader');
-      if (preloader) preloader.style.display = 'none';
-      document.body.classList.remove('loading');
-      document.body.classList.add('loaded');
-      heroTl.play();
-      ScrollTrigger.refresh();
-      return;
-    }
-
-    sessionStorage.setItem('preloaderShown', 'true');
-
-    setTimeout(() => {
-      document.body.classList.remove('loading');
-      document.body.classList.add('loaded');
-
-      // Hero plays right as loader wipe-up finishes (matches 1.8s CSS transition)
-      setTimeout(() => {
-        heroTl.play();
-        ScrollTrigger.refresh();
-      }, 1800);
-
-    }, 2500); // 2.5 seconds slowest for a more patient brand feel
-  };
-
-  // Preloader bypass
-  if (sessionStorage.getItem('preloaderShown')) {
-    initRemoval();
-  } else {
-    if (document.readyState === 'complete') {
-      initRemoval();
-    } else {
-      window.addEventListener('load', initRemoval);
-    }
-    // Maximum loading time fallback 
-    setTimeout(initRemoval, 3500);
-  }
+  // --- Pre-loader Removal (Moved to top level) ---
 
   const navbar = document.querySelector('.navbar');
 
