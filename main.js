@@ -1,7 +1,218 @@
 import './style.css'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Lenis from 'lenis'
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Initialize Smooth Scrolling (Lenis)
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  orientation: 'vertical',
+  gestureOrientation: 'vertical',
+  smoothWheel: true,
+  wheelMultiplier: 1,
+  smoothTouch: false,
+  touchMultiplier: 2,
+  infinite: false,
+});
+
+// Removed duplicate requestAnimationFrame loop; GSAP ticker handles it below
+
+// Connect Lenis to ScrollTrigger
+lenis.on('scroll', ScrollTrigger.update);
+
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000);
+});
+
+gsap.ticker.lagSmoothing(0);
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Navbar scroll effect
+  // --- Custom Cursor Logic ---
+  const cursorDot = document.querySelector('.cursor-dot');
+  const cursorOutline = document.querySelector('.cursor-outline');
+  const interactiveElements = document.querySelectorAll('a, button, .treatment-card, .ba-handle');
+
+  if (cursorDot && cursorOutline) {
+    window.addEventListener('mousemove', (e) => {
+      const posX = e.clientX;
+      const posY = e.clientY;
+
+      // Use GSAP for smooth cursor trailing
+      gsap.to(cursorDot, { x: posX, y: posY, duration: 0.1 });
+      gsap.to(cursorOutline, { x: posX, y: posY, duration: 0.25 });
+    });
+
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursorOutline.classList.add('cursor-hover');
+      });
+      el.addEventListener('mouseleave', () => {
+        cursorOutline.classList.remove('cursor-hover');
+      });
+    });
+  }
+
+  // --- Hero Intro Animation ---
+  const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.5 } });
+  
+  heroTl
+    .fromTo('.hero-title',   { opacity: 0, y: 30 }, { opacity: 1, y: 0, delay: 0.3 })
+    .fromTo('.hero-subtitle',{ opacity: 0, y: 30 }, { opacity: 1, y: 0 }, '-=1.2')
+    .fromTo('.hero-btn',     { opacity: 0, y: 30 }, { opacity: 1, y: 0 }, '-=1.2');
+
+  // --- Pre-loader Removal (GSAP block removed in favor of CSS transition below) ---
+
+  // --- GSAP Scroll Reveals ---
+  const revealSections = document.querySelectorAll('section');
+  
+  revealSections.forEach(section => {
+    const sectionTitle = section.querySelector('.section-title');
+    const sectionDesc = section.querySelector('.section-description');
+    const cards = section.querySelectorAll('.treatment-card, .article-card, .review-card, .ba-container');
+    
+    const sectionTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 80%',
+        toggleActions: 'play none none none'
+      }
+    });
+
+    if (sectionTitle) {
+      sectionTl.fromTo(sectionTitle, 
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }
+      );
+    }
+    
+    if (sectionDesc) {
+      sectionTl.fromTo(sectionDesc, 
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, 
+        '-=0.7'
+      );
+    }
+
+    if (cards.length > 0) {
+      sectionTl.fromTo(cards, 
+        { opacity: 0, y: 60 },
+        { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: 'power3.out' }, 
+        '-=0.7'
+      );
+    }
+  });
+
+  // Specific about-section parallax/reveal
+  gsap.fromTo('.about-text p', 
+    {
+      opacity: 0,
+      x: document.documentElement.dir === 'rtl' ? 50 : -50,
+    },
+    {
+      scrollTrigger: {
+        trigger: '.about',
+        start: 'top 70%'
+      },
+      opacity: 1,
+      x: 0,
+      duration: 1.2,
+      stagger: 0.3,
+      ease: 'power3.out'
+    }
+  );
+
+  gsap.fromTo('.about-image', 
+    {
+      opacity: 0,
+      scale: 0.9,
+    },
+    {
+      scrollTrigger: {
+        trigger: '.about',
+        start: 'top 70%'
+      },
+      opacity: 1,
+      scale: 1,
+      duration: 1.5,
+      ease: 'power2.out'
+    }
+  );
+
+
+  // --- Magnetic Buttons ---
+  const magneticBtns = document.querySelectorAll('.btn-primary, .btn-secondary, .social-icon');
+  
+  magneticBtns.forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      gsap.to(btn, {
+        x: x * 0.3,
+        y: y * 0.3,
+        duration: 0.5,
+        ease: 'power2.out'
+      });
+    });
+    
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, {
+        x: 0,
+        y: 0,
+        duration: 0.5,
+        ease: 'elastic.out(1, 0.3)'
+      });
+    });
+  });
+
+  // --- Pre-loader Removal ---
+  let isLoaderRemoved = false;
+  const initRemoval = () => {
+    if (isLoaderRemoved) return;
+    isLoaderRemoved = true;
+    
+    // Check if preloader was already shown this session
+    if (sessionStorage.getItem('preloaderShown')) {
+      const preloader = document.getElementById('preloader');
+      if (preloader) preloader.style.display = 'none';
+      document.body.classList.remove('loading');
+      document.body.classList.add('loaded');
+      heroTl.play();
+      ScrollTrigger.refresh();
+      return;
+    }
+    
+    sessionStorage.setItem('preloaderShown', 'true');
+
+    setTimeout(() => {
+      document.body.classList.remove('loading');
+      document.body.classList.add('loaded');
+      
+      // Hero plays right as loader wipe-up finishes (matches 1.2s CSS transition)
+      setTimeout(() => {
+        heroTl.play();
+        ScrollTrigger.refresh();
+      }, 1200);
+      
+    }, 1500); // 1.5 seconds minimum for premium feel
+  };
+
+  // Preloader bypass
+  if (sessionStorage.getItem('preloaderShown')) {
+    initRemoval();
+  } else {
+    if (document.readyState === 'complete') {
+      initRemoval();
+    } else {
+      window.addEventListener('load', initRemoval);
+    }
+    // Maximum loading time fallback 
+    setTimeout(initRemoval, 3500);
+  }
   const navbar = document.querySelector('.navbar');
   
   window.addEventListener('scroll', () => {
@@ -12,29 +223,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Reveal elements on scroll
-  const revealElements = document.querySelectorAll('.reveal, .treatment-card, .about-text, .about-image, .location-info, .location-map');
-  
-  // Add reveal class to these elements
-  revealElements.forEach(el => el.classList.add('reveal'));
-
-  const revealOptions = {
-    threshold: 0.1,
-    rootMargin: "0px 0px -50px 0px"
-  };
-
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, revealOptions);
-
-  revealElements.forEach(el => {
-    revealObserver.observe(el);
-  });
+  // --- Language Switching Enhancements ---
+  // (The rest of the translations and logic remains, but we add a small re-trigger for GSAP if needed)
 
   const langToggles = document.querySelectorAll('.lang-toggle');
   const mobileNavToggle = document.getElementById('mobile-nav-toggle');
@@ -73,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "footer-tagline": "Warm, luxurious, inviting, human.",
       "footer-explore": "Explore",
       "footer-contact": "Contact Us",
+      "footer-address": "116 Herzl Blvd, Jerusalem, Israel",
       "footer-discuss": "Let's discuss your journey.",
       "footer-rights": "© 2026 Linnéa Aesthetic Clinic. All rights reserved.",
       "modal-title": "Book a Consultation",
@@ -227,6 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "footer-tagline": "חם, יוקרתי, מזמין, אנושי.",
       "footer-explore": "ניווט",
       "footer-contact": "צרו קשר",
+      "footer-address": "שדרות הרצל 116, ירושלים, ישראל",
       "footer-discuss": "בואו נדבר על המסע שלכן.",
       "footer-rights": "© 2026 לינאה קליניקה אסתטית. כל הזכויות שמורות.",
       "modal-title": "קביעת פגישת ייעוץ",
@@ -365,6 +557,12 @@ document.addEventListener('DOMContentLoaded', () => {
       navContainer.style.direction = lang === 'en' ? 'ltr' : 'rtl';
     }
 
+    // Switch bilingual legal modal content
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      const elLang = el.getAttribute('data-lang');
+      el.style.display = (elLang === lang) ? '' : 'none';
+    });
+
     // Update texts
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
@@ -424,7 +622,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Modal logic
   const modal = document.getElementById('booking-modal');
-  const openModalBtns = document.querySelectorAll('.nav-btn, .hero-btn');
+  const openModalBtns = document.querySelectorAll('.nav-btn, .hero-btn, a[href="#contact"], a[href="index.html#contact"], a[href="#book"], a[href="index.html#book"]');
   const closeModal = document.getElementById('close-modal');
   const form = document.getElementById('booking-form');
 
@@ -442,12 +640,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Close on click outside
+      // Close on click outside
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.classList.remove('active');
       }
     });
+
+    // Handle incoming links hash - REMOVED so it doesn't open on page load
+    // Navigation is handled strictly through click events and scrolling now.
   }
 
   if (form) {
