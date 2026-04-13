@@ -658,9 +658,6 @@ body.acc-light-bg .navbar svg {
 }
 
 /* --- Pre-loader Logic (Restored to GH Pages Brand) --- */
-html.skip-preloader .loader-overlay { display: none !important; }
-html.skip-preloader body.loading { overflow: auto !important; }
-
 .loader-overlay {
   position: fixed;
   top: 0;
@@ -716,6 +713,16 @@ body.loaded .loader-overlay {
   background: var(--aura-cream);
   margin: 0 auto;
   animation: loadBar 1.5s cubic-bezier(0.85, 0, 0.15, 1) forwards 0.5s;
+}
+
+@media (max-width: 768px) {
+  .loader-logo {
+    font-size: 3rem;
+  }
+  .loader-bar {
+    margin-top: 2rem;
+    width: 0;
+  }
 }
 
 @keyframes fadeUpLoader {

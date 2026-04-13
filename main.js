@@ -170,49 +170,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Pre-loader Removal ---
-  let isLoaderRemoved = false;
-  const initRemoval = () => {
-    if (isLoaderRemoved) return;
-    isLoaderRemoved = true;
+  // --- Preloader ---
+  const preloaderEl = document.getElementById('preloader');
 
-    // Check if preloader was already shown this session
-    if (sessionStorage.getItem('preloaderShown')) {
-      const preloader = document.getElementById('preloader');
-      if (preloader) preloader.style.display = 'none';
-      document.body.classList.remove('loading');
-      document.body.classList.add('loaded');
-      heroTl.play();
-      ScrollTrigger.refresh();
-      return;
-    }
-
+  if (sessionStorage.getItem('preloaderShown')) {
+    // Return visit: skip instantly, jump hero to final state
+    if (preloaderEl) preloaderEl.style.display = 'none';
+    document.body.classList.remove('loading');
+    document.body.classList.add('loaded');
+    heroTl.progress(1);
+    ScrollTrigger.refresh();
+  } else {
+    // First visit: brand preloader for 2.5s then CSS wipe-up (1.8s transition)
     sessionStorage.setItem('preloaderShown', 'true');
-
     setTimeout(() => {
       document.body.classList.remove('loading');
       document.body.classList.add('loaded');
-
-      // Hero plays right as loader wipe-up finishes (matches 1.8s CSS transition)
       setTimeout(() => {
         heroTl.play();
         ScrollTrigger.refresh();
       }, 1800);
-
-    }, 2500); // 2.5 seconds slowest for a more patient brand feel
-  };
-
-  // Preloader bypass
-  if (sessionStorage.getItem('preloaderShown')) {
-    initRemoval();
-  } else {
-    if (document.readyState === 'complete') {
-      initRemoval();
-    } else {
-      window.addEventListener('load', initRemoval);
-    }
-    // Maximum loading time fallback 
-    setTimeout(initRemoval, 3500);
+    }, 2500);
   }
 
   const navbar = document.querySelector('.navbar');
