@@ -186,11 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       document.body.classList.remove('loading');
 
-      // Wipe accelerates out — bottom edge exits at full speed, no lingering
+      // Wipe: slow deliberate start → accelerates cleanly off screen (1.5s feels lavish)
       gsap.to(preloaderEl, {
         yPercent: -100,
-        duration: 0.9,
-        ease: 'power3.in',
+        duration: 1.5,
+        ease: 'power2.in',
         onComplete: () => {
           if (preloaderEl) preloaderEl.style.display = 'none';
           document.body.classList.add('loaded');
@@ -448,6 +448,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "review3-author": "שרה ב.",
       "btn-submit": "שליחת בקשה",
       "alert-success": "תודה על פנייתך! צוות הקליניקה ייצור איתך קשר בהקדם.",
+      "success-title": "תודה רבה!",
+      "success-msg": "פנייתך התקבלה. ניצור איתך קשר בהקדם.",
       "nav-accessibility": "הצהרת נגישות",
       "nav-privacy": "מדיניות פרטיות",
       "nav-terms": "תנאי שימוש באתר",
