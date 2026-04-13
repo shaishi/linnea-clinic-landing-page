@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const langToggles = document.querySelectorAll('.lang-toggle');
   const mobileNavToggle = document.getElementById('mobile-nav-toggle');
   const navLinks = document.querySelector('.nav-links');
-  let currentLang = localStorage.getItem('linneaLang') || 'en';
+  let currentLang = localStorage.getItem('linneaLang') || 'he';
 
   const translations = {
     en: {
@@ -682,7 +682,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const formData = new FormData(form);
       const submitBtn = form.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
       submitBtn.textContent = '...';
       submitBtn.disabled = true;
 
@@ -705,7 +704,7 @@ document.addEventListener('DOMContentLoaded', () => {
           submitBtn.textContent = 'Error, please try again.';
           submitBtn.disabled = false;
         }
-      }).catch(error => {
+      }).catch(() => {
         submitBtn.textContent = 'Error, please try again.';
         submitBtn.disabled = false;
       });
@@ -846,25 +845,19 @@ document.addEventListener('DOMContentLoaded', () => {
       pos = Math.max(0, Math.min(100, pos));
 
       if (isRTL) {
-        beforeClip.style.width = (100 - pos) + '%';
+        beforeImg.style.clipPath = `inset(0 0 0 ${pos}%)`;
       } else {
-        beforeClip.style.width = pos + '%';
+        beforeImg.style.clipPath = `inset(0 ${100 - pos}% 0 0)`;
       }
       handle.style.left = pos + '%';
-      // Make before image fill the full wrapper width regardless of clip
-      if (beforeImg) {
-        beforeImg.style.width = (rect.width) + 'px';
-      }
     };
 
-    // Set initial image width on load
-    const initWidth = () => {
-      if (beforeImg) {
-        beforeImg.style.width = wrapper.getBoundingClientRect().width + 'px';
-      }
+    // Set initial clip position to 50%
+    const initClip = () => {
+      const isRTL = document.documentElement.dir === 'rtl';
+      beforeImg.style.clipPath = isRTL ? 'inset(0 0 0 50%)' : 'inset(0 50% 0 0)';
     };
-    initWidth();
-    window.addEventListener('resize', initWidth);
+    initClip();
 
     // Mouse events
     wrapper.addEventListener('mousedown', (e) => {
