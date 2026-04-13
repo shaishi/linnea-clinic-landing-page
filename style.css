@@ -518,7 +518,7 @@ body.acc-light-bg .navbar svg {
 .image-placeholder {
   width: 100%;
   aspect-ratio: 4/5;
-  background-image: url("/images/about-harmony.png");
+  background-image: url("./images/about-harmony.png");
   background-size: cover;
   background-position: center;
   border-radius: var(--border-radius-lg);
