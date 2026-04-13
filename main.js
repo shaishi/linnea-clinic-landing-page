@@ -181,15 +181,25 @@ document.addEventListener('DOMContentLoaded', () => {
     heroTl.progress(1);
     ScrollTrigger.refresh();
   } else {
-    // First visit: brand preloader for 2.5s then CSS wipe-up (1.8s transition)
+    // First visit: brand preloader for 2.5s, then GSAP wipe + hero reveal simultaneously
     sessionStorage.setItem('preloaderShown', 'true');
     setTimeout(() => {
       document.body.classList.remove('loading');
-      document.body.classList.add('loaded');
-      setTimeout(() => {
-        heroTl.play();
-        ScrollTrigger.refresh();
-      }, 1800);
+
+      // Wipe accelerates out — bottom edge exits at full speed, no lingering
+      gsap.to(preloaderEl, {
+        yPercent: -100,
+        duration: 0.9,
+        ease: 'power3.in',
+        onComplete: () => {
+          if (preloaderEl) preloaderEl.style.display = 'none';
+          document.body.classList.add('loaded');
+        }
+      });
+
+      // Hero fades in simultaneously — content reveals beneath the lifting overlay
+      heroTl.play();
+      ScrollTrigger.refresh();
     }, 2500);
   }
 

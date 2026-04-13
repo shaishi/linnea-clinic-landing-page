@@ -673,8 +673,7 @@ body.acc-light-bg .navbar svg {
   visibility: visible;
   pointer-events: all;
   transform: translateY(0);
-  /* Solid wipe-up exit - Restored and slowed for premium feel */
-  transition: transform 1.8s cubic-bezier(0.77, 0, 0.18, 1);
+  /* Exit handled by GSAP for smooth acceleration */
 }
 
 body.loading .loader-overlay {
@@ -685,7 +684,6 @@ body.loading .loader-overlay {
 }
 
 body.loaded .loader-overlay {
-  transform: translateY(-100%);
   pointer-events: none;
 }
 
