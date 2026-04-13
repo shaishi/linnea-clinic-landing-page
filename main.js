@@ -1,9 +1,6 @@
-import './style.css'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Lenis from 'lenis'
-
-gsap.registerPlugin(ScrollTrigger);
+// --- Pre-loader Logic (Highest Priority for Reliability) ---
+// Using global gsap and Lenis from CDNs to ensure 100% stability on GH Pages
+if (typeof gsap !== 'undefined') gsap.registerPlugin(ScrollTrigger);
 
 // Initialize Smooth Scrolling (Lenis)
 const lenis = new Lenis({
