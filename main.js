@@ -186,20 +186,31 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       document.body.classList.remove('loading');
 
-      // Wipe: slow deliberate start → accelerates cleanly off screen (1.5s feels lavish)
+      // Step 1: brand content gently recedes (scale down + fade)
+      gsap.to('.loader-content', {
+        scale: 0.88,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power2.in'
+      });
+
+      // Step 2: overlay dissolves after content fades
       gsap.to(preloaderEl, {
-        yPercent: -100,
-        duration: 1.5,
-        ease: 'power2.in',
+        opacity: 0,
+        duration: 1.1,
+        delay: 0.5,
+        ease: 'power2.inOut',
         onComplete: () => {
           if (preloaderEl) preloaderEl.style.display = 'none';
           document.body.classList.add('loaded');
         }
       });
 
-      // Hero fades in simultaneously — content reveals beneath the lifting overlay
-      heroTl.play();
-      ScrollTrigger.refresh();
+      // Hero materializes as overlay dissolves
+      setTimeout(() => {
+        heroTl.play();
+        ScrollTrigger.refresh();
+      }, 500);
     }, 2500);
   }
 
