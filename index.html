@@ -66,15 +66,6 @@
     ]
   }
   </script>
-  <!-- Preloader visibility: controlled by inline script so it never flickers -->
-  <script>
-    if (sessionStorage.getItem('preloaderShown')) {
-      var s = document.createElement('style');
-      s.textContent = '#preloader{display:none!important}body.loading .loader-overlay{display:none!important}';
-      document.head.appendChild(s);
-      document.documentElement.classList.add('preloader-done');
-    }
-  </script>
 </head>
 
 <body class="loading">
@@ -217,7 +208,7 @@
         <div class="treatments-grid">
           <div class="treatment-card legal-link" data-target="treatment-skin-modal" style="cursor: pointer;"
             title="View Details">
-            <img src="/images/skin.png" alt="Skin Rejuvenation aesthetic laser treatments at Linnea Clinic Jerusalem"
+            <img src="./images/skin.png" alt="Skin Rejuvenation aesthetic laser treatments at Linnea Clinic Jerusalem"
               data-i18n-alt="alt-skin" class="treatment-img" />
             <div class="treatment-content">
               <h3 data-i18n="skin-title">Skin Rejuvenation</h3>
@@ -229,7 +220,7 @@
           </div>
           <div class="treatment-card legal-link" data-target="treatment-botox-modal" style="cursor: pointer;"
             title="View Details">
-            <img src="/images/botox.png" alt="Professional Botox and Dermal Filler Injectable treatments in Jerusalem"
+            <img src="./images/botox.png" alt="Professional Botox and Dermal Filler Injectable treatments in Jerusalem"
               data-i18n-alt="alt-botox" class="treatment-img" />
             <div class="treatment-content">
               <h3 data-i18n="botox-title">Injectables</h3>
@@ -241,7 +232,7 @@
           </div>
           <div class="treatment-card legal-link" data-target="treatment-contouring-modal" style="cursor: pointer;"
             title="View Details">
-            <img src="/images/contouring.png" alt="Expert Facial Contouring and bespoke Aesthetic Sculpting Clinic"
+            <img src="./images/contouring.png" alt="Expert Facial Contouring and bespoke Aesthetic Sculpting Clinic"
               data-i18n-alt="alt-contouring" class="treatment-img" />
             <div class="treatment-content">
               <h3 data-i18n="contouring-title">Facial Contouring</h3>

@@ -675,16 +675,6 @@ body.acc-light-bg .navbar svg {
   transform: translateY(0);
   /* Solid wipe-up exit - Restored and slowed for premium feel */
   transition: transform 1.8s cubic-bezier(0.77, 0, 0.18, 1);
-  /* CSS Safety Valve: Hard fallback in case JS fails */
-  animation: preloaderSafetyBypass 0.1s forwards 6s;
-}
-
-@keyframes preloaderSafetyBypass {
-  to { 
-    transform: translateY(-100%); 
-    pointer-events: none; 
-    visibility: hidden; 
-  }
 }
 
 body.loading .loader-overlay {

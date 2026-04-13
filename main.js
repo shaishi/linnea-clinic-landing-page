@@ -178,12 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check if preloader was already shown this session
     if (sessionStorage.getItem('preloaderShown')) {
-      const preloader = document.getElementById('preloader');
-      if (preloader) preloader.style.display = 'none';
       document.body.classList.remove('loading');
       document.body.classList.add('loaded');
-      heroTl.play();
-      ScrollTrigger.refresh();
+      if (typeof heroTl !== 'undefined' && heroTl.play) heroTl.play();
+      if (typeof ScrollTrigger !== 'undefined' && ScrollTrigger.refresh) ScrollTrigger.refresh();
       return;
     }
 
