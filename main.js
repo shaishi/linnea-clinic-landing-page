@@ -190,16 +190,21 @@ document.addEventListener('DOMContentLoaded', () => {
     sessionStorage.setItem('preloaderShown', 'true');
 
     setTimeout(() => {
-      document.body.classList.remove('loading');
-      document.body.classList.add('loaded');
+      try {
+        document.body.classList.remove('loading');
+        document.body.classList.add('loaded');
 
-      // Hero plays right as loader wipe-up finishes (matches 1.8s CSS transition)
-      setTimeout(() => {
-        heroTl.play();
-        ScrollTrigger.refresh();
-      }, 1800);
-
-    }, 2500); // 2.5 seconds slowest for a more patient brand feel
+        // Hero plays right as loader wipe-up finishes (matches 1.8s CSS transition)
+        setTimeout(() => {
+          if (typeof heroTl !== 'undefined' && heroTl.play) heroTl.play();
+          if (typeof ScrollTrigger !== 'undefined' && ScrollTrigger.refresh) ScrollTrigger.refresh();
+        }, 1800);
+      } catch (e) {
+        console.warn("Preloader transition error:", e);
+        document.body.classList.remove('loading');
+        document.body.classList.add('loaded');
+      }
+    }, 2500); 
   };
 
   // Preloader bypass
