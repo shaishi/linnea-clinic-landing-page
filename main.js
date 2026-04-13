@@ -1,6 +1,9 @@
-// --- Pre-loader Logic (Highest Priority for Reliability) ---
-// Using global gsap and Lenis from CDNs to ensure 100% stability on GH Pages
-if (typeof gsap !== 'undefined') gsap.registerPlugin(ScrollTrigger);
+import './style.css'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Lenis from 'lenis'
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Initialize Smooth Scrolling (Lenis)
 const lenis = new Lenis({
@@ -175,34 +178,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check if preloader was already shown this session
     if (sessionStorage.getItem('preloaderShown')) {
-      // Small delay to ensure browser registers initial state for a smooth transition
-      setTimeout(() => {
-        document.body.classList.remove('loading');
-        document.body.classList.add('loaded');
-        if (typeof heroTl !== 'undefined' && heroTl.play) heroTl.play();
-        if (typeof ScrollTrigger !== 'undefined' && ScrollTrigger.refresh) ScrollTrigger.refresh();
-      }, 100);
+      const preloader = document.getElementById('preloader');
+      if (preloader) preloader.style.display = 'none';
+      document.body.classList.remove('loading');
+      document.body.classList.add('loaded');
+      heroTl.play();
+      ScrollTrigger.refresh();
       return;
     }
 
     sessionStorage.setItem('preloaderShown', 'true');
 
     setTimeout(() => {
-      try {
-        document.body.classList.remove('loading');
-        document.body.classList.add('loaded');
+      document.body.classList.remove('loading');
+      document.body.classList.add('loaded');
 
-        // Hero plays right as loader wipe-up finishes (matches 1.8s CSS transition)
-        setTimeout(() => {
-          if (typeof heroTl !== 'undefined' && heroTl.play) heroTl.play();
-          if (typeof ScrollTrigger !== 'undefined' && ScrollTrigger.refresh) ScrollTrigger.refresh();
-        }, 1800);
-      } catch (e) {
-        console.warn("Preloader transition error:", e);
-        document.body.classList.remove('loading');
-        document.body.classList.add('loaded');
-      }
-    }, 2500); 
+      // Hero plays right as loader wipe-up finishes (matches 1.8s CSS transition)
+      setTimeout(() => {
+        heroTl.play();
+        ScrollTrigger.refresh();
+      }, 1800);
+
+    }, 2500); // 2.5 seconds slowest for a more patient brand feel
   };
 
   // Preloader bypass
