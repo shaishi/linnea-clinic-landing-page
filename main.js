@@ -178,10 +178,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check if preloader was already shown this session
     if (sessionStorage.getItem('preloaderShown')) {
-      document.body.classList.remove('loading');
-      document.body.classList.add('loaded');
-      if (typeof heroTl !== 'undefined' && heroTl.play) heroTl.play();
-      if (typeof ScrollTrigger !== 'undefined' && ScrollTrigger.refresh) ScrollTrigger.refresh();
+      // Small delay to ensure browser registers initial state for a smooth transition
+      setTimeout(() => {
+        document.body.classList.remove('loading');
+        document.body.classList.add('loaded');
+        if (typeof heroTl !== 'undefined' && heroTl.play) heroTl.play();
+        if (typeof ScrollTrigger !== 'undefined' && ScrollTrigger.refresh) ScrollTrigger.refresh();
+      }, 100);
       return;
     }
 
