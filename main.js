@@ -460,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "botxadv-time-val": "20 Minutes",
       "botxadv-pain-val": "Minimal",
       "botxadv-mat-val": "Botulinum Toxin"
-      ,"btn-back": "&larr; Back",
+      ,"btn-back": "Back",
       "view-treatments": "View Treatments"
 
     },
@@ -690,7 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "botxadv-time-val": "20 דקות",
       "botxadv-pain-val": "מינימלית",
       "botxadv-mat-val": "בוטולינום טוקסין"
-      ,"btn-back": "<span>&larr;</span> חזור",
+      ,"btn-back": "חזור",
       "view-treatments": "לכל הטיפולים"
 
     }

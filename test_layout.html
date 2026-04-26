@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="./style.css">
+<style>
+  body { background: #fff; color: black; }
+</style>
+</head>
+<body>
+  <div class="drill-view">Hidden drill view</div>
+  <div class="drill-view active">Active drill view</div>
+</body>
+<script>
+  setTimeout(()=>console.log(document.querySelector('.drill-view').style.visibility), 100);
+</script>
+</html>

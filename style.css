@@ -2266,22 +2266,14 @@ html[dir="rtl"] .ba-label-after {
 }
 
 .drill-view {
-  position: absolute;
-  top: 60px; /* Below the title */
-  left: 0;
+  display: none;
   width: 100%;
   opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-  pointer-events: none;
 }
 
 .drill-view.active {
-  position: relative;
-  top: 0;
+  display: block;
   opacity: 1;
-  visibility: visible;
-  pointer-events: all;
   animation: drillFadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
