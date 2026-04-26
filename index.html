@@ -5,17 +5,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
-    content="Linnéa Aesthetic Clinic in Jerusalem offers high-end, personalized aesthetic treatments including Botox, dermal fillers, and advanced skin rejuvenation therapies." />
+    content="קליניקת לינאה האסתטית בירושלים מציעה טיפולי אסתטיקה ברמה הגבוהה ביותר: בוטוקס, פילרים, הצערת עור וטיפולי פיסול פנים. ד&quot;ר שילה DMD, MSc — מומחה לאסתטיקה רפואית." />
   <meta name="keywords"
-    content="aesthetic clinic Jerusalem, botox Jerusalem, dermal fillers Israel, skin rejuvenation, aesthetic medicine, Linnéa, anti-aging" />
+    content="קליניקה אסתטית ירושלים, בוטוקס ירושלים, פילרים ירושלים, הצערת עור, רפואה אסתטית, לינאה, פיסול פנים, aesthetic clinic Jerusalem, botox Jerusalem, dermal fillers Israel" />
   <meta name="author" content="Linnéa Aesthetic Clinic" />
-  <meta property="og:title" content="Linnéa | High-End Aesthetic Clinic" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Linnéa | קליניקה אסתטית יוקרתית בירושלים" />
   <meta property="og:description"
-    content="Discover your natural radiance. High-end aesthetic treatments tailored to enhance your unique beauty in a soothing, professional environment." />
+    content="גלי את הזוהר הטבעי שלך. טיפולי אסתטיקה מותאמים אישית ברמה הגבוהה ביותר בסביבה מרגיעה ומקצועית. ד&quot;ר שילה DMD, MSc." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://shaishi.github.io/linnea-clinic-landing-page/" />
-  <meta property="og:image" content="https://shaishi.github.io/linnea-clinic-landing-page/images/botox_article.png" />
-  <title>Linnéa | High-End Aesthetic Clinic</title>
+  <meta property="og:image" content="https://shaishi.github.io/linnea-clinic-landing-page/images/hero-bg.jpg" />
+  <meta property="og:image:alt" content="קליניקת לינאה האסתטית ירושלים — טיפולים בוטוקס, פילרים, הצערת עור" />
+  <meta property="og:locale" content="he_IL" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:site_name" content="Linnéa Aesthetic Clinic" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Linnéa | קליניקה אסתטית יוקרתית בירושלים" />
+  <meta name="twitter:description" content="גלי את הזוהר הטבעי שלך. טיפולי בוטוקס, פילרים ופיסול פנים ברמה הגבוהה ביותר. ד&quot;ר שילה DMD, MSc." />
+  <meta name="twitter:image" content="https://shaishi.github.io/linnea-clinic-landing-page/images/hero-bg.jpg" />
+  <!-- Local SEO -->
+  <meta name="geo.region" content="IL-JM" />
+  <meta name="geo.placename" content="Jerusalem, Israel" />
+  <meta name="geo.position" content="31.7857;35.2007" />
+  <meta name="ICBM" content="31.7857, 35.2007" />
+  <!-- hreflang for bilingual site -->
+  <link rel="alternate" hreflang="he" href="https://shaishi.github.io/linnea-clinic-landing-page/" />
+  <link rel="alternate" hreflang="en" href="https://shaishi.github.io/linnea-clinic-landing-page/" />
+  <link rel="alternate" hreflang="x-default" href="https://shaishi.github.io/linnea-clinic-landing-page/" />
+  <title>Linnéa | קליניקה אסתטית יוקרתית בירושלים</title>
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -63,7 +82,24 @@
     "sameAs": [
       "https://www.instagram.com/linneaclinic",
       "https://www.facebook.com/linneaclinic"
-    ]
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "reviewCount": "3",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Aesthetic Treatments",
+      "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Botox Injections", "alternateName": "בוטוקס"}},
+        {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Dermal Fillers", "alternateName": "פילרים"}},
+        {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Skin Rejuvenation", "alternateName": "הצערת עור"}},
+        {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Facial Contouring", "alternateName": "פיסול פנים"}}
+      ]
+    }
   }
   </script>
 </head>
@@ -88,7 +124,7 @@
   <!-- Navbar -->
   <header class="navbar">
     <div class="container nav-container">
-      <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Toggle Menu">
+      <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="פתח תפריט ניווט" aria-expanded="false" aria-controls="main-nav-links">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -97,7 +133,7 @@
         </svg>
       </button>
       <a href="#" class="brand-logo">Linnéa<span class="brand-subtitle">aesthetics</span></a>
-      <nav class="nav-links">
+      <nav class="nav-links" id="main-nav-links" aria-label="ניווט ראשי">
         <a href="#about" data-i18n="nav-about">About</a>
         <a href="#treatments" data-i18n="nav-treatments">Treatments</a>
         <a href="#articles" data-i18n="nav-science">Science</a>
@@ -205,43 +241,223 @@
           A curated selection of high-end procedures designed to rejuvenate
           and refine.
         </p>
+        
+        <!-- Signature Category -->
+        <h3 class="category-title text-center" data-i18n="cat-signature" style="margin-top: 4rem; font-family: 'DM Serif Display', serif; color: var(--clinique-teal); font-size: 2.2rem;">Signature Treatments</h3>
         <div class="treatments-grid">
-          <div class="treatment-card legal-link" data-target="treatment-skin-modal" style="cursor: pointer;"
-            title="View Details">
-            <img src="./images/skin.png" alt="Skin Rejuvenation aesthetic laser treatments at Linnea Clinic Jerusalem"
-              data-i18n-alt="alt-skin" class="treatment-img" />
+          <div class="treatment-card legal-link" data-target="modal-ffr" style="cursor: pointer;" title="View Details">
+            <img src="./images/t_ffr_1777194492983.png" alt="Full Face Restoration" class="treatment-img" />
             <div class="treatment-content">
-              <h3 data-i18n="skin-title">Skin Rejuvenation</h3>
-              <p data-i18n="skin-desc">
-                Advanced therapies using the latest luminescence technology to
-                restore your skin's youthful glow and texture.
-              </p>
+              <h3 data-i18n="ffr-title">Full Face Restoration</h3>
+              <p data-i18n="ffr-desc">A holistic approach combining fillers and Botox for complete facial harmony and lift.</p>
             </div>
           </div>
-          <div class="treatment-card legal-link" data-target="treatment-botox-modal" style="cursor: pointer;"
-            title="View Details">
-            <img src="./images/botox.png" alt="Professional Botox and Dermal Filler Injectable treatments in Jerusalem"
-              data-i18n-alt="alt-botox" class="treatment-img" />
+        </div>
+
+        <!-- Skin Rejuvenation Category -->
+        <h3 class="category-title text-center" data-i18n="cat-skin" style="margin-top: 4rem; font-family: 'DM Serif Display', serif; color: var(--clinique-teal); font-size: 2.2rem;">Skin Rejuvenation</h3>
+        <div class="treatments-grid">
+          <div class="treatment-card legal-link" data-target="modal-pn" style="cursor: pointer;" title="View Details">
+            <img src="./images/t_pn_1777194520499.png" alt="Polynucleotides (PN)" class="treatment-img" />
             <div class="treatment-content">
-              <h3 data-i18n="botox-title">Injectables</h3>
-              <p data-i18n="botox-desc">
-                Precise, natural-looking enhancements performed by our master
-                injectors for a refreshed appearance.
-              </p>
+              <h3 data-i18n="pn-title">Polynucleotides (PN) - Salmon DNA</h3>
+              <p data-i18n="pn-desc">Innovative biological molecules promoting deep cellular regeneration and skin vitality.</p>
             </div>
           </div>
-          <div class="treatment-card legal-link" data-target="treatment-contouring-modal" style="cursor: pointer;"
-            title="View Details">
-            <img src="./images/contouring.png" alt="Expert Facial Contouring and bespoke Aesthetic Sculpting Clinic"
-              data-i18n-alt="alt-contouring" class="treatment-img" />
+          <div class="treatment-card legal-link" data-target="modal-sculptra" style="cursor: pointer;" title="View Details">
+            <img src="./images/t_sculptra_1777194549075.png" alt="Sculptra" class="treatment-img" />
             <div class="treatment-content">
-              <h3 data-i18n="contouring-title">Facial Contouring</h3>
-              <p data-i18n="contouring-desc">
-                Tailored structural treatments to define, lift, and harmonize
-                your natural facial proportions.
-              </p>
+              <h3 data-i18n="sculptra-title">Sculptra</h3>
+              <p data-i18n="sculptra-desc">A bio-stimulator that rebuilds your body's natural collagen for long-lasting firmness.</p>
             </div>
           </div>
+          <div class="treatment-card legal-link" data-target="modal-radiesse" style="cursor: pointer;" title="View Details">
+            <img src="./images/scientific_article.png" alt="Radiesse" class="treatment-img" />
+            <div class="treatment-content">
+              <h3 data-i18n="radiesse-title">Radiesse</h3>
+              <p data-i18n="radiesse-desc">Dual-action treatment offering immediate volume while stimulating collagen and elastin.</p>
+            </div>
+          </div>
+          <div class="treatment-card legal-link" data-target="modal-prp" style="cursor: pointer;" title="View Details">
+            <img src="./images/t_prp_1777194575811.png" alt="PRF / PRP" class="treatment-img" />
+            <div class="treatment-content">
+              <h3 data-i18n="prp-title">PRF / PRP</h3>
+              <p data-i18n="prp-desc">Utilizing your own body's growth factors for natural rejuvenation and tissue repair.</p>
+            </div>
+          </div>
+          <div class="treatment-card legal-link" data-target="modal-skinbooster" style="cursor: pointer;" title="View Details">
+            <img src="./images/skin.png" alt="Skin Booster" class="treatment-img" />
+            <div class="treatment-content">
+              <h3 data-i18n="skinbooster-title">Skin Booster</h3>
+              <p data-i18n="skinbooster-desc">Deep hydration treatment improving skin elasticity for a radiant, glowing complexion.</p>
+            </div>
+          </div>
+          <div class="treatment-card legal-link" data-target="modal-acne" style="cursor: pointer;" title="View Details">
+            <img src="./images/before-after-skin.png" alt="Acne Scars Treatment" class="treatment-img" />
+            <div class="treatment-content">
+              <h3 data-i18n="acne-title">Acne Scars Treatment</h3>
+              <p data-i18n="acne-desc">Combined injection techniques to blur scars and significantly improve skin texture.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Facial Contouring Category -->
+        <h3 class="category-title text-center" data-i18n="cat-contouring" style="margin-top: 4rem; font-family: 'DM Serif Display', serif; color: var(--clinique-teal); font-size: 2.2rem;">Facial Contouring</h3>
+        <div class="treatments-grid">
+           <div class="treatment-card legal-link" data-target="modal-lips" style="cursor: pointer;" title="View Details">
+            <img src="./images/t_lips_1777194610121.png" alt="Lip Enhancement" class="treatment-img" />
+            <div class="treatment-content">
+              <h3 data-i18n="lips-title">Lip Enhancement</h3>
+              <p data-i18n="lips-desc">Emphasizing lip borders, correcting asymmetry, and adding balanced natural volume.</p>
+            </div>
+          </div>
+          <div class="treatment-card legal-link" data-target="modal-jawline" style="cursor: pointer;" title="View Details">
+            <img src="./images/contouring.png" alt="Jawline & Chin Sculpting" class="treatment-img" />
+            <div class="treatment-content">
+              <h3 data-i18n="jawline-title">Jawline & Chin Sculpting</h3>
+              <p data-i18n="jawline-desc">Defining the facial frame to create a sculpted, lifted, and sharper profile.</p>
+            </div>
+          </div>
+          <div class="treatment-card legal-link" data-target="modal-nose" style="cursor: pointer;" title="View Details">
+            <img src="./images/jaw-after.png" alt="Non-Surgical Rhinoplasty" class="treatment-img" />
+            <div class="treatment-content">
+              <h3 data-i18n="nose-title">Non-Surgical Rhinoplasty</h3>
+              <p data-i18n="nose-desc">Correcting asymmetry and lifting the nasal tip precisely without surgery.</p>
+            </div>
+          </div>
+          <div class="treatment-card legal-link" data-target="modal-teartrough" style="cursor: pointer;" title="View Details">
+            <img src="./images/t_teartrough_1777194646793.png" alt="Tear Trough Filler" class="treatment-img" />
+            <div class="treatment-content">
+              <h3 data-i18n="teartrough-title">Tear Trough Filler</h3>
+              <p data-i18n="teartrough-desc">Delicate treatment to reduce dark circles and under-eye hollows for a rested look.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botox Category -->
+        <h3 class="category-title text-center" data-i18n="cat-botox" style="margin-top: 4rem; font-family: 'DM Serif Display', serif; color: var(--clinique-teal); font-size: 2.2rem;">Botox & Neuromodulators</h3>
+        <div class="treatments-grid">
+          <div class="treatment-card legal-link" data-target="modal-botx" style="cursor: pointer;" title="View Details">
+            <img src="./images/botox.png" alt="Classic Botox" class="treatment-img" />
+            <div class="treatment-content">
+              <h3 data-i18n="botx-title">Classic Botox</h3>
+              <p data-i18n="botx-desc">Relaxing expression lines in the forehead and eyes for a smooth, serene appearance.</p>
+            </div>
+          </div>
+          <div class="treatment-card legal-link" data-target="modal-botxadv" style="cursor: pointer;" title="View Details">
+            <img src="./images/botox_article.png" alt="Advanced Botox" class="treatment-img" />
+            <div class="treatment-content">
+              <h3 data-i18n="botxadv-title">Advanced Botox</h3>
+              <p data-i18n="botxadv-desc">Treating bruxism (teeth grinding) or sculpting the jawline and neck.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transformations Section (moved after treatments) -->
+    <section class="transformations section" id="transformations">
+      <div class="container">
+        <h2 class="section-title text-center" data-i18n="transformations-title">Visible Transformations</h2>
+        <p class="section-description text-center" data-i18n="transformations-desc">
+          Slide to explore our natural-looking results.
+        </p>
+        <div class="carousel-wrapper" data-carousel="transformations">
+          <button class="carousel-btn carousel-prev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15,6 9,12 15,18"/></svg>
+          </button>
+          <div class="carousel-viewport">
+            <div class="ba-grid carousel-track">
+              <!-- Item 1: Skin -->
+              <div class="ba-container">
+                <div class="ba-slider" id="ba-slider-skin">
+                  <div class="ba-image-wrapper">
+                    <img src="./images/skin-after.png" alt="After skin rejuvenation" data-i18n-alt="alt-skin-after"
+                      class="ba-after-img">
+                    <div class="ba-before-clip">
+                      <img src="./images/skin-before.png" alt="Before skin rejuvenation" data-i18n-alt="alt-skin-before"
+                        class="ba-before-img">
+                    </div>
+                    <div class="ba-handle">
+                      <div class="ba-handle-line"></div>
+                      <div class="ba-handle-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <polyline points="9,6 15,12 9,18" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <polyline points="15,6 9,12 15,18" />
+                        </svg>
+                      </div>
+                      <div class="ba-handle-line"></div>
+                    </div>
+                    <span class="ba-label ba-label-before" data-i18n="slider-before">Before</span>
+                    <span class="ba-label ba-label-after" data-i18n="slider-after">After</span>
+                  </div>
+                </div>
+                <h3 style="color: var(--aura-cream); font-size: 1.5rem; margin-top: 1rem;" data-i18n="skin-title">Skin Rejuvenation</h3>
+              </div>
+              <!-- Item 2: Lips -->
+              <div class="ba-container">
+                <div class="ba-slider" id="ba-slider-lips">
+                  <div class="ba-image-wrapper">
+                    <img src="./images/lips-after.png" alt="After lip enhancement" data-i18n-alt="alt-lips-after"
+                      class="ba-after-img">
+                    <div class="ba-before-clip">
+                      <img src="./images/lips-before.png" alt="Before lip enhancement" data-i18n-alt="alt-lips-before"
+                        class="ba-before-img">
+                    </div>
+                    <div class="ba-handle">
+                      <div class="ba-handle-line"></div>
+                      <div class="ba-handle-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <polyline points="9,6 15,12 9,18" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <polyline points="15,6 9,12 15,18" />
+                        </svg>
+                      </div>
+                      <div class="ba-handle-line"></div>
+                    </div>
+                    <span class="ba-label ba-label-before" data-i18n="slider-before">Before</span>
+                    <span class="ba-label ba-label-after" data-i18n="slider-after">After</span>
+                  </div>
+                </div>
+                <h3 style="color: var(--aura-cream); font-size: 1.5rem; margin-top: 1rem;" data-i18n="article2-title">Dermal Fillers</h3>
+              </div>
+              <!-- Item 3: Jawline -->
+              <div class="ba-container">
+                <div class="ba-slider" id="ba-slider-jaw">
+                  <div class="ba-image-wrapper">
+                    <img src="./images/jawline-after.png" alt="After jawline contouring" data-i18n-alt="alt-jawline-after"
+                      class="ba-after-img">
+                    <div class="ba-before-clip">
+                      <img src="./images/jawline-before.png" alt="Before jawline contouring"
+                        data-i18n-alt="alt-jawline-before" class="ba-before-img">
+                    </div>
+                    <div class="ba-handle">
+                      <div class="ba-handle-line"></div>
+                      <div class="ba-handle-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <polyline points="9,6 15,12 9,18" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <polyline points="15,6 9,12 15,18" />
+                        </svg>
+                      </div>
+                      <div class="ba-handle-line"></div>
+                    </div>
+                    <span class="ba-label ba-label-before" data-i18n="slider-before">Before</span>
+                    <span class="ba-label ba-label-after" data-i18n="slider-after">After</span>
+                  </div>
+                </div>
+                <h3 style="color: var(--aura-cream); font-size: 1.5rem; margin-top: 1rem;" data-i18n="contouring-title">Facial Contouring</h3>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-btn carousel-next" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>
+          </button>
+          <div class="carousel-dots-row"></div>
         </div>
       </div>
     </section>
@@ -256,151 +472,60 @@
           Explore our expert articles on aesthetic medicine, treatments, and
           the science of longevity.
         </p>
-        <div class="articles-grid">
-          <div class="treatment-card article-card">
-            <img src="./images/botox_article.png"
-              alt="The Art of Botox: Expert Neuromodulator Treatments and Wrinkle Smoothing"
-              data-i18n-alt="alt-article-botox" class="treatment-img" />
-            <div class="treatment-content">
-              <h3 data-i18n="article1-title">The Art of Botox</h3>
-              <p data-i18n="article1-desc">
-                Discover how precise neuromodulator treatments can smooth
-                wrinkles while maintaining your natural expressions.
-              </p>
-              <a href="article-botox.html" class="btn btn-secondary mt-4" data-i18n="read-more"
-                style="padding: 0.5rem 1.5rem; font-size: 0.9rem">Read More</a>
-            </div>
-          </div>
-          <div class="treatment-card article-card">
-            <img src="./images/fillers_article.png"
-              alt="Mastering Dermal Fillers: Volume Restoration and Facial Balancing Techniques"
-              data-i18n-alt="alt-article-fillers" class="treatment-img" />
-            <div class="treatment-content">
-              <h3 data-i18n="article2-title">Mastering Dermal Fillers</h3>
-              <p data-i18n="article2-desc">
-                Learn about the subtleties of facial contouring and restoring
-                volume for a youthful, balanced appearance.
-              </p>
-              <a href="article-fillers.html" class="btn btn-secondary mt-4" data-i18n="read-more"
-                style="padding: 0.5rem 1.5rem; font-size: 0.9rem">Read More</a>
-            </div>
-          </div>
-          <div class="treatment-card article-card">
-            <img src="./images/scientific_article.png"
-              alt="The Science of Longevity and Cellular Health in Modern Aesthetic Medicine"
-              data-i18n-alt="alt-article-scientific" class="treatment-img" />
-            <div class="treatment-content">
-              <h3 data-i18n="article3-title">The Science of Longevity</h3>
-              <p data-i18n="article3-desc">
-                Delve into our evidence-based approach combining aesthetic
-                treatments with cellular health and graceful aging.
-              </p>
-              <a href="article-scientific.html" class="btn btn-secondary mt-4" data-i18n="read-more"
-                style="padding: 0.5rem 1.5rem; font-size: 0.9rem">Read More</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Transformations Section -->
-    <section class="transformations section" id="transformations">
-      <div class="container">
-        <h2 class="section-title text-center" data-i18n="transformations-title">Visible Transformations</h2>
-        <p class="section-description text-center" data-i18n="transformations-desc">
-          Slide to explore our natural-looking results.
-        </p>
-
-        <div class="ba-grid">
-          <!-- Item 1: Skin -->
-          <div class="ba-container">
-            <div class="ba-slider" id="ba-slider-skin">
-              <div class="ba-image-wrapper">
-                <img src="./images/skin-after.png" alt="After skin rejuvenation" data-i18n-alt="alt-skin-after"
-                  class="ba-after-img">
-                <div class="ba-before-clip">
-                  <img src="./images/skin-before.png" alt="Before skin rejuvenation" data-i18n-alt="alt-skin-before"
-                    class="ba-before-img">
+        <div class="carousel-wrapper" data-carousel="articles">
+          <button class="carousel-btn carousel-prev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15,6 9,12 15,18"/></svg>
+          </button>
+          <div class="carousel-viewport">
+            <div class="articles-grid carousel-track">
+              <div class="treatment-card article-card">
+                <img src="./images/botox_article.png"
+                  alt="The Art of Botox: Expert Neuromodulator Treatments and Wrinkle Smoothing"
+                  data-i18n-alt="alt-article-botox" class="treatment-img" />
+                <div class="treatment-content">
+                  <h3 data-i18n="article1-title">The Art of Botox</h3>
+                  <p data-i18n="article1-desc">
+                    Discover how precise neuromodulator treatments can smooth
+                    wrinkles while maintaining your natural expressions.
+                  </p>
+                  <a href="article-botox.html" class="btn btn-secondary mt-4" data-i18n="read-more"
+                    style="padding: 0.5rem 1.5rem; font-size: 0.9rem">Read More</a>
                 </div>
-                <div class="ba-handle">
-                  <div class="ba-handle-line"></div>
-                  <div class="ba-handle-circle">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                      <polyline points="9,6 15,12 9,18" />
-                    </svg>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                      <polyline points="15,6 9,12 15,18" />
-                    </svg>
-                  </div>
-                  <div class="ba-handle-line"></div>
+              </div>
+              <div class="treatment-card article-card">
+                <img src="./images/fillers_article.png"
+                  alt="Mastering Dermal Fillers: Volume Restoration and Facial Balancing Techniques"
+                  data-i18n-alt="alt-article-fillers" class="treatment-img" />
+                <div class="treatment-content">
+                  <h3 data-i18n="article2-title">Mastering Dermal Fillers</h3>
+                  <p data-i18n="article2-desc">
+                    Learn about the subtleties of facial contouring and restoring
+                    volume for a youthful, balanced appearance.
+                  </p>
+                  <a href="article-fillers.html" class="btn btn-secondary mt-4" data-i18n="read-more"
+                    style="padding: 0.5rem 1.5rem; font-size: 0.9rem">Read More</a>
                 </div>
-                <span class="ba-label ba-label-before" data-i18n="slider-before">Before</span>
-                <span class="ba-label ba-label-after" data-i18n="slider-after">After</span>
+              </div>
+              <div class="treatment-card article-card">
+                <img src="./images/scientific_article.png"
+                  alt="The Science of Longevity and Cellular Health in Modern Aesthetic Medicine"
+                  data-i18n-alt="alt-article-scientific" class="treatment-img" />
+                <div class="treatment-content">
+                  <h3 data-i18n="article3-title">The Science of Longevity</h3>
+                  <p data-i18n="article3-desc">
+                    Delve into our evidence-based approach combining aesthetic
+                    treatments with cellular health and graceful aging.
+                  </p>
+                  <a href="article-scientific.html" class="btn btn-secondary mt-4" data-i18n="read-more"
+                    style="padding: 0.5rem 1.5rem; font-size: 0.9rem">Read More</a>
+                </div>
               </div>
             </div>
-            <h3 style="color: var(--aura-cream); font-size: 1.5rem; margin-top: 1rem;" data-i18n="skin-title">Skin
-              Rejuvenation</h3>
           </div>
-
-          <!-- Item 2: Lips -->
-          <div class="ba-container">
-            <div class="ba-slider" id="ba-slider-lips">
-              <div class="ba-image-wrapper">
-                <img src="./images/lips-after.png" alt="After lip enhancement" data-i18n-alt="alt-lips-after"
-                  class="ba-after-img">
-                <div class="ba-before-clip">
-                  <img src="./images/lips-before.png" alt="Before lip enhancement" data-i18n-alt="alt-lips-before"
-                    class="ba-before-img">
-                </div>
-                <div class="ba-handle">
-                  <div class="ba-handle-line"></div>
-                  <div class="ba-handle-circle">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                      <polyline points="9,6 15,12 9,18" />
-                    </svg>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                      <polyline points="15,6 9,12 15,18" />
-                    </svg>
-                  </div>
-                  <div class="ba-handle-line"></div>
-                </div>
-                <span class="ba-label ba-label-before" data-i18n="slider-before">Before</span>
-                <span class="ba-label ba-label-after" data-i18n="slider-after">After</span>
-              </div>
-            </div>
-            <h3 style="color: var(--aura-cream); font-size: 1.5rem; margin-top: 1rem;" data-i18n="article2-title">Dermal
-              Fillers</h3>
-          </div>
-
-          <!-- Item 3: Jawline -->
-          <div class="ba-container">
-            <div class="ba-slider" id="ba-slider-jaw">
-              <div class="ba-image-wrapper">
-                <img src="./images/jawline-after.png" alt="After jawline contouring" data-i18n-alt="alt-jawline-after"
-                  class="ba-after-img">
-                <div class="ba-before-clip">
-                  <img src="./images/jawline-before.png" alt="Before jawline contouring"
-                    data-i18n-alt="alt-jawline-before" class="ba-before-img">
-                </div>
-                <div class="ba-handle">
-                  <div class="ba-handle-line"></div>
-                  <div class="ba-handle-circle">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                      <polyline points="9,6 15,12 9,18" />
-                    </svg>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                      <polyline points="15,6 9,12 15,18" />
-                    </svg>
-                  </div>
-                  <div class="ba-handle-line"></div>
-                </div>
-                <span class="ba-label ba-label-before" data-i18n="slider-before">Before</span>
-                <span class="ba-label ba-label-after" data-i18n="slider-after">After</span>
-              </div>
-            </div>
-            <h3 style="color: var(--aura-cream); font-size: 1.5rem; margin-top: 1rem;" data-i18n="contouring-title">
-              Facial Contouring</h3>
-          </div>
+          <button class="carousel-btn carousel-next" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>
+          </button>
+          <div class="carousel-dots-row"></div>
         </div>
       </div>
     </section>
@@ -411,25 +536,33 @@
         <h2 class="section-title text-center" data-i18n="reviews-title">What Our Clients Say</h2>
         <p class="section-description text-center" data-i18n="reviews-subtitle">Google Reviews</p>
 
-        <div class="reviews-grid">
-          <div class="review-card">
-            <div class="review-stars">★★★★★</div>
-            <p class="review-text" data-i18n="review1-text">"An amazing experience from start to finish. The results are
-              super natural and I felt so taken care of."</p>
-            <p class="review-author" data-i18n="review1-author">Michal R.</p>
+        <div class="carousel-wrapper" data-carousel="reviews">
+          <button class="carousel-btn carousel-prev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15,6 9,12 15,18"/></svg>
+          </button>
+          <div class="carousel-viewport">
+            <div class="reviews-grid carousel-track">
+              <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text" data-i18n="review1-text">"An amazing experience from start to finish. The results are super natural and I felt so taken care of."</p>
+                <p class="review-author" data-i18n="review1-author">Michal R.</p>
+              </div>
+              <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text" data-i18n="review2-text">"Dr. Shiloh is a true artist. My skin has never looked better, and most importantly, it still looks like ME."</p>
+                <p class="review-author" data-i18n="review2-author">David L.</p>
+              </div>
+              <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text" data-i18n="review3-text">"Professional, hygienic, and very high-end. Highly recommended for anyone looking for quality."</p>
+                <p class="review-author" data-i18n="review3-author">Sarah B.</p>
+              </div>
+            </div>
           </div>
-          <div class="review-card">
-            <div class="review-stars">★★★★★</div>
-            <p class="review-text" data-i18n="review2-text">"Dr. Shiloh is a true artist. My skin has never looked
-              better, and most importantly, it still looks like ME."</p>
-            <p class="review-author" data-i18n="review2-author">David L.</p>
-          </div>
-          <div class="review-card">
-            <div class="review-stars">★★★★★</div>
-            <p class="review-text" data-i18n="review3-text">"Professional, hygienic, and very high-end. Highly
-              recommended for anyone looking for quality."</p>
-            <p class="review-author" data-i18n="review3-author">Sarah B.</p>
-          </div>
+          <button class="carousel-btn carousel-next" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>
+          </button>
+          <div class="carousel-dots-row"></div>
         </div>
 
         <div class="text-center">
@@ -527,10 +660,10 @@
 
 
   <!-- Book Consultation Modal -->
-  <div class="modal-overlay" id="booking-modal">
+  <div class="modal-overlay" id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
     <div class="modal-content">
-      <button class="close-modal" id="close-modal">&times;</button>
-      <h2 class="modal-title" data-i18n="modal-title">Book a Consultation</h2>
+      <button class="close-modal" id="close-modal" aria-label="סגור חלון">&times;</button>
+      <h2 class="modal-title" id="booking-modal-title" data-i18n="modal-title">Book a Consultation</h2>
       <p class="modal-desc" data-i18n="modal-desc">
         Take the first step towards your natural radiance.
       </p>
@@ -578,6 +711,7 @@
           <textarea id="other-details" name="other_details" placeholder="Tell us more about what you're looking for..."
             data-i18n-placeholder="placeholder-other-details" rows="3"></textarea>
         </div>
+        <p class="form-consent" data-i18n="form-consent" style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.75rem;line-height:1.5;">בהגשת טופס זה, אני מסכים/ה לאיסוף ועיבוד פרטיי האישיים לצורך יצירת קשר בנוגע לבקשת הייעוץ, בהתאם למדיניות הפרטיות שלנו.</p>
         <button type="submit" class="btn btn-primary w-100" data-i18n="btn-submit">
           Submit Request
         </button>
@@ -586,10 +720,10 @@
   </div>
 
   <!-- Legal Modals -->
-  <div class="modal-overlay legal-modal-overlay" id="accessibility-stmt-modal">
+  <div class="modal-overlay legal-modal-overlay" id="accessibility-stmt-modal" role="dialog" aria-modal="true" aria-labelledby="accessibility-stmt-title">
     <div class="modal-content legal-modal-content">
-      <button class="close-modal legal-close" data-close="accessibility-stmt-modal">&times;</button>
-      <h2 class="modal-title" data-i18n="nav-accessibility">Accessibility Statement</h2>
+      <button class="close-modal legal-close" data-close="accessibility-stmt-modal" aria-label="סגור חלון">&times;</button>
+      <h2 class="modal-title" id="accessibility-stmt-title" data-i18n="nav-accessibility">Accessibility Statement</h2>
       <div class="modal-body">
 
         <div data-lang="en">
@@ -650,10 +784,10 @@
 
 
 
-  <div class="modal-overlay legal-modal-overlay" id="treatment-skin-modal">
+  <div class="modal-overlay legal-modal-overlay" id="treatment-skin-modal" role="dialog" aria-modal="true" aria-labelledby="treatment-skin-title">
     <div class="modal-content legal-modal-content" style="max-width: 500px;">
-      <button class="close-modal legal-close" data-close="treatment-skin-modal">&times;</button>
-      <h2 class="modal-title" data-i18n="skin-title" style="margin-bottom: 1.5rem;">Skin Rejuvenation</h2>
+      <button class="close-modal legal-close" data-close="treatment-skin-modal" aria-label="סגור חלון">&times;</button>
+      <h2 class="modal-title" id="treatment-skin-title" data-i18n="skin-title" style="margin-bottom: 1.5rem;">Skin Rejuvenation</h2>
       <div class="modal-body">
         <ul style="list-style: none; padding: 0; line-height: 2.2;">
           <li><strong data-i18n="modal-time-lbl" style="color:var(--clinique-teal);">Time:</strong> <span
@@ -672,10 +806,10 @@
     </div>
   </div>
 
-  <div class="modal-overlay legal-modal-overlay" id="treatment-botox-modal">
+  <div class="modal-overlay legal-modal-overlay" id="treatment-botox-modal" role="dialog" aria-modal="true" aria-labelledby="treatment-botox-title">
     <div class="modal-content legal-modal-content" style="max-width: 500px;">
-      <button class="close-modal legal-close" data-close="treatment-botox-modal">&times;</button>
-      <h2 class="modal-title" data-i18n="botox-title" style="margin-bottom: 1.5rem;">Injectables</h2>
+      <button class="close-modal legal-close" data-close="treatment-botox-modal" aria-label="סגור חלון">&times;</button>
+      <h2 class="modal-title" id="treatment-botox-title" data-i18n="botox-title" style="margin-bottom: 1.5rem;">Injectables</h2>
       <div class="modal-body">
         <ul style="list-style: none; padding: 0; line-height: 2.2;">
           <li><strong data-i18n="modal-time-lbl" style="color:var(--clinique-teal);">Time:</strong> <span
@@ -694,10 +828,10 @@
     </div>
   </div>
 
-  <div class="modal-overlay legal-modal-overlay" id="treatment-contouring-modal">
+  <div class="modal-overlay legal-modal-overlay" id="treatment-contouring-modal" role="dialog" aria-modal="true" aria-labelledby="treatment-contouring-title">
     <div class="modal-content legal-modal-content" style="max-width: 500px;">
-      <button class="close-modal legal-close" data-close="treatment-contouring-modal">&times;</button>
-      <h2 class="modal-title" data-i18n="contouring-title" style="margin-bottom: 1.5rem;">Facial Contouring</h2>
+      <button class="close-modal legal-close" data-close="treatment-contouring-modal" aria-label="סגור חלון">&times;</button>
+      <h2 class="modal-title" id="treatment-contouring-title" data-i18n="contouring-title" style="margin-bottom: 1.5rem;">Facial Contouring</h2>
       <div class="modal-body">
         <ul style="list-style: none; padding: 0; line-height: 2.2;">
           <li><strong data-i18n="modal-time-lbl" style="color:var(--clinique-teal);">Time:</strong> <span
@@ -716,10 +850,10 @@
     </div>
   </div>
 
-  <div class="modal-overlay legal-modal-overlay" id="privacy-modal">
+  <div class="modal-overlay legal-modal-overlay" id="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
     <div class="modal-content legal-modal-content">
-      <button class="close-modal legal-close" data-close="privacy-modal">&times;</button>
-      <h2 class="modal-title" data-i18n="nav-privacy">Privacy Policy</h2>
+      <button class="close-modal legal-close" data-close="privacy-modal" aria-label="סגור חלון">&times;</button>
+      <h2 class="modal-title" id="privacy-modal-title" data-i18n="nav-privacy">Privacy Policy</h2>
       <div class="modal-body">
 
         <div data-lang="en">
@@ -804,10 +938,10 @@
 
 
 
-  <div class="modal-overlay legal-modal-overlay" id="terms-modal">
+  <div class="modal-overlay legal-modal-overlay" id="terms-modal" role="dialog" aria-modal="true" aria-labelledby="terms-modal-title">
     <div class="modal-content legal-modal-content">
-      <button class="close-modal legal-close" data-close="terms-modal">&times;</button>
-      <h2 class="modal-title" data-i18n="nav-terms">Terms of Use</h2>
+      <button class="close-modal legal-close" data-close="terms-modal" aria-label="סגור חלון">&times;</button>
+      <h2 class="modal-title" id="terms-modal-title" data-i18n="nav-terms">Terms of Use</h2>
       <div class="modal-body">
 
         <div data-lang="en">
@@ -883,8 +1017,8 @@
 
   <!-- Accessibility Widget -->
   <div class="accessibility-widget" id="accessibility-widget">
-    <button class="accessibility-toggle" id="accessibility-toggle" aria-label="Accessibility Options"
-      title="Accessibility">
+    <button class="accessibility-toggle" id="accessibility-toggle" aria-label="אפשרויות נגישות"
+      title="נגישות" aria-expanded="false" aria-controls="accessibility-panel">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
         class="acc-icon" style="stroke: none;">
         <circle cx="12" cy="4" r="2" />

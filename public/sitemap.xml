@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://shaishi.github.io/linnea-clinic-landing-page/</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://shaishi.github.io/linnea-clinic-landing-page/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shaishi.github.io/linnea-clinic-landing-page/"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://shaishi.github.io/linnea-clinic-landing-page/article-botox.html</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://shaishi.github.io/linnea-clinic-landing-page/article-botox.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shaishi.github.io/linnea-clinic-landing-page/article-botox.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://shaishi.github.io/linnea-clinic-landing-page/article-fillers.html</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://shaishi.github.io/linnea-clinic-landing-page/article-fillers.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shaishi.github.io/linnea-clinic-landing-page/article-fillers.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://shaishi.github.io/linnea-clinic-landing-page/article-scientific.html</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://shaishi.github.io/linnea-clinic-landing-page/article-scientific.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://shaishi.github.io/linnea-clinic-landing-page/article-scientific.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

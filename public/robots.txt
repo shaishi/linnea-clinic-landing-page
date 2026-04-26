@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shaishi.github.io/linnea-clinic-landing-page/sitemap.xml

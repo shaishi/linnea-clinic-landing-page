@@ -201,8 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         delay: 0.5,
         ease: 'power2.inOut',
         onComplete: () => {
-          if (preloaderEl) preloaderEl.style.display = 'none';
-          document.body.classList.add('loaded');
+          document.body.classList.add('loaded'); // CSS instantly enforces display:none
         }
       });
 
@@ -245,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "article-scientific-title": "Linnéa | The Science of Longevity",
       "nav-home": "Home",
       "nav-articles": "Articles",
+      "btn-book": "Book Consultation",
       "hero-title": "Your Natural Radiance, Effortlessly Refined",
       "hero-subtitle": "High-end aesthetic treatments tailored to enhance your unique beauty in a soothing, professional environment.",
       "about-title": "Cultivating Aesthetic Harmony",
@@ -328,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "read-more": "Read More",
       "success-title": "Thank You!",
       "success-msg": "Your request has been received. We will contact you shortly.",
+      "form-consent": "By submitting this form, you consent to the collection and processing of your personal information solely for the purpose of contacting you regarding your consultation request, in accordance with our Privacy Policy.",
       "article1-title": "The Art of Botox",
       "article1-subtitle": "A deep dive into neuromodulators and natural expression.",
       "article1-desc": "Discover how precise neuromodulator treatments can smooth wrinkles while maintaining your natural expressions.",
@@ -391,7 +392,76 @@ document.addEventListener('DOMContentLoaded', () => {
       "doc-title": "Our Doctors",
       "doc-name": "Dr. Shiloh DMD, MSc",
       "doc-p1": "Dr. Shiloh, the clinic’s lead physician, is a graduate of the Hebrew University of Jerusalem and Hadassah Medical Center, holding both a DMD degree and an MSc in Medical Big Data. His unique background combines advanced medical training with technological expertise from Unit 8200, enabling an innovation-driven, research-oriented, and technology-focused approach to aesthetic medicine and injectables.",
-      "doc-p2": "Dr. Shiloh’s philosophy is rooted in precise minimalism - clean, refined, and natural-looking treatments that preserve facial harmony and authenticity. Each treatment is carefully tailored, with meticulous attention to detail and close, personalized guidance throughout the entire journey, with the understanding that exceptional results should not only look natural, but feel right. At the clinic, only FDA-approved materials are used, reflecting an uncompromising commitment to excellence, safety, and long-term outcomes."
+      "doc-p2": "Dr. Shiloh’s philosophy is rooted in precise minimalism - clean, refined, and natural-looking treatments that preserve facial harmony and authenticity. Each treatment is carefully tailored, with meticulous attention to detail and close, personalized guidance throughout the entire journey, with the understanding that exceptional results should not only look natural, but feel right. At the clinic, only FDA-approved materials are used, reflecting an uncompromising commitment to excellence, safety, and long-term outcomes.",
+      "cat-signature": "Signature Treatments",
+      "cat-skin": "Skin Rejuvenation",
+      "cat-contouring": "Facial Contouring",
+      "cat-botox": "Botox & Neuromodulators",
+      "ffr-title": "Full Face Restoration",
+      "ffr-desc": "A holistic approach combining fillers and Botox for complete facial harmony and lift.",
+      "ffr-time-val": "60-90 Minutes",
+      "ffr-pain-val": "Mild (Topical Anesthetic)",
+      "ffr-mat-val": "Hyaluronic Acid, Botox, Bio-stimulators",
+      "pn-title": "Polynucleotides (PN) - Salmon DNA",
+      "pn-desc": "Innovative biological molecules promoting deep cellular regeneration and skin vitality.",
+      "pn-time-val": "30-45 Minutes",
+      "pn-pain-val": "Minimal (Topical Anesthetic)",
+      "pn-mat-val": "Polynucleotides",
+      "sculptra-title": "Sculptra",
+      "sculptra-desc": "A bio-stimulator that rebuilds your body's natural collagen for long-lasting firmness.",
+      "sculptra-time-val": "45-60 Minutes",
+      "sculptra-pain-val": "Minimal (Topical Anesthetic)",
+      "sculptra-mat-val": "Poly-L-Lactic Acid (PLLA)",
+      "radiesse-title": "Radiesse",
+      "radiesse-desc": "Dual-action treatment offering immediate volume while stimulating collagen and elastin.",
+      "radiesse-time-val": "30-45 Minutes",
+      "radiesse-pain-val": "Mild",
+      "radiesse-mat-val": "Calcium Hydroxylapatite",
+      "prp-title": "PRF / PRP",
+      "prp-desc": "Utilizing your own body's growth factors for natural rejuvenation and tissue repair.",
+      "prp-time-val": "45-60 Minutes",
+      "prp-pain-val": "Mild (Topical Anesthetic)",
+      "prp-mat-val": "Platelet-Rich Plasma/Fibrin",
+      "skinbooster-title": "Skin Booster",
+      "skinbooster-desc": "Deep hydration treatment improving skin elasticity for a radiant, glowing complexion.",
+      "skinbooster-time-val": "20-30 Minutes",
+      "skinbooster-pain-val": "Minimal",
+      "skinbooster-mat-val": "Lightweight Hyaluronic Acid",
+      "acne-title": "Acne Scars Treatment",
+      "acne-desc": "Combined injection techniques to blur scars and significantly improve skin texture.",
+      "acne-time-val": "45-60 Minutes",
+      "acne-pain-val": "Moderate (Topical)",
+      "acne-mat-val": "Bio-stimulators / Fillers",
+      "lips-title": "Lip Enhancement",
+      "lips-desc": "Emphasizing lip borders, correcting asymmetry, and adding balanced natural volume.",
+      "lips-time-val": "30-45 Minutes",
+      "lips-pain-val": "Mild (Topical Anesthetic)",
+      "lips-mat-val": "Dedicated Hyaluronic Acid",
+      "jawline-title": "Jawline & Chin Sculpting",
+      "jawline-desc": "Defining the facial frame to create a sculpted, lifted, and sharper profile.",
+      "jawline-time-val": "45 Minutes",
+      "jawline-pain-val": "Mild",
+      "jawline-mat-val": "High-Density Hyaluronic Acid / Radiesse",
+      "nose-title": "Non-Surgical Rhinoplasty",
+      "nose-desc": "Correcting asymmetry and lifting the nasal tip precisely without surgery.",
+      "nose-time-val": "20-30 Minutes",
+      "nose-pain-val": "Minimal",
+      "nose-mat-val": "Hyaluronic Acid",
+      "teartrough-title": "Tear Trough Filler",
+      "teartrough-desc": "Delicate treatment to reduce dark circles and under-eye hollows for a rested look.",
+      "teartrough-time-val": "30 Minutes",
+      "teartrough-pain-val": "Minimal",
+      "teartrough-mat-val": "Hyaluronic Acid",
+      "botx-title": "Classic Botox",
+      "botx-desc": "Relaxing expression lines in the forehead and eyes for a smooth, serene appearance.",
+      "botx-time-val": "15-20 Minutes",
+      "botx-pain-val": "Virtually None",
+      "botx-mat-val": "Botulinum Toxin",
+      "botxadv-title": "Advanced Botox",
+      "botxadv-desc": "Treating bruxism (teeth grinding) or sculpting the jawline and neck.",
+      "botxadv-time-val": "20 Minutes",
+      "botxadv-pain-val": "Minimal",
+      "botxadv-mat-val": "Botulinum Toxin"
     },
     he: {
       "nav-about": "אודות",
@@ -461,6 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "alert-success": "תודה על פנייתך! צוות הקליניקה ייצור איתך קשר בהקדם.",
       "success-title": "תודה רבה!",
       "success-msg": "פנייתך התקבלה. ניצור איתך קשר בהקדם.",
+      "form-consent": "בהגשת טופס זה, אני מסכים/ה לאיסוף ועיבוד פרטיי האישיים לצורך יצירת קשר בנוגע לבקשת הייעוץ, בהתאם למדיניות הפרטיות שלנו.",
       "nav-accessibility": "הצהרת נגישות",
       "nav-privacy": "מדיניות פרטיות",
       "nav-terms": "תנאי שימוש באתר",
@@ -548,7 +619,76 @@ document.addEventListener('DOMContentLoaded', () => {
       "doc-title": "הרופאים שלנו",
       "doc-name": "ד\"ר שילה DMD, MSc",
       "doc-p1": "ד\"ר שילה, הרופא הראשי במרפאה, הוא בוגר האוניברסיטה העברית והמרכז הרפואי הדסה, ובעל תואר DMD ותואר MSc בביג דאטה רפואי. הרקע הייחודי שלו, המשלב הכשרה רפואית מתקדמת עם ניסיון טכנולוגי מיחידת 8200, מאפשר גישה מוכוונת חדשנות, מחקר וטכנולוגיה בתחום האסתטיקה הרפואית וההזרקות.",
-      "doc-p2": "הגישה של ד\"ר שילה מבוססת על מינימליזם מדויק - טיפולים נקיים, אסתטיים וטבעיים, תוך שמירה על הרמוניה ואותנטיות של תווי הפנים. כל טיפול מותאם באופן אישי, עם הקפדה על פרטים קטנים וליווי צמוד לאורך כל הדרך, מתוך הבנה שתוצאה מצוינת אינה רק נראית טבעית - אלא גם מרגישה נכון. במרפאה נעשה שימוש בלעדי בחומרים המאושרים על ידי ה-FDA, כחלק ממחויבות בלתי מתפשרת לאיכות, בטיחות ותוצאות ארוכות טווח."
+      "doc-p2": "הגישה של ד\"ר שילה מבוססת על מינימליזם מדויק - טיפולים נקיים, אסתטיים וטבעיים, תוך שמירה על הרמוניה ואותנטיות של תווי הפנים. כל טיפול מותאם באופן אישי, עם הקפדה על פרטים קטנים וליווי צמוד לאורך כל הדרך, מתוך הבנה שתוצאה מצוינת אינה רק נראית טבעית - אלא גם מרגישה נכון. במרפאה נעשה שימוש בלעדי בחומרים המאושרים על ידי ה-FDA, כחלק ממחויבות בלתי מתפשרת לאיכות, בטיחות ותוצאות ארוכות טווח.",
+      "cat-signature": "טיפולים משולבים (Signature)",
+      "cat-skin": "הצערת וחידוש העור",
+      "cat-contouring": "פיסול ועיצוב תווי פנים",
+      "cat-botox": "טיפולי בוטולינום טוקסין (בוטוקס)",
+      "ffr-title": "פיסול פנים מלא",
+      "ffr-desc": "גישה הוליסטית המשלבת חומרי מילוי ובוטוקס ליצירת הרמוניה, הרמה והצערה.",
+      "ffr-time-val": "60-90 דקות",
+      "ffr-pain-val": "קלה (אלחוש מקומי)",
+      "ffr-mat-val": "חומצה היאלרונית, בוטוקס וביוסטימולטורים",
+      "pn-title": "פולינוקלאוטידים (PN)",
+      "pn-desc": "טיפול חדשני המעודד התחדשות תאית עמוקה, שיפור דרמטי בחיוניות ומרקם העור.",
+      "pn-time-val": "30-45 דקות",
+      "pn-pain-val": "מינימלית (אילחוש)",
+      "pn-mat-val": "פולינוקלאוטידים",
+      "sculptra-title": "סקולפטרה (Sculptra)",
+      "sculptra-desc": "ביוסטימולטור המחדש קולגן טבעי למיצוק ושיפור איכות העור לטווח ארוך.",
+      "sculptra-time-val": "45-60 דקות",
+      "sculptra-pain-val": "מינימלית (אלחוש מקומי)",
+      "sculptra-mat-val": "חומצה פולי-לקטית (PLLA)",
+      "radiesse-title": "רדיאס (Radiesse)",
+      "radiesse-desc": "חומר המעניק מילוי בנוסף לגירוי ייצור קולגן ואלסטין לשיפור מוצקות העור.",
+      "radiesse-time-val": "30-45 דקות",
+      "radiesse-pain-val": "קלה",
+      "radiesse-mat-val": "סידן הידרוקסיאפטיט",
+      "prp-title": "PRF / PRP",
+      "prp-desc": "שימוש בפקטורי גדילה מדם המטופל להצערה טבעית ולשיקום רקמות.",
+      "prp-time-val": "45-60 דקות",
+      "prp-pain-val": "קלה (אלחוש מקומי)",
+      "prp-mat-val": "פלזמה עשירה בטסיות",
+      "skinbooster-title": "סקין בוסטר",
+      "skinbooster-desc": "לחות עמוקה לשכבות העור, שיפור האלסטיות ומראה קורן, זוהר ורענן.",
+      "skinbooster-time-val": "20-30 דקות",
+      "skinbooster-pain-val": "מינימלית",
+      "skinbooster-mat-val": "חומצה היאלרונית דלילה",
+      "acne-title": "טיפול בצלקות אקנה",
+      "acne-desc": "שילוב טכניקות וחומרים לטשטוש והחלקת צלקות ושיפור משמעותי במרקם.",
+      "acne-time-val": "45-60 דקות",
+      "acne-pain-val": "בינונית (אלחוש מקומי)",
+      "acne-mat-val": "ביוסטימולטורים / חומרי מילוי",
+      "lips-title": "עיצוב ועיבוי שפתיים",
+      "lips-desc": "הדגשת מסגרת, תיקון אסימטריה והוספת נפח בצורה פרופורציונלית וטבעית.",
+      "lips-time-val": "30-45 דקות",
+      "lips-pain-val": "קלה (אלחוש מקומי)",
+      "lips-mat-val": "חומצה היאלרונית ייעודית לשפתיים",
+      "jawline-title": "עיצוב קו לסת וסנטר",
+      "jawline-desc": "חיטוב מסגרת הפנים ליצירת מראה מפוסל, מורם וחד המדגיש את קווי הפנים.",
+      "jawline-time-val": "45 דקות",
+      "jawline-pain-val": "קלה",
+      "jawline-mat-val": "חומצה היאלרונית סמיכה / רדיאס",
+      "nose-title": "פיסול אף",
+      "nose-desc": "תיקון אסימטריה, הרמת הקצה והחלקת גבנון במדויק ללא כירורגיה.",
+      "nose-time-val": "20-30 דקות",
+      "nose-pain-val": "מינימלית",
+      "nose-mat-val": "חומצה היאלרונית",
+      "teartrough-title": "מילוי שקעי עיניים",
+      "teartrough-desc": "הפחתת מראה העיגולים השחורים תחת העיניים למראה ערני וצעיר.",
+      "teartrough-time-val": "30 דקות",
+      "teartrough-pain-val": "מינימלית",
+      "teartrough-mat-val": "חומצה היאלרונית לאזור העיניים",
+      "botx-title": "בוטוקס (החלקת קמטים)",
+      "botx-desc": "הרפיית שרירי ההבעה במצח ובצידי העיניים למראה נינוח וחלק.",
+      "botx-time-val": "15-20 דקות",
+      "botx-pain-val": "אפסית",
+      "botx-mat-val": "בוטולינום טוקסין",
+      "botxadv-title": "בוטוקס מתקדם",
+      "botxadv-desc": "לטיפול בחריקת שיניים (ברוקסיזם) וחיטוב קו הצוואר והלסת (קו נפרטיטי).",
+      "botxadv-time-val": "20 דקות",
+      "botxadv-pain-val": "מינימלית",
+      "botxadv-mat-val": "בוטולינום טוקסין"
     }
   };
 
@@ -635,14 +775,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (mobileNavToggle && navLinks) {
     mobileNavToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+      const isOpen = navLinks.classList.toggle('active');
+      mobileNavToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
     // Close menu when clicking a link
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('active');
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
       });
+    });
+
+    // Close menu when clicking outside the navbar
+    document.addEventListener('click', (e) => {
+      if (navLinks.classList.contains('active') &&
+          !navLinks.contains(e.target) &&
+          !mobileNavToggle.contains(e.target)) {
+        navLinks.classList.remove('active');
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
+      }
     });
   }
 
@@ -669,6 +821,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close on click outside
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
+        modal.classList.remove('active');
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
         modal.classList.remove('active');
       }
     });
@@ -758,6 +917,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Close legal modals on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      legalModals.forEach(m => m.classList.remove('active'));
+    }
+  });
+
   // Cookie Banner
   const cookieBanner = document.getElementById('cookie-banner');
   const cookieAccept = document.getElementById('cookie-accept');
@@ -786,7 +952,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (accToggle && accPanel) {
     accToggle.addEventListener('click', () => {
-      accPanel.classList.toggle('active');
+      const isOpen = accPanel.classList.toggle('active');
+      accToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
     });
 
     if (accClose) {
@@ -828,6 +995,136 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }
+
+  // ─── Carousels (desktop + mobile) ──────────────────────────────────
+  function initCarousel(wrapper) {
+    const type = wrapper.dataset.carousel;
+    const track = wrapper.querySelector('.carousel-track');
+    const viewport = wrapper.querySelector('.carousel-viewport');
+    const prevBtn = wrapper.querySelector('.carousel-prev');
+    const nextBtn = wrapper.querySelector('.carousel-next');
+    const dotsRow = wrapper.querySelector('.carousel-dots-row');
+    if (!track || !viewport || !prevBtn || !nextBtn || !dotsRow) return;
+
+    const items = Array.from(track.children);
+    const total = items.length;
+    let current = 0;
+    let prevIpv = -1;
+
+    function getIpv() {
+      if (window.innerWidth <= 768) return 1;
+      return type === 'transformations' ? 1 : 3;
+    }
+
+    function getGap() {
+      // Read the actual computed column-gap in pixels
+      return parseFloat(getComputedStyle(track).columnGap) || 0;
+    }
+
+    function getItemW() {
+      const ipv = getIpv();
+      const gap = getGap();
+      // Total visible = ipv items + (ipv-1) gaps
+      return (viewport.offsetWidth - (ipv - 1) * gap) / ipv;
+    }
+
+    function applyTransform(animate) {
+      const itemW = getItemW();
+      const gap = getGap();
+      const step = itemW + gap; // shift per item = item width + one gap
+      if (!animate) track.style.transition = 'none';
+      track.style.transform = `translateX(${-current * step}px)`;
+      if (!animate) { track.offsetHeight; track.style.transition = ''; }
+    }
+
+    function updateDots() {
+      dotsRow.querySelectorAll('.carousel-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+      });
+    }
+
+    function goTo(index) {
+      const ipv = getIpv();
+      const max = Math.max(0, total - ipv);
+      current = index > max ? 0 : index < 0 ? max : index;
+      applyTransform(true);
+      updateDots();
+    }
+
+    function layout() {
+      const ipv = getIpv();
+      const itemW = getItemW();
+
+      // Reset heights so natural content height can be measured
+      items.forEach(item => {
+        item.style.height = '';
+        item.style.flex = `0 0 ${itemW}px`;
+        item.style.width = `${itemW}px`;
+        item.style.maxWidth = `${itemW}px`;
+      });
+
+      // Rebuild dots when items-per-view changes
+      if (ipv !== prevIpv) {
+        prevIpv = ipv;
+        const max = Math.max(0, total - ipv);
+        dotsRow.innerHTML = '';
+        for (let i = 0; i <= max; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot';
+          dot.setAttribute('aria-label', `Slide ${i + 1} of ${max + 1}`);
+          const idx = i;
+          dot.addEventListener('click', () => goTo(idx));
+          dotsRow.appendChild(dot);
+        }
+      }
+
+      // Clamp position and re-render without animation
+      const max = Math.max(0, total - ipv);
+      if (current > max) current = 0;
+      applyTransform(false);
+      updateDots();
+
+      // Equalize all card heights to the tallest card
+      requestAnimationFrame(() => {
+        const maxH = Math.max(...items.map(i => i.offsetHeight));
+        if (maxH > 0) items.forEach(item => { item.style.height = `${maxH}px`; });
+      });
+    }
+
+    // Wire buttons and touch only once
+    if (!wrapper.dataset.carouselInit) {
+      wrapper.dataset.carouselInit = 'true';
+
+      prevBtn.addEventListener('click', () => goTo(current - 1));
+      nextBtn.addEventListener('click', () => goTo(current + 1));
+
+      if (type !== 'transformations') {
+        let sx = 0;
+        track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+        track.addEventListener('touchend', e => {
+          const diff = sx - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+        }, { passive: true });
+      }
+    }
+
+    // Store layout fn for resize calls
+    wrapper._carouselLayout = layout;
+    layout();
+  }
+
+  document.querySelectorAll('.carousel-wrapper').forEach(initCarousel);
+
+  // Re-layout on resize (debounced)
+  let _carouselResizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(_carouselResizeTimer);
+    _carouselResizeTimer = setTimeout(() => {
+      document.querySelectorAll('.carousel-wrapper').forEach(w => {
+        if (w._carouselLayout) w._carouselLayout();
+      });
+    }, 150);
+  });
 
   // ─── Before / After Slider ───────────────────────────────────────
   document.querySelectorAll('.ba-slider').forEach(slider => {
