@@ -2300,9 +2300,9 @@ html[dir="rtl"] .ba-label-after {
 }
 
 .btn-back-categories {
-  background: transparent;
+  background: var(--aura-cream);
   border: 1px solid var(--aura-cream);
-  color: var(--aura-cream);
+  color: var(--clinique-teal-dark);
   font-size: 1rem;
   font-family: var(--font-serif);
   cursor: pointer;
@@ -2319,9 +2319,8 @@ html[dir="rtl"] .ba-label-after {
 }
 
 .btn-back-categories:hover {
-  background: var(--aura-cream);
-  color: var(--clinique-teal-dark);
-  box-shadow: 0 8px 25px rgba(97, 125, 120, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .btn-back-categories span {
