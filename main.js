@@ -460,6 +460,9 @@ document.addEventListener('DOMContentLoaded', () => {
       "botxadv-time-val": "20 Minutes",
       "botxadv-pain-val": "Minimal",
       "botxadv-mat-val": "Botulinum Toxin"
+      ,"btn-back": "&larr; Back",
+      "view-treatments": "View Treatments"
+
     },
     he: {
       "nav-about": "אודות",
@@ -687,6 +690,9 @@ document.addEventListener('DOMContentLoaded', () => {
       "botxadv-time-val": "20 דקות",
       "botxadv-pain-val": "מינימלית",
       "botxadv-mat-val": "בוטולינום טוקסין"
+      ,"btn-back": "<span>&larr;</span> חזור",
+      "view-treatments": "לכל הטיפולים"
+
     }
   };
 
@@ -886,6 +892,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+
+  // Drill-Down / Nested Carousel Logic
+  const categoryTriggers = document.querySelectorAll('.category-trigger');
+  const backBtns = document.querySelectorAll('.btn-back-categories');
+  const drillViews = document.querySelectorAll('.drill-view');
+  
+  const switchDrillView = (targetId) => {
+    drillViews.forEach(view => {
+      view.classList.remove('active');
+    });
+    const targetView = document.getElementById(targetId);
+    if (targetView) {
+      targetView.classList.add('active');
+      // Trigger resize event or layout recalculation so the hidden carousels calculate correct widths!
+      setTimeout(() => {
+        const wrapper = targetView.querySelector('.carousel-wrapper');
+        if (wrapper && wrapper._carouselLayout) {
+          wrapper._carouselLayout();
+        }
+        window.dispatchEvent(new Event('resize'));
+      }, 50);
+    }
+  };
+
+  categoryTriggers.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = btn.getAttribute('data-target-sub');
+      switchDrillView(targetId);
+      // Optional: scroll slightly to center the view
+      const section = document.getElementById('treatments');
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  backBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchDrillView('treatments-categories-view');
+    });
+  });
 
   // Legal Modals
   const legalLinks = document.querySelectorAll('.legal-link');
