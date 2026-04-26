@@ -6,7 +6,7 @@ try {
   if (typeof Lenis !== 'undefined') {
     // Initialize Smooth Scrolling (Lenis)
     lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
@@ -54,12 +54,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Hero Intro Animation ---
-  const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.5 } });
+  const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.0 } });
 
   heroTl
-    .fromTo('.hero-title', { opacity: 0, y: 30 }, { opacity: 1, y: 0, delay: 0.3 })
-    .fromTo('.hero-subtitle', { opacity: 0, y: 30 }, { opacity: 1, y: 0 }, '-=1.2')
-    .fromTo('.hero-btn', { opacity: 0, y: 30 }, { opacity: 1, y: 0 }, '-=1.2');
+    .fromTo('.hero-title', { opacity: 0, y: 20 }, { opacity: 1, y: 0, delay: 0.15 })
+    .fromTo('.hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8')
+    .fromTo('.hero-btn', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8');
 
   // --- Pre-loader Removal (GSAP block removed in favor of CSS transition below) ---
 
@@ -83,14 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sectionTitle) {
       sectionTl.fromTo(sectionTitle,
         { opacity: 0, y: -50 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
       );
     }
 
     if (sectionDesc) {
       sectionTl.fromTo(sectionDesc,
         { opacity: 0, y: -30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
         '-=0.6'
       );
     }
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (cards.length > 0) {
       sectionTl.fromTo(cards,
         { opacity: 0, y: -60 },
-        { opacity: 1, y: 0, duration: 1.0, stagger: 0.15, ease: 'power3.out' },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out' },
         '-=0.6'
       );
     }
@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       opacity: 1,
       x: 0,
-      duration: 1.2,
-      stagger: 0.3,
+      duration: 0.7,
+      stagger: 0.15,
       ease: 'power3.out'
     }
   );
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       opacity: 1,
       scale: 1,
-      duration: 1.5,
+      duration: 0.9,
       ease: 'power2.out'
     }
   );
@@ -188,15 +188,15 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.to('.loader-content', {
         scale: 0.88,
         opacity: 0,
-        duration: 0.7,
+        duration: 0.4,
         ease: 'power2.in'
       });
 
       // Step 2: overlay dissolves after content fades
       gsap.to(preloaderEl, {
         opacity: 0,
-        duration: 1.1,
-        delay: 0.5,
+        duration: 0.7,
+        delay: 0.3,
         ease: 'power2.inOut',
         onComplete: () => {
           document.body.classList.add('loaded'); // CSS instantly enforces display:none
