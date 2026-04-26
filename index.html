@@ -44,7 +44,7 @@
   <link rel="preload" as="image" href="./images/hero-bg.jpg" fetchpriority="high" />
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23617d78'/><text x='50' y='70' font-family='serif' font-size='60' fill='%23f4efdf' text-anchor='middle'>L</text></svg>" />
-  <link rel="stylesheet" href="./style.css?v=8" />
+  <link rel="stylesheet" href="./style.css?v=9" />
   
   <!-- Critical Libraries (CDN for Local/GH Pages) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -255,17 +255,10 @@
             </button>
             <div class="carousel-viewport">
               <div class="treatments-grid carousel-track">
-                <!-- Signature -->
-                <div class="treatment-card category-trigger" data-target-sub="sub-signature" style="cursor: pointer; display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/t_ffr_1777194492983.png" alt="Signature" class="treatment-img" />
-                  <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
-                    <h3 data-i18n="cat-signature" style="font-family: var(--font-serif);">Signature Treatments</h3>
-                    <button class="btn btn-primary" style="margin-top: auto; padding: 0.6rem 1.5rem; font-size: 0.9rem; font-family: var(--font-sans); letter-spacing: 0.05em;" data-i18n="view-treatments">View Treatments</button>
-                  </div>
-                </div>
+                
                 <!-- Skin -->
                 <div class="treatment-card category-trigger" data-target-sub="sub-skin" style="cursor: pointer; display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/t_sculptra_1777194549075.png" alt="Skin Rejuvenation" class="treatment-img" />
+                  <img src="./images/aesthetic_aesthetic_skin.png" alt="Skin Rejuvenation" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="cat-skin" style="font-family: var(--font-serif);">Skin Rejuvenation</h3>
                     <button class="btn btn-primary" style="margin-top: auto; padding: 0.6rem 1.5rem; font-size: 0.9rem; font-family: var(--font-sans); letter-spacing: 0.05em;" data-i18n="view-treatments">View Treatments</button>
@@ -273,7 +266,7 @@
                 </div>
                 <!-- Contouring -->
                 <div class="treatment-card category-trigger" data-target-sub="sub-contouring" style="cursor: pointer; display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/contouring.png" alt="Facial Contouring" class="treatment-img" />
+                  <img src="./images/aesthetic_face.png" alt="Facial Contouring" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="cat-contouring" style="font-family: var(--font-serif);">Facial Contouring</h3>
                     <button class="btn btn-primary" style="margin-top: auto; padding: 0.6rem 1.5rem; font-size: 0.9rem; font-family: var(--font-sans); letter-spacing: 0.05em;" data-i18n="view-treatments">View Treatments</button>
@@ -281,7 +274,7 @@
                 </div>
                 <!-- Botox -->
                 <div class="treatment-card category-trigger" data-target-sub="sub-botox" style="cursor: pointer; display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/botox.png" alt="Botox & Neuromodulators" class="treatment-img" />
+                  <img src="./images/aesthetic_botox.png" alt="Botox & Neuromodulators" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="cat-botox" style="font-family: var(--font-serif);">Botox & Neuromodulators</h3>
                     <button class="btn btn-primary" style="margin-top: auto; padding: 0.6rem 1.5rem; font-size: 0.9rem; font-family: var(--font-sans); letter-spacing: 0.05em;" data-i18n="view-treatments">View Treatments</button>
@@ -296,34 +289,6 @@
           </div>
         </div>
 
-        <!-- View 2: Sub-Carousel - Signature -->
-        <div id="sub-signature" class="drill-view">
-          <div class="drill-header">
-            <button class="btn-back-categories"><span>&larr;</span> <span data-i18n="btn-back">Back</span></button>
-            <h3 data-i18n="cat-signature">Signature Treatments</h3>
-            <div style="width:100px;"></div>
-          </div>
-          <div class="carousel-wrapper" data-carousel="signature">
-            <button class="carousel-btn carousel-prev" aria-label="Previous">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15,6 9,12 15,18"/></svg>
-            </button>
-            <div class="carousel-viewport">
-              <div class="treatments-grid carousel-track" style="justify-content: center;">
-                <div class="treatment-card legal-link" data-target="modal-ffr" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/t_ffr_1777194492983.png" alt="Full Face Restoration" class="treatment-img" />
-                  <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
-                    <h3 data-i18n="ffr-title">Full Face Restoration</h3>
-                    <p data-i18n="ffr-desc">A holistic approach combining fillers and Botox for complete facial harmony and lift.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button class="carousel-btn carousel-next" aria-label="Next">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>
-            </button>
-            <div class="carousel-dots-row"></div>
-          </div>
-        </div>
 
         <!-- View 3: Sub-Carousel - Skin -->
         <div id="sub-skin" class="drill-view">
@@ -339,35 +304,35 @@
             <div class="carousel-viewport">
               <div class="treatments-grid carousel-track">
                 <div class="treatment-card legal-link" data-target="modal-pn" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/t_pn_1777194520499.png" alt="Polynucleotides (PN)" class="treatment-img" />
+                  <img src="./images/aesthetic_face.png" alt="Polynucleotides (PN)" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="pn-title">Polynucleotides (PN)</h3>
                     <p data-i18n="pn-desc">Innovative biological molecules promoting deep cellular regeneration and skin vitality.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-sculptra" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/t_sculptra_1777194549075.png" alt="Sculptra" class="treatment-img" />
+                  <img src="./images/aesthetic_aesthetic_skin.png" alt="Sculptra" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="sculptra-title">Sculptra</h3>
                     <p data-i18n="sculptra-desc">A bio-stimulator that rebuilds your body's natural collagen for long-lasting firmness.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-radiesse" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/scientific_article.png" alt="Radiesse" class="treatment-img" />
+                  <img src="./images/aesthetic_aesthetic_skin.png" alt="Radiesse" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="radiesse-title">Radiesse</h3>
                     <p data-i18n="radiesse-desc">Dual-action treatment offering immediate volume while stimulating collagen and elastin.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-skinbooster" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/skin.png" alt="Skin Booster" class="treatment-img" />
+                  <img src="./images/aesthetic_skin.png" alt="Skin Booster" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="skinbooster-title">Skin Booster</h3>
                     <p data-i18n="skinbooster-desc">Deep hydration treatment improving skin elasticity for a radiant, glowing complexion.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-acne" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/before-after-skin.png" alt="Acne Scars Treatment" class="treatment-img" />
+                  <img src="./images/aesthetic_skin.png" alt="Acne Scars Treatment" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="acne-title">Acne Scars Treatment</h3>
                     <p data-i18n="acne-desc">Combined injection techniques to blur scars and significantly improve skin texture.</p>
@@ -395,29 +360,36 @@
             </button>
             <div class="carousel-viewport">
               <div class="treatments-grid carousel-track">
+<div class="treatment-card legal-link" data-target="modal-ffr" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
+                  <img src="./images/aesthetic_face.png" alt="Full Face Restoration" class="treatment-img" />
+                  <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+                    <h3 data-i18n="ffr-title">Full Face Restoration</h3>
+                    <p data-i18n="ffr-desc">A holistic approach combining fillers and Botox for complete facial harmony and lift.</p>
+                  </div>
+                </div>
                 <div class="treatment-card legal-link" data-target="modal-lips" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/t_lips_1777194610121.png" alt="Lip Enhancement" class="treatment-img" />
+                  <img src="./images/aesthetic_lips.png" alt="Lip Enhancement" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="lips-title">Lip Enhancement</h3>
                     <p data-i18n="lips-desc">Emphasizing lip borders, correcting asymmetry, and adding balanced natural volume.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-jawline" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/contouring.png" alt="Jawline & Chin Sculpting" class="treatment-img" />
+                  <img src="./images/aesthetic_jawline.png" alt="Jawline & Chin Sculpting" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="jawline-title">Jawline & Chin Sculpting</h3>
                     <p data-i18n="jawline-desc">Defining the facial frame to create a sculpted, lifted, and sharper profile.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-nose" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/jaw-after.png" alt="Non-Surgical Rhinoplasty" class="treatment-img" />
+                  <img src="./images/aesthetic_nose.png" alt="Non-Surgical Rhinoplasty" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="nose-title">Non-Surgical Rhinoplasty</h3>
                     <p data-i18n="nose-desc">Correcting asymmetry and lifting the nasal tip precisely without surgery.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-teartrough" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/t_teartrough_1777194646793.png" alt="Tear Trough Filler" class="treatment-img" />
+                  <img src="./images/aesthetic_face.png" alt="Tear Trough Filler" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="teartrough-title">Tear Trough Filler</h3>
                     <p data-i18n="teartrough-desc">Delicate treatment to reduce dark circles and under-eye hollows for a rested look.</p>
@@ -446,14 +418,14 @@
             <div class="carousel-viewport">
               <div class="treatments-grid carousel-track" style="justify-content: center;">
                 <div class="treatment-card legal-link" data-target="modal-botx" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/botox.png" alt="Classic Botox" class="treatment-img" />
+                  <img src="./images/aesthetic_botox.png" alt="Classic Botox" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="botx-title">Classic Botox</h3>
                     <p data-i18n="botx-desc">Relaxing expression lines in the forehead and eyes for a smooth, serene appearance.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-botxadv" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/botox_article.png" alt="Advanced Botox" class="treatment-img" />
+                  <img src="./images/aesthetic_botox.png" alt="Advanced Botox" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="botxadv-title">Advanced Botox</h3>
                     <p data-i18n="botxadv-desc">Treating bruxism (teeth grinding) or sculpting the jawline and neck.</p>
@@ -623,7 +595,7 @@
                 </div>
               </div>
               <div class="treatment-card article-card" style="display: flex; flex-direction: column; height: 100%;">
-                <img src="./images/scientific_article.png"
+                <img src="./images/aesthetic_aesthetic_skin.png"
                   alt="The Science of Longevity and Cellular Health in Modern Aesthetic Medicine"
                   data-i18n-alt="alt-article-scientific" class="treatment-img" />
                 <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
