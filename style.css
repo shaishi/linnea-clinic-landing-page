@@ -2291,7 +2291,7 @@ html[dir="rtl"] .ba-label-after {
 }
 
 .drill-header h3 {
-  font-family: 'DM Serif Display', serif;
+  font-family: var(--font-serif);
   color: var(--clinique-teal);
   font-size: 2.2rem;
   margin: 0;
