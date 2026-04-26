@@ -2300,25 +2300,31 @@ html[dir="rtl"] .ba-label-after {
 }
 
 .btn-back-categories {
-  background: none;
-  border: none;
-  color: var(--text-dark);
-  font-size: 1.1rem;
-  font-family: 'Outfit', sans-serif;
+  background: transparent;
+  border: 1px solid var(--clinique-teal-dark);
+  color: var(--clinique-teal-dark);
+  font-size: 1rem;
+  font-family: var(--font-serif);
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  transition: color 0.3s ease;
-  width: 100px;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  transition: all 0.4s ease;
+  width: auto;
+  min-width: 120px;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
 .btn-back-categories:hover {
-  color: var(--clinique-teal);
+  background: var(--clinique-teal-dark);
+  color: var(--aura-cream);
+  box-shadow: 0 8px 25px rgba(97, 125, 120, 0.2);
 }
 
 .btn-back-categories span {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   line-height: 1;
 }
