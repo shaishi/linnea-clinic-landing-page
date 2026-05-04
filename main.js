@@ -244,10 +244,10 @@ document.addEventListener('DOMContentLoaded', () => {
       "nav-articles": "Articles",
       "btn-book": "Book Consultation",
       "hero-title": "Your Natural Radiance, Effortlessly Refined",
-      "hero-subtitle": "High-end aesthetic treatments tailored to enhance your unique beauty in a soothing, professional environment.",
+      "hero-subtitle": "High-end aesthetic treatments tailored to enhance your unique beauty in a soothing, professional environment. Consultations are conducted by a dual-doctor team for maximum precision and harmonious results.",
       "about-title": "Cultivating Aesthetic Harmony",
       "about-p1": "At Linnéa, we believe that aesthetic enhancement isn't about altering your appearance, but rather cultivating the harmony that already exists within you. Our boutique clinic provides an inviting, human-centered experience where advanced science meets customized care.",
-      "about-p2": "Every treatment is precisely tailored, leaving you looking luminous, pure, and naturally balanced.",
+      "about-p2": "Every treatment is precisely tailored, leaving you looking luminous, pure, and naturally balanced. What sets us apart is our unique consultation model, conducted jointly by two doctors. This collaboration ensures a comprehensive assessment, highly precise treatment planning, and a perfectly harmonious result.",
       "treatments-title": "Our Treatments",
       "treatments-desc": "A curated selection of high-end procedures designed to rejuvenate and refine.",
       "skin-title": "Skin Rejuvenation",
@@ -391,6 +391,10 @@ document.addEventListener('DOMContentLoaded', () => {
       "doc-name": "Dr. Shiloh DMD, MSc",
       "doc-p1": "Dr. Shiloh, the clinic’s lead physician, is a graduate of the Hebrew University of Jerusalem and Hadassah Medical Center, holding both a DMD degree and an MSc in Medical Big Data. His unique background combines advanced medical training with technological expertise from Unit 8200, enabling an innovation-driven, research-oriented, and technology-focused approach to aesthetic medicine and injectables.",
       "doc-p2": "Dr. Shiloh’s philosophy is rooted in precise minimalism - clean, refined, and natural-looking treatments that preserve facial harmony and authenticity. Each treatment is carefully tailored, with meticulous attention to detail and close, personalized guidance throughout the entire journey, with the understanding that exceptional results should not only look natural, but feel right. At the clinic, only FDA-approved materials are used, reflecting an uncompromising commitment to excellence, safety, and long-term outcomes.",
+      "doc2-name": "Dr. Yasmine Khoury",
+      "doc2-p1": "Dr. Yasmine Khoury, a dental physician and biomedical researcher, graduated with honors from the Hebrew University of Jerusalem, completing both a DMD and an MSc in Dental Sciences. Her background combines academic excellence, advanced research experience, and participation in the international scientific arena—forming the foundation for a precise, up-to-date, and evidence-based clinical approach.",
+      "doc2-p2": "Dr. Khoury's professional approach focuses on dental aesthetics with a minimalist and precise touch—gentle, clean, and natural treatments that preserve the harmony and authenticity of the smile. Every treatment is fully personalized, with meticulous attention to detail and a pursuit of elegant results that don't look 'done' but blend naturally into the overall appearance.",
+      "doc2-p3": "Alongside her clinical work, Dr. Khoury is involved in instructing and teaching students and professionals in the field, driven by a commitment to high standards, uncompromising safety, and continuous development. For her, aesthetic dentistry is a fusion of science, precision, and art—where the goal is not just to improve appearance but to create a result that feels right, natural, and safe for every patient.",
       "cat-signature": "Signature Treatments",
       "cat-skin": "Skin Rejuvenation",
       "cat-contouring": "Facial Contouring",
@@ -472,10 +476,10 @@ document.addEventListener('DOMContentLoaded', () => {
       "nav-contact": "צור קשר",
       "btn-book": "קביעת פגישה",
       "hero-title": "גלי את הזוהר הטבעי שלך",
-      "hero-subtitle": "טיפולים אסתטיים ברמה הגבוהה ביותר, המותאמים אישית להעצמת היופי הייחודי שלך באווירה מרגיעה ומקצועית.",
+      "hero-subtitle": "טיפולים אסתטיים ברמה הגבוהה ביותר, המותאמים אישית להעצמת היופי הייחודי שלך באווירה מרגיעה ומקצועית. הייעוץ בקליניקה מבוצע על ידי צמד רופאים לדיוק מקסימלי ותוצאה הרמונית.",
       "about-title": "טיפוח הרמוניה אסתטית",
       "about-p1": "אצל לינאה, אנו מאמינים ששיפור אסתטי אינו רק שינוי המראה שלך, אלא טיפוח ההרמוניה שכבר קיימת בך. קליניקת הבוטיק שלנו מספקת חוויה מזמינה ואנושית שבה מדע מתקדם פוגש טיפול מותאם אישית.",
-      "about-p2": "כל טיפול מותאם בקפידה, ומעניק לך מראה זוהר, טהור ומאוזן באופן טבעי.",
+      "about-p2": "כל טיפול מותאם בקפידה, ומעניק לך מראה זוהר, טהור ומאוזן באופן טבעי. מה שמייחד אותנו הוא מודל הייעוץ שלנו, המבוצע על ידי שני רופאים יחד. שיתוף הפעולה הזה מבטיח אבחון מקיף, תכנון טיפול מדויק ביותר ותוצאה הרמונית ומושלמת.",
       "treatments-title": "הטיפולים שלנו",
       "treatments-desc": "מבחר מוקפד של הליכים מתקדמים שנועדו לחדש ולעדן.",
       "skin-title": "הצערת העור",
@@ -621,6 +625,10 @@ document.addEventListener('DOMContentLoaded', () => {
       "doc-name": "ד\"ר שילה DMD, MSc",
       "doc-p1": "ד\"ר שילה, הרופא הראשי במרפאה, הוא בוגר האוניברסיטה העברית והמרכז הרפואי הדסה, ובעל תואר DMD ותואר MSc בביג דאטה רפואי. הרקע הייחודי שלו, המשלב הכשרה רפואית מתקדמת עם ניסיון טכנולוגי מיחידת 8200, מאפשר גישה מוכוונת חדשנות, מחקר וטכנולוגיה בתחום האסתטיקה הרפואית וההזרקות.",
       "doc-p2": "הגישה של ד\"ר שילה מבוססת על מינימליזם מדויק - טיפולים נקיים, אסתטיים וטבעיים, תוך שמירה על הרמוניה ואותנטיות של תווי הפנים. כל טיפול מותאם באופן אישי, עם הקפדה על פרטים קטנים וליווי צמוד לאורך כל הדרך, מתוך הבנה שתוצאה מצוינת אינה רק נראית טבעית - אלא גם מרגישה נכון. במרפאה נעשה שימוש בלעדי בחומרים המאושרים על ידי ה-FDA, כחלק ממחויבות בלתי מתפשרת לאיכות, בטיחות ותוצאות ארוכות טווח.",
+      "doc2-name": "ד”ר יסמין ח’ורי",
+      "doc2-p1": "ד”ר יסמין ח’ורי, רופאת שיניים וחוקרת בתחום הביו-רפואה, היא בוגרת האוניברסיטה העברית בירושלים, שם השלימה בהצטיינות תואר DMD ותואר MSc במדעי רפואת השיניים. הרקע שלה משלב מצוינות אקדמית, ניסיון מחקרי מתקדם והשתתפות בזירה המדעית הבינלאומית – ומהווה בסיס לגישה קלינית מדויקת, עדכנית ומבוססת ראיות.",
+      "doc2-p2": "הקו המקצועי של ד”ר ח’ורי מתמקד באסתטיקה דנטלית בגישה מינימליסטית ומדויקת – טיפולים עדינים, נקיים וטבעיים, תוך שמירה על הרמוניה ואותנטיות של החיוך. כל טיפול נבנה בהתאמה אישית מלאה, עם תשומת לב לפרטים הקטנים ולשאיפה לתוצאה אלגנטית שאינה “עשויה”, אלא משתלבת באופן טבעי במראה הכללי.",
+      "doc2-p3": "לצד עבודתה הקלינית, ד”ר ח’ורי עוסקת בהדרכה והוראה של סטודנטים ואנשי מקצוע בתחום, מתוך מחויבות לסטנדרטים גבוהים, בטיחות בלתי מתפשרת והתפתחות מתמדת. עבורה, רפואת שיניים אסתטית היא שילוב בין מדע, דיוק ואומנות – כאשר המטרה אינה רק לשפר את המראה, אלא ליצור תוצאה שמרגישה נכונה, טבעית ובטוחה לכל מטופל.",
       "cat-signature": "טיפולים משולבים (Signature)",
       "cat-skin": "הצערת וחידוש העור",
       "cat-contouring": "פיסול ועיצוב תווי פנים",
@@ -1058,7 +1066,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getIpv() {
       if (window.innerWidth <= 768) return 1;
-      return type === 'transformations' ? 1 : 3;
+      return type === 'transformations' ? 1 : (type === 'doctors' ? 2 : 3);
     }
 
     function getGap() {

@@ -208,37 +208,67 @@
     <section class="doctors section" id="doctors"
       style="background: linear-gradient(135deg, var(--clinique-teal-dark) 0%, var(--clinique-teal) 100%);">
       <div class="container" style="padding: 3rem 1rem;">
-        <div style="display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap;">
-          <div style="flex: 0 0 300px; max-width: 300px;" class="reveal">
-            <img src="./images/doctor_shilo.png"
-              alt="Dr. Shiloh DMD MSc, Lead Dentist at Linnéa Aesthetic Clinic Jerusalem" data-i18n-alt="alt-dr-shilo"
-              loading="lazy"
-              style="width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.25);" />
+        
+        <div class="carousel-wrapper" data-carousel="doctors">
+          <button class="carousel-btn carousel-prev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15,6 9,12 15,18"/></svg>
+          </button>
+          
+          <div class="carousel-viewport">
+            <div class="carousel-track" style="display: flex; gap: 2rem; align-items: stretch;">
+              
+              <!-- Doctor 1 -->
+              <div class="doctor-card reveal" style="display: flex; flex-direction: column; gap: 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(244, 239, 223, 0.15); border-radius: 20px; padding: 2rem; align-items: center; text-align: center;">
+                <div style="flex: 0 0 auto; width: 100%;">
+                  <p style="font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); margin-bottom: 1rem;" data-i18n="doc-title">Our Doctors</p>
+                  <img src="./images/doctor_shilo.png"
+                    alt="Dr. Shiloh DMD MSc, Lead Dentist at Linnéa Aesthetic Clinic Jerusalem" data-i18n-alt="alt-dr-shilo"
+                    loading="lazy"
+                    style="width: 100%; max-width: 250px; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); margin: 0 auto 1.5rem auto; display: block;" />
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                  <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--aura-cream); margin: 0 0 1.5rem; line-height: 1.2;" data-i18n="doc-name">Dr. Shiloh DMD, MSc</h2>
+                  <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.88); margin-bottom: 1.25rem;" data-i18n="doc-p1">
+                    Dr. Shiloh, the clinic's lead physician, is a graduate of the Hebrew University of Jerusalem and Hadassah Medical Center, holding both a DMD degree and an MSc in Medical Big Data. His unique background combines advanced medical training with technological expertise from Unit 8200, enabling an innovation-driven, research-oriented, and technology-focused approach to aesthetic medicine and injectables.
+                  </p>
+                  <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.88);" data-i18n="doc-p2">
+                    Dr. Shiloh's philosophy is rooted in precise minimalism - clean, refined, and natural-looking treatments that preserve facial harmony and authenticity. Each treatment is carefully tailored, with meticulous attention to detail and close, personalized guidance throughout the entire journey, with the understanding that exceptional results should not only look natural, but feel right. At the clinic, only FDA-approved materials are used, reflecting an uncompromising commitment to excellence, safety, and long-term outcomes.
+                  </p>
+                </div>
+              </div>
+              
+              <!-- Doctor 2 -->
+              <div class="doctor-card reveal" style="display: flex; flex-direction: column; gap: 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(244, 239, 223, 0.15); border-radius: 20px; padding: 2rem; align-items: center; text-align: center;">
+                <div style="flex: 0 0 auto; width: 100%;">
+                  <p style="font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); margin-bottom: 1rem;" data-i18n="doc-title">Our Doctors</p>
+                  <img src="./images/dr_yasmine_khoury.png"
+                    alt="Dr. Yasmine Khoury"
+                    loading="lazy"
+                    style="width: 100%; max-width: 250px; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); margin: 0 auto 1.5rem auto; display: block;" />
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                  <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--aura-cream); margin: 0 0 1.5rem; line-height: 1.2;" data-i18n="doc2-name">Dr. Yasmine Khoury</h2>
+                  <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.88); margin-bottom: 1.25rem;" data-i18n="doc2-p1">
+                    ...
+                  </p>
+                  <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.88); margin-bottom: 1.25rem;" data-i18n="doc2-p2">
+                    ...
+                  </p>
+                  <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.88);" data-i18n="doc2-p3">
+                    ...
+                  </p>
+                </div>
+              </div>
+
+            </div>
           </div>
-          <div style="flex: 1; min-width: 280px;" class="reveal">
-            <p style="font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); margin-bottom: 0.75rem;"
-              data-i18n="doc-title">Our Doctors</p>
-            <h2
-              style="font-family: var(--font-serif); font-size: 2.6rem; color: var(--aura-cream); margin: 0 0 1.75rem; line-height: 1.2;"
-              data-i18n="doc-name">Dr. Shiloh DMD, MSc</h2>
-            <p style="font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,0.88); margin-bottom: 1.25rem;"
-              data-i18n="doc-p1">
-              Dr. Shiloh, the clinic's lead physician, is a graduate of the Hebrew University of Jerusalem and Hadassah
-              Medical Center, holding both a DMD degree and an MSc in Medical Big Data. His unique background combines
-              advanced medical training with technological expertise from Unit 8200, enabling an innovation-driven,
-              research-oriented, and technology-focused approach to aesthetic medicine and injectables.
-            </p>
-            <p style="font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,0.88);" data-i18n="doc-p2">
-              Dr. Shiloh's philosophy is rooted in precise minimalism - clean, refined, and natural-looking treatments
-              that
-              preserve facial harmony and authenticity. Each treatment is carefully tailored, with meticulous attention
-              to
-              detail and close, personalized guidance throughout the entire journey, with the understanding that
-              exceptional results should not only look natural, but feel right. At the clinic, only FDA-approved
-              materials are used, reflecting an uncompromising commitment to excellence, safety, and long-term outcomes.
-            </p>
-          </div>
+          
+          <button class="carousel-btn carousel-next" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>
+          </button>
+          <div class="carousel-dots-row"></div>
         </div>
+
       </div>
     </section>
 
