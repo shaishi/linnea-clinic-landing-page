@@ -1541,7 +1541,9 @@ html[dir="rtl"] .hero-title {
 
 .carousel-viewport {
   overflow: hidden;
-  width: 100%;
+  width: auto;
+  margin: -40px -20px;
+  padding: 40px 20px;
 }
 
 /* Force flat flex row — overrides treatments-grid / articles-grid / ba-grid */
