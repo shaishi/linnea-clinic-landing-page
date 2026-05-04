@@ -41,10 +41,9 @@
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&family=Heebo:wght@300;400;500;600&display=swap"
     rel="stylesheet" />
-  <link rel="preload" as="image" href="./images/hero-bg.jpg" fetchpriority="high" />
+  <link rel="preload" as="image" href="/linnea-clinic-landing-page/assets/hero-bg-BTbLZj4d.jpg" fetchpriority="high" />
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23617d78'/><text x='50' y='70' font-family='serif' font-size='60' fill='%23f4efdf' text-anchor='middle'>L</text></svg>" />
-  <link rel="stylesheet" href="./style.css?v=10" />
   
   <!-- Critical Libraries (CDN for Local/GH Pages) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -113,6 +112,9 @@
     }
   }
   </script>
+  <script type="module" crossorigin src="/linnea-clinic-landing-page/assets/main-axaTv18L.js"></script>
+  <link rel="modulepreload" crossorigin href="/linnea-clinic-landing-page/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="stylesheet" crossorigin href="/linnea-clinic-landing-page/assets/main-CYH5PbUh.css">
 </head>
 
 <body class="loading">
@@ -208,37 +210,67 @@
     <section class="doctors section" id="doctors"
       style="background: linear-gradient(135deg, var(--clinique-teal-dark) 0%, var(--clinique-teal) 100%);">
       <div class="container" style="padding: 3rem 1rem;">
-        <div style="display: flex; gap: 2.5rem; align-items: center; flex-wrap: wrap;">
-          <div style="flex: 0 0 300px; max-width: 300px;" class="reveal">
-            <img src="./images/doctor_shilo.png"
-              alt="Dr. Shiloh DMD MSc, Lead Dentist at Linnéa Aesthetic Clinic Jerusalem" data-i18n-alt="alt-dr-shilo"
-              loading="lazy"
-              style="width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.25);" />
+        
+        <div class="carousel-wrapper" data-carousel="doctors">
+          <button class="carousel-btn carousel-prev" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15,6 9,12 15,18"/></svg>
+          </button>
+          
+          <div class="carousel-viewport">
+            <div class="carousel-track" style="display: flex; gap: 2rem; align-items: stretch;">
+              
+              <!-- Doctor 1 -->
+              <div class="doctor-card reveal" style="display: flex; flex-direction: column; gap: 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(244, 239, 223, 0.15); border-radius: 20px; padding: 2rem; align-items: center; text-align: center;">
+                <div style="flex: 0 0 auto; width: 100%;">
+                  <p style="font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); margin-bottom: 1rem;" data-i18n="doc-title">Our Doctors</p>
+                  <img src="/linnea-clinic-landing-page/assets/doctor_shilo-C-ikO-v6.png"
+                    alt="Dr. Shiloh DMD MSc, Lead Dentist at Linnéa Aesthetic Clinic Jerusalem" data-i18n-alt="alt-dr-shilo"
+                    loading="lazy"
+                    style="width: 100%; max-width: 250px; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); margin: 0 auto 1.5rem auto; display: block;" />
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                  <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--aura-cream); margin: 0 0 1.5rem; line-height: 1.2;" data-i18n="doc-name">Dr. Shiloh DMD, MSc</h2>
+                  <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.88); margin-bottom: 1.25rem;" data-i18n="doc-p1">
+                    Dr. Shiloh, the clinic's lead physician, is a graduate of the Hebrew University of Jerusalem and Hadassah Medical Center, holding both a DMD degree and an MSc in Medical Big Data. His unique background combines advanced medical training with technological expertise from Unit 8200, enabling an innovation-driven, research-oriented, and technology-focused approach to aesthetic medicine and injectables.
+                  </p>
+                  <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.88);" data-i18n="doc-p2">
+                    Dr. Shiloh's philosophy is rooted in precise minimalism - clean, refined, and natural-looking treatments that preserve facial harmony and authenticity. Each treatment is carefully tailored, with meticulous attention to detail and close, personalized guidance throughout the entire journey, with the understanding that exceptional results should not only look natural, but feel right. At the clinic, only FDA-approved materials are used, reflecting an uncompromising commitment to excellence, safety, and long-term outcomes.
+                  </p>
+                </div>
+              </div>
+              
+              <!-- Doctor 2 -->
+              <div class="doctor-card reveal" style="display: flex; flex-direction: column; gap: 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(244, 239, 223, 0.15); border-radius: 20px; padding: 2rem; align-items: center; text-align: center;">
+                <div style="flex: 0 0 auto; width: 100%;">
+                  <p style="font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); margin-bottom: 1rem;" data-i18n="doc-title">Our Doctors</p>
+                  <img src="/linnea-clinic-landing-page/assets/dr_yasmine_khoury-BJ4lyOKk.png"
+                    alt="Dr. Yasmine Khoury"
+                    loading="lazy"
+                    style="width: 100%; max-width: 250px; aspect-ratio: 3/4; object-fit: cover; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); margin: 0 auto 1.5rem auto; display: block;" />
+                </div>
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                  <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--aura-cream); margin: 0 0 1.5rem; line-height: 1.2;" data-i18n="doc2-name">Dr. Yasmine Khoury</h2>
+                  <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.88); margin-bottom: 1.25rem;" data-i18n="doc2-p1">
+                    ...
+                  </p>
+                  <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.88); margin-bottom: 1.25rem;" data-i18n="doc2-p2">
+                    ...
+                  </p>
+                  <p style="font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,0.88);" data-i18n="doc2-p3">
+                    ...
+                  </p>
+                </div>
+              </div>
+
+            </div>
           </div>
-          <div style="flex: 1; min-width: 280px;" class="reveal">
-            <p style="font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.6); margin-bottom: 0.75rem;"
-              data-i18n="doc-title">Our Doctors</p>
-            <h2
-              style="font-family: var(--font-serif); font-size: 2.6rem; color: var(--aura-cream); margin: 0 0 1.75rem; line-height: 1.2;"
-              data-i18n="doc-name">Dr. Shiloh DMD, MSc</h2>
-            <p style="font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,0.88); margin-bottom: 1.25rem;"
-              data-i18n="doc-p1">
-              Dr. Shiloh, the clinic's lead physician, is a graduate of the Hebrew University of Jerusalem and Hadassah
-              Medical Center, holding both a DMD degree and an MSc in Medical Big Data. His unique background combines
-              advanced medical training with technological expertise from Unit 8200, enabling an innovation-driven,
-              research-oriented, and technology-focused approach to aesthetic medicine and injectables.
-            </p>
-            <p style="font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,0.88);" data-i18n="doc-p2">
-              Dr. Shiloh's philosophy is rooted in precise minimalism - clean, refined, and natural-looking treatments
-              that
-              preserve facial harmony and authenticity. Each treatment is carefully tailored, with meticulous attention
-              to
-              detail and close, personalized guidance throughout the entire journey, with the understanding that
-              exceptional results should not only look natural, but feel right. At the clinic, only FDA-approved
-              materials are used, reflecting an uncompromising commitment to excellence, safety, and long-term outcomes.
-            </p>
-          </div>
+          
+          <button class="carousel-btn carousel-next" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,6 15,12 9,18"/></svg>
+          </button>
+          <div class="carousel-dots-row"></div>
         </div>
+
       </div>
     </section>
 
@@ -258,7 +290,7 @@
                 
                 <!-- Skin -->
                 <div class="treatment-card category-trigger" data-target-sub="sub-skin" style="cursor: pointer; display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_skin.png" alt="Skin Rejuvenation" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_skin-Dbzub9bR.png" alt="Skin Rejuvenation" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="cat-skin" style="font-family: var(--font-serif);">Skin Rejuvenation</h3>
                     <button class="btn btn-primary" style="margin-top: auto; padding: 0.6rem 1.5rem; font-size: 0.9rem; font-family: var(--font-sans); letter-spacing: 0.05em;" data-i18n="view-treatments">View Treatments</button>
@@ -266,7 +298,7 @@
                 </div>
                 <!-- Contouring -->
                 <div class="treatment-card category-trigger" data-target-sub="sub-contouring" style="cursor: pointer; display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_face.png" alt="Facial Contouring" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_face-BirTXALr.png" alt="Facial Contouring" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="cat-contouring" style="font-family: var(--font-serif);">Facial Contouring</h3>
                     <button class="btn btn-primary" style="margin-top: auto; padding: 0.6rem 1.5rem; font-size: 0.9rem; font-family: var(--font-sans); letter-spacing: 0.05em;" data-i18n="view-treatments">View Treatments</button>
@@ -274,7 +306,7 @@
                 </div>
                 <!-- Botox -->
                 <div class="treatment-card category-trigger" data-target-sub="sub-botox" style="cursor: pointer; display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_botox.png" alt="Botox & Neuromodulators" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_botox-BhA6VEZi.png" alt="Botox & Neuromodulators" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="cat-botox" style="font-family: var(--font-serif);">Botox & Neuromodulators</h3>
                     <button class="btn btn-primary" style="margin-top: auto; padding: 0.6rem 1.5rem; font-size: 0.9rem; font-family: var(--font-sans); letter-spacing: 0.05em;" data-i18n="view-treatments">View Treatments</button>
@@ -304,35 +336,35 @@
             <div class="carousel-viewport">
               <div class="treatments-grid carousel-track">
                 <div class="treatment-card legal-link" data-target="modal-pn" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_face.png" alt="Polynucleotides (PN)" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_face-BirTXALr.png" alt="Polynucleotides (PN)" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="pn-title">Polynucleotides (PN)</h3>
                     <p data-i18n="pn-desc">Innovative biological molecules promoting deep cellular regeneration and skin vitality.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-sculptra" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_skin.png" alt="Sculptra" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_skin-Dbzub9bR.png" alt="Sculptra" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="sculptra-title">Sculptra</h3>
                     <p data-i18n="sculptra-desc">A bio-stimulator that rebuilds your body's natural collagen for long-lasting firmness.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-radiesse" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_skin.png" alt="Radiesse" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_skin-Dbzub9bR.png" alt="Radiesse" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="radiesse-title">Radiesse</h3>
                     <p data-i18n="radiesse-desc">Dual-action treatment offering immediate volume while stimulating collagen and elastin.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-skinbooster" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_skin.png" alt="Skin Booster" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_skin-Dbzub9bR.png" alt="Skin Booster" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="skinbooster-title">Skin Booster</h3>
                     <p data-i18n="skinbooster-desc">Deep hydration treatment improving skin elasticity for a radiant, glowing complexion.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-acne" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_skin.png" alt="Acne Scars Treatment" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_skin-Dbzub9bR.png" alt="Acne Scars Treatment" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="acne-title">Acne Scars Treatment</h3>
                     <p data-i18n="acne-desc">Combined injection techniques to blur scars and significantly improve skin texture.</p>
@@ -361,35 +393,35 @@
             <div class="carousel-viewport">
               <div class="treatments-grid carousel-track">
 <div class="treatment-card legal-link" data-target="modal-ffr" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_face.png" alt="Full Face Restoration" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_face-BirTXALr.png" alt="Full Face Restoration" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="ffr-title">Full Face Restoration</h3>
                     <p data-i18n="ffr-desc">A holistic approach combining fillers and Botox for complete facial harmony and lift.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-lips" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_lips.png" alt="Lip Enhancement" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_lips-D2XtV2uD.png" alt="Lip Enhancement" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="lips-title">Lip Enhancement</h3>
                     <p data-i18n="lips-desc">Emphasizing lip borders, correcting asymmetry, and adding balanced natural volume.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-jawline" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_jawline.png" alt="Jawline & Chin Sculpting" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_jawline-CjV0PQwD.png" alt="Jawline & Chin Sculpting" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="jawline-title">Jawline & Chin Sculpting</h3>
                     <p data-i18n="jawline-desc">Defining the facial frame to create a sculpted, lifted, and sharper profile.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-nose" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_nose.png" alt="Non-Surgical Rhinoplasty" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_nose-Cn9XZQfg.png" alt="Non-Surgical Rhinoplasty" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="nose-title">Non-Surgical Rhinoplasty</h3>
                     <p data-i18n="nose-desc">Correcting asymmetry and lifting the nasal tip precisely without surgery.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-teartrough" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_face.png" alt="Tear Trough Filler" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_face-BirTXALr.png" alt="Tear Trough Filler" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="teartrough-title">Tear Trough Filler</h3>
                     <p data-i18n="teartrough-desc">Delicate treatment to reduce dark circles and under-eye hollows for a rested look.</p>
@@ -418,14 +450,14 @@
             <div class="carousel-viewport">
               <div class="treatments-grid carousel-track" style="justify-content: center;">
                 <div class="treatment-card legal-link" data-target="modal-botx" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_botox.png" alt="Classic Botox" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_botox-BhA6VEZi.png" alt="Classic Botox" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="botx-title">Classic Botox</h3>
                     <p data-i18n="botx-desc">Relaxing expression lines in the forehead and eyes for a smooth, serene appearance.</p>
                   </div>
                 </div>
                 <div class="treatment-card legal-link" data-target="modal-botxadv" style="cursor: pointer;" title="View Details" style="display: flex; flex-direction: column; height: 100%;">
-                  <img src="./images/aesthetic_botox.png" alt="Advanced Botox" class="treatment-img" />
+                  <img src="/linnea-clinic-landing-page/assets/aesthetic_botox-BhA6VEZi.png" alt="Advanced Botox" class="treatment-img" />
                   <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
                     <h3 data-i18n="botxadv-title">Advanced Botox</h3>
                     <p data-i18n="botxadv-desc">Treating bruxism (teeth grinding) or sculpting the jawline and neck.</p>
@@ -460,10 +492,10 @@
               <div class="ba-container">
                 <div class="ba-slider" id="ba-slider-skin">
                   <div class="ba-image-wrapper">
-                    <img src="./images/skin-after.png" alt="After skin rejuvenation" data-i18n-alt="alt-skin-after"
+                    <img src="/linnea-clinic-landing-page/assets/skin-after-CRB2yuv8.png" alt="After skin rejuvenation" data-i18n-alt="alt-skin-after"
                       class="ba-after-img">
                     <div class="ba-before-clip">
-                      <img src="./images/skin-before.png" alt="Before skin rejuvenation" data-i18n-alt="alt-skin-before"
+                      <img src="/linnea-clinic-landing-page/assets/skin-before-DL_EEyTW.png" alt="Before skin rejuvenation" data-i18n-alt="alt-skin-before"
                         class="ba-before-img">
                     </div>
                     <div class="ba-handle">
@@ -488,10 +520,10 @@
               <div class="ba-container">
                 <div class="ba-slider" id="ba-slider-lips">
                   <div class="ba-image-wrapper">
-                    <img src="./images/lips-after.png" alt="After lip enhancement" data-i18n-alt="alt-lips-after"
+                    <img src="/linnea-clinic-landing-page/assets/lips-after-BpM6jQB7.png" alt="After lip enhancement" data-i18n-alt="alt-lips-after"
                       class="ba-after-img">
                     <div class="ba-before-clip">
-                      <img src="./images/lips-before.png" alt="Before lip enhancement" data-i18n-alt="alt-lips-before"
+                      <img src="/linnea-clinic-landing-page/assets/lips-before-D7fqsob2.png" alt="Before lip enhancement" data-i18n-alt="alt-lips-before"
                         class="ba-before-img">
                     </div>
                     <div class="ba-handle">
@@ -516,10 +548,10 @@
               <div class="ba-container">
                 <div class="ba-slider" id="ba-slider-jaw">
                   <div class="ba-image-wrapper">
-                    <img src="./images/jawline-after.png" alt="After jawline contouring" data-i18n-alt="alt-jawline-after"
+                    <img src="/linnea-clinic-landing-page/assets/jawline-after-Cz1HaHxv.png" alt="After jawline contouring" data-i18n-alt="alt-jawline-after"
                       class="ba-after-img">
                     <div class="ba-before-clip">
-                      <img src="./images/jawline-before.png" alt="Before jawline contouring"
+                      <img src="/linnea-clinic-landing-page/assets/jawline-before-CLeeVoRn.png" alt="Before jawline contouring"
                         data-i18n-alt="alt-jawline-before" class="ba-before-img">
                     </div>
                     <div class="ba-handle">
@@ -567,7 +599,7 @@
           <div class="carousel-viewport">
             <div class="articles-grid carousel-track">
               <div class="treatment-card article-card" style="display: flex; flex-direction: column; height: 100%;">
-                <img src="./images/botox_article.png"
+                <img src="/linnea-clinic-landing-page/assets/botox_article-Dpav9mu1.png"
                   alt="The Art of Botox: Expert Neuromodulator Treatments and Wrinkle Smoothing"
                   data-i18n-alt="alt-article-botox" class="treatment-img" />
                 <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
@@ -581,7 +613,7 @@
                 </div>
               </div>
               <div class="treatment-card article-card" style="display: flex; flex-direction: column; height: 100%;">
-                <img src="./images/fillers_article.png"
+                <img src="/linnea-clinic-landing-page/assets/fillers_article-BTqnD1Kn.png"
                   alt="Mastering Dermal Fillers: Volume Restoration and Facial Balancing Techniques"
                   data-i18n-alt="alt-article-fillers" class="treatment-img" />
                 <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
@@ -595,7 +627,7 @@
                 </div>
               </div>
               <div class="treatment-card article-card" style="display: flex; flex-direction: column; height: 100%;">
-                <img src="./images/aesthetic_skin.png"
+                <img src="/linnea-clinic-landing-page/assets/aesthetic_skin-Dbzub9bR.png"
                   alt="The Science of Longevity and Cellular Health in Modern Aesthetic Medicine"
                   data-i18n-alt="alt-article-scientific" class="treatment-img" />
                 <div class="treatment-content" style="display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
@@ -1347,7 +1379,6 @@
     </svg>
   </button>
 
-  <script src="./main.js?v=8" type="module"></script>
 </body>
 
 </html>
