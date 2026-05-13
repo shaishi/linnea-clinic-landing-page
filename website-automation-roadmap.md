@@ -45,26 +45,16 @@
 9. Escalation for concerns
    - If a patient replies with concern keywords or submits a low satisfaction status, flag the row as Needs doctor review.
 
-## Priority 4: Marketing Without Feeling Automated
-
-10. Educational nurture only with consent
-   - If email update consent is checked, send one high-quality educational email every 4-6 weeks.
-   - Content should feel editorial, not promotional.
-
-11. Review request only after a positive signal
-   - Ask for a Google review only after the patient indicates satisfaction.
-   - Keep review links in footer/site by default, not in the hero.
-
 ## Priority 5: Operations
 
-12. Daily clinic brief
+10. Daily clinic brief
    - Every morning, send the clinic a short internal email:
      - Today's consultations
      - Who needs a call
      - Missing forms
      - Follow-ups due today
 
-13. Weekly performance summary
+11. Weekly performance summary
    - Leads received
    - Bookings confirmed
    - Manual scheduling cases

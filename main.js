@@ -251,6 +251,23 @@ document.addEventListener('DOMContentLoaded', () => {
     : (localStorage.getItem('linneaLang') || 'he');
   localStorage.setItem('linneaLang', currentLang);
 
+  const setLeadTrackingFields = () => {
+    const trackingMap = {
+      'lead-page-url': window.location.href,
+      'lead-page-language': currentLang,
+      'lead-utm-source': params.get('utm_source') || '',
+      'lead-utm-medium': params.get('utm_medium') || '',
+      'lead-utm-campaign': params.get('utm_campaign') || '',
+      'lead-utm-term': params.get('utm_term') || '',
+      'lead-utm-content': params.get('utm_content') || '',
+    };
+
+    Object.keys(trackingMap).forEach(id => {
+      const input = document.getElementById(id);
+      if (input) input.value = trackingMap[id];
+    });
+  };
+
   const translations = {
     en: {
       "nav-about": "About",
@@ -858,6 +875,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
     document.documentElement.setAttribute('lang', lang);
     document.body.setAttribute('dir', lang === 'en' ? 'ltr' : 'rtl');
+    setLeadTrackingFields();
 
     // Explicitly force direction for navbar container
     const navContainer = document.querySelector('.nav-container');

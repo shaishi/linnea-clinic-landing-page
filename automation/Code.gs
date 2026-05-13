@@ -16,6 +16,9 @@ const CONFIG = {
   appointmentMinutes: 45,
   bookingLookaheadDays: 35,
   maxSlotsInEmail: 3,
+  duplicateWindowDays: 14,
+  prepReminderHoursAfterSend: 6,
+  prepEscalationHoursBefore: 3,
   calendarId: 'primary',
   webAppUrl: '', // Paste the deployed Web App URL ending with /exec after deployment.
   spreadsheetId: '', // Leave empty: setupLinneaAutomation will create one and save its ID.
@@ -42,12 +45,16 @@ const CONFIG = {
     optionsSent: 'נשלח מייל תיאום',
     manualScheduling: 'צריך תיאום ידני',
     bookedNeedsCall: 'נקבע ביומן - צריך להתקשר',
+    duplicateUpdated: 'פנייה כפולה עודכנה',
     slotUnavailable: 'המועד נתפס - צריך תיאום חדש',
     prepEmailSent: 'נשלח מייל הכנה',
+    prepFormsMissing: 'טפסי הכנה חסרים',
+    rescheduleRequested: 'ביקשה לתאם מחדש',
     arrivalConfirmed: 'מאשרת הגעה',
     consultationSummarySent: 'נשלח סיכום ייעוץ',
     treatmentCareSent: 'נשלחו הנחיות לאחר טיפול',
     treatmentCheckInSent: 'נשלחה בדיקת מצב 48 שעות',
+    doctorReviewNeeded: 'צריך בדיקת רופא',
     whatsappDraftReady: 'טיוטת WhatsApp מוכנה',
   },
   brand: {
@@ -67,7 +74,10 @@ function setupLinneaAutomation() {
   ensurePrepForm_();
   createTimeTriggerIfMissing_('processNewIntakeEmails', 'minutes');
   createTimeTriggerIfMissing_('sendPrepEmails24HoursBefore', 'hours');
+  createTimeTriggerIfMissing_('monitorPrepFormCompletion', 'hours');
   createTimeTriggerIfMissing_('processPatientJourneyMessages', 'hours');
+  createTimeTriggerIfMissing_('sendDailyClinicBrief', 'hours');
+  createTimeTriggerIfMissing_('sendWeeklyPerformanceSummary', 'hours');
 }
 
 function quickDeploymentCheck() {
@@ -165,6 +175,18 @@ function runPatientJourneyOnceNow() {
   processPatientJourneyMessages();
 }
 
+function runPrepMonitorOnceNow() {
+  monitorPrepFormCompletion();
+}
+
+function runDailyBriefOnceNow() {
+  sendDailyClinicBrief(true);
+}
+
+function runWeeklySummaryOnceNow() {
+  sendWeeklyPerformanceSummary(true);
+}
+
 function sendPrepEmails24HoursBefore() {
   const sheet = ensureLeadSheet_();
   const rows = getLeadRows_();
@@ -197,10 +219,54 @@ function sendPrepEmails24HoursBefore() {
       : '';
     updateLeadStatus_(row['Row ID'], CONFIG.statuses.prepEmailSent, {
       clinicStatus: CONFIG.statuses.prepEmailSent,
+      leadStage: 'Forms sent',
       prepFormSentAt: new Date(),
       prepFormUrl: prepUrl,
       whatsappDraftLink,
     });
+  });
+}
+
+function monitorPrepFormCompletion() {
+  const rows = getLeadRows_();
+  const now = new Date();
+
+  rows.forEach(row => {
+    const appointmentStart = row['Appointment Start'] ? new Date(row['Appointment Start']) : null;
+    const prepSentAt = row['Prep Form Sent At'] ? new Date(row['Prep Form Sent At']) : null;
+    if (!appointmentStart || Number.isNaN(appointmentStart.getTime())) return;
+    if (!prepSentAt || Number.isNaN(prepSentAt.getTime())) return;
+    if (row['Prep Form Submitted At']) return;
+    if (appointmentStart <= now) return;
+
+    const patient = patientFromRow_(row);
+    const hoursSincePrepSent = (now.getTime() - prepSentAt.getTime()) / 3600000;
+    const hoursUntilAppointment = (appointmentStart.getTime() - now.getTime()) / 3600000;
+    const updates = {};
+
+    if (!row['Missing Forms Reminder At'] && hoursSincePrepSent >= CONFIG.prepReminderHoursAfterSend) {
+      updates.missingFormsReminderAt = now;
+      updates.whatsappDraftLink = shouldPrepareWhatsAppDraft_(patient, 'prep')
+        ? buildWhatsAppLink_(patient.phone, prepReminderWhatsAppText_(patient, appointmentStart))
+        : '';
+      updates.followUpTask = 'טפסי הכנה טרם מולאו - לשלוח תזכורת עדינה';
+      updates.clinicStatus = CONFIG.statuses.prepFormsMissing;
+    }
+
+    if (!row['Forms Escalation At'] && hoursUntilAppointment <= CONFIG.prepEscalationHoursBefore) {
+      updates.formsEscalationAt = now;
+      updates.followUpTask = 'טפסי הכנה חסרים פחות מ-3 שעות לפני הפגישה - ליצור קשר ידני';
+      updates.clinicStatus = CONFIG.statuses.prepFormsMissing;
+      updateCalendarEventStatus_(row['Calendar Event ID'], CONFIG.statuses.prepFormsMissing, [
+        '',
+        'טפסי הכנה עדיין לא מולאו.',
+        `עודכן אוטומטית: ${Utilities.formatDate(now, CONFIG.timezone, 'dd/MM/yyyy HH:mm')}`,
+      ].join('\n'));
+    }
+
+    if (Object.keys(updates).length > 0) {
+      updateLeadStatus_(row['Row ID'], CONFIG.statuses.prepFormsMissing, updates);
+    }
   });
 }
 
@@ -212,13 +278,19 @@ function onPrepFormSubmit(e) {
 
   if (!rowId) throw new Error('Missing row ID in prep form submission.');
 
-  updateLeadStatus_(rowId, CONFIG.statuses.arrivalConfirmed, {
-    clinicStatus: CONFIG.statuses.arrivalConfirmed,
+  const nextStatus = attendance && attendance.indexOf('חדש') !== -1
+    ? CONFIG.statuses.rescheduleRequested
+    : CONFIG.statuses.arrivalConfirmed;
+
+  updateLeadStatus_(rowId, nextStatus, {
+    clinicStatus: nextStatus,
+    leadStage: nextStatus === CONFIG.statuses.rescheduleRequested ? 'Reschedule requested' : 'Confirmed',
     prepFormSubmittedAt: new Date(),
     attendanceConfirmation: attendance || CONFIG.statuses.arrivalConfirmed,
+    followUpTask: nextStatus === CONFIG.statuses.rescheduleRequested ? 'המטופל/ת ביקש/ה לתאם מועד חדש' : '',
   });
 
-  updateCalendarEventStatus_(eventId, CONFIG.statuses.arrivalConfirmed, [
+  updateCalendarEventStatus_(eventId, nextStatus, [
     '',
     'טפסי הכנה מולאו על ידי המטופל/ת.',
     `אישור הגעה: ${attendance || CONFIG.statuses.arrivalConfirmed}`,
@@ -260,6 +332,7 @@ function processPatientJourneyMessages() {
 
     const treatmentDate = row['Treatment Date'] ? new Date(row['Treatment Date']) : null;
     if (!treatmentDate || Number.isNaN(treatmentDate.getTime())) return;
+    if (!row['Treatment Type']) return;
 
     if (!row['Treatment Care Sent At'] && treatmentDate <= now) {
       if (shouldSendEmail_(patient, 'postTreatmentCare')) {
@@ -288,7 +361,92 @@ function processPatientJourneyMessages() {
           : '',
       });
     }
+
+    if (satisfactionNeedsDoctorReview_(row['Satisfaction Status']) && !isTruthy_(row['Doctor Review Flag'])) {
+      updateLeadStatus_(row['Row ID'], CONFIG.statuses.doctorReviewNeeded, {
+        clinicStatus: CONFIG.statuses.doctorReviewNeeded,
+        doctorReviewFlag: 'כן',
+        followUpTask: 'תגובה לאחר טיפול דורשת בדיקת רופא',
+      });
+    }
   });
+}
+
+function sendDailyClinicBrief(force) {
+  const localHour = Number(Utilities.formatDate(new Date(), CONFIG.timezone, 'H'));
+  if (!force && (localHour < 7 || localHour > 10)) return;
+
+  const todayKey = Utilities.formatDate(new Date(), CONFIG.timezone, 'yyyy-MM-dd');
+  const props = PropertiesService.getScriptProperties();
+  if (!force && props.getProperty('LINNEA_DAILY_BRIEF_SENT') === todayKey) return;
+
+  const rows = getLeadRows_();
+  const todayRows = rows.filter(row => isSameLocalDate_(row['Appointment Start'], new Date()));
+  const needsCall = rows.filter(row => String(row['Clinic Status'] || row.Status || '').indexOf('להתקשר') !== -1);
+  const missingForms = rows.filter(row => row['Prep Form Sent At'] && !row['Prep Form Submitted At'] && row['Appointment Start']);
+  const followUps = rows.filter(row => row['Follow-up Task']);
+
+  const body = [
+    `בוקר טוב, זה הבריף היומי של Linnéa ל-${todayKey}.`,
+    '',
+    `פגישות היום: ${todayRows.length}`,
+    formatRowsForBrief_(todayRows, ['Patient Name', 'Phone', 'Selected Slot', 'Clinic Status']),
+    '',
+    `צריך להתקשר: ${needsCall.length}`,
+    formatRowsForBrief_(needsCall, ['Patient Name', 'Phone', 'Clinic Status', 'Follow-up Task']),
+    '',
+    `טפסים חסרים: ${missingForms.length}`,
+    formatRowsForBrief_(missingForms, ['Patient Name', 'Phone', 'Appointment Start', 'Follow-up Task']),
+    '',
+    `משימות פתוחות: ${followUps.length}`,
+    formatRowsForBrief_(followUps, ['Patient Name', 'Phone', 'Follow-up Task']),
+  ].join('\n');
+
+  GmailApp.sendEmail(CONFIG.clinicEmail, `בריף יומי Linnéa - ${todayKey}`, body, {
+    name: CONFIG.clinicName,
+  });
+  props.setProperty('LINNEA_DAILY_BRIEF_SENT', todayKey);
+}
+
+function sendWeeklyPerformanceSummary(force) {
+  const now = new Date();
+  const dayOfWeek = Number(Utilities.formatDate(now, CONFIG.timezone, 'u'));
+  if (!force && dayOfWeek !== 1) return;
+
+  const weekKey = Utilities.formatDate(now, CONFIG.timezone, 'yyyy-ww');
+  const props = PropertiesService.getScriptProperties();
+  if (!force && props.getProperty('LINNEA_WEEKLY_SUMMARY_SENT') === weekKey) return;
+
+  const rows = getLeadRows_();
+  const since = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+  const recentRows = rows.filter(row => {
+    const createdAt = row['Created At'] ? new Date(row['Created At']) : null;
+    return createdAt && !Number.isNaN(createdAt.getTime()) && createdAt >= since;
+  });
+  const bookedRows = recentRows.filter(row => row['Appointment Start']);
+  const manualRows = recentRows.filter(row => row.Status === CONFIG.statuses.manualScheduling || row['Clinic Status'] === CONFIG.statuses.manualScheduling);
+  const prepSentRows = rows.filter(row => row['Prep Form Sent At']);
+  const prepSubmittedRows = prepSentRows.filter(row => row['Prep Form Submitted At']);
+  const treatmentCounts = countBy_(recentRows, 'Interest');
+
+  const body = [
+    `סיכום שבועי Linnéa - ${weekKey}`,
+    '',
+    `לידים חדשים: ${recentRows.length}`,
+    `תורים שנקבעו: ${bookedRows.length}`,
+    `תיאומים ידניים: ${manualRows.length}`,
+    `שיעור מילוי טפסים: ${prepSentRows.length ? Math.round((prepSubmittedRows.length / prepSentRows.length) * 100) : 0}%`,
+    '',
+    'תחומי עניין מובילים:',
+    Object.keys(treatmentCounts).length
+      ? Object.keys(treatmentCounts).map(key => `- ${key || 'לא צוין'}: ${treatmentCounts[key]}`).join('\n')
+      : '- אין נתונים השבוע',
+  ].join('\n');
+
+  GmailApp.sendEmail(CONFIG.clinicEmail, `סיכום שבועי Linnéa - ${weekKey}`, body, {
+    name: CONFIG.clinicName,
+  });
+  props.setProperty('LINNEA_WEEKLY_SUMMARY_SENT', weekKey);
 }
 
 function doPost(e) {
@@ -349,6 +507,8 @@ function doGet(e) {
       selectedSlot: formatSlotForButton_(start),
       calendarEventId: event.getId(),
       clinicStatus: CONFIG.statuses.bookedNeedsCall,
+      leadStage: 'Booked',
+      followUpTask: 'לחייג למטופל/ת כדי לאשר התאמה לפני הפגישה',
     });
     sendPatientConfirmation_(booking.patient, start, end, event.getId());
     sendClinicNotification_(booking.patient, start, end, event.getId());
@@ -373,11 +533,72 @@ function processNewIntakeEmails() {
     const patient = parseIntakeEmail_(message);
 
     if (patient.email && patient.name) {
+      const duplicate = findDuplicateLead_(patient, CONFIG.duplicateWindowDays);
+      if (duplicate) {
+        updateDuplicateLead_(duplicate, patient, message);
+        thread.addLabel(label);
+        return;
+      }
+
       const rowId = appendLeadRow_(patient, message, CONFIG.statuses.intakeReceived);
       sendBookingOptions_(patient, rowId);
       thread.addLabel(label);
     }
   });
+}
+
+function findDuplicateLead_(patient, windowDays) {
+  const rows = getLeadRows_();
+  const cutoff = new Date(Date.now() - windowDays * 24 * 60 * 60 * 1000);
+  const email = String(patient.email || '').trim().toLowerCase();
+  const phone = normalizePhoneForCompare_(patient.phone);
+
+  return rows.find(row => {
+    const createdAt = row['Created At'] ? new Date(row['Created At']) : null;
+    if (!createdAt || Number.isNaN(createdAt.getTime()) || createdAt < cutoff) return false;
+    if (email && String(row.Email || '').trim().toLowerCase() === email) return true;
+    if (phone && normalizePhoneForCompare_(row.Phone) === phone) return true;
+    return false;
+  });
+}
+
+function updateDuplicateLead_(duplicateRow, patient, message) {
+  const duplicateCount = Number(duplicateRow['Duplicate Count'] || 0) + 1;
+  const mergedNotes = [
+    duplicateRow.Notes || '',
+    patient.notes ? `פנייה חוזרת: ${patient.notes}` : '',
+  ].filter(Boolean).join('\n\n');
+
+  updateLeadStatus_(duplicateRow['Row ID'], duplicateRow.Status || CONFIG.statuses.duplicateUpdated, {
+    clinicStatus: CONFIG.statuses.duplicateUpdated,
+    leadStage: duplicateRow['Lead Stage'] || 'Duplicate updated',
+    patientName: patient.name || duplicateRow['Patient Name'],
+    email: patient.email || duplicateRow.Email,
+    phone: patient.phone || duplicateRow.Phone,
+    interest: patient.interest || duplicateRow.Interest,
+    notes: mergedNotes,
+    sourceSubject: message ? message.getSubject() : duplicateRow['Source Subject'],
+    sourceMessageId: message ? message.getId() : duplicateRow['Source Message ID'],
+    pageUrl: patient.pageUrl || duplicateRow['Page URL'],
+    pageLanguage: patient.pageLanguage || duplicateRow['Page Language'],
+    utmSource: patient.utmSource || duplicateRow['UTM Source'],
+    utmMedium: patient.utmMedium || duplicateRow['UTM Medium'],
+    utmCampaign: patient.utmCampaign || duplicateRow['UTM Campaign'],
+    utmTerm: patient.utmTerm || duplicateRow['UTM Term'],
+    utmContent: patient.utmContent || duplicateRow['UTM Content'],
+    serviceConsent: patient.serviceConsent || duplicateRow['Service Consent'],
+    privacyConsent: patient.privacyConsent || duplicateRow['Privacy Consent'],
+    emailUpdatesConsent: patient.emailUpdatesConsent || duplicateRow['Email Updates Consent'],
+    communicationProfile: patient.communicationProfile || duplicateRow['Communication Profile'],
+    whatsappConsent: patient.whatsappConsent || duplicateRow['WhatsApp Consent'],
+    duplicateCount,
+    lastDuplicateAt: new Date(),
+    followUpTask: 'פנייה כפולה: לבדוק אם צריך מענה ידני נוסף',
+    leadScore: calculateLeadReadiness_(patient).score,
+    urgency: calculateLeadReadiness_(patient).urgency,
+  });
+
+  sendClinicDuplicateNotification_(duplicateRow, patient, duplicateCount);
 }
 
 function sendBookingOptions_(patient, rowId) {
@@ -386,6 +607,8 @@ function sendBookingOptions_(patient, rowId) {
     sendManualSchedulingEmail_(patient);
     updateLeadStatus_(rowId, CONFIG.statuses.manualScheduling, {
       clinicStatus: CONFIG.statuses.manualScheduling,
+      leadStage: 'Needs manual scheduling',
+      followUpTask: 'לא נמצאו מספיק מועדים אוטומטיים - לתאם ידנית',
     });
     return;
   }
@@ -416,6 +639,7 @@ function sendBookingOptions_(patient, rowId) {
   updateLeadStatus_(rowId, CONFIG.statuses.optionsSent, {
     offeredSlots: slots.map(slot => formatSlotForButton_(new Date(slot.start))).join(' | '),
     clinicStatus: CONFIG.statuses.optionsSent,
+    leadStage: 'Booking options sent',
   });
 }
 
@@ -733,11 +957,18 @@ function parseIntakeEmail_(message) {
     email: pickField_(body, ['Email', 'E-mail', 'אימייל', 'דוא"ל']) || extractEmail_(from),
     phone: pickField_(body, ['Phone Number', 'Phone', 'טלפון', 'מספר טלפון']),
     interest: pickField_(body, ['Area of Interest', 'Treatment', 'תחום עניין', 'טיפול']),
-    notes: pickField_(body, ['Message', 'Notes', 'Please specify', 'הערות', 'פירוט']),
+    notes: pickField_(body, ['Message', 'Notes', 'Please specify', 'other_details', 'הערות', 'פירוט']),
     serviceConsent: pickField_(body, ['service_consent', 'Service Consent', 'אישור יצירת קשר']),
     privacyConsent: pickField_(body, ['privacy_consent', 'Privacy Consent', 'אישור מדיניות פרטיות']),
     emailUpdatesConsent: pickField_(body, ['email_updates_consent', 'Email Updates Consent', 'עדכונים במייל']),
     whatsappConsent: pickField_(body, ['whatsapp_consent', 'WhatsApp Consent', 'אישור WhatsApp']),
+    pageUrl: pickField_(body, ['page_url', 'Page URL', 'עמוד מקור']),
+    pageLanguage: pickField_(body, ['page_language', 'Page Language', 'שפת עמוד']),
+    utmSource: pickField_(body, ['utm_source', 'UTM Source']),
+    utmMedium: pickField_(body, ['utm_medium', 'UTM Medium']),
+    utmCampaign: pickField_(body, ['utm_campaign', 'UTM Campaign']),
+    utmTerm: pickField_(body, ['utm_term', 'UTM Term']),
+    utmContent: pickField_(body, ['utm_content', 'UTM Content']),
   });
 }
 
@@ -757,6 +988,13 @@ function normalizePayload_(payload) {
     privacyConsent,
     emailUpdatesConsent,
     whatsappConsent,
+    pageUrl: firstValue_(payload.pageUrl || payload.page_url || payload['Page URL']),
+    pageLanguage: firstValue_(payload.pageLanguage || payload.page_language || payload['Page Language']),
+    utmSource: firstValue_(payload.utmSource || payload.utm_source || payload['UTM Source']),
+    utmMedium: firstValue_(payload.utmMedium || payload.utm_medium || payload['UTM Medium']),
+    utmCampaign: firstValue_(payload.utmCampaign || payload.utm_campaign || payload['UTM Campaign']),
+    utmTerm: firstValue_(payload.utmTerm || payload.utm_term || payload['UTM Term']),
+    utmContent: firstValue_(payload.utmContent || payload.utm_content || payload['UTM Content']),
     communicationProfile: isTruthy_(whatsappConsent || serviceConsent)
       ? CONFIG.communicationProfiles.whatsappShortEmailForms
       : CONFIG.communicationProfiles.emailOnly,
@@ -987,6 +1225,18 @@ function ensureLeadSheet_() {
     'Notes',
     'Source Subject',
     'Source Message ID',
+    'Page URL',
+    'Page Language',
+    'UTM Source',
+    'UTM Medium',
+    'UTM Campaign',
+    'UTM Term',
+    'UTM Content',
+    'Lead Score',
+    'Lead Stage',
+    'Urgency',
+    'Duplicate Count',
+    'Last Duplicate At',
     'Offered Slots',
     'Selected Slot',
     'Appointment Start',
@@ -998,6 +1248,8 @@ function ensureLeadSheet_() {
     'Prep Form Sent At',
     'Prep Form Submitted At',
     'Prep Form URL',
+    'Missing Forms Reminder At',
+    'Forms Escalation At',
     'Attendance Confirmation',
     'Communication Profile',
     'WhatsApp Consent',
@@ -1011,6 +1263,8 @@ function ensureLeadSheet_() {
     'Treatment Care Sent At',
     '48h Check-in Sent At',
     'Satisfaction Status',
+    'Doctor Review Flag',
+    'Follow-up Task',
     'Last Error',
   ];
 
@@ -1034,6 +1288,7 @@ function appendLeadRow_(patient, message, status) {
   const rowId = Utilities.getUuid();
   const now = new Date();
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const readiness = calculateLeadReadiness_(patient);
   const valuesByHeader = {
     'Row ID': rowId,
     'Created At': now,
@@ -1047,6 +1302,17 @@ function appendLeadRow_(patient, message, status) {
     'Notes': patient.notes || '',
     'Source Subject': message ? message.getSubject() : '',
     'Source Message ID': message ? message.getId() : '',
+    'Page URL': patient.pageUrl || '',
+    'Page Language': patient.pageLanguage || '',
+    'UTM Source': patient.utmSource || '',
+    'UTM Medium': patient.utmMedium || '',
+    'UTM Campaign': patient.utmCampaign || '',
+    'UTM Term': patient.utmTerm || '',
+    'UTM Content': patient.utmContent || '',
+    'Lead Score': readiness.score,
+    'Lead Stage': 'New',
+    'Urgency': readiness.urgency,
+    'Duplicate Count': 0,
     'Service Consent': patient.serviceConsent || '',
     'Privacy Consent': patient.privacyConsent || '',
     'Email Updates Consent': patient.emailUpdatesConsent || '',
@@ -1072,6 +1338,25 @@ function updateLeadStatus_(rowId, status, fields) {
     updatedAt: 'Updated At',
     status: 'Status',
     clinicStatus: 'Clinic Status',
+    patientName: 'Patient Name',
+    email: 'Email',
+    phone: 'Phone',
+    interest: 'Interest',
+    notes: 'Notes',
+    sourceSubject: 'Source Subject',
+    sourceMessageId: 'Source Message ID',
+    pageUrl: 'Page URL',
+    pageLanguage: 'Page Language',
+    utmSource: 'UTM Source',
+    utmMedium: 'UTM Medium',
+    utmCampaign: 'UTM Campaign',
+    utmTerm: 'UTM Term',
+    utmContent: 'UTM Content',
+    leadScore: 'Lead Score',
+    leadStage: 'Lead Stage',
+    urgency: 'Urgency',
+    duplicateCount: 'Duplicate Count',
+    lastDuplicateAt: 'Last Duplicate At',
     offeredSlots: 'Offered Slots',
     selectedSlot: 'Selected Slot',
     appointmentStart: 'Appointment Start',
@@ -1080,6 +1365,8 @@ function updateLeadStatus_(rowId, status, fields) {
     prepFormSentAt: 'Prep Form Sent At',
     prepFormSubmittedAt: 'Prep Form Submitted At',
     prepFormUrl: 'Prep Form URL',
+    missingFormsReminderAt: 'Missing Forms Reminder At',
+    formsEscalationAt: 'Forms Escalation At',
     attendanceConfirmation: 'Attendance Confirmation',
     serviceConsent: 'Service Consent',
     privacyConsent: 'Privacy Consent',
@@ -1091,6 +1378,8 @@ function updateLeadStatus_(rowId, status, fields) {
     treatmentCareSentAt: 'Treatment Care Sent At',
     checkIn48hSentAt: '48h Check-in Sent At',
     satisfactionStatus: 'Satisfaction Status',
+    doctorReviewFlag: 'Doctor Review Flag',
+    followUpTask: 'Follow-up Task',
     lastError: 'Last Error',
   };
 
@@ -1190,6 +1479,83 @@ function treatmentCheckInWhatsAppText_(patient, treatmentType) {
     `היי ${patient.name}, בודקות איך את מרגישה אחרי ${treatmentType || 'הטיפול'}.`,
     'אפשר לענות כאן בקצרה שהכול בסדר, ואם יש משהו שמדאיג אותך נשמח שתצרפי שאלה או תמונה.',
   ].join('\n');
+}
+
+function sendClinicDuplicateNotification_(duplicateRow, patient, duplicateCount) {
+  GmailApp.sendEmail(CONFIG.clinicEmail, `פנייה כפולה באתר - ${patient.name || duplicateRow['Patient Name']}`, [
+    'זוהתה פנייה חוזרת מאותו מטופל/ת בטווח הזמן שהוגדר.',
+    '',
+    `שם: ${patient.name || duplicateRow['Patient Name']}`,
+    `טלפון: ${patient.phone || duplicateRow.Phone || 'לא נמסר'}`,
+    `אימייל: ${patient.email || duplicateRow.Email || 'לא נמסר'}`,
+    `מספר פניות חוזרות: ${duplicateCount}`,
+    `סטטוס קיים: ${duplicateRow.Status || 'לא צוין'}`,
+    '',
+    'המערכת עדכנה את הרשומה הקיימת ולא פתחה מסע מטופל חדש.',
+  ].join('\n'), {
+    name: CONFIG.clinicName,
+  });
+}
+
+function calculateLeadReadiness_(patient) {
+  let score = 0;
+  if (patient.name) score += 10;
+  if (patient.email) score += 10;
+  if (patient.phone) score += 10;
+  if (patient.interest) score += 20;
+  if (isTruthy_(patient.serviceConsent)) score += 20;
+  if (isTruthy_(patient.privacyConsent)) score += 20;
+  if (patient.communicationProfile && patient.communicationProfile !== CONFIG.communicationProfiles.emailOnly) score += 10;
+
+  const freeText = `${patient.notes || ''} ${patient.interest || ''}`.toLowerCase();
+  const urgency = /(urgent|asap|today|tomorrow|דחוף|בהקדם|היום|מחר)/i.test(freeText)
+    ? 'High'
+    : 'Normal';
+
+  return { score: Math.min(score, 100), urgency };
+}
+
+function satisfactionNeedsDoctorReview_(value) {
+  const normalized = String(value || '').trim().toLowerCase();
+  if (!normalized) return false;
+  return ['needs attention', 'doctor', 'pain', 'concern', 'בעיה', 'כאב', 'מודאג', 'דחוף', 'רופא'].some(token =>
+    normalized.indexOf(token) !== -1
+  );
+}
+
+function normalizePhoneForCompare_(phone) {
+  const digits = String(phone || '').replace(/\D/g, '');
+  if (!digits) return '';
+  if (digits.startsWith('972')) return `0${digits.slice(3)}`;
+  return digits;
+}
+
+function isSameLocalDate_(value, date) {
+  if (!value) return false;
+  const parsed = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(parsed.getTime())) return false;
+  return Utilities.formatDate(parsed, CONFIG.timezone, 'yyyy-MM-dd') ===
+    Utilities.formatDate(date, CONFIG.timezone, 'yyyy-MM-dd');
+}
+
+function formatRowsForBrief_(rows, fields) {
+  if (!rows.length) return '- אין';
+  return rows.slice(0, 12).map(row => {
+    const parts = fields.map(field => {
+      const value = row[field];
+      if (value instanceof Date) return `${field}: ${Utilities.formatDate(value, CONFIG.timezone, 'dd/MM/yyyy HH:mm')}`;
+      return `${field}: ${value || '-'}`;
+    });
+    return `- ${parts.join(' | ')}`;
+  }).join('\n');
+}
+
+function countBy_(rows, field) {
+  return rows.reduce((acc, row) => {
+    const key = String(row[field] || '').trim() || 'לא צוין';
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
 }
 
 function findRowById_(sheet, rowId) {
