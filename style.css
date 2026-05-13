@@ -246,6 +246,20 @@ a {
   transform: translateY(-2px);
 }
 
+.treatment-card .btn-secondary,
+.article-card .btn-secondary {
+  background-color: rgba(127, 159, 155, 0.2);
+  color: var(--text-dark);
+  border: 1px solid rgba(127, 159, 155, 0.38);
+}
+
+.treatment-card .btn-secondary:hover,
+.article-card .btn-secondary:hover {
+  background-color: rgba(127, 159, 155, 0.34);
+  color: var(--text-dark);
+  box-shadow: none;
+}
+
 .w-100 {
   width: 100%;
 }
@@ -640,6 +654,28 @@ html[dir="rtl"] .brand-logo {
 .treatment-card .btn-primary:hover {
   background-color: rgba(127, 159, 155, 0.28);
   box-shadow: none;
+}
+
+.doctor-card {
+  box-shadow: 0 16px 36px rgba(44, 58, 56, 0.14);
+}
+
+.doctor-card [data-i18n="doc-title"] {
+  color: rgba(44, 58, 56, 0.62) !important;
+}
+
+.doctor-card [data-i18n="doc-name"],
+.doctor-card [data-i18n="doc2-name"] {
+  color: var(--text-dark) !important;
+}
+
+.doctor-card [data-i18n="doc-p1"],
+.doctor-card [data-i18n="doc-p2"],
+.doctor-card [data-i18n="doc-p3"],
+.doctor-card [data-i18n="doc2-p1"],
+.doctor-card [data-i18n="doc2-p2"],
+.doctor-card [data-i18n="doc2-p3"] {
+  color: rgba(44, 58, 56, 0.78) !important;
 }
 
 [dir="rtl"] .arrow {
