@@ -1454,7 +1454,7 @@ html[dir="rtl"] .footer-logo {
 }
 
 .whatsapp-btn::after {
-  content: "לקביעת פגישה";
+  content: "לקביעת ייעוץ אישי";
   position: absolute;
   bottom: calc(100% + 0.75rem);
   right: 0;
@@ -2402,6 +2402,14 @@ html[dir="rtl"] .ba-label-after {
   left: 16px;
 }
 
+.ba-disclaimer {
+  max-width: 760px;
+  margin: 1.25rem auto 0;
+  color: rgba(240, 233, 215, 0.78);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
 @media (max-width: 600px) {
   .ba-grid {
     grid-template-columns: 1fr;
@@ -2483,21 +2491,26 @@ html[dir="rtl"] .ba-label-after {
   color: rgba(240, 233, 215, 0.92);
 }
 
+.footer-review-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: rgba(240, 233, 215, 0.74);
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+
+.footer-review-link:hover {
+  color: var(--aura-cream);
+}
+
 .review-author {
   font-weight: 600;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--aura-cream);
-}
-
-.google-review-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  max-width: fit-content;
-  margin: 0 auto;
 }
 
 /* --- Drill-Down Nested Carousels --- */

@@ -299,6 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "review-google-btn": "Rate us on Google",
       "transformations-title": "Visible Transformations",
       "transformations-desc": "Slide to explore our natural-looking results.",
+      "transformations-disclaimer": "* Before/after images are provided for illustration only and must be read together with this notice: results may vary.",
       "before-label": "Before",
       "after-label": "After",
       "slider-before": "Before",
@@ -575,6 +576,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "review-google-btn": "דרגו אותנו בגוגל",
       "transformations-title": "שינויים נראים לעין",
       "transformations-desc": "הזיזו את הסליידר כדי לחקור את התוצאות הטבעיות שלנו.",
+      "transformations-disclaimer": "* כל תמונת לפני/אחרי חייבת להיות מלווה בכיתוב: \"התוצאות עשויות להשתנות\".",
       "before-label": "לפני",
       "after-label": "אחרי",
       "slider-before": "לפני",
@@ -803,15 +805,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  const escapeHtml = (value) => String(value)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-
   const formatTranslatedText = (value, lang) => {
-    const safeText = escapeHtml(value);
+    const safeText = String(value);
     if (lang !== 'he') return safeText;
 
     return safeText.replace(
