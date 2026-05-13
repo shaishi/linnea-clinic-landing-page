@@ -1,12 +1,12 @@
 /* Linnéa Design System */
 :root {
   /* Brand Colors */
-  --clinique-teal: #7faaa4;
-  --clinique-teal-dark: #4f746f;
+  --clinique-teal: #9fbcb7;
+  --clinique-teal-dark: #98b7b4;
   --clinique-teal-light: #98b7b4;
 
   --aura-cream: #f0e9d7;
-  --aura-cream-dark: #ddd3bf;
+  --aura-cream-dark: #f0e9d7;
 
   --pearl-luminescence: #f3f3f1;
 
@@ -21,7 +21,7 @@
   ); /* Adjusted for WCAG AA contrast against teal */
 
   /* Typography */
-  --font-serif: "DM Serif Display", "Heebo", sans-serif;
+  --font-serif: "DM Serif Display", "Frank Ruhl Libre", "Heebo", serif;
   --font-sans: "Outfit", "Heebo", sans-serif;
 
   /* Layout */
@@ -41,6 +41,11 @@
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-blur: 15px;
+}
+
+html[lang="he"],
+html[dir="rtl"] {
+  --font-serif: "Frank Ruhl Libre", "DM Serif Display", "Heebo", serif;
 }
 
 /* Reset & Base */
