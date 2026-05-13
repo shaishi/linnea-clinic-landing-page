@@ -21,7 +21,7 @@
   ); /* Adjusted for WCAG AA contrast against teal */
 
   /* Typography */
-  --font-serif: "DM Serif Display", "Noto Serif Hebrew", "Heebo", serif;
+  --font-serif: "DM Serif Display", "David Libre", "Heebo", serif;
   --font-brand: "DM Serif Display", serif;
   --font-sans: "Outfit", "Heebo", sans-serif;
 
@@ -46,7 +46,7 @@
 
 html[lang="he"],
 html[dir="rtl"] {
-  --font-serif: "Noto Serif Hebrew", "DM Serif Display", "Heebo", serif;
+  --font-serif: "David Libre", "DM Serif Display", "Heebo", serif;
 }
 
 /* Reset & Base */
@@ -271,16 +271,16 @@ a {
 
 .navbar.scrolled {
   height: 70px; /* Dinamically shrinks */
-  background: rgba(243, 243, 241, 0.94);
+  background: rgba(152, 183, 180, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(152, 183, 180, 0.45);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(240, 233, 215, 0.22);
+  box-shadow: 0 10px 30px rgba(44, 58, 56, 0.1);
 }
 
 /* Always-readable navbar: dark gradient + subtle text shadow so cream text shows on any background */
 .navbar:not(.scrolled) {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(152, 183, 180, 0.92) 0%, rgba(159, 188, 183, 0.62) 62%, transparent 100%);
 }
 
 /* Removed text-shadow that caused the dark effect the user disliked */
@@ -348,7 +348,7 @@ body.acc-light-bg .navbar svg {
 /* Dynamic scroll scaling */
 .navbar.scrolled .brand-logo {
   font-size: 1.7rem;
-  color: var(--text-dark);
+  color: var(--aura-cream);
 }
 
 .navbar.scrolled .brand-subtitle {
@@ -360,7 +360,7 @@ body.acc-light-bg .navbar svg {
 .navbar.scrolled .nav-links a,
 .navbar.scrolled .nav-phone,
 .navbar.scrolled .mobile-nav-toggle {
-  color: var(--text-dark) !important;
+  color: var(--aura-cream) !important;
 }
 
 .mobile-nav-toggle:focus {
@@ -368,14 +368,14 @@ body.acc-light-bg .navbar svg {
 }
 
 .navbar.scrolled .nav-actions .nav-btn {
-  background: var(--clinique-teal-dark) !important;
-  color: var(--text-dark) !important;
-  border: 1px solid var(--clinique-teal-dark) !important;
+  background: rgba(240, 233, 215, 0.92) !important;
+  color: #5f7f7a !important;
+  border: 1px solid rgba(240, 233, 215, 0.5) !important;
 }
 
 .navbar.scrolled .lang-btn {
-  border-color: var(--clinique-teal-dark);
-  color: var(--text-dark);
+  border-color: rgba(240, 233, 215, 0.75);
+  color: var(--aura-cream);
 }
 
 .nav-links {
@@ -472,14 +472,14 @@ body.acc-light-bg .navbar svg {
 
 .hero-title {
   font-size: 5rem;
-  color: var(--text-dark);
+  color: var(--aura-cream);
   margin-bottom: 1.5rem;
   line-height: 1.1;
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
-  color: rgba(44, 58, 56, 0.86);
+  color: rgba(240, 233, 215, 0.92);
   margin-bottom: 2.5rem;
   max-width: 600px;
   margin-left: auto;
@@ -2308,13 +2308,17 @@ html[dir="rtl"] .ba-label-after {
 
 /* Reviews Section */
 .reviews {
-  background-color: var(--pearl-luminescence);
-  color: var(--text-dark);
+  background-color: var(--clinique-teal);
+  color: var(--aura-cream);
   padding: 4rem 0;
 }
 
 .reviews .section-title {
-  color: var(--clinique-teal-dark);
+  color: var(--aura-cream);
+}
+
+.reviews .section-description {
+  color: rgba(240, 233, 215, 0.82);
 }
 
 .reviews-grid {
@@ -2331,28 +2335,28 @@ html[dir="rtl"] .ba-label-after {
 
 /* Arrow buttons on cream background need dark styling */
 .reviews .carousel-btn {
-  background: rgba(97, 125, 120, 0.15);
-  border-color: rgba(97, 125, 120, 0.35);
-  color: var(--clinique-teal-dark);
+  background: rgba(240, 233, 215, 0.12);
+  border-color: rgba(240, 233, 215, 0.32);
+  color: var(--aura-cream);
 }
 .reviews .carousel-btn:hover {
-  background: rgba(97, 125, 120, 0.3);
+  background: rgba(240, 233, 215, 0.22);
 }
 
 /* Dots on cream background */
 .reviews .carousel-dot {
-  background: rgba(97, 125, 120, 0.25);
+  background: rgba(240, 233, 215, 0.28);
 }
 .reviews .carousel-dot.active {
-  background: var(--clinique-teal-dark);
+  background: var(--aura-cream);
 }
 
 .review-card {
-  background: var(--aura-cream);
+  background: rgba(240, 233, 215, 0.14);
   padding: 1.75rem;
   border-radius: var(--border-radius-md);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.09);
-  border: 1px solid rgba(152, 183, 180, 0.35);
+  box-shadow: 0 14px 34px rgba(44, 58, 56, 0.1);
+  border: 1px solid rgba(240, 233, 215, 0.28);
   /* text-align handled per-element via carousel rules */
 }
 
@@ -2366,7 +2370,7 @@ html[dir="rtl"] .ba-label-after {
   font-style: italic;
   font-size: 1.05rem;
   margin-bottom: 1.5rem;
-  color: #4a5c59;
+  color: rgba(240, 233, 215, 0.92);
 }
 
 .review-author {
@@ -2374,7 +2378,7 @@ html[dir="rtl"] .ba-label-after {
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--clinique-teal-dark);
+  color: var(--aura-cream);
 }
 
 .google-review-btn {
