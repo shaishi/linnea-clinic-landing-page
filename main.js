@@ -227,7 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const langToggles = document.querySelectorAll('.lang-toggle');
   const mobileNavToggle = document.getElementById('mobile-nav-toggle');
   const navLinks = document.querySelector('.nav-links');
-  let currentLang = localStorage.getItem('linneaLang') || 'he';
+  const params = new URLSearchParams(window.location.search);
+  const requestedLang = params.get('lang');
+  let currentLang = ['he', 'en'].includes(requestedLang)
+    ? requestedLang
+    : (localStorage.getItem('linneaLang') || 'he');
+  localStorage.setItem('linneaLang', currentLang);
 
   const translations = {
     en: {
@@ -240,6 +245,9 @@ document.addEventListener('DOMContentLoaded', () => {
       "article-botox-title": "Linnéa | The Art of Botox",
       "article-fillers-title": "Linnéa | Mastering Dermal Fillers",
       "article-scientific-title": "Linnéa | The Science of Longevity",
+      "article-skin-quality-title": "Linnéa | Skin Quality, Quietly Refined",
+      "article-facial-harmony-title": "Linnéa | Facial Harmony Over Volume",
+      "article-consultation-plan-title": "Linnéa | The Consultation as a Treatment Plan",
       "nav-home": "Home",
       "nav-articles": "Articles",
       "btn-book": "Book Consultation",
@@ -615,6 +623,9 @@ document.addEventListener('DOMContentLoaded', () => {
       "article-botox-title": "Linnéa | אמנות הבוטוקס",
       "article-fillers-title": "Linnéa | שליטה בחומרי מילוי",
       "article-scientific-title": "Linnéa | מדע אריכות הימים",
+      "article-skin-quality-title": "Linnéa | איכות עור, בעדינות",
+      "article-facial-harmony-title": "Linnéa | הרמוניית פנים לפני נפח",
+      "article-consultation-plan-title": "Linnéa | הייעוץ כתוכנית טיפול",
       "nav-home": "עמוד הבית",
       "nav-articles": "מאמרים",
       "articles-title": "תובנות ומדע",
@@ -837,6 +848,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    document.querySelectorAll('a[href*="article-"]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('http') || href.startsWith('#')) return;
+      const [path, hash = ''] = href.split('#');
+      const cleanPath = path.split('?')[0];
+      const nextHref = `${cleanPath}?lang=${lang}${hash ? `#${hash}` : ''}`;
+      link.setAttribute('href', nextHref);
+    });
+
     // Re-trigger scroll animations whenever the language is switched
     const activeReveals = document.querySelectorAll('.reveal.active');
     activeReveals.forEach(el => {
@@ -855,6 +875,12 @@ document.addEventListener('DOMContentLoaded', () => {
         newTitle = translations[lang]["article-fillers-title"];
       } else if (window.location.pathname.includes('article-scientific')) {
         newTitle = translations[lang]["article-scientific-title"];
+      } else if (window.location.pathname.includes('article-skin-quality')) {
+        newTitle = translations[lang]["article-skin-quality-title"];
+      } else if (window.location.pathname.includes('article-facial-harmony')) {
+        newTitle = translations[lang]["article-facial-harmony-title"];
+      } else if (window.location.pathname.includes('article-consultation-plan')) {
+        newTitle = translations[lang]["article-consultation-plan-title"];
       }
 
       document.title = newTitle;
@@ -869,6 +895,9 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       currentLang = currentLang === 'en' ? 'he' : 'en';
       localStorage.setItem('linneaLang', currentLang);
+      const nextUrl = new URL(window.location.href);
+      nextUrl.searchParams.set('lang', currentLang);
+      window.history.replaceState({}, '', nextUrl);
       applyLanguage(currentLang);
     });
   });

@@ -36,7 +36,7 @@
 - [x] Darken the teal color palette for increased contrast.
 
 ## 7. Hebrew Localization
-- [x] Add Hebrew font integration (Frank Ruhl Libre, Assistant).
+- [x] Add Hebrew font integration (Noto Serif Hebrew, Assistant).
 - [x] Implement translation dictionary in `main.js`.
 - [x] Add `data-i18n` attributes to `index.html`.
 - [x] Add language toggle button an handle RTL (`dir="rtl"`) layout logic.

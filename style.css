@@ -21,7 +21,8 @@
   ); /* Adjusted for WCAG AA contrast against teal */
 
   /* Typography */
-  --font-serif: "DM Serif Display", "Frank Ruhl Libre", "Heebo", serif;
+  --font-serif: "DM Serif Display", "Noto Serif Hebrew", "Heebo", serif;
+  --font-brand: "DM Serif Display", serif;
   --font-sans: "Outfit", "Heebo", sans-serif;
 
   /* Layout */
@@ -45,7 +46,7 @@
 
 html[lang="he"],
 html[dir="rtl"] {
-  --font-serif: "Frank Ruhl Libre", "DM Serif Display", "Heebo", serif;
+  --font-serif: "Noto Serif Hebrew", "DM Serif Display", "Heebo", serif;
 }
 
 /* Reset & Base */
@@ -270,10 +271,10 @@ a {
 
 .navbar.scrolled {
   height: 70px; /* Dinamically shrinks */
-  background: rgba(126, 156, 150, 0.90); /* Restored main branch greenish/teal with enhanced transparency */
+  background: rgba(243, 243, 241, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(152, 183, 180, 0.45);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
@@ -317,7 +318,7 @@ body.acc-light-bg .navbar svg {
 
 /* Logo with baseline correction */
 .brand-logo {
-  font-family: var(--font-serif);
+  font-family: var(--font-brand);
   font-size: 2.2rem;
   font-weight: 400;
   color: var(--aura-cream);
@@ -347,6 +348,7 @@ body.acc-light-bg .navbar svg {
 /* Dynamic scroll scaling */
 .navbar.scrolled .brand-logo {
   font-size: 1.7rem;
+  color: var(--text-dark);
 }
 
 .navbar.scrolled .brand-subtitle {
@@ -358,7 +360,7 @@ body.acc-light-bg .navbar svg {
 .navbar.scrolled .nav-links a,
 .navbar.scrolled .nav-phone,
 .navbar.scrolled .mobile-nav-toggle {
-  color: var(--aura-cream) !important;
+  color: var(--text-dark) !important;
 }
 
 .mobile-nav-toggle:focus {
@@ -366,14 +368,14 @@ body.acc-light-bg .navbar svg {
 }
 
 .navbar.scrolled .nav-actions .nav-btn {
-  background: var(--aura-cream) !important;
-  color: var(--clinique-teal-dark) !important;
-  border: none !important;
+  background: var(--clinique-teal-dark) !important;
+  color: var(--text-dark) !important;
+  border: 1px solid var(--clinique-teal-dark) !important;
 }
 
 .navbar.scrolled .lang-btn {
-  border-color: var(--aura-cream);
-  color: var(--aura-cream);
+  border-color: var(--clinique-teal-dark);
+  color: var(--text-dark);
 }
 
 .nav-links {
@@ -470,14 +472,14 @@ body.acc-light-bg .navbar svg {
 
 .hero-title {
   font-size: 5rem;
-  color: var(--aura-cream);
+  color: var(--text-dark);
   margin-bottom: 1.5rem;
   line-height: 1.1;
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
-  color: var(--text-muted);
+  color: rgba(44, 58, 56, 0.86);
   margin-bottom: 2.5rem;
   max-width: 600px;
   margin-left: auto;
@@ -492,7 +494,7 @@ body.acc-light-bg .navbar svg {
 
 /* About Section */
 .about {
-  background-color: var(--aura-cream);
+  background-color: var(--pearl-luminescence);
   color: var(--text-dark);
   border-radius: 40px;
   width: calc(100% - 4rem);
@@ -553,8 +555,8 @@ body.acc-light-bg .navbar svg {
 }
 
 .treatment-card {
-  background-color: rgba(255, 255, 255, 0.09);
-  border: 1px solid rgba(244, 239, 223, 0.22);
+  background-color: rgba(243, 243, 241, 0.14);
+  border: 1px solid rgba(240, 233, 215, 0.45);
   border-radius: var(--border-radius-lg);
   transition: var(--transition-smooth);
   overflow: hidden;
@@ -817,7 +819,7 @@ body.loaded .loader-overlay {
   margin-top: 4rem;
   padding: 2.5rem;
   background: var(--pearl-luminescence);
-  border: 1px solid rgba(126, 156, 150, 0.15);
+  border: 1px solid rgba(152, 183, 180, 0.28);
   border-radius: var(--border-radius-lg);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
 }
@@ -1179,7 +1181,7 @@ html[dir="rtl"] .footer-logo {
 }
 
 .modal-content {
-  background-color: var(--aura-cream);
+  background-color: var(--pearl-luminescence);
   color: var(--text-dark);
   padding: 3rem;
   border-radius: var(--border-radius-lg);
@@ -1260,8 +1262,8 @@ html[dir="rtl"] .footer-logo {
   overflow-y: auto;
   padding: 2rem 2rem 1.75rem;
   border-radius: 18px;
-  background: linear-gradient(180deg, var(--pearl-luminescence) 0%, var(--aura-cream) 100%);
-  border: 1px solid rgba(79, 116, 111, 0.18);
+  background: var(--pearl-luminescence);
+  border: 1px solid rgba(152, 183, 180, 0.42);
   box-shadow: 0 28px 70px rgba(22, 38, 35, 0.26);
 }
 
@@ -1300,8 +1302,8 @@ html[dir="rtl"] .footer-logo {
 #booking-modal .form-group textarea {
   min-height: 42px;
   padding: 0.65rem 0.8rem;
-  background: rgba(255, 255, 255, 0.72);
-  border-color: rgba(79, 116, 111, 0.28);
+  background: var(--aura-cream);
+  border-color: rgba(152, 183, 180, 0.55);
 }
 
 #booking-modal .form-group textarea {
@@ -1329,14 +1331,14 @@ html[dir="rtl"] .footer-logo {
   margin-top: 0.4rem;
   padding: 0.82rem 1.2rem;
   background: var(--clinique-teal-dark);
-  color: #fff;
+  color: var(--text-dark);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 14px 28px rgba(79, 116, 111, 0.28);
 }
 
 #booking-modal .btn-primary[type="submit"]:hover {
-  background: #3f625e;
-  color: #fff;
+  background: var(--clinique-teal);
+  color: var(--text-dark);
   box-shadow: 0 18px 36px rgba(79, 116, 111, 0.34);
 }
 
@@ -1516,7 +1518,7 @@ html[dir="rtl"] .hero-title {
     overflow: hidden !important;
     visibility: hidden !important;
     pointer-events: none !important;
-    background: rgba(126, 156, 150, 0.98) !important;
+    background: rgba(152, 183, 180, 0.98) !important;
     flex-direction: column !important;
     transition: all 0.3s ease-in-out !important;
     z-index: 1000 !important;
@@ -2306,7 +2308,7 @@ html[dir="rtl"] .ba-label-after {
 
 /* Reviews Section */
 .reviews {
-  background-color: var(--aura-cream);
+  background-color: var(--pearl-luminescence);
   color: var(--text-dark);
   padding: 4rem 0;
 }
@@ -2346,11 +2348,11 @@ html[dir="rtl"] .ba-label-after {
 }
 
 .review-card {
-  background: white;
+  background: var(--aura-cream);
   padding: 1.75rem;
   border-radius: var(--border-radius-md);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.09);
-  border: 1px solid rgba(126, 156, 150, 0.25);
+  border: 1px solid rgba(152, 183, 180, 0.35);
   /* text-align handled per-element via carousel rules */
 }
 
