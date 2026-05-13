@@ -37,7 +37,7 @@ Below is a recording of the page in action, demonstrating the layout and scroll 
 I have implemented a complete bi-directional (LTR/RTL) localization system for the website. 
 - **Language Switcher**: Added a sleek `EN | HE` toggle in the navigation bar.
 - **RTL Layout**: The entire site intelligently flips layout direction (`dir="rtl"`) when switching to Hebrew.
-- **Hebrew Typography**: Integrated beautiful, high-quality Hebrew web fonts: **David Libre** (a premium Hebrew serif complementing DM Serif Display) for headings, and **Assistant** (a clean sans-serif) for body text.
+- **Hebrew Typography**: Integrated **Assistant** for modern, clean Hebrew headings and interface text that feels closer to the English sans-serif tone.
 - **Full Translation**: Hardcoded a local translation dictionary with elegant, high-end Hebrew copy matching the English tone for all sections, including the entire consultation form.
 
 Here is a look at the layout flipped to RTL with the premium Hebrew typography:

@@ -1046,12 +1046,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const drillViews = document.querySelectorAll('.drill-view');
   
   const switchDrillView = (targetId) => {
-    drillViews.forEach(view => {
-      view.classList.remove('active');
-    });
     const targetView = document.getElementById(targetId);
+    const activeView = Array.from(drillViews).find(view => view.classList.contains('active'));
+    if (activeView === targetView) return;
+
+    if (activeView) {
+      activeView.classList.add('is-leaving');
+      setTimeout(() => {
+        activeView.classList.remove('active', 'is-leaving');
+      }, 160);
+    }
+
     if (targetView) {
-      targetView.classList.add('active');
+      setTimeout(() => {
+        targetView.classList.add('active');
+      }, activeView ? 90 : 0);
       // Trigger resize event or layout recalculation so the hidden carousels calculate correct widths!
       setTimeout(() => {
         const wrapper = targetView.querySelector('.carousel-wrapper');
@@ -1059,7 +1068,7 @@ document.addEventListener('DOMContentLoaded', () => {
           wrapper._carouselLayout();
         }
         window.dispatchEvent(new Event('resize'));
-      }, 50);
+      }, 180);
     }
   };
 
