@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Custom Cursor Logic ---
   const cursorDot = document.querySelector('.cursor-dot');
   const cursorOutline = document.querySelector('.cursor-outline');
-  const interactiveElements = document.querySelectorAll('a, button, .treatment-card, .ba-handle');
+  const interactiveElements = document.querySelectorAll('a, button, .treatment-card, .doctor-card, .ba-handle');
 
   if (cursorDot && cursorOutline) {
     window.addEventListener('mousemove', (e) => {
@@ -803,6 +803,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  const escapeHtml = (value) => String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+
+  const formatTranslatedText = (value, lang) => {
+    const safeText = escapeHtml(value);
+    if (lang !== 'he') return safeText;
+
+    return safeText.replace(
+      /([A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ0-9 .,'&|:/+-]*[A-Za-zÀ-ÖØ-öø-ÿ0-9])/g,
+      '<span class="latin-inline">$1</span>'
+    );
+  };
+
   const applyLanguage = (lang) => {
     console.log('Final applyLanguage:', lang);
     langToggles.forEach(btn => {
@@ -828,7 +845,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (translations[lang] && translations[lang][key]) {
-        el.textContent = translations[lang][key];
+        el.innerHTML = formatTranslatedText(translations[lang][key], lang);
       }
     });
 

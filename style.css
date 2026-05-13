@@ -366,6 +366,13 @@ html[dir="rtl"] .brand-logo {
   font-family: var(--font-brand);
 }
 
+.latin-inline {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-family: var(--font-brand);
+  font-weight: 400;
+}
+
 /* Dynamic scroll scaling */
 .navbar.scrolled .brand-logo {
   font-size: 1.7rem;
@@ -657,16 +664,32 @@ html[dir="rtl"] .brand-logo {
 }
 
 .doctor-card {
+  transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
   box-shadow: 0 16px 36px rgba(44, 58, 56, 0.14);
 }
 
+.doctor-card:hover {
+  background-color: rgba(243, 243, 241, 0.9) !important;
+  border-color: rgba(127, 159, 155, 0.42) !important;
+  box-shadow: 0 22px 48px rgba(44, 58, 56, 0.2);
+}
+
+.doctor-card img {
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+}
+
+.doctor-card:hover img {
+  transform: scale(1.025);
+  box-shadow: 0 18px 42px rgba(44, 58, 56, 0.24) !important;
+}
+
 .doctor-card [data-i18n="doc-title"] {
-  color: rgba(44, 58, 56, 0.62) !important;
+  color: rgba(63, 87, 84, 0.68) !important;
 }
 
 .doctor-card [data-i18n="doc-name"],
 .doctor-card [data-i18n="doc2-name"] {
-  color: var(--text-dark) !important;
+  color: #3f5754 !important;
 }
 
 .doctor-card [data-i18n="doc-p1"],
@@ -675,7 +698,7 @@ html[dir="rtl"] .brand-logo {
 .doctor-card [data-i18n="doc2-p1"],
 .doctor-card [data-i18n="doc2-p2"],
 .doctor-card [data-i18n="doc2-p3"] {
-  color: rgba(44, 58, 56, 0.78) !important;
+  color: rgba(54, 75, 72, 0.78) !important;
 }
 
 [dir="rtl"] .arrow {
