@@ -1,14 +1,14 @@
 /* Linnéa Design System */
 :root {
   /* Brand Colors */
-  --clinique-teal: #7e9c96; /* Darkened for better contrast */
-  --clinique-teal-dark: #617d78;
-  --clinique-teal-light: #98b4af;
+  --clinique-teal: #9fbcb7;
+  --clinique-teal-dark: #98b7b4;
+  --clinique-teal-light: #9fbcb7;
 
-  --aura-cream: #f4efdf;
-  --aura-cream-dark: #e8e2d0;
+  --aura-cream: #f0e9d7;
+  --aura-cream-dark: #e4dcc8;
 
-  --pearl-luminescence: #fdfbf6;
+  --pearl-luminescence: #f3f3f1;
 
   /* Text Colors */
   --text-primary: #f4efdf; /* Main text on teal background */

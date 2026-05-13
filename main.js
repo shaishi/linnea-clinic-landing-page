@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "location-title": "Visit Our Clinic",
       "location-desc": "Located in the heart of the city, Linnéa offers a hygienic, soothing sanctuary away from the bustle. We invite you to step into our luxurious space.",
       "address-label": "Address:",
-      "address-val": "116 Herzl Blvd, Jerusalem",
+      "address-val": "150 Menachem Begin Road, Tel Aviv",
       "hours-label": "Hours:",
       "phone-label": "Phone:",
       "get-directions": "Get Directions",
@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "footer-tagline": "Warm, luxurious, inviting, human.",
       "footer-explore": "Explore",
       "footer-contact": "Contact Us",
-      "footer-address": "116 Herzl Blvd, Jerusalem, Israel",
+      "footer-address": "150 Menachem Begin Road, Tel Aviv, Israel",
       "footer-discuss": "Let's discuss your journey.",
       "footer-rights": "© 2026 Linnéa Aesthetic Clinic. All rights reserved.",
       "modal-title": "Book a Consultation",
@@ -317,8 +317,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "acc-light-bg": "Light Background",
       "acc-links-underline": "Highlight Links",
       "acc-reset": "Reset Settings",
-      "accessibility-stmt-content": "We view accessibility as fundamentally important. This website has been adapted to the accessibility requirements according to Israeli law. If you encounter any accessibility issues, please contact our accessibility coordinator.",
-      "privacy-content": "Your privacy is important to us. We collect only necessary information to provide our aesthetic services and do not share your data with unauthorized third parties. By using this website, you agree to our data handling practices.",
+      "accessibility-stmt-content": "We view accessibility as fundamentally important. This website has been adapted to Israeli Standard IS 5568 and WCAG 2.0 Level AA. If you encounter any accessibility issues, please contact our accessibility coordinator.",
+      "privacy-content": "Your privacy is important to us. We collect consultation details, consent choices and operational appointment information only for clinic communication, scheduling, preparation forms and follow-up. Email updates require separate consent and may be cancelled at any time.",
       "terms-content": "By browsing and using this website, you agree to comply with and be bound by the following terms of use. The contents of this website are for general information and aesthetic service booking purposes only.",
       "nav-home": "Home",
       "nav-articles": "Articles",
@@ -327,9 +327,13 @@ document.addEventListener('DOMContentLoaded', () => {
       "read-more": "Read More",
       "success-title": "Thank You!",
       "success-msg": "Your request has been received. We will contact you shortly.",
-      "marketing-consent-1": "I agree to the ",
-      "marketing-consent-2": "Privacy Policy",
-      "marketing-consent-3": " and consent to receive marketing communications.",
+      "service-consent": "I agree that Linnéa may contact me by email, phone or WhatsApp for consultation scheduling, appointment reminders, preparation forms and treatment follow-up.",
+      "privacy-consent-1": "I have read and agree to the ",
+      "privacy-consent-2": "Privacy Policy",
+      "privacy-consent-3": " and ",
+      "privacy-consent-4": "Terms of Use",
+      "email-updates-consent-1": "I agree to receive email updates. You may unsubscribe at any time. ",
+      "email-updates-consent-2": "Privacy Policy",
       "article1-title": "The Art of Botox",
       "article1-subtitle": "A deep dive into neuromodulators and natural expression.",
       "article1-desc": "Discover how precise neuromodulator treatments can smooth wrinkles while maintaining your natural expressions.",
@@ -357,21 +361,21 @@ document.addEventListener('DOMContentLoaded', () => {
       "article3-title": "The Science of Longevity",
       "article3-subtitle": "Evidence-based approaches to cellular health and graceful aging.",
       "article3-desc": "Delve into our evidence-based approach combining aesthetic treatments with cellular health and graceful aging.",
-      "alt-dr-shilo": "Dr. Shiloh DMD MSc, Expert Aesthetic Doctor at Linnéa Aesthetic Clinic Jerusalem, Israel",
+      "alt-dr-shilo": "Dr. Shiloh DMD MSc, Expert Aesthetic Doctor at Linnéa Aesthetic Clinic Tel Aviv, Israel",
       "alt-skin": "Professional Skin Rejuvenation and Advanced Laser Treatments at Linnéa Aesthetic Clinic Israel",
-      "alt-botox": "Expert Botox Injections and Dermal Fillers at Premium Aesthetic Clinic Jerusalem",
-      "alt-contouring": "Facial Contouring and Aesthetic Sculpting Specialist in Jerusalem, Israel",
+      "alt-botox": "Expert Botox Injections and Dermal Fillers at Premium Aesthetic Clinic Tel Aviv",
+      "alt-contouring": "Facial Contouring and Aesthetic Sculpting Specialist in Tel Aviv, Israel",
       "alt-article-botox": "The Art of Botox: Expert Anti-Aging and Wrinkle Treatments in Israel",
       "alt-article-fillers": "Mastering Dermal Fillers: Advanced Volume Restoration at Linnéa Aesthetic Clinic",
       "alt-article-scientific": "Science of Longevity: Evidence-Based Aesthetic Medicine in Israel",
       "alt-skin-after": "After Results of Skin Rejuvenation Treatment at Linnéa Clinic Israel",
-      "alt-skin-before": "Before Skin Rejuvenation Treatment at Aesthetic Clinic Jerusalem",
+      "alt-skin-before": "Before Skin Rejuvenation Treatment at Aesthetic Clinic Tel Aviv",
       "alt-lips-after": "After Results of Lip Enhancement Fillers in Israel",
       "alt-lips-before": "Before Lip Enhancement Fillers at Linnéa Clinic",
       "alt-jawline-after": "After Jawline Contouring and Facial Sculpting Results",
-      "alt-jawline-before": "Before Jawline Contouring at Jerusalem Aesthetic Clinic",
+      "alt-jawline-before": "Before Jawline Contouring at Tel Aviv Aesthetic Clinic",
       "alt-article1-hero": "Botox and Neuromodulator Treatment for Natural Results in Israel",
-      "alt-article2-hero": "Dermal Fillers and Facial Balancing for Elegant Aging in Jerusalem",
+      "alt-article2-hero": "Dermal Fillers and Facial Balancing for Elegant Aging in Tel Aviv",
       "alt-article3-hero": "Cellular Health and Longevity Science in Modern Aesthetic Medicine Israel",
       "article3-p1": "True aesthetic beauty radiates from within, reflecting optimal cellular health. At Linnéa, we look beyond the surface, integrating cutting-edge longevity science with our aesthetic treatments to ensure age-defying results that last.",
       "article3-p2": "Our scientific approach focuses on bio-stimulation and regenerative medicine. By triggering the body's natural collagen and elastin production through advanced technologies like microneedling, laser therapies, and polynucleotides, we effectively repair the skin at a molecular level.",
@@ -496,7 +500,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "location-title": "בקרו בקליניקה שלנו",
       "location-desc": "ממוקמת בלב העיר, לינאה מציעה מקלט היגייני ומרגיע הרחק מההמולה. אנו מזמינים אתכם להיכנס לחלל היוקרתי שלנו.",
       "address-label": "כתובת:",
-      "address-val": "שדרות הרצל 116, ירושלים",
+      "address-val": "דרך מנחם בגין 150, תל אביב",
       "hours-label": "שעות פתיחה:",
       "phone-label": "טלפון:",
       "get-directions": "ניווט לקליניקה",
@@ -504,7 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "footer-tagline": "חם, יוקרתי, מזמין, אנושי.",
       "footer-explore": "ניווט",
       "footer-contact": "צרו קשר",
-      "footer-address": "שדרות הרצל 116, ירושלים, ישראל",
+      "footer-address": "דרך מנחם בגין 150, תל אביב, ישראל",
       "footer-discuss": "בואו נדבר על המסע שלכן.",
       "footer-rights": "© 2026 לינאה קליניקה אסתטית. כל הזכויות שמורות.",
       "modal-title": "קביעת פגישת ייעוץ",
@@ -541,9 +545,13 @@ document.addEventListener('DOMContentLoaded', () => {
       "alert-success": "תודה על פנייתך! צוות הקליניקה ייצור איתך קשר בהקדם.",
       "success-title": "תודה רבה!",
       "success-msg": "פנייתך התקבלה. ניצור איתך קשר בהקדם.",
-      "marketing-consent-1": "אני מסכים/ה ל",
-      "marketing-consent-2": "מדיניות הפרטיות",
-      "marketing-consent-3": " ומאשר/ת קבלת דיוור שיווקי.",
+      "service-consent": "אני מאשר/ת שלינאה תיצור איתי קשר במייל, בטלפון או ב-WhatsApp לצורך תיאום ייעוץ, תזכורות, טפסי הכנה ומעקב טיפול.",
+      "privacy-consent-1": "קראתי ואני מסכים/ה ל",
+      "privacy-consent-2": "מדיניות הפרטיות",
+      "privacy-consent-3": " ול",
+      "privacy-consent-4": "תנאי השימוש באתר",
+      "email-updates-consent-1": "אני מסכים/ה לקבל עדכונים במייל. ניתן לבטל בכל עת. ",
+      "email-updates-consent-2": "מדיניות הפרטיות",
       "nav-accessibility": "הצהרת נגישות",
       "nav-privacy": "מדיניות פרטיות",
       "nav-terms": "תנאי שימוש באתר",
@@ -558,8 +566,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "acc-light-bg": "רקע בהיר",
       "acc-links-underline": "הדגשת קישורים",
       "acc-reset": "איפוס הגדרות",
-      "accessibility-stmt-content": "אנו רואים חשיבות עליונה בהנגשת האתר. אתר זה הונגש בהתאם לתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), תשע\"ג. במידה ונתקלתם בבעיית נגישות, אנא צרו עמנו קשר.",
-      "privacy-content": "הפרטיות שלך חשובה לנו. אנו אוספים רק מידע הכרחי למתן השירותים האסתטיים שלנו ואיננו משתפים את הנתונים שלך עם צדדים שלישיים ללא הרשאה. בעצם השימוש באתר זה, הנך מסכים למדיניות זו.",
+      "accessibility-stmt-content": "אנו רואים חשיבות עליונה בהנגשת האתר. אתר זה הונגש בהתאם לתקן ישראלי 5568 ולהנחיות WCAG 2.0 ברמה AA. במידה ונתקלתם בבעיית נגישות, אנא צרו עמנו קשר.",
+      "privacy-content": "הפרטיות שלך חשובה לנו. אנו אוספים פרטי ייעוץ, בחירות הסכמה ומידע תפעולי על תורים לצורך תקשורת עם הקליניקה, תיאום, טפסי הכנה ומעקב. עדכונים במייל דורשים הסכמה נפרדת וניתן לבטל בכל עת.",
       "terms-content": "הגלישה והשימוש באתר זה כפופים לתנאי השימוש הבאים. תכני האתר נועדו למידע כללי בלבד ולצורך הזמנת תורים אלינו.",
       "page-title": "Linnéa | קליניקה אסתטית יוקרתית",
       "article-botox-title": "Linnéa | אמנות הבוטוקס",
@@ -595,21 +603,21 @@ document.addEventListener('DOMContentLoaded', () => {
       "article3-title": "מדע אריכות הימים",
       "article3-subtitle": "גישות מבוססות-ראיות לבריאות התא והזדקנות בחן.",
       "article3-desc": "חקרו את הגישה המדעית שלנו המשלבת טיפולים אסתטיים עם בריאות תאית לאריכות ימים.",
-      "alt-dr-shilo": "ד\"ר שילה DMD MSc, מומחה לאסתטיקה רפואית במרפאת לינאה ירושלים, ישראל",
+      "alt-dr-shilo": "ד\"ר שילה DMD MSc, מומחה לאסתטיקה רפואית במרפאת לינאה תל אביב, ישראל",
       "alt-skin": "חידוש העור וטיפולי לייזר מתקדמים במרפאת האסתטיקה לינאה ישראל",
-      "alt-botox": "הזרקות בוטוקס וחומרי מילוי מומחים במרפאת בוטיק לאסתטיקה בירושלים",
-      "alt-contouring": "מומחה לפיסול פנים וקו לסת במרפאת אסתטיקה בירושלים, ישראל",
+      "alt-botox": "הזרקות בוטוקס וחומרי מילוי מומחים במרפאת בוטיק לאסתטיקה בתל אביב",
+      "alt-contouring": "מומחה לפיסול פנים וקו לסת במרפאת אסתטיקה בתל אביב, ישראל",
       "alt-article-botox": "אמנות הבוטוקס: טיפולי אנטי-אייג'ינג והחלקת קמטים מומחים בישראל",
       "alt-article-fillers": "מומחיות בחומרי מילוי: שחזור נפח מתקדם במרפאת לינאה אסתטיקה",
       "alt-article-scientific": "מדע אריכות הימים: רפואה אסתטית מבוססת מדע בישראל",
       "alt-skin-after": "תוצאות אחרי טיפול חידוש עור במרפאת לינאה ישראל",
-      "alt-skin-before": "לפני טיפול חידוש עור במרפאת אסתטיקה בירושלים",
+      "alt-skin-before": "לפני טיפול חידוש עור במרפאת אסתטיקה בתל אביב",
       "alt-lips-after": "תוצאות אחרי עיבוי שפתיים עם חומרי מילוי בישראל",
       "alt-lips-before": "לפני עיבוי שפתיים במרפאת לינאה",
       "alt-jawline-after": "תוצאות אחרי פיסול קו לסת ועיצוב פנים",
-      "alt-jawline-before": "לפני פיסול קו לסת במרפאת אסתטיקה ירושלים",
+      "alt-jawline-before": "לפני פיסול קו לסת במרפאת אסתטיקה תל אביב",
       "alt-article1-hero": "טיפול בוטוקס ונוירומודולטורים לתוצאות טבעיות בישראל",
-      "alt-article2-hero": "חומרי מילוי ואיזון פנים להזדקנות אלגנטית בירושלים",
+      "alt-article2-hero": "חומרי מילוי ואיזון פנים להזדקנות אלגנטית בתל אביב",
       "alt-article3-hero": "בריאות תאית ומדע אריכות הימים ברפואה אסתטית מודרנית בישראל",
       "article3-p1": "יופי אסתטי אמיתי זוהר מבפנים ומשקף בריאות תאית אופטימלית. בלינאה, אנו מסתכלים מעבר לפני השטח ומשלבים מדע מתקדם של אריכות ימים עם טיפולי האסתטיקה שלנו כדי להבטיח תוצאות המחזיקות לאורך זמן ומאטות את תהליך ההזדקנות.",
       "article3-p2": "הגישה המדעית שלנו מתמקדת בביו-סטימולציה ורפואה רנרטיבית. על ידי גירוי ייצור הקולגן והאלסטין הטבעי של הגוף באמצעות טכנולוגיות מתקדמות כמו מיקרונידלינג, טיפולי לייזר ופולינוקלאוטידים, אנו מתקנים את העור ברמה המולקולרית.",
@@ -860,6 +868,22 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const requiredConsents = form.querySelectorAll('input[type="checkbox"][required]');
+      const hasMissingConsent = Array.from(requiredConsents).some(checkbox => !checkbox.checked);
+      if (hasMissingConsent) {
+        requiredConsents.forEach(checkbox => {
+          checkbox.setCustomValidity(checkbox.checked ? '' : (currentLang === 'he' ? 'יש לאשר את התנאים לפני שליחת הבקשה.' : 'Please approve the required terms before submitting.'));
+        });
+        form.reportValidity();
+        return;
+      }
+
+      requiredConsents.forEach(checkbox => checkbox.setCustomValidity(''));
       const formData = new FormData(form);
       const submitBtn = form.querySelector('button[type="submit"]');
       submitBtn.textContent = '...';
@@ -887,6 +911,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }).catch(() => {
         submitBtn.textContent = 'Error, please try again.';
         submitBtn.disabled = false;
+      });
+    });
+
+    form.querySelectorAll('input[type="checkbox"][required]').forEach(checkbox => {
+      checkbox.addEventListener('change', () => {
+        checkbox.setCustomValidity('');
       });
     });
 
