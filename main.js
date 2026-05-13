@@ -272,20 +272,20 @@ document.addEventListener('DOMContentLoaded', () => {
       "footer-discuss": "Let's discuss your journey.",
       "footer-rights": "© 2026 Linnéa Aesthetic Clinic. All rights reserved.",
       "modal-title": "Book a Consultation",
-      "modal-desc": "Take the first step towards your natural radiance.",
+      "modal-desc": "Share a few details and our team will offer a discreet consultation time.",
       "label-name": "Full Name",
-      "placeholder-name": "Jane Doe",
+      "placeholder-name": "Your full name",
       "label-email": "Email",
       "placeholder-email": "jane@example.com",
       "label-phone": "Phone Number",
-      "placeholder-phone": "+1 234 567 8900",
+      "placeholder-phone": "+972 50 000 0000",
       "label-interest": "Area of Interest",
       "opt-rejuvenation": "Skin Rejuvenation",
       "opt-injectables": "Injectables",
       "opt-contouring": "Facial Contouring",
       "opt-other": "Other",
       "label-other-details": "Please specify",
-      "placeholder-other-details": "Tell us more about what you're looking for...",
+      "placeholder-other-details": "A few words about what you would like to refine",
       "reviews-title": "What Our Clients Say",
       "reviews-subtitle": "Google Reviews",
       "review-google-btn": "Rate us on Google",
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "review3-text": "\"Professional, hygienic, and very high-end. Highly recommended for anyone looking for quality.\"",
       "review3-author": "Sarah B.",
       "btn-submit": "Submit Request",
-      "alert-success": "Thank you for booking a consultation! Our team will contact you shortly.",
+      "alert-success": "Thank you. Your consultation request has been received.",
       "nav-accessibility": "Accessibility Statement",
       "nav-privacy": "Privacy Policy",
       "nav-terms": "Terms of Use",
@@ -326,7 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "articles-desc": "Explore our expert articles on aesthetic medicine, treatments, and the science of longevity.",
       "read-more": "Read More",
       "success-title": "Thank You!",
-      "success-msg": "Your request has been received. We will contact you shortly.",
+      "success-msg": "Your request has been received. We will follow up with refined appointment options shortly.",
       "service-consent": "I agree that Linnéa may contact me by email, phone or WhatsApp for consultation scheduling, appointment reminders, preparation forms and treatment follow-up.",
       "privacy-consent-1": "I have read and agree to the ",
       "privacy-consent-2": "Privacy Policy",
@@ -512,20 +512,20 @@ document.addEventListener('DOMContentLoaded', () => {
       "footer-discuss": "בואו נדבר על המסע שלכן.",
       "footer-rights": "© 2026 לינאה קליניקה אסתטית. כל הזכויות שמורות.",
       "modal-title": "קביעת פגישת ייעוץ",
-      "modal-desc": "הצעד הראשון אל עבר הזוהר הטבעי שלך.",
+      "modal-desc": "השאירו כמה פרטים, והצוות יחזור עם אפשרויות ייעוץ מדויקות.",
       "label-name": "שם מלא",
-      "placeholder-name": "ישראל ישראלי",
+      "placeholder-name": "שם מלא",
       "label-email": "אימייל",
       "placeholder-email": "israel@example.com",
       "label-phone": "מספר טלפון",
-      "placeholder-phone": "050-1234567",
+      "placeholder-phone": "050-0000000",
       "label-interest": "תחום עניין",
       "opt-rejuvenation": "הצערת העור",
       "opt-injectables": "הזרקות",
       "opt-contouring": "פיסול פנים",
       "opt-other": "אחר",
       "label-other-details": "אנא פרטו",
-      "placeholder-other-details": "ספרו לנו עוד על מה שאתם מחפשים...",
+      "placeholder-other-details": "כמה מילים על מה שתרצו לדייק",
       "reviews-title": "מה הלקוחות שלנו אומרים",
       "reviews-subtitle": "ביקורות גוגל",
       "review-google-btn": "דרגו אותנו בגוגל",
@@ -542,9 +542,9 @@ document.addEventListener('DOMContentLoaded', () => {
       "review3-text": "\"מקצועי, היגייני וברמה גבוהה מאוד. מומלץ בחום לכל מי שמחפש איכות.\"",
       "review3-author": "שרה ב.",
       "btn-submit": "שליחת בקשה",
-      "alert-success": "תודה על פנייתך! צוות הקליניקה ייצור איתך קשר בהקדם.",
+      "alert-success": "תודה. בקשת הייעוץ התקבלה.",
       "success-title": "תודה רבה!",
-      "success-msg": "פנייתך התקבלה. ניצור איתך קשר בהקדם.",
+      "success-msg": "פנייתך התקבלה. נחזור אליך בקרוב עם אפשרויות תיאום מדויקות.",
       "service-consent": "אני מאשר/ת שלינאה תיצור איתי קשר במייל, בטלפון או ב-WhatsApp לצורך תיאום ייעוץ, תזכורות, טפסי הכנה ומעקב טיפול.",
       "privacy-consent-1": "קראתי ואני מסכים/ה ל",
       "privacy-consent-2": "מדיניות הפרטיות",
@@ -886,7 +886,7 @@ document.addEventListener('DOMContentLoaded', () => {
       requiredConsents.forEach(checkbox => checkbox.setCustomValidity(''));
       const formData = new FormData(form);
       const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.textContent = '...';
+      submitBtn.textContent = currentLang === 'he' ? 'שולח...' : 'Sending...';
       submitBtn.disabled = true;
 
       fetch(form.action, {
@@ -905,11 +905,11 @@ document.addEventListener('DOMContentLoaded', () => {
           `;
           applyLanguage(currentLang);
         } else {
-          submitBtn.textContent = 'Error, please try again.';
+          submitBtn.textContent = currentLang === 'he' ? 'לא נשלח, נסו שוב' : 'Please try again';
           submitBtn.disabled = false;
         }
       }).catch(() => {
-        submitBtn.textContent = 'Error, please try again.';
+        submitBtn.textContent = currentLang === 'he' ? 'לא נשלח, נסו שוב' : 'Please try again';
         submitBtn.disabled = false;
       });
     });
