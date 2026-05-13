@@ -4,30 +4,52 @@
 
   <url>
     <loc>https://shaishi.github.io/linnea-clinic-landing-page/</loc>
-    <lastmod>2025-04-11</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="he" href="https://shaishi.github.io/linnea-clinic-landing-page/"/>
+    <xhtml:link rel="alternate" hreflang="he-IL" href="https://shaishi.github.io/linnea-clinic-landing-page/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://shaishi.github.io/linnea-clinic-landing-page/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://shaishi.github.io/linnea-clinic-landing-page/"/>
   </url>
 
   <url>
     <loc>https://shaishi.github.io/linnea-clinic-landing-page/article-botox.html</loc>
-    <lastmod>2025-04-11</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://shaishi.github.io/linnea-clinic-landing-page/article-fillers.html</loc>
-    <lastmod>2025-04-11</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://shaishi.github.io/linnea-clinic-landing-page/article-scientific.html</loc>
-    <lastmod>2025-04-11</lastmod>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://shaishi.github.io/linnea-clinic-landing-page/article-skin-quality.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://shaishi.github.io/linnea-clinic-landing-page/article-facial-harmony.html</loc>
+    <lastmod>2026-05-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://shaishi.github.io/linnea-clinic-landing-page/article-consultation-plan.html</loc>
+    <lastmod>2026-05-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -1,0 +1,26 @@
+# Linnéa Aesthetic Clinic
+
+Linnéa is a high-end aesthetic clinic in Tel Aviv, Israel. The clinic focuses on natural-looking aesthetic medicine, dual-doctor consultation, facial harmony planning, Botox, dermal fillers, facial contouring and advanced skin quality treatments.
+
+## Core Pages
+
+- Home: https://shaishi.github.io/linnea-clinic-landing-page/
+- Botox article: https://shaishi.github.io/linnea-clinic-landing-page/article-botox.html
+- Dermal fillers article: https://shaishi.github.io/linnea-clinic-landing-page/article-fillers.html
+- Aesthetic longevity article: https://shaishi.github.io/linnea-clinic-landing-page/article-scientific.html
+- Skin quality article: https://shaishi.github.io/linnea-clinic-landing-page/article-skin-quality.html
+- Facial harmony article: https://shaishi.github.io/linnea-clinic-landing-page/article-facial-harmony.html
+- Consultation planning article: https://shaishi.github.io/linnea-clinic-landing-page/article-consultation-plan.html
+
+## Key Facts
+
+- Clinic name: Linnéa Aesthetic Clinic
+- Location: 150 Menachem Begin Road, Tel Aviv, Israel
+- Email: linneaclinic@gmail.com
+- Phone: +972-50-123-4567
+- Languages: Hebrew, English
+- Primary positioning: refined, medically led aesthetic treatments with a restrained and natural-looking philosophy.
+
+## Medical Notice
+
+Website content is general information only and is not a substitute for medical consultation, diagnosis or treatment. Results may vary.

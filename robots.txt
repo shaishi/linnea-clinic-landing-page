@@ -1,8 +1,33 @@
 User-agent: *
 Allow: /
-
-# Block access to any potential build artifacts
 Disallow: /node_modules/
 Disallow: /.git/
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
 
 Sitemap: https://shaishi.github.io/linnea-clinic-landing-page/sitemap.xml

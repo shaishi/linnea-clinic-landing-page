@@ -31,9 +31,10 @@
   <meta name="geo.position" content="32.0707;34.7940" />
   <meta name="ICBM" content="32.0707, 34.7940" />
   <!-- hreflang for bilingual site -->
-  <link rel="alternate" hreflang="he" href="https://shaishi.github.io/linnea-clinic-landing-page/" />
+  <link rel="alternate" hreflang="he-IL" href="https://shaishi.github.io/linnea-clinic-landing-page/" />
   <link rel="alternate" hreflang="en" href="https://shaishi.github.io/linnea-clinic-landing-page/" />
   <link rel="alternate" hreflang="x-default" href="https://shaishi.github.io/linnea-clinic-landing-page/" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
   <title>Linnéa | קליניקה אסתטית יוקרתית בתל אביב</title>
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -60,57 +61,130 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "MedicalBusiness",
-    "name": "Linn\u00e9a Aesthetic Clinic",
-    "url": "https://shaishi.github.io/linnea-clinic-landing-page/",
-    "telephone": "+972-50-123-4567",
-    "email": "linneaclinic@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "150 Menachem Begin Road",
-      "addressLocality": "Tel Aviv",
-      "addressRegion": "Tel Aviv District",
-      "addressCountry": "IL"
-    },
-    "openingHoursSpecification": [
+    "@graph": [
       {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday"],
-        "opens": "09:00",
-        "closes": "19:00"
+        "@type": ["MedicalClinic", "LocalBusiness"],
+        "@id": "https://shaishi.github.io/linnea-clinic-landing-page/#clinic",
+        "name": "Linn\u00e9a Aesthetic Clinic",
+        "alternateName": "לינאה קליניקה אסתטית",
+        "url": "https://shaishi.github.io/linnea-clinic-landing-page/",
+        "telephone": "+972-50-123-4567",
+        "email": "linneaclinic@gmail.com",
+        "image": "https://shaishi.github.io/linnea-clinic-landing-page/images/hero-bg.jpg",
+        "logo": "https://shaishi.github.io/linnea-clinic-landing-page/images/hero-bg.jpg",
+        "priceRange": "\u20aa\u20aa\u20aa",
+        "medicalSpecialty": ["Aesthetic Medicine", "Dermatologic Surgery", "Dentistry"],
+        "description": "Linn\u00e9a is a high-end aesthetic clinic in Tel Aviv offering personalized consultations, Botox, dermal fillers, facial contouring and advanced skin quality treatments with a refined, natural-looking approach.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "150 Menachem Begin Road",
+          "addressLocality": "Tel Aviv",
+          "addressRegion": "Tel Aviv District",
+          "addressCountry": "IL"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 32.0707,
+          "longitude": 34.7940
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Monday",
+            "opens": "10:00",
+            "closes": "17:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Friday",
+            "opens": "09:00",
+            "closes": "14:00"
+          }
+        ],
+        "areaServed": ["Tel Aviv", "Gush Dan", "Israel"],
+        "availableLanguage": ["Hebrew", "English"],
+        "sameAs": [
+          "https://www.instagram.com/linneaclinic",
+          "https://www.facebook.com/linneaclinic"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Aesthetic Treatments",
+          "itemListElement": [
+            {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Botox Injections", "alternateName": "בוטוקס"}},
+            {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Dermal Fillers", "alternateName": "פילרים"}},
+            {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Skin Rejuvenation", "alternateName": "הצערת עור"}},
+            {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Facial Contouring", "alternateName": "פיסול פנים"}}
+          ]
+        }
       },
       {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Friday",
-        "opens": "09:00",
-        "closes": "14:00"
+        "@type": "WebSite",
+        "@id": "https://shaishi.github.io/linnea-clinic-landing-page/#website",
+        "url": "https://shaishi.github.io/linnea-clinic-landing-page/",
+        "name": "Linn\u00e9a Aesthetic Clinic",
+        "inLanguage": ["he-IL", "en"],
+        "publisher": {"@id": "https://shaishi.github.io/linnea-clinic-landing-page/#clinic"}
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://shaishi.github.io/linnea-clinic-landing-page/#webpage",
+        "url": "https://shaishi.github.io/linnea-clinic-landing-page/",
+        "name": "Linn\u00e9a | קליניקה אסתטית יוקרתית בתל אביב",
+        "isPartOf": {"@id": "https://shaishi.github.io/linnea-clinic-landing-page/#website"},
+        "about": {"@id": "https://shaishi.github.io/linnea-clinic-landing-page/#clinic"},
+        "primaryImageOfPage": "https://shaishi.github.io/linnea-clinic-landing-page/images/hero-bg.jpg",
+        "inLanguage": "he-IL"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://shaishi.github.io/linnea-clinic-landing-page/#dr-shiloh",
+        "name": "Dr. Shmuel Shai Shiloh",
+        "honorificPrefix": "Dr.",
+        "jobTitle": "Aesthetic physician and dentist",
+        "worksFor": {"@id": "https://shaishi.github.io/linnea-clinic-landing-page/#clinic"},
+        "knowsAbout": ["Aesthetic medicine", "Injectables", "Medical Big Data", "Facial harmony"]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://shaishi.github.io/linnea-clinic-landing-page/#dr-khoury",
+        "name": "Dr. Yasmine Khoury",
+        "honorificPrefix": "Dr.",
+        "jobTitle": "Dental physician and biomedical researcher",
+        "worksFor": {"@id": "https://shaishi.github.io/linnea-clinic-landing-page/#clinic"},
+        "knowsAbout": ["Dental aesthetics", "Biomedical research", "Facial harmony"]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://shaishi.github.io/linnea-clinic-landing-page/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What makes Linn\u00e9a different from a standard aesthetic clinic?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Linn\u00e9a uses a dual-doctor consultation model, combining medical assessment, facial harmony planning and a restrained aesthetic approach before recommending treatment."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Where is Linn\u00e9a Aesthetic Clinic located?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The clinic is located at 150 Menachem Begin Road, Tel Aviv, Israel."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do before and after results vary?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Aesthetic treatment results vary between patients and depend on anatomy, medical background, treatment plan and healing response."
+            }
+          }
+        ]
       }
-    ],
-    "image": "https://shaishi.github.io/linnea-clinic-landing-page/images/hero-bg.jpg",
-    "priceRange": "\u20aa\u20aa\u20aa",
-    "medicalSpecialty": "Plastic and Reconstructive Surgery",
-    "description": "Linn\u00e9a Aesthetic Clinic in Tel Aviv offers high-end, personalized aesthetic treatments including Botox, dermal fillers, and advanced skin rejuvenation therapies.",
-    "sameAs": [
-      "https://www.instagram.com/linneaclinic",
-      "https://www.facebook.com/linneaclinic"
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": "3",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Aesthetic Treatments",
-      "itemListElement": [
-        {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Botox Injections", "alternateName": "בוטוקס"}},
-        {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Dermal Fillers", "alternateName": "פילרים"}},
-        {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Skin Rejuvenation", "alternateName": "הצערת עור"}},
-        {"@type": "Offer", "itemOffered": {"@type": "MedicalProcedure", "name": "Facial Contouring", "alternateName": "פיסול פנים"}}
-      ]
-    }
+    ]
   }
   </script>
 </head>
@@ -174,6 +248,36 @@
         <button class="btn btn-primary hero-btn" data-i18n="btn-book">
           Book a Personal Consultation
         </button>
+      </div>
+    </section>
+
+    <!-- Method Section -->
+    <section class="method section" id="method">
+      <div class="container">
+        <div class="method-header">
+          <p class="section-kicker" data-i18n="method-kicker">The Linnéa Method</p>
+          <h2 class="section-title" data-i18n="method-title">A quieter standard for aesthetic medicine</h2>
+          <p class="section-description" data-i18n="method-desc">
+            Every consultation is built around medical clarity, facial harmony and restraint, so the result feels refined rather than treated.
+          </p>
+        </div>
+        <div class="method-grid">
+          <article class="method-card">
+            <span class="method-number">01</span>
+            <h3 data-i18n="method-1-title">Dual-doctor planning</h3>
+            <p data-i18n="method-1-desc">Two doctors review the facial structure, treatment goals and safety considerations before creating a personal plan.</p>
+          </article>
+          <article class="method-card">
+            <span class="method-number">02</span>
+            <h3 data-i18n="method-2-title">Precise minimalism</h3>
+            <p data-i18n="method-2-desc">The focus is on subtle refinement, preserving expression and proportion rather than changing identity.</p>
+          </article>
+          <article class="method-card">
+            <span class="method-number">03</span>
+            <h3 data-i18n="method-3-title">Medical continuity</h3>
+            <p data-i18n="method-3-desc">Consultation, preparation, treatment and follow-up are connected into one calm, medically led patient journey.</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -831,7 +935,7 @@
   <div class="modal-overlay" id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
     <div class="modal-content">
       <button class="close-modal" id="close-modal" aria-label="סגור חלון">&times;</button>
-      <h2 class="modal-title" id="booking-modal-title" data-i18n="modal-title">Book a Consultation</h2>
+      <h2 class="modal-title" id="booking-modal-title" data-i18n="modal-title">Book a Personal Consultation</h2>
       <p class="modal-desc" data-i18n="modal-desc">
         Take the first step towards your natural radiance.
       </p>

@@ -1,0 +1,46 @@
+# Linnéa Aesthetic Clinic - AI Search Reference
+
+## Overview
+
+Linnéa Aesthetic Clinic is a high-end aesthetic clinic located at 150 Menachem Begin Road, Tel Aviv, Israel. The clinic provides personalized aesthetic consultations and treatment planning for patients seeking refined, natural-looking results.
+
+The clinic's core positioning is based on a dual-doctor consultation model: every treatment plan is considered through medical assessment, facial harmony, restraint, safety and long-term aesthetic balance.
+
+## Services
+
+- Botox and neuromodulator treatments
+- Dermal fillers
+- Facial contouring
+- Lip enhancement
+- Jawline and chin sculpting
+- Non-surgical rhinoplasty
+- Tear trough filler
+- Skin rejuvenation
+- Skin boosters
+- Polynucleotides
+- Biostimulation and collagen-supporting treatments
+
+## Clinical Philosophy
+
+Linnéa emphasizes precise minimalism: treatments should refine existing beauty rather than change facial identity. The clinic focuses on subtle facial harmony, medical safety, patient education and clear consultation before treatment.
+
+## Doctors
+
+Dr. Shmuel Shai Shiloh DMD, MSc combines dental medical training, aesthetic medicine and medical big data expertise.
+
+Dr. Yasmine Khoury DMD, MSc is a dental physician and biomedical researcher focused on precise, evidence-based clinical care and dental aesthetics.
+
+## Location and Contact
+
+- Address: 150 Menachem Begin Road, Tel Aviv, Israel
+- Email: linneaclinic@gmail.com
+- Phone: +972-50-123-4567
+- Website: https://shaishi.github.io/linnea-clinic-landing-page/
+
+## Important Medical Notice
+
+The website provides general educational information only. It is not medical advice, diagnosis or treatment. Patients should consult a qualified medical professional before any aesthetic procedure. Results may vary.
+
+## Suggested Citation
+
+Linnéa Aesthetic Clinic, Tel Aviv. High-end aesthetic medicine clinic focused on dual-doctor consultation, facial harmony and natural-looking aesthetic results.
