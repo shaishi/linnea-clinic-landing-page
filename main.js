@@ -28,12 +28,15 @@ try {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const hasGsap = typeof gsap !== 'undefined';
+  const hasScrollTrigger = typeof ScrollTrigger !== 'undefined';
+
   // --- Custom Cursor Logic ---
   const cursorDot = document.querySelector('.cursor-dot');
   const cursorOutline = document.querySelector('.cursor-outline');
   const interactiveElements = document.querySelectorAll('a, button, .treatment-card, .doctor-card, .ba-handle');
 
-  if (cursorDot && cursorOutline) {
+  if (cursorDot && cursorOutline && hasGsap) {
     window.addEventListener('mousemove', (e) => {
       const posX = e.clientX;
       const posY = e.clientY;
@@ -54,130 +57,144 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Hero Intro Animation ---
-  const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.0 } });
+  const heroTl = hasGsap
+    ? gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.0 } })
+    : { progress: () => {}, play: () => {} };
 
-  heroTl
-    .fromTo('.hero-title', { opacity: 0, y: 20 }, { opacity: 1, y: 0, delay: 0.15 })
-    .fromTo('.hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8')
-    .fromTo('.hero-btn', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8');
+  if (hasGsap) {
+    heroTl
+      .fromTo('.hero-title', { opacity: 0, y: 20 }, { opacity: 1, y: 0, delay: 0.15 })
+      .fromTo('.hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8')
+      .fromTo('.hero-btn', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8');
+  }
 
   // --- Pre-loader Removal (GSAP block removed in favor of CSS transition below) ---
 
   // --- GSAP Scroll Reveals ---
   const revealSections = document.querySelectorAll('section');
 
-  revealSections.forEach(section => {
-    const sectionTitle = section.querySelector('.section-title');
-    const sectionDesc = section.querySelector('.section-description');
-    const cards = Array.from(section.querySelectorAll('.treatment-card, .article-card, .review-card, .ba-container, .article-hero-img, .reveal, .article-content p'))
-      .filter(el => !el.classList.contains('section-title') && !el.classList.contains('section-description'));
+  if (hasGsap && hasScrollTrigger) {
+    revealSections.forEach(section => {
+      const sectionTitle = section.querySelector('.section-title');
+      const sectionDesc = section.querySelector('.section-description');
+      const cards = Array.from(section.querySelectorAll('.treatment-card, .article-card, .review-card, .ba-container, .article-hero-img, .reveal, .article-content p'))
+        .filter(el => !el.classList.contains('section-title') && !el.classList.contains('section-description'));
 
-    const sectionTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: 'top 80%',
-        toggleActions: 'play none none none'
+      const sectionTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      if (sectionTitle) {
+        sectionTl.fromTo(sectionTitle,
+          { opacity: 0, y: -50 },
+          { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
+        );
+      }
+
+      if (sectionDesc) {
+        sectionTl.fromTo(sectionDesc,
+          { opacity: 0, y: -30 },
+          { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
+          '-=0.6'
+        );
+      }
+
+      if (cards.length > 0) {
+        sectionTl.fromTo(cards,
+          { opacity: 0, y: -60 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out' },
+          '-=0.6'
+        );
       }
     });
-
-    if (sectionTitle) {
-      sectionTl.fromTo(sectionTitle,
-        { opacity: 0, y: -50 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
-      );
-    }
-
-    if (sectionDesc) {
-      sectionTl.fromTo(sectionDesc,
-        { opacity: 0, y: -30 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
-        '-=0.6'
-      );
-    }
-
-    if (cards.length > 0) {
-      sectionTl.fromTo(cards,
-        { opacity: 0, y: -60 },
-        { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out' },
-        '-=0.6'
-      );
-    }
-  });
+  }
 
   // Specific about-section parallax/reveal
-  gsap.fromTo('.about-text p',
-    {
-      opacity: 0,
-      x: document.documentElement.dir === 'rtl' ? 50 : -50,
-    },
-    {
-      scrollTrigger: {
-        trigger: '.about',
-        start: 'top 70%'
+  if (hasGsap && hasScrollTrigger) {
+    gsap.fromTo('.about-text p',
+      {
+        opacity: 0,
+        x: document.documentElement.dir === 'rtl' ? 50 : -50,
       },
-      opacity: 1,
-      x: 0,
-      duration: 0.7,
-      stagger: 0.15,
-      ease: 'power3.out'
-    }
-  );
+      {
+        scrollTrigger: {
+          trigger: '.about',
+          start: 'top 70%'
+        },
+        opacity: 1,
+        x: 0,
+        duration: 0.7,
+        stagger: 0.15,
+        ease: 'power3.out'
+      }
+    );
 
-  gsap.fromTo('.about-image',
-    {
-      opacity: 0,
-      scale: 0.9,
-    },
-    {
-      scrollTrigger: {
-        trigger: '.about',
-        start: 'top 70%'
+    gsap.fromTo('.about-image',
+      {
+        opacity: 0,
+        scale: 0.9,
       },
-      opacity: 1,
-      scale: 1,
-      duration: 0.9,
-      ease: 'power2.out'
-    }
-  );
+      {
+        scrollTrigger: {
+          trigger: '.about',
+          start: 'top 70%'
+        },
+        opacity: 1,
+        scale: 1,
+        duration: 0.9,
+        ease: 'power2.out'
+      }
+    );
+  }
 
 
   // --- Magnetic Buttons ---
   const magneticBtns = document.querySelectorAll('.btn-primary, .btn-secondary, .social-icon');
 
-  magneticBtns.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
+  if (hasGsap) {
+    magneticBtns.forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
 
-      gsap.to(btn, {
-        x: x * 0.3,
-        y: y * 0.3,
-        duration: 0.5,
-        ease: 'power2.out'
+        gsap.to(btn, {
+          x: x * 0.3,
+          y: y * 0.3,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, {
+          x: 0,
+          y: 0,
+          duration: 0.5,
+          ease: 'elastic.out(1, 0.3)'
+        });
       });
     });
-
-    btn.addEventListener('mouseleave', () => {
-      gsap.to(btn, {
-        x: 0,
-        y: 0,
-        duration: 0.5,
-        ease: 'elastic.out(1, 0.3)'
-      });
-    });
-  });
+  }
 
   // --- Preloader ---
   const preloaderEl = document.getElementById('preloader');
 
-  if (sessionStorage.getItem('preloaderShown')) {
+  if (!hasGsap) {
+    if (preloaderEl) preloaderEl.style.display = 'none';
+    document.body.classList.remove('loading');
+    document.body.classList.add('loaded');
+  } else if (sessionStorage.getItem('preloaderShown')) {
     // Return visit: skip instantly, jump hero to final state
     if (preloaderEl) preloaderEl.style.display = 'none';
     document.body.classList.remove('loading');
     document.body.classList.add('loaded');
     heroTl.progress(1);
-    ScrollTrigger.refresh();
+    if (hasScrollTrigger) ScrollTrigger.refresh();
   } else {
     // First visit: brand preloader for 2.5s, then GSAP wipe + hero reveal simultaneously
     sessionStorage.setItem('preloaderShown', 'true');
@@ -206,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Hero materializes as overlay dissolves
       setTimeout(() => {
         heroTl.play();
-        ScrollTrigger.refresh();
+        if (hasScrollTrigger) ScrollTrigger.refresh();
       }, 500);
     }, 2500);
   }
@@ -885,6 +902,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const cleanPath = path.split('?')[0];
       const nextHref = `${cleanPath}?lang=${lang}${hash ? `#${hash}` : ''}`;
       link.setAttribute('href', nextHref);
+    });
+
+    document.querySelectorAll('a[href*="article-"]').forEach(link => {
+      if (link.dataset.languageLinkBound === 'true') return;
+      link.dataset.languageLinkBound = 'true';
+      link.addEventListener('click', () => {
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('http') || href.startsWith('#')) return;
+        const [path, hash = ''] = href.split('#');
+        const cleanPath = path.split('?')[0];
+        link.setAttribute('href', `${cleanPath}?lang=${currentLang}${hash ? `#${hash}` : ''}`);
+      });
     });
 
     // Re-trigger scroll animations whenever the language is switched

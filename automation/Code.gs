@@ -440,7 +440,7 @@ function createConsultationEvent_(patient, start, end) {
     description,
     location: CONFIG.clinicAddress,
     guests: patient.email,
-    sendInvites: true,
+    sendInvites: false,
   });
   event.addEmailReminder(24 * 60);
   event.addPopupReminder(24 * 60);

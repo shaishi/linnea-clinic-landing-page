@@ -483,11 +483,12 @@ html[dir="rtl"] .brand-logo {
 
 /* Hero Section */
 .hero {
-  min-height: 100vh;
+  min-height: 82vh;
   display: flex;
   align-items: center;
   position: relative;
   padding-top: 6rem;
+  padding-bottom: 2rem;
 }
 
 .hero-content {
@@ -522,7 +523,7 @@ html[dir="rtl"] .brand-logo {
 /* Method Section */
 .method {
   background: var(--clinique-teal);
-  padding-top: 1.5rem;
+  padding-top: 0.75rem;
 }
 
 .method-header {
