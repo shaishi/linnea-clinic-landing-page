@@ -345,6 +345,13 @@ body.acc-light-bg .navbar svg {
   transition: var(--transition-smooth);
 }
 
+html[dir="rtl"] [data-i18n="doc-name"],
+html[dir="rtl"] [data-i18n="doc2-name"],
+html[dir="rtl"] .review-author,
+html[dir="rtl"] .brand-logo {
+  font-family: var(--font-brand);
+}
+
 /* Dynamic scroll scaling */
 .navbar.scrolled .brand-logo {
   font-size: 1.7rem;
@@ -1387,6 +1394,34 @@ html[dir="rtl"] .footer-logo {
     box-shadow 0.3s ease;
 }
 
+.whatsapp-btn::after {
+  content: "לקביעת פגישה";
+  position: absolute;
+  bottom: calc(100% + 0.75rem);
+  right: 0;
+  min-width: 118px;
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(240, 233, 215, 0.96);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px rgba(44, 58, 56, 0.16);
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.whatsapp-btn:hover::after,
+.whatsapp-btn:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .whatsapp-btn:hover {
   transform: translateY(-5px) scale(1.05);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -1400,6 +1435,11 @@ html[dir="rtl"] .footer-logo {
 html[dir="rtl"] .whatsapp-btn {
   right: auto;
   left: 2rem;
+}
+
+html[dir="rtl"] .whatsapp-btn::after {
+  right: auto;
+  left: 0;
 }
 
 /* Force Hebrew Hero Title to one line */
@@ -1640,14 +1680,14 @@ html[dir="rtl"] .hero-title {
 /* ===== Carousel (desktop + mobile) ===== */
 .carousel-wrapper {
   position: relative;
-  padding: 0 3.5rem;
+  padding: 0 3rem;
 }
 
 .carousel-viewport {
   overflow: hidden;
-  width: auto;
-  margin: -40px -20px;
-  padding: 40px 20px;
+  width: 100%;
+  margin: -24px -14px;
+  padding: 24px 14px;
 }
 
 /* Force flat flex row — overrides treatments-grid / articles-grid / ba-grid */
@@ -1666,7 +1706,7 @@ html[dir="rtl"] .hero-title {
 .treatments-grid.carousel-track,
 .articles-grid.carousel-track,
 .reviews-grid.carousel-track {
-  column-gap: 1.5rem;
+  column-gap: 1.25rem;
   row-gap: 0;
 }
 
@@ -1793,7 +1833,7 @@ html[dir="rtl"] .hero-title {
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .carousel-wrapper {
-    padding: 0 2.5rem;
+    padding: 0 2.25rem;
   }
   .carousel-btn {
     width: 38px;

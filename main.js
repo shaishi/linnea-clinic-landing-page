@@ -1225,8 +1225,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function getItemW() {
       const ipv = getIpv();
       const gap = getGap();
+      const styles = getComputedStyle(viewport);
+      const horizontalPadding = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+      const contentWidth = viewport.clientWidth - horizontalPadding;
       // Total visible = ipv items + (ipv-1) gaps
-      return (viewport.offsetWidth - (ipv - 1) * gap) / ipv;
+      return (contentWidth - (ipv - 1) * gap) / ipv;
     }
 
     function applyTransform(animate) {
