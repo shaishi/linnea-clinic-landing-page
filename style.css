@@ -473,14 +473,14 @@ body.acc-light-bg .navbar svg {
 .hero-title {
   font-size: 5rem;
   color: var(--aura-cream);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.1rem;
   line-height: 1.1;
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
   color: rgba(240, 233, 215, 0.92);
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.8rem;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
@@ -510,7 +510,7 @@ body.acc-light-bg .navbar svg {
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  gap: 2rem;
   align-items: center;
 }
 
@@ -578,7 +578,7 @@ body.acc-light-bg .navbar svg {
 }
 
 .treatment-content {
-  padding: 1.4rem 1.6rem;
+  padding: 1.25rem 1.45rem;
 }
 
 .article-card .treatment-content {
@@ -633,14 +633,14 @@ body.acc-light-bg .navbar svg {
 .location-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  gap: 2rem;
   align-items: center;
 }
 
 .contact-details {
-  margin-top: 2rem;
+  margin-top: 1.25rem;
   display: grid;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .detail-item strong {
@@ -1644,7 +1644,7 @@ html[dir="rtl"] .hero-title {
   display: flex !important;
   flex-wrap: nowrap !important;
   grid-template-columns: none !important;
-  margin-top: 1.75rem;
+  margin-top: 1rem;
   direction: ltr;
   transition: transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform;
@@ -1655,7 +1655,7 @@ html[dir="rtl"] .hero-title {
 .treatments-grid.carousel-track,
 .articles-grid.carousel-track,
 .reviews-grid.carousel-track {
-  column-gap: 2rem;
+  column-gap: 1.5rem;
   row-gap: 0;
 }
 
