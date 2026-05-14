@@ -70,7 +70,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-wrap: break-word; /* Prevent long text overflow */
-  cursor: none; /* Hide default cursor */
+}
+
+body.has-custom-cursor {
+  cursor: none;
 }
 
 /* Lenis Scroll Tweaks */
@@ -2596,32 +2599,45 @@ html[dir="rtl"] .ba-label-after {
 }
 
 .drill-view {
-  display: none;
+  display: block;
   width: 100%;
   opacity: 0;
-  transform: translateY(10px);
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  transform: translateY(12px) scale(0.985);
+  transform-origin: 50% 0;
 }
 
 .drill-view.is-leaving {
   display: block;
-  animation: drillFadeOut 0.16s ease forwards;
+  height: auto;
+  overflow: visible;
+  pointer-events: none;
+  visibility: visible;
+  animation: drillFadeOut 0.26s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .drill-view.active {
   display: block;
+  height: auto;
+  overflow: visible;
   opacity: 1;
   transform: translateY(0);
-  animation: drillFadeIn 0.28s ease forwards;
+  pointer-events: auto;
+  visibility: visible;
+  animation: drillFadeIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes drillFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(12px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes drillFadeOut {
   from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 0; transform: translateY(-8px) scale(0.99); }
 }
 
 .drill-header {

@@ -179,6 +179,15 @@ function runPrepMonitorOnceNow() {
   monitorPrepFormCompletion();
 }
 
+function rebuildPrepFormTemplate() {
+  const form = getOrCreatePrepForm_();
+  form.getItems().slice().reverse().forEach(item => form.deleteItem(item));
+  configurePrepForm_(form);
+  buildPrepForm_(form);
+  ensurePrepFormSubmitTrigger_(form);
+  return `Prep form rebuilt: ${form.getEditUrl()}`;
+}
+
 function runDailyBriefOnceNow() {
   sendDailyClinicBrief(true);
 }
@@ -275,6 +284,9 @@ function onPrepFormSubmit(e) {
   const rowId = firstValue_(values['קוד פנייה פנימי']);
   const eventId = firstValue_(values['Calendar Event ID']);
   const attendance = firstValue_(values['אישור הגעה']);
+  const medicalAlerts = summarizeMedicalAlerts_(values);
+  const prepNotes = summarizePrepNotes_(values);
+  const consentSignature = firstValue_(values['חתימה דיגיטלית - שם מלא']);
 
   if (!rowId) throw new Error('Missing row ID in prep form submission.');
 
@@ -287,6 +299,9 @@ function onPrepFormSubmit(e) {
     leadStage: nextStatus === CONFIG.statuses.rescheduleRequested ? 'Reschedule requested' : 'Confirmed',
     prepFormSubmittedAt: new Date(),
     attendanceConfirmation: attendance || CONFIG.statuses.arrivalConfirmed,
+    medicalAlerts,
+    prepNotes,
+    consentSignature,
     followUpTask: nextStatus === CONFIG.statuses.rescheduleRequested ? 'המטופל/ת ביקש/ה לתאם מועד חדש' : '',
   });
 
@@ -294,17 +309,21 @@ function onPrepFormSubmit(e) {
     '',
     'טפסי הכנה מולאו על ידי המטופל/ת.',
     `אישור הגעה: ${attendance || CONFIG.statuses.arrivalConfirmed}`,
+    medicalAlerts ? `דגשים רפואיים: ${medicalAlerts}` : '',
+    prepNotes ? `הערות מטופל/ת: ${prepNotes}` : '',
     `עודכן אוטומטית: ${Utilities.formatDate(new Date(), CONFIG.timezone, 'dd/MM/yyyy HH:mm')}`,
-  ].join('\n'));
+  ].filter(Boolean).join('\n'));
 
   const patientName = firstValue_(values['שם מלא']);
   GmailApp.sendEmail(CONFIG.clinicEmail, `אישור הגעה וטפסים מולאו - ${patientName || rowId}`, [
     'המטופל/ת מילא/ה את טפסי ההכנה ואישר/ה הגעה.',
     '',
     `שם: ${patientName || 'לא נמסר'}`,
-    `סטטוס חדש: ${CONFIG.statuses.arrivalConfirmed}`,
+    `סטטוס חדש: ${nextStatus}`,
+    medicalAlerts ? `דגשים רפואיים: ${medicalAlerts}` : '',
+    prepNotes ? `הערות מטופל/ת: ${prepNotes}` : '',
     `Row ID: ${rowId}`,
-  ].join('\n'), {
+  ].filter(Boolean).join('\n'), {
     name: CONFIG.clinicName,
   });
 }
@@ -829,8 +848,8 @@ function sendPrepEmail_(patient, appointmentStart, prepUrl) {
     'לקראת הפגישה שלך',
     'טפסי הכנה ואישור הגעה',
     `
-      <p style="margin:0 0 14px;">היי ${escapeHtml_(patient.name)}, לקראת פגישת הייעוץ שלך ב-${dateText}, נשמח שתמלאי טופס הכנה קצר.</p>
-      <p style="margin:0 0 14px;">הטופס כולל הסכמה מדעת, היסטוריה רפואית רלוונטית ואישור הגעה. המידע עוזר לנו להגיע לפגישה מוכנים ולשמור על תהליך מדויק ובטוח.</p>
+      <p style="margin:0 0 14px;">היי ${escapeHtml_(patient.name)}, לקראת פגישת הייעוץ שלך ב-${dateText}, נשמח למילוי טופס הכנה קצר.</p>
+      <p style="margin:0 0 14px;">הטופס כולל אישור הגעה, הסכמה מדעת והיסטוריה רפואית רלוונטית. המידע מאפשר לנו להגיע לפגישה מוכנים, קשובים ומדויקים יותר.</p>
       <p style="margin:24px 0;text-align:center;">
         <a href="${prepUrl}" style="display:inline-block;background:${CONFIG.brand.sageDark};color:#fff;text-decoration:none;border-radius:999px;padding:14px 22px;font-weight:700;font-size:16px;">מילוי טפסי הכנה</a>
       </p>
@@ -1025,6 +1044,12 @@ function ensureLabel_() {
 }
 
 function ensurePrepForm_() {
+  const form = getOrCreatePrepForm_();
+  ensurePrepFormSubmitTrigger_(form);
+  return form;
+}
+
+function getOrCreatePrepForm_() {
   const props = PropertiesService.getScriptProperties();
   let formId = CONFIG.prepFormId || props.getProperty('LINNEA_PREP_FORM_ID');
   let form;
@@ -1033,16 +1058,24 @@ function ensurePrepForm_() {
     form = FormApp.openById(formId);
   } else {
     form = FormApp.create(CONFIG.prepFormName);
-    form.setDescription('טופס הכנה לפגישת ייעוץ ב-Linnéa aesthetics: הסכמה מדעת, היסטוריה רפואית ואישור הגעה.');
-    form.setCollectEmail(false);
-    form.setConfirmationMessage('תודה, הטפסים התקבלו וההגעה אושרה. נתראה בקליניקה ✨');
+    configurePrepForm_(form);
     buildPrepForm_(form);
     formId = form.getId();
     props.setProperty('LINNEA_PREP_FORM_ID', formId);
   }
 
-  ensurePrepFormSubmitTrigger_(form);
   return form;
+}
+
+function configurePrepForm_(form) {
+  form.setTitle(CONFIG.prepFormName);
+  form.setDescription([
+    'טופס הכנה לפגישת ייעוץ ב-Linnéa aesthetics.',
+    'הטופס כולל אישור הגעה, הסכמה מדעת, היסטוריה רפואית קצרה ודגשים שחשוב לצוות להכיר לפני הפגישה.',
+    'המידע נשמר לשימוש המרפאה בלבד ונועד לאפשר ייעוץ מדויק, אחראי ובטוח יותר.',
+  ].join('\n'));
+  form.setCollectEmail(false);
+  form.setConfirmationMessage('תודה, הטפסים התקבלו. אם אישרת הגעה - ניפגש בקליניקה. אם ביקשת לתאם מחדש, הצוות יחזור אליך בהקדם ✨');
 }
 
 function buildPrepForm_(form) {
@@ -1053,24 +1086,42 @@ function buildPrepForm_(form) {
   form.addTextItem().setTitle('מועד הפגישה').setRequired(true);
 
   form.addPageBreakItem().setTitle('אישור הגעה');
+  form.addSectionHeaderItem()
+    .setTitle('אישור קצר לפני הפגישה')
+    .setHelpText('כדי שנוכל להכין את הייעוץ בצורה מדויקת ונעימה, נשמח לאישור הגעה ולעדכון אם נדרש שינוי במועד.');
   form.addMultipleChoiceItem()
     .setTitle('אישור הגעה')
     .setChoiceValues(['אני מאשר/ת הגעה לפגישה', 'אני צריכ/ה לתאם מועד חדש'])
     .setRequired(true);
+  form.addParagraphTextItem()
+    .setTitle('אם ביקשת לתאם מחדש, אילו ימים ושעות נוחים לך?')
+    .setRequired(false);
 
   form.addPageBreakItem().setTitle('הסכמה מדעת לטיפול קוסמטי');
   form.addSectionHeaderItem()
     .setTitle('הסכמה מדעת')
     .setHelpText([
-      'אני מאשר/ת שקיבלתי מידע כללי על אופי הייעוץ והטיפול הקוסמטי האפשרי.',
-      'ידוע לי שתוצאות טיפול קוסמטי משתנות מאדם לאדם ואינן מובטחות.',
-      'ידוע לי שייתכנו תופעות לוואי כגון אדמומיות, נפיחות, רגישות, שטפי דם, כאב מקומי או תגובה בלתי צפויה.',
-      'ידוע לי שהצוות רשאי להחליט שלא לבצע טיפול אם נמצא שאינו מתאים רפואית או מקצועית.',
-      'אני מתחייב/ת למסור מידע רפואי מלא ונכון לפני קבלת טיפול.',
+      'הייעוץ ב-Linnéa נועד לבחון התאמה אישית לטיפול אסתטי, להסביר אפשרויות טיפול, גבולות, סיכונים וחלופות, ולהחליט יחד על תוכנית מדויקת ובטוחה.',
+      'ידוע לי שתוצאות טיפול קוסמטי משתנות מאדם לאדם ואינן מובטחות. התוצאות עשויות להיות מושפעות ממבנה אנטומי, מצב רפואי, תגובת ריפוי, גיל, אורח חיים וטיפולים קודמים.',
+      'ידוע לי שייתכנו תופעות לוואי כגון אדמומיות, נפיחות, רגישות, שטפי דם, כאב מקומי, אסימטריה זמנית, זיהום, תגובה אלרגית או תגובה בלתי צפויה.',
+      'ידוע לי שהצוות רשאי להמליץ לדחות, לשנות או לא לבצע טיפול אם נמצא שאינו מתאים מבחינה רפואית, מקצועית או אסתטית.',
+      'אני מתחייב/ת למסור מידע רפואי מלא ונכון לפני קבלת טיפול ולעדכן את הצוות בכל שינוי רלוונטי.',
     ].join('\n'));
   form.addCheckboxItem()
     .setTitle('אישור הסכמה מדעת')
     .setChoiceValues(['קראתי והבנתי את האמור לעיל ואני מסכימ/ה להמשך תהליך הייעוץ'])
+    .setRequired(true);
+  form.addCheckboxItem()
+    .setTitle('אישור הבנת תוצאות משתנות')
+    .setChoiceValues(['ידוע לי שהתוצאות עשויות להשתנות ואינן מובטחות'])
+    .setRequired(true);
+  form.addCheckboxItem()
+    .setTitle('אישור מסירת מידע מלא')
+    .setChoiceValues(['אני מאשר/ת שמסרתי מידע נכון ומלא ככל הידוע לי'])
+    .setRequired(true);
+  form.addCheckboxItem()
+    .setTitle('אישור שמירת מידע רפואי')
+    .setChoiceValues(['אני מאשר/ת שמירת המידע שמסרתי לצורך ניהול הייעוץ, מעקב רפואי ותיעוד מרפאה'])
     .setRequired(true);
 
   form.addPageBreakItem().setTitle('היסטוריה רפואית לצורך טיפול קוסמטי');
@@ -1083,14 +1134,36 @@ function buildPrepForm_(form) {
       'מחלה אוטואימונית',
       'נטייה לדימומים או נטילת מדללי דם',
       'סוכרת',
+      'מחלת עור פעילה באזור הטיפול',
       'הרפס פעיל או נטייה להרפס',
+      'נטייה לצלקות קלואידיות',
+      'מחלה נוירולוגית או חולשת שרירים',
+      'טיפול באיזוטרטינואין / רואקוטן בשנה האחרונה',
       'טיפול קוסמטי/אסתטי קודם באזור',
       'אחר',
     ])
     .setRequired(true);
-  form.addParagraphTextItem().setTitle('פירוט מצבים רפואיים, אלרגיות או תרופות קבועות').setRequired(false);
-  form.addParagraphTextItem().setTitle('טיפולים אסתטיים קודמים או רגישויות מיוחדות').setRequired(false);
-  form.addParagraphTextItem().setTitle('הערות נוספות שחשוב שנדע לפני הפגישה').setRequired(false);
+  form.addParagraphTextItem()
+    .setTitle('פירוט מצבים רפואיים, אלרגיות או תרופות קבועות')
+    .setHelpText('אם סימנת סעיף כלשהו למעלה, נשמח לפירוט קצר. אם אין, אפשר להשאיר ריק.')
+    .setRequired(false);
+  form.addParagraphTextItem()
+    .setTitle('טיפולים אסתטיים קודמים או רגישויות מיוחדות')
+    .setHelpText('לדוגמה: בוטוקס, חומצה היאלורונית, סקין בוסטר, לייזר, פילינג, תגובה חריגה או חוסר שביעות רצון בעבר.')
+    .setRequired(false);
+  form.addParagraphTextItem()
+    .setTitle('מטרת הייעוץ ומה חשוב לך שנדע')
+    .setHelpText('אפשר לכתוב בחופשיות מה היית רוצה לשפר, ממה חשוב לך להימנע, או איזה סגנון תוצאה מרגיש לך נכון.')
+    .setRequired(false);
+  form.addParagraphTextItem()
+    .setTitle('הערות נוספות שחשוב שנדע לפני הפגישה')
+    .setRequired(false);
+
+  form.addPageBreakItem().setTitle('חתימה ואישור סופי');
+  form.addTextItem()
+    .setTitle('חתימה דיגיטלית - שם מלא')
+    .setHelpText('הקלדת שמך המלא מהווה אישור לכך שקראת ומילאת את הטופס מרצונך.')
+    .setRequired(true);
 }
 
 function ensurePrepFormSubmitTrigger_(form) {
@@ -1251,6 +1324,9 @@ function ensureLeadSheet_() {
     'Missing Forms Reminder At',
     'Forms Escalation At',
     'Attendance Confirmation',
+    'Medical Alerts',
+    'Prep Notes',
+    'Consent Signature',
     'Communication Profile',
     'WhatsApp Consent',
     'WhatsApp Draft Link',
@@ -1368,6 +1444,9 @@ function updateLeadStatus_(rowId, status, fields) {
     missingFormsReminderAt: 'Missing Forms Reminder At',
     formsEscalationAt: 'Forms Escalation At',
     attendanceConfirmation: 'Attendance Confirmation',
+    medicalAlerts: 'Medical Alerts',
+    prepNotes: 'Prep Notes',
+    consentSignature: 'Consent Signature',
     serviceConsent: 'Service Consent',
     privacyConsent: 'Privacy Consent',
     emailUpdatesConsent: 'Email Updates Consent',
@@ -1495,6 +1574,27 @@ function sendClinicDuplicateNotification_(duplicateRow, patient, duplicateCount)
   ].join('\n'), {
     name: CONFIG.clinicName,
   });
+}
+
+function summarizeMedicalAlerts_(values) {
+  const conditions = firstValue_(values['האם קיימים מצבים רפואיים רלוונטיים?']);
+  const medicalDetails = firstValue_(values['פירוט מצבים רפואיים, אלרגיות או תרופות קבועות']);
+  const priorTreatments = firstValue_(values['טיפולים אסתטיים קודמים או רגישויות מיוחדות']);
+  const hasRelevantCondition = conditions && conditions.indexOf('אין מצבים רפואיים ידועים') === -1;
+
+  return [
+    hasRelevantCondition ? `סומנו מצבים: ${conditions}` : '',
+    medicalDetails ? `פירוט רפואי: ${medicalDetails}` : '',
+    priorTreatments ? `טיפולים/רגישויות בעבר: ${priorTreatments}` : '',
+  ].filter(Boolean).join(' | ');
+}
+
+function summarizePrepNotes_(values) {
+  return [
+    firstValue_(values['אם ביקשת לתאם מחדש, אילו ימים ושעות נוחים לך?']),
+    firstValue_(values['מטרת הייעוץ ומה חשוב לך שנדע']),
+    firstValue_(values['הערות נוספות שחשוב שנדע לפני הפגישה']),
+  ].filter(Boolean).join(' | ');
 }
 
 function calculateLeadReadiness_(patient) {

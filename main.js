@@ -34,9 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Custom Cursor Logic ---
   const cursorDot = document.querySelector('.cursor-dot');
   const cursorOutline = document.querySelector('.cursor-outline');
-  const interactiveElements = document.querySelectorAll('a, button, .treatment-card, .doctor-card, .ba-handle');
 
   if (cursorDot && cursorOutline && hasGsap) {
+    document.body.classList.add('has-custom-cursor');
+
     window.addEventListener('mousemove', (e) => {
       const posX = e.clientX;
       const posY = e.clientY;
@@ -46,13 +47,20 @@ document.addEventListener('DOMContentLoaded', () => {
       gsap.to(cursorOutline, { x: posX, y: posY, duration: 0.25 });
     });
 
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('a, button, input, textarea, select, label, .treatment-card, .doctor-card, .review-card, .ba-handle, .legal-link')) {
         cursorOutline.classList.add('cursor-hover');
-      });
-      el.addEventListener('mouseleave', () => {
+      }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      const fromInteractive = e.target.closest('a, button, input, textarea, select, label, .treatment-card, .doctor-card, .review-card, .ba-handle, .legal-link');
+      const toInteractive = e.relatedTarget && e.relatedTarget.closest
+        ? e.relatedTarget.closest('a, button, input, textarea, select, label, .treatment-card, .doctor-card, .review-card, .ba-handle, .legal-link')
+        : null;
+      if (fromInteractive && !toInteractive) {
         cursorOutline.classList.remove('cursor-hover');
-      });
+      }
     });
   }
 
@@ -1121,32 +1129,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const categoryTriggers = document.querySelectorAll('.category-trigger');
   const backBtns = document.querySelectorAll('.btn-back-categories');
   const drillViews = document.querySelectorAll('.drill-view');
+  let drillTransitionTimer;
   
   const switchDrillView = (targetId) => {
     const targetView = document.getElementById(targetId);
     const activeView = Array.from(drillViews).find(view => view.classList.contains('active'));
-    if (activeView === targetView) return;
+    if (!targetView || activeView === targetView) return;
+
+    window.clearTimeout(drillTransitionTimer);
 
     if (activeView) {
       activeView.classList.add('is-leaving');
       setTimeout(() => {
         activeView.classList.remove('active', 'is-leaving');
-      }, 160);
+      }, 260);
     }
 
-    if (targetView) {
-      setTimeout(() => {
-        targetView.classList.add('active');
-      }, activeView ? 90 : 0);
-      // Trigger resize event or layout recalculation so the hidden carousels calculate correct widths!
-      setTimeout(() => {
+    drillTransitionTimer = setTimeout(() => {
+      targetView.classList.add('active');
+
+      requestAnimationFrame(() => {
         const wrapper = targetView.querySelector('.carousel-wrapper');
         if (wrapper && wrapper._carouselLayout) {
           wrapper._carouselLayout();
         }
         window.dispatchEvent(new Event('resize'));
-      }, 180);
-    }
+      });
+    }, activeView ? 140 : 0);
   };
 
   categoryTriggers.forEach(btn => {
@@ -1154,9 +1163,6 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const targetId = btn.getAttribute('data-target-sub');
       switchDrillView(targetId);
-      // Optional: scroll slightly to center the view
-      const section = document.getElementById('treatments');
-      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
