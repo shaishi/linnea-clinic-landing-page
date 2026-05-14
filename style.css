@@ -448,9 +448,16 @@ html[dir="rtl"] .brand-logo {
 
 .nav-actions {
   display: flex;
-  gap: 2.5rem;
+  gap: 1.45rem;
   align-items: center;
   direction: ltr;
+}
+
+.nav-actions .nav-btn {
+  white-space: nowrap;
+  padding: 0.82rem 1.35rem;
+  font-size: 0.92rem;
+  line-height: 1.15;
 }
 
 .nav-phone {
@@ -497,16 +504,17 @@ html[dir="rtl"] .brand-logo {
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 800px;
+  max-width: min(1180px, calc(100vw - 4rem));
   text-align: center;
   margin: 0 auto;
 }
 
 .hero-title {
-  font-size: 5rem;
+  font-size: clamp(3rem, 4.65vw, 4.35rem);
   color: var(--aura-cream);
   margin-bottom: 1.1rem;
-  line-height: 1.1;
+  line-height: 1.06;
+  white-space: nowrap;
 }
 
 .hero-subtitle {
@@ -2671,7 +2679,20 @@ html[dir="rtl"] .ba-label-after {
   }
 
   .nav-actions {
-    display: none !important;
+    display: flex !important;
+    flex: 0 0 auto !important;
+    min-width: 62px;
+    justify-content: flex-end !important;
+  }
+
+  .nav-actions .nav-btn {
+    display: inline-flex !important;
+    min-height: 34px;
+    padding: 0.45rem 0.68rem !important;
+    border-radius: 999px;
+    font-size: 0.72rem !important;
+    line-height: 1;
+    letter-spacing: 0 !important;
   }
 
   .nav-links {
@@ -2714,13 +2735,14 @@ html[dir="rtl"] .ba-label-after {
     line-height: 1.08;
     margin-bottom: 0.9rem;
     text-wrap: balance;
+    white-space: normal;
   }
 
   html[lang="en"] .hero-title {
-    max-width: 12.5ch;
+    max-width: 17ch;
     margin-left: auto;
     margin-right: auto;
-    font-size: clamp(2.35rem, 9.4vw, 2.82rem) !important;
+    font-size: clamp(2.08rem, 8.2vw, 2.46rem) !important;
     line-height: 1.05;
   }
 

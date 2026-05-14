@@ -371,9 +371,9 @@ document.addEventListener('DOMContentLoaded', () => {
       "article-consultation-plan-title": "Linnéa | The Consultation as a Treatment Plan",
       "nav-home": "Home",
       "nav-articles": "Articles",
-      "btn-book": "Book a Consultation",
-      "hero-title": "Refined Aesthetics",
-      "hero-subtitle": "At Linnéa, dual-doctor consultations guide natural, harmonious results.",
+      "btn-book": "Book a Personal Consultation",
+      "hero-title": "Linnéa | Medical Precision, Clean Lines",
+      "hero-subtitle": "Dual-doctor consultations for natural, harmonious results.",
       "method-kicker": "The Linnéa Method",
       "method-title": "A quieter standard in aesthetics",
       "method-desc": "Every consultation is built around medical clarity, facial harmony and restraint.",
@@ -983,6 +983,11 @@ document.addEventListener('DOMContentLoaded', () => {
         el.innerHTML = formatTranslatedText(translations[lang][key], lang);
       }
     });
+
+    const navBookBtn = document.getElementById('nav-book-btn');
+    if (navBookBtn && window.matchMedia('(max-width: 600px)').matches) {
+      navBookBtn.textContent = lang === 'he' ? 'ייעוץ אישי' : 'Consult';
+    }
 
     // Update placeholders
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
