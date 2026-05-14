@@ -2681,16 +2681,16 @@ html[dir="rtl"] .ba-label-after {
   .nav-actions {
     display: flex !important;
     flex: 0 0 auto !important;
-    min-width: 62px;
+    min-width: 112px;
     justify-content: flex-end !important;
   }
 
   .nav-actions .nav-btn {
     display: inline-flex !important;
     min-height: 34px;
-    padding: 0.45rem 0.68rem !important;
+    padding: 0.42rem 0.62rem !important;
     border-radius: 999px;
-    font-size: 0.72rem !important;
+    font-size: 0.62rem !important;
     line-height: 1;
     letter-spacing: 0 !important;
   }

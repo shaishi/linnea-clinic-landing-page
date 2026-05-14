@@ -49,8 +49,8 @@ const CONFIG = {
     slotUnavailable: 'המועד נתפס - צריך תיאום חדש',
     prepEmailSent: 'נשלח מייל הכנה',
     prepFormsMissing: 'טפסי הכנה חסרים',
-    rescheduleRequested: 'ביקשה לתאם מחדש',
-    arrivalConfirmed: 'מאשרת הגעה',
+    rescheduleRequested: 'מבקש/ת לתאם מחדש',
+    arrivalConfirmed: 'אישור הגעה התקבל',
     consultationSummarySent: 'נשלח סיכום ייעוץ',
     treatmentCareSent: 'נשלחו הנחיות לאחר טיפול',
     treatmentCheckInSent: 'נשלחה בדיקת מצב 48 שעות',
@@ -194,6 +194,49 @@ function runDailyBriefOnceNow() {
 
 function runWeeklySummaryOnceNow() {
   sendWeeklyPerformanceSummary(true);
+}
+
+function sendLatestIntakePreviewToClinic() {
+  const patient = latestIntakePatientForTest_();
+  const now = new Date();
+  const slots = [
+    addMinutes_(nextDateAtTime_(1, '10:00'), 0),
+    addMinutes_(nextDateAtTime_(1, '11:30'), 0),
+    addMinutes_(nextDateAtTime_(5, '09:45'), 0),
+  ].map((start, index) => ({
+    label: formatSlotForButton_(start),
+    href: `${CONFIG.siteUrl}?preview=booking-option-${index + 1}`,
+  }));
+  const appointmentStart = slots[0] ? nextDateAtTime_(1, '10:00') : addMinutes_(now, 24 * 60);
+  const appointmentEnd = addMinutes_(appointmentStart, CONFIG.appointmentMinutes);
+  const prepUrl = createPrefilledPrepFormUrl_('TEST-PREVIEW-ROW', 'TEST-PREVIEW-EVENT', patient, appointmentStart);
+
+  sendPreviewHtmlEmail_('[בדיקה] מייל בחירת מועד', bookingOptionsEmail_(patient, slots));
+  sendPreviewHtmlEmail_('[בדיקה] מייל אישור תור', confirmationEmail_(patient, appointmentStart));
+  sendPreviewHtmlEmail_('[בדיקה] מייל טפסי הכנה 24 שעות לפני', prepEmailHtml_(patient, appointmentStart, prepUrl));
+  sendPreviewHtmlEmail_('[בדיקה] מייל סיכום ייעוץ', consultationSummaryEmailHtml_(patient, 'בייעוץ הוצעה תוכנית הדרגתית ועדינה לשיפור איכות העור והרמוניית הפנים.', 'תיאום טיפול ראשון לאחר אישור רפואי.'));
+  sendPreviewHtmlEmail_('[בדיקה] מייל הנחיות לאחר טיפול', postTreatmentCareEmailHtml_(patient, 'טיפול אסתטי', 'להימנע ממגע או עיסוי באזור הטיפול.\nלהימנע מפעילות גופנית מאומצת ב-24 השעות הראשונות.\nבכל תחושה חריגה, יש ליצור קשר עם המרפאה.'));
+  sendPreviewHtmlEmail_('[בדיקה] מייל בדיקת מצב 48 שעות', treatmentCheckInEmailHtml_(patient, 'טיפול אסתטי'));
+
+  Logger.log(`Sent preview emails to ${CONFIG.clinicEmail}`);
+  Logger.log(`Patient preview source: ${patient.name} / ${patient.email} / ${patient.phone || ''}`);
+  Logger.log(`Prep form preview URL: ${prepUrl}`);
+}
+
+function createEndToEndTestFromLatestIntake() {
+  const sourcePatient = latestIntakePatientForTest_();
+  const testPatient = Object.assign({}, sourcePatient, {
+    name: `${sourcePatient.name} - בדיקה`,
+    email: CONFIG.clinicEmail,
+    notes: [
+      sourcePatient.notes || '',
+      `בדיקת מערכת על בסיס פנייה מקורית של ${sourcePatient.name} (${sourcePatient.email}).`,
+      'אפשר לבחור מועד מהמייל שיגיע לקליניקה; ייווצר אירוע בדיקה ביומן.',
+    ].filter(Boolean).join('\n'),
+  });
+  const rowId = appendLeadRow_(testPatient, null, CONFIG.statuses.intakeReceived);
+  sendBookingOptions_(testPatient, rowId);
+  Logger.log(`Created test lead ${rowId} and sent booking options to ${CONFIG.clinicEmail}`);
 }
 
 function sendPrepEmails24HoursBefore() {
@@ -739,7 +782,7 @@ function bookingOptionsEmail_(patient, buttons) {
           ${button.label}
         </a>
         <div style="padding-top:6px;text-align:center;font-size:12px;line-height:1.5;">
-          <a href="${button.href}" style="color:${CONFIG.brand.sageDark};text-decoration:underline;">אם הכפתור לא נפתח, לחצי כאן</a>
+          <a href="${button.href}" style="color:${CONFIG.brand.sageDark};text-decoration:underline;">אם הכפתור לא נפתח, אפשר ללחוץ כאן</a>
         </div>
       </td>
     </tr>
@@ -793,7 +836,7 @@ function confirmationEmail_(patient, start) {
     `
       <p style="margin:0 0 14px;">היי ${escapeHtml_(patient.name)}, שמרנו עבורך פגישת ייעוץ ל-${dateText}.</p>
       <p style="margin:0 0 14px;">כתובת הקליניקה: ${CONFIG.clinicAddress}<br><a href="${CONFIG.mapsUrl}" style="color:${CONFIG.brand.sageDark};font-weight:700;">פתיחה במפות</a></p>
-      <p style="margin:0;">לקראת הפגישה נשלח מייל קצר עם טפסי הכנה ואישור הגעה. אם תרצי לשנות משהו לפני כן, אפשר להשיב למייל הזה.</p>
+      <p style="margin:0;">לקראת הפגישה נשלח מייל קצר עם טפסי הכנה ואישור הגעה. אם יש צורך לשנות משהו לפני כן, אפשר להשיב למייל הזה.</p>
     `
   );
 }
@@ -843,8 +886,17 @@ function sendManualSchedulingEmail_(patient) {
 }
 
 function sendPrepEmail_(patient, appointmentStart, prepUrl) {
+  const htmlBody = prepEmailHtml_(patient, appointmentStart, prepUrl);
+  GmailApp.sendEmail(patient.email, 'תזכורת וטפסי הכנה לפגישה שלך ב-Linnéa', stripHtml_(htmlBody), {
+    name: CONFIG.clinicName,
+    htmlBody,
+    replyTo: CONFIG.clinicEmail,
+  });
+}
+
+function prepEmailHtml_(patient, appointmentStart, prepUrl) {
   const dateText = formatSlotForButton_(appointmentStart);
-  const htmlBody = premiumEmailShell_(
+  return premiumEmailShell_(
     'לקראת הפגישה שלך',
     'טפסי הכנה ואישור הגעה',
     `
@@ -859,16 +911,19 @@ function sendPrepEmail_(patient, appointmentStart, prepUrl) {
       </div>
     `
   );
+}
 
-  GmailApp.sendEmail(patient.email, 'תזכורת וטפסי הכנה לפגישה שלך ב-Linnéa', stripHtml_(htmlBody), {
+function sendConsultationSummaryEmail_(patient, summary, nextStep) {
+  const htmlBody = consultationSummaryEmailHtml_(patient, summary, nextStep);
+  GmailApp.sendEmail(patient.email, 'סיכום הייעוץ שלך ב-Linnéa', stripHtml_(htmlBody), {
     name: CONFIG.clinicName,
     htmlBody,
     replyTo: CONFIG.clinicEmail,
   });
 }
 
-function sendConsultationSummaryEmail_(patient, summary, nextStep) {
-  const htmlBody = premiumEmailShell_(
+function consultationSummaryEmailHtml_(patient, summary, nextStep) {
+  return premiumEmailShell_(
     `שמחנו לפגוש אותך`,
     'סיכום אישי מהייעוץ שלך',
     `
@@ -878,18 +933,21 @@ function sendConsultationSummaryEmail_(patient, summary, nextStep) {
         <p style="margin:0;color:${CONFIG.brand.muted};">${escapeHtml_(summary)}</p>
       </div>
       ${nextStep ? `<p style="margin:0 0 16px;"><strong>השלב הבא שהצענו:</strong> ${escapeHtml_(nextStep)}</p>` : ''}
-      <p style="margin:0;">אם תרצי לחשוב, לשאול או לדייק משהו לפני קבלת החלטה, אפשר פשוט להשיב למייל הזה.</p>
+      <p style="margin:0;">אם תרצו לחשוב, לשאול או לדייק משהו לפני קבלת החלטה, אפשר פשוט להשיב למייל הזה.</p>
     `
   );
+}
 
-  GmailApp.sendEmail(patient.email, 'סיכום הייעוץ שלך ב-Linnéa', stripHtml_(htmlBody), {
+function sendPostTreatmentCareEmail_(patient, treatmentType, careNotes) {
+  const htmlBody = postTreatmentCareEmailHtml_(patient, treatmentType, careNotes);
+  GmailApp.sendEmail(patient.email, 'הנחיות לאחר הטיפול שלך ב-Linnéa', stripHtml_(htmlBody), {
     name: CONFIG.clinicName,
     htmlBody,
     replyTo: CONFIG.clinicEmail,
   });
 }
 
-function sendPostTreatmentCareEmail_(patient, treatmentType, careNotes) {
+function postTreatmentCareEmailHtml_(patient, treatmentType, careNotes) {
   const notes = careNotes || [
     'להימנע ממגע או עיסוי באזור הטיפול אלא אם קיבלת הנחיה אחרת מהצוות.',
     'להימנע מפעילות גופנית מאומצת, סאונה או חום גבוה ב-24 השעות הראשונות.',
@@ -897,7 +955,7 @@ function sendPostTreatmentCareEmail_(patient, treatmentType, careNotes) {
     'אם מופיע כאב חריג, שינוי צבע משמעותי, נפיחות חריגה או כל תחושה שמדאיגה אותך, יש ליצור איתנו קשר מיד.',
   ].join('\n');
 
-  const htmlBody = premiumEmailShell_(
+  return premiumEmailShell_(
     'הנחיות לאחר הטיפול',
     treatmentType ? `לאחר ${escapeHtml_(treatmentType)}` : 'Linnéa aftercare',
     `
@@ -907,33 +965,30 @@ function sendPostTreatmentCareEmail_(patient, treatmentType, careNotes) {
       <p style="margin:0;">נבדוק איתך שוב בעוד כ-48 שעות.</p>
     `
   );
+}
 
-  GmailApp.sendEmail(patient.email, 'הנחיות לאחר הטיפול שלך ב-Linnéa', stripHtml_(htmlBody), {
+function sendTreatmentCheckInEmail_(patient, treatmentType) {
+  const htmlBody = treatmentCheckInEmailHtml_(patient, treatmentType);
+  GmailApp.sendEmail(patient.email, 'בדיקה קצרה מ-Linnéa', stripHtml_(htmlBody), {
     name: CONFIG.clinicName,
     htmlBody,
     replyTo: CONFIG.clinicEmail,
   });
 }
 
-function sendTreatmentCheckInEmail_(patient, treatmentType) {
-  const htmlBody = premiumEmailShell_(
+function treatmentCheckInEmailHtml_(patient, treatmentType) {
+  return premiumEmailShell_(
     'בדיקת מצב קצרה',
     '48 שעות אחרי הטיפול',
     `
-      <p style="margin:0 0 16px;">היי ${escapeHtml_(patient.name)}, רצינו לבדוק איך את מרגישה אחרי ${escapeHtml_(treatmentType || 'הטיפול')}.</p>
-      <p style="margin:0 0 16px;">רגישות קלה או שינוי מקומי יכולים להיות חלק טבעי מהימים הראשונים. אם משהו מטריד אותך, נשמח שתכתבי לנו ונכוון אותך אישית.</p>
+      <p style="margin:0 0 16px;">היי ${escapeHtml_(patient.name)}, רצינו לבדוק איך ההרגשה אחרי ${escapeHtml_(treatmentType || 'הטיפול')}.</p>
+      <p style="margin:0 0 16px;">רגישות קלה או שינוי מקומי יכולים להיות חלק טבעי מהימים הראשונים. אם משהו מטריד או מרגיש חריג, נשמח לקבל הודעה ולכוון באופן אישי.</p>
       <div style="margin:22px 0;padding:18px;border-radius:18px;background:${CONFIG.brand.ivory};border:1px solid ${CONFIG.brand.blush};">
-        <p style="margin:0;">אפשר להשיב בקצרה שהכול בסדר, או לצרף שאלה/תמונה אם תרצי שנבדוק.</p>
+        <p style="margin:0;">אפשר להשיב בקצרה שהכול בסדר, או לצרף שאלה/תמונה אם תרצו שנבדוק.</p>
       </div>
       <p style="margin:0;">אנחנו כאן.</p>
     `
   );
-
-  GmailApp.sendEmail(patient.email, 'בדיקה קצרה מ-Linnéa', stripHtml_(htmlBody), {
-    name: CONFIG.clinicName,
-    htmlBody,
-    replyTo: CONFIG.clinicEmail,
-  });
 }
 
 function premiumEmailShell_(title, eyebrow, bodyHtml) {
@@ -958,6 +1013,34 @@ function premiumEmailShell_(title, eyebrow, bodyHtml) {
     </body>
     </html>
   `;
+}
+
+function sendPreviewHtmlEmail_(subject, htmlBody) {
+  GmailApp.sendEmail(CONFIG.clinicEmail, subject, stripHtml_(htmlBody), {
+    name: `${CONFIG.clinicName} Preview`,
+    htmlBody,
+    replyTo: CONFIG.clinicEmail,
+  });
+}
+
+function latestIntakePatientForTest_() {
+  const threads = GmailApp.search(CONFIG.sourceQuery, 0, 1);
+  if (threads.length > 0) {
+    const messages = threads[0].getMessages();
+    const patient = parseIntakeEmail_(messages[messages.length - 1]);
+    if (patient.name && patient.email) return patient;
+  }
+
+  return normalizePayload_({
+    name: 'מטופל/ת בדיקה',
+    email: CONFIG.clinicEmail,
+    phone: '050-0000000',
+    interest: 'ייעוץ אסתטי אישי',
+    notes: 'בדיקת תצוגת מיילים וטפסים לפני הפעלה מלאה.',
+    serviceConsent: 'yes',
+    privacyConsent: 'yes',
+    whatsappConsent: 'yes',
+  });
 }
 
 function sendNoLongerAvailableEmail_(patient, slot) {
@@ -1091,7 +1174,7 @@ function buildPrepForm_(form) {
     .setHelpText('כדי שנוכל להכין את הייעוץ בצורה מדויקת ונעימה, נשמח לאישור הגעה ולעדכון אם נדרש שינוי במועד.');
   form.addMultipleChoiceItem()
     .setTitle('אישור הגעה')
-    .setChoiceValues(['אני מאשר/ת הגעה לפגישה', 'אני צריכ/ה לתאם מועד חדש'])
+    .setChoiceValues(['אני מאשר/ת הגעה לפגישה', 'אני מבקש/ת לתאם מועד חדש'])
     .setRequired(true);
   form.addParagraphTextItem()
     .setTitle('אם ביקשת לתאם מחדש, אילו ימים ושעות נוחים לך?')
@@ -1105,7 +1188,7 @@ function buildPrepForm_(form) {
       'ידוע לי שתוצאות טיפול קוסמטי משתנות מאדם לאדם ואינן מובטחות. התוצאות עשויות להיות מושפעות ממבנה אנטומי, מצב רפואי, תגובת ריפוי, גיל, אורח חיים וטיפולים קודמים.',
       'ידוע לי שייתכנו תופעות לוואי כגון אדמומיות, נפיחות, רגישות, שטפי דם, כאב מקומי, אסימטריה זמנית, זיהום, תגובה אלרגית או תגובה בלתי צפויה.',
       'ידוע לי שהצוות רשאי להמליץ לדחות, לשנות או לא לבצע טיפול אם נמצא שאינו מתאים מבחינה רפואית, מקצועית או אסתטית.',
-      'אני מתחייב/ת למסור מידע רפואי מלא ונכון לפני קבלת טיפול ולעדכן את הצוות בכל שינוי רלוונטי.',
+      'יש למסור מידע רפואי מלא ונכון לפני קבלת טיפול ולעדכן את הצוות בכל שינוי רלוונטי.',
     ].join('\n'));
   form.addCheckboxItem()
     .setTitle('אישור הסכמה מדעת')
@@ -1117,7 +1200,7 @@ function buildPrepForm_(form) {
     .setRequired(true);
   form.addCheckboxItem()
     .setTitle('אישור מסירת מידע מלא')
-    .setChoiceValues(['אני מאשר/ת שמסרתי מידע נכון ומלא ככל הידוע לי'])
+    .setChoiceValues(['אני מאשר/ת שהמידע שמסרתי נכון ומלא ככל הידוע לי'])
     .setRequired(true);
   form.addCheckboxItem()
     .setTitle('אישור שמירת מידע רפואי')
@@ -1153,7 +1236,7 @@ function buildPrepForm_(form) {
     .setRequired(false);
   form.addParagraphTextItem()
     .setTitle('מטרת הייעוץ ומה חשוב לך שנדע')
-    .setHelpText('אפשר לכתוב בחופשיות מה היית רוצה לשפר, ממה חשוב לך להימנע, או איזה סגנון תוצאה מרגיש לך נכון.')
+    .setHelpText('אפשר לכתוב בחופשיות מה חשוב לשפר, ממה חשוב להימנע, או איזה סגנון תוצאה מרגיש נכון.')
     .setRequired(false);
   form.addParagraphTextItem()
     .setTitle('הערות נוספות שחשוב שנדע לפני הפגישה')
@@ -1531,9 +1614,9 @@ function normalizePhoneForWhatsApp_(phone) {
 
 function prepReminderWhatsAppText_(patient, appointmentStart) {
   return [
-    `היי ${patient.name}, מזכירות בעדינות שמחר נפגשות ב-Linnéa.`,
+    `היי ${patient.name}, תזכורת עדינה לפגישת הייעוץ ב-Linnéa מחר.`,
     `שלחנו למייל טופס הכנה קצר לקראת הפגישה ב-${formatSlotForButton_(appointmentStart)}.`,
-    'נשמח שתמלאי אותו לפני ההגעה. אם משהו לא נפתח, כתבי לנו כאן.',
+    'נשמח למילוי הטופס לפני ההגעה. אם משהו לא נפתח, אפשר לכתוב לנו כאן.',
   ].join('\n');
 }
 
@@ -1541,7 +1624,7 @@ function consultationSummaryWhatsAppText_(patient, nextStep) {
   return [
     `היי ${patient.name}, שמחנו לפגוש אותך ב-Linnéa.`,
     nextStep ? `שלחנו לך למייל סיכום קצר ואת השלב הבא שהצענו.` : 'שלחנו לך למייל סיכום קצר של הייעוץ.',
-    'אם תרצי לדייק משהו או לשאול שאלה, אנחנו כאן.',
+    'אם תרצו לדייק משהו או לשאול שאלה, אנחנו כאן.',
   ].join('\n');
 }
 
@@ -1549,14 +1632,14 @@ function postTreatmentCareWhatsAppText_(patient, treatmentType) {
   return [
     `היי ${patient.name}, תודה שבחרת ב-Linnéa.`,
     `שלחנו למייל הנחיות קצרות לאחר ${treatmentType || 'הטיפול'}.`,
-    'אם משהו מרגיש חריג או מדאיג, כתבי לנו כאן ונכוון אותך אישית.',
+    'אם משהו מרגיש חריג או מדאיג, אפשר לכתוב לנו כאן ונכוון באופן אישי.',
   ].join('\n');
 }
 
 function treatmentCheckInWhatsAppText_(patient, treatmentType) {
   return [
-    `היי ${patient.name}, בודקות איך את מרגישה אחרי ${treatmentType || 'הטיפול'}.`,
-    'אפשר לענות כאן בקצרה שהכול בסדר, ואם יש משהו שמדאיג אותך נשמח שתצרפי שאלה או תמונה.',
+    `היי ${patient.name}, רצינו לבדוק איך ההרגשה אחרי ${treatmentType || 'הטיפול'}.`,
+    'אפשר לענות כאן בקצרה שהכול בסדר, ואם יש משהו שמדאיג אפשר לצרף שאלה או תמונה.',
   ].join('\n');
 }
 
@@ -1675,6 +1758,25 @@ function dateAtTime_(date, time) {
   const result = new Date(date);
   result.setHours(parts[0], parts[1], 0, 0);
   return result;
+}
+
+function addMinutes_(date, minutes) {
+  return new Date(date.getTime() + minutes * 60000);
+}
+
+function nextDateAtTime_(dayOfWeek, time) {
+  const now = new Date();
+  const cursor = new Date(now);
+  cursor.setHours(0, 0, 0, 0);
+
+  for (let i = 1; i <= 14; i++) {
+    const day = new Date(cursor);
+    day.setDate(cursor.getDate() + i);
+    const localDay = Number(Utilities.formatDate(day, CONFIG.timezone, 'u')) % 7;
+    if (localDay === dayOfWeek) return dateAtTime_(day, time);
+  }
+
+  return dateAtTime_(addMinutes_(now, 24 * 60), time);
 }
 
 function formatSlotForButton_(date) {

@@ -986,7 +986,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const navBookBtn = document.getElementById('nav-book-btn');
     if (navBookBtn && window.matchMedia('(max-width: 600px)').matches) {
-      navBookBtn.textContent = lang === 'he' ? 'ייעוץ אישי' : 'Consult';
+      navBookBtn.textContent = lang === 'he' ? 'קביעת ייעוץ אישי' : 'Book Consultation';
     }
 
     // Update placeholders
