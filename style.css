@@ -2640,6 +2640,221 @@ html[dir="rtl"] .ba-label-after {
   to { opacity: 0; transform: translateY(-8px) scale(0.99); }
 }
 
+/* Refined mobile composition */
+@media (max-width: 600px) {
+  :root {
+    --navbar-height: 72px;
+  }
+
+  .navbar {
+    min-height: var(--navbar-height);
+  }
+
+  .nav-container {
+    padding: 0 1.15rem !important;
+  }
+
+  .navbar .brand-logo {
+    font-size: 1.28rem !important;
+    line-height: 1 !important;
+  }
+
+  .navbar .brand-logo .brand-subtitle {
+    font-size: 0.52rem !important;
+    letter-spacing: 0.12em !important;
+    margin-top: 0.2rem !important;
+  }
+
+  .mobile-nav-toggle {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .nav-actions {
+    display: none !important;
+  }
+
+  .nav-links {
+    top: var(--navbar-height) !important;
+    min-height: calc(100svh - var(--navbar-height)) !important;
+    background: rgba(143, 174, 170, 0.995) !important;
+    box-shadow: 0 22px 50px rgba(44, 58, 56, 0.18);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-links.active {
+    display: flex !important;
+    justify-content: flex-start !important;
+    gap: 0.55rem !important;
+    padding-top: 2.25rem !important;
+  }
+
+  .nav-links a {
+    font-size: 1.08rem !important;
+    margin: 0.45rem 0 !important;
+  }
+
+  .lang-btn {
+    margin-top: 0.85rem !important;
+  }
+
+  .hero {
+    min-height: 76svh;
+    padding-top: 4.75rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .hero-content {
+    width: min(100%, 360px);
+    padding: 0 1.35rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 10.2vw, 3.05rem) !important;
+    line-height: 1.08;
+    margin-bottom: 0.9rem;
+    text-wrap: balance;
+  }
+
+  .hero-subtitle {
+    max-width: 30ch;
+    font-size: 0.98rem !important;
+    line-height: 1.72;
+    margin-bottom: 1.45rem;
+    text-wrap: pretty;
+  }
+
+  .hero-btn {
+    min-height: 48px;
+    padding: 0.78rem 1.5rem;
+    font-size: 0.88rem;
+  }
+
+  .section {
+    padding: 2rem 0;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 8.8vw, 2.55rem) !important;
+    line-height: 1.12;
+    margin-bottom: 1rem !important;
+    text-wrap: balance;
+  }
+
+  .section-description {
+    max-width: 31ch;
+    font-size: 0.98rem;
+    line-height: 1.72;
+    margin-bottom: 1.35rem;
+    text-wrap: pretty;
+  }
+
+  .method-header {
+    margin-bottom: 1.2rem;
+  }
+
+  .doctor-card {
+    padding: 1.35rem !important;
+    gap: 1rem !important;
+  }
+
+  .doctor-card [data-i18n="doc-p1"],
+  .doctor-card [data-i18n="doc-p2"],
+  .doctor-card [data-i18n="doc-p3"],
+  .doctor-card [data-i18n="doc2-p1"],
+  .doctor-card [data-i18n="doc2-p2"],
+  .doctor-card [data-i18n="doc2-p3"] {
+    font-size: 0.93rem;
+    line-height: 1.72;
+  }
+
+  .carousel-wrapper {
+    padding: 0 1.75rem;
+  }
+
+  .treatment-card,
+  .review-card {
+    border-radius: 12px;
+  }
+
+  .treatment-content {
+    padding: 1.15rem;
+  }
+
+  .treatment-card h3 {
+    font-size: 1.35rem;
+    line-height: 1.18;
+  }
+
+  .treatment-card p,
+  .review-text {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .cookie-banner {
+    padding: 0.9rem 1rem calc(0.9rem + env(safe-area-inset-bottom));
+  }
+
+  .cookie-content p {
+    font-size: 0.86rem;
+    line-height: 1.55;
+  }
+
+  .cookie-actions {
+    width: 100%;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .cookie-btn {
+    min-width: 104px;
+    padding: 0.58rem 1rem;
+  }
+
+  .whatsapp-btn,
+  html[dir="rtl"] .whatsapp-btn {
+    width: 52px;
+    height: 52px;
+    bottom: 1.25rem;
+  }
+
+  .accessibility-widget,
+  html[dir="rtl"] .accessibility-widget {
+    bottom: 1.25rem;
+  }
+
+  .modal-overlay {
+    z-index: 5000;
+  }
+
+  .modal-overlay.active ~ .whatsapp-btn,
+  .modal-overlay.active ~ .back-to-top,
+  .modal-overlay.active ~ .accessibility-widget {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-content {
+    width: min(100%, 336px);
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 10vw, 2.7rem) !important;
+  }
+
+  .hero-subtitle {
+    max-width: 28ch;
+    font-size: 0.94rem !important;
+  }
+
+  .navbar .brand-logo {
+    font-size: 1.18rem !important;
+  }
+}
+
 .drill-header {
   display: flex;
   justify-content: space-between;
