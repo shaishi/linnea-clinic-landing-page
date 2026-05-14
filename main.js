@@ -1,6 +1,85 @@
 // --- Imports Disabled for CDN / Direct Browser Compatibility ---
 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') { gsap.registerPlugin(ScrollTrigger); }
 
+const LINNEA_TRACKING_CONFIG = {
+  googleAnalyticsId: '', // Example: G-XXXXXXXXXX
+  metaPixelId: '', // Example: 123456789012345
+};
+
+let linneaTrackingLoaded = false;
+
+const hasTrackingId = (value, prefix) => {
+  const normalized = String(value || '').trim();
+  return normalized && normalized.indexOf(prefix) === 0 && !normalized.includes('XXXXXXXX');
+};
+
+const loadScriptOnce = (id, src, onLoad) => {
+  if (document.getElementById(id)) {
+    if (onLoad) onLoad();
+    return;
+  }
+
+  const script = document.createElement('script');
+  script.id = id;
+  script.async = true;
+  script.src = src;
+  if (onLoad) script.onload = onLoad;
+  document.head.appendChild(script);
+};
+
+const initLinneaTracking = () => {
+  if (linneaTrackingLoaded) return;
+
+  const gaId = String(LINNEA_TRACKING_CONFIG.googleAnalyticsId || '').trim();
+  const pixelId = String(LINNEA_TRACKING_CONFIG.metaPixelId || '').trim();
+  const hasGa = hasTrackingId(gaId, 'G-');
+  const hasPixel = Boolean(pixelId) && !pixelId.includes('XXXXXXXX');
+
+  if (!hasGa && !hasPixel) return;
+  linneaTrackingLoaded = true;
+
+  if (hasGa) {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag(){ window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', gaId, {
+      anonymize_ip: true,
+      page_title: document.title,
+      page_location: window.location.href,
+    });
+    loadScriptOnce('linnea-ga4', `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`);
+  }
+
+  if (hasPixel) {
+    window.fbq = window.fbq || function fbq(){ (window.fbq.callMethod ? window.fbq.callMethod : window.fbq.queue.push).apply(window.fbq, arguments); };
+    if (!window.fbq.queue) window.fbq.queue = [];
+    window.fbq.loaded = true;
+    window.fbq.version = '2.0';
+    window.fbq('init', pixelId);
+    window.fbq('track', 'PageView');
+    loadScriptOnce('linnea-meta-pixel', 'https://connect.facebook.net/en_US/fbevents.js');
+  }
+};
+
+const trackLinneaEvent = (eventName, params = {}) => {
+  if (!linneaTrackingLoaded) return;
+
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', eventName, params);
+  }
+
+  if (typeof window.fbq === 'function') {
+    const metaEventMap = {
+      booking_modal_open: 'Contact',
+      consultation_request_submit: 'Lead',
+      consultation_request_success: 'Lead',
+      whatsapp_click: 'Contact',
+    };
+    const metaEventName = metaEventMap[eventName];
+    if (metaEventName) window.fbq('track', metaEventName, params);
+  }
+};
+
 let lenis;
 try {
   if (typeof Lenis !== 'undefined') {
@@ -373,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "nav-privacy": "Privacy Policy",
       "nav-terms": "Terms of Use",
       "footer-legal": "Legal",
-      "cookie-text": "We use cookies to improve your browsing experience. By using our site, you agree to our use of cookies.",
+      "cookie-text": "We use essential cookies and, with your approval, analytics and advertising cookies to understand website performance and improve consultation requests.",
       "cookie-accept": "Accept",
       "cookie-decline": "Decline",
       "acc-title": "Accessibility Options",
@@ -668,7 +747,7 @@ document.addEventListener('DOMContentLoaded', () => {
       "nav-privacy": "מדיניות פרטיות",
       "nav-terms": "תנאי שימוש באתר",
       "footer-legal": "משפטי",
-      "cookie-text": "אנו משתמשים בעוגיות (Cookies) כדי לשפר את חוויית הגלישה שלך. המשך הגלישה באתר מהווה הסכמה לשימוש בהן.",
+      "cookie-text": "אנו משתמשים בעוגיות חיוניות, ובהסכמתך גם בעוגיות מדידה ופרסום, כדי להבין את ביצועי האתר ולשפר את תהליך בקשת הייעוץ.",
       "cookie-accept": "אישור",
       "cookie-decline": "דחייה",
       "acc-title": "תפריט נגישות",
@@ -1023,6 +1102,10 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         modal.classList.add('active');
+        trackLinneaEvent('booking_modal_open', {
+          source_label: btn.textContent.trim().slice(0, 80),
+          language: currentLang,
+        });
       });
     });
 
@@ -1074,6 +1157,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const submitBtn = form.querySelector('button[type="submit"]');
       submitBtn.textContent = currentLang === 'he' ? 'שולח...' : 'Sending...';
       submitBtn.disabled = true;
+      trackLinneaEvent('consultation_request_submit', {
+        language: currentLang,
+        interest: formData.get('interest') || '',
+      });
 
       fetch(form.action, {
         method: "POST",
@@ -1083,6 +1170,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }).then(response => {
         if (response.ok) {
+          trackLinneaEvent('consultation_request_success', {
+            language: currentLang,
+            interest: formData.get('interest') || '',
+          });
           form.innerHTML = `
             <div style="text-align: center; padding: 2.5rem 0;">
               <h3 style="font-family: var(--font-serif); font-size: 2.5rem; color: var(--clinique-teal-dark); margin-bottom: 1rem;" data-i18n="success-title">Thank You!</h3>
@@ -1222,12 +1313,26 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleCookie = (status) => {
     localStorage.setItem('cookieConsent', status);
     cookieBanner.classList.add('hidden');
+    if (status === 'accepted') initLinneaTracking();
   };
+
+  if (localStorage.getItem('cookieConsent') === 'accepted') {
+    initLinneaTracking();
+  }
 
   if (cookieAccept && cookieDecline) {
     cookieAccept.addEventListener('click', () => handleCookie('accepted'));
     cookieDecline.addEventListener('click', () => handleCookie('declined'));
   }
+
+  document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+    link.addEventListener('click', () => {
+      trackLinneaEvent('whatsapp_click', {
+        language: currentLang,
+        location: link.classList.contains('whatsapp-btn') ? 'floating_button' : 'page_link',
+      });
+    });
+  });
 
   // Accessibility Widget
   const accToggle = document.getElementById('accessibility-toggle');
