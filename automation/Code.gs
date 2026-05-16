@@ -22,6 +22,8 @@ const CONFIG = {
   intakeCheckEveryMinutes: 10,
   patientMessageQuietHours: { start: 21, end: 8 },
   clinicBriefHourWindow: { start: 8, end: 9 },
+  automaticClinicBriefsEnabled: false,
+  automaticWeeklySummaryEnabled: false,
   sendEmptyDailyBrief: false,
   calendarId: 'primary',
   webAppUrl: '', // Paste the deployed Web App URL ending with /exec after deployment.
@@ -77,8 +79,11 @@ const LINNEA_SCHEDULED_TRIGGERS = [
   { handler: 'sendPrepEmails24HoursBefore', cadence: 'hours', interval: 1 },
   { handler: 'monitorPrepFormCompletion', cadence: 'hours', interval: 1 },
   { handler: 'processPatientJourneyMessages', cadence: 'hours', interval: 1 },
-  { handler: 'sendDailyClinicBrief', cadence: 'hours', interval: 1 },
-  { handler: 'sendWeeklyPerformanceSummary', cadence: 'hours', interval: 1 },
+];
+
+const LINNEA_LEGACY_REPORT_TRIGGERS = [
+  'sendDailyClinicBrief',
+  'sendWeeklyPerformanceSummary',
 ];
 
 function setupLinneaAutomation() {
@@ -172,16 +177,16 @@ function listLinneaTriggers() {
 }
 
 function repairLinneaAutomationSchedule() {
-  deleteTriggersForHandlers_(LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler).concat('onPrepFormSubmit'));
+  deleteTriggersForHandlers_(LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler).concat(LINNEA_LEGACY_REPORT_TRIGGERS, 'onPrepFormSubmit'));
   LINNEA_SCHEDULED_TRIGGERS.forEach(item => {
     createTimeTriggerIfMissing_(item.handler, item.cadence, item.interval);
   });
   ensurePrepFormSubmitTrigger_(ensurePrepForm_());
-  Logger.log('Linnea schedule repaired: duplicate triggers removed and clean cadence installed.');
+  Logger.log('Linnea schedule repaired: duplicate triggers removed, legacy report triggers removed, and clean cadence installed.');
 }
 
 function emergencyStopLinneaScheduledEmails() {
-  deleteTriggersForHandlers_(LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler));
+  deleteTriggersForHandlers_(LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler).concat(LINNEA_LEGACY_REPORT_TRIGGERS));
   Logger.log('Scheduled Linnea email triggers stopped. Web app booking links and form-submit trigger remain active.');
 }
 
@@ -464,6 +469,8 @@ function processPatientJourneyMessages() {
 
 function sendDailyClinicBrief(force) {
   return withScriptLock_('sendDailyClinicBrief', () => {
+    if (!force && !CONFIG.automaticClinicBriefsEnabled) return;
+
     const localHour = Number(Utilities.formatDate(new Date(), CONFIG.timezone, 'H'));
     if (!force && (localHour < CONFIG.clinicBriefHourWindow.start || localHour > CONFIG.clinicBriefHourWindow.end)) return;
 
@@ -507,6 +514,8 @@ function sendDailyClinicBrief(force) {
 
 function sendWeeklyPerformanceSummary(force) {
   return withScriptLock_('sendWeeklyPerformanceSummary', () => {
+    if (!force && !CONFIG.automaticWeeklySummaryEnabled) return;
+
     const now = new Date();
     const dayOfWeek = Number(Utilities.formatDate(now, CONFIG.timezone, 'u'));
     if (!force && dayOfWeek !== 1) return;

@@ -89,12 +89,10 @@ https://script.google.com/macros/s/AKfy.../exec
    - `sendPrepEmails24HoursBefore`
    - `monitorPrepFormCompletion`
    - `processPatientJourneyMessages`
-   - `sendDailyClinicBrief`
-   - `sendWeeklyPerformanceSummary`
    - `onPrepFormSubmit`
 5. לעשות `Deploy` ואז `Manage deployments` ולבחור `New version`.
 
-חשוב: בגרסה הזו `setupLinneaAutomation` כבר מנקה טריגרים כפולים ומתקין מחדש טריגר אחד מכל סוג. לכן אם בטעות מריצים אותה שוב, היא לא אמורה ליצור הצפה של מיילים.
+חשוב: בגרסה הזו `setupLinneaAutomation` כבר מנקה טריגרים כפולים, מסירה טריגרים ישנים של בריף יומי/שבועי, ומתקינה מחדש טריגר אחד מכל סוג פעיל. לכן אם בטעות מריצים אותה שוב, היא לא אמורה ליצור הצפה של מיילים.
 
 ## אם מתחילים לקבל יותר מדי מיילים
 
@@ -126,9 +124,9 @@ listLinneaTriggers
 - `sendPrepEmails24HoursBefore`
 - `monitorPrepFormCompletion`
 - `processPatientJourneyMessages`
-- `sendDailyClinicBrief`
-- `sendWeeklyPerformanceSummary`
 - `onPrepFormSubmit`
+
+לא אמור להופיע טריגר עבור `sendDailyClinicBrief` או `sendWeeklyPerformanceSummary`. הבריפים נשארו להרצה ידנית בלבד כדי שלא תקבלו מיילים מיותרים.
 
 ## תזמון שקט ויוקרתי
 
@@ -136,7 +134,7 @@ listLinneaTriggers
 
 - פניות חדשות נבדקות כל 10 דקות, לא כל 5 דקות.
 - מיילים מתוזמנים למטופלים לא נשלחים בין 21:00 ל-08:00 לפי שעון ישראל. אם פנייה נכנסת בלילה, היא תחכה לבוקר.
-- בריף יומי לרופאים נשלח רק בין 08:00 ל-09:00 ורק אם יש משהו שדורש תשומת לב.
+- בריף יומי וסיכום שבועי לא נשלחים אוטומטית. אפשר להריץ אותם ידנית דרך `runDailyBriefOnceNow` או `runWeeklySummaryOnceNow`.
 - לכל פונקציה מתוזמנת יש נעילה פנימית, כדי שריצה אחת לא תשלח כפול בזמן שריצה אחרת עדיין עובדת.
 
 אם רוצים לעדכן גם את מבנה טופס ההכנה הקיים, להריץ ידנית:
