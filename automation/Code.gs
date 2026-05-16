@@ -19,6 +19,10 @@ const CONFIG = {
   duplicateWindowDays: 14,
   prepReminderHoursAfterSend: 6,
   prepEscalationHoursBefore: 3,
+  intakeCheckEveryMinutes: 10,
+  patientMessageQuietHours: { start: 21, end: 8 },
+  clinicBriefHourWindow: { start: 8, end: 9 },
+  sendEmptyDailyBrief: false,
   calendarId: 'primary',
   webAppUrl: '', // Paste the deployed Web App URL ending with /exec after deployment.
   spreadsheetId: '', // Leave empty: setupLinneaAutomation will create one and save its ID.
@@ -68,16 +72,20 @@ const CONFIG = {
   },
 };
 
+const LINNEA_SCHEDULED_TRIGGERS = [
+  { handler: 'processNewIntakeEmails', cadence: 'minutes', interval: CONFIG.intakeCheckEveryMinutes },
+  { handler: 'sendPrepEmails24HoursBefore', cadence: 'hours', interval: 1 },
+  { handler: 'monitorPrepFormCompletion', cadence: 'hours', interval: 1 },
+  { handler: 'processPatientJourneyMessages', cadence: 'hours', interval: 1 },
+  { handler: 'sendDailyClinicBrief', cadence: 'hours', interval: 1 },
+  { handler: 'sendWeeklyPerformanceSummary', cadence: 'hours', interval: 1 },
+];
+
 function setupLinneaAutomation() {
   ensureLabel_();
   ensureLeadSheet_();
   ensurePrepForm_();
-  createTimeTriggerIfMissing_('processNewIntakeEmails', 'minutes');
-  createTimeTriggerIfMissing_('sendPrepEmails24HoursBefore', 'hours');
-  createTimeTriggerIfMissing_('monitorPrepFormCompletion', 'hours');
-  createTimeTriggerIfMissing_('processPatientJourneyMessages', 'hours');
-  createTimeTriggerIfMissing_('sendDailyClinicBrief', 'hours');
-  createTimeTriggerIfMissing_('sendWeeklyPerformanceSummary', 'hours');
+  repairLinneaAutomationSchedule();
 }
 
 function quickDeploymentCheck() {
@@ -163,6 +171,20 @@ function listLinneaTriggers() {
   });
 }
 
+function repairLinneaAutomationSchedule() {
+  deleteTriggersForHandlers_(LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler).concat('onPrepFormSubmit'));
+  LINNEA_SCHEDULED_TRIGGERS.forEach(item => {
+    createTimeTriggerIfMissing_(item.handler, item.cadence, item.interval);
+  });
+  ensurePrepFormSubmitTrigger_(ensurePrepForm_());
+  Logger.log('Linnea schedule repaired: duplicate triggers removed and clean cadence installed.');
+}
+
+function emergencyStopLinneaScheduledEmails() {
+  deleteTriggersForHandlers_(LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler));
+  Logger.log('Scheduled Linnea email triggers stopped. Web app booking links and form-submit trigger remain active.');
+}
+
 function runOnceNow() {
   processNewIntakeEmails();
 }
@@ -240,85 +262,88 @@ function createEndToEndTestFromLatestIntake() {
 }
 
 function sendPrepEmails24HoursBefore() {
-  const sheet = ensureLeadSheet_();
-  const rows = getLeadRows_();
-  const now = new Date();
-  const minTime = new Date(now.getTime() + 23 * 60 * 60 * 1000);
-  const maxTime = new Date(now.getTime() + 25 * 60 * 60 * 1000);
+  return withScriptLock_('sendPrepEmails24HoursBefore', () => {
+    const rows = getLeadRows_();
+    const now = new Date();
+    const minTime = new Date(now.getTime() + 23 * 60 * 60 * 1000);
+    const maxTime = new Date(now.getTime() + 25 * 60 * 60 * 1000);
 
-  rows.forEach(row => {
-    const appointmentStart = row['Appointment Start'] ? new Date(row['Appointment Start']) : null;
-    if (!appointmentStart || Number.isNaN(appointmentStart.getTime())) return;
-    if (appointmentStart < minTime || appointmentStart > maxTime) return;
-    if (row['Prep Form Sent At']) return;
-    if (row.Status === CONFIG.statuses.arrivalConfirmed) return;
+    rows.forEach(row => {
+      const appointmentStart = row['Appointment Start'] ? new Date(row['Appointment Start']) : null;
+      if (!appointmentStart || Number.isNaN(appointmentStart.getTime())) return;
+      if (appointmentStart < minTime || appointmentStart > maxTime) return;
+      if (row['Prep Form Sent At']) return;
+      if (row.Status === CONFIG.statuses.arrivalConfirmed) return;
 
-    const patient = {
-      name: row['Patient Name'],
-      email: row.Email,
-      phone: row.Phone,
-      interest: row.Interest,
-      notes: row.Notes,
-      communicationProfile: row['Communication Profile'] || CONFIG.defaultCommunicationProfile,
-      whatsappConsent: isTruthy_(row['WhatsApp Consent']),
-    };
-    if (!patient.email || !patient.name) return;
+      const patient = {
+        name: row['Patient Name'],
+        email: row.Email,
+        phone: row.Phone,
+        interest: row.Interest,
+        notes: row.Notes,
+        communicationProfile: row['Communication Profile'] || CONFIG.defaultCommunicationProfile,
+        whatsappConsent: isTruthy_(row['WhatsApp Consent']),
+      };
+      if (!patient.email || !patient.name) return;
 
-    const prepUrl = createPrefilledPrepFormUrl_(row['Row ID'], row['Calendar Event ID'], patient, appointmentStart);
-    sendPrepEmail_(patient, appointmentStart, prepUrl);
-    const whatsappDraftLink = shouldPrepareWhatsAppDraft_(patient, 'prep')
-      ? buildWhatsAppLink_(patient.phone, prepReminderWhatsAppText_(patient, appointmentStart))
-      : '';
-    updateLeadStatus_(row['Row ID'], CONFIG.statuses.prepEmailSent, {
-      clinicStatus: CONFIG.statuses.prepEmailSent,
-      leadStage: 'Forms sent',
-      prepFormSentAt: new Date(),
-      prepFormUrl: prepUrl,
-      whatsappDraftLink,
+      const prepUrl = createPrefilledPrepFormUrl_(row['Row ID'], row['Calendar Event ID'], patient, appointmentStart);
+      sendPrepEmail_(patient, appointmentStart, prepUrl);
+      const whatsappDraftLink = shouldPrepareWhatsAppDraft_(patient, 'prep')
+        ? buildWhatsAppLink_(patient.phone, prepReminderWhatsAppText_(patient, appointmentStart))
+        : '';
+      updateLeadStatus_(row['Row ID'], CONFIG.statuses.prepEmailSent, {
+        clinicStatus: CONFIG.statuses.prepEmailSent,
+        leadStage: 'Forms sent',
+        prepFormSentAt: new Date(),
+        prepFormUrl: prepUrl,
+        whatsappDraftLink,
+      });
     });
   });
 }
 
 function monitorPrepFormCompletion() {
-  const rows = getLeadRows_();
-  const now = new Date();
+  return withScriptLock_('monitorPrepFormCompletion', () => {
+    const rows = getLeadRows_();
+    const now = new Date();
 
-  rows.forEach(row => {
-    const appointmentStart = row['Appointment Start'] ? new Date(row['Appointment Start']) : null;
-    const prepSentAt = row['Prep Form Sent At'] ? new Date(row['Prep Form Sent At']) : null;
-    if (!appointmentStart || Number.isNaN(appointmentStart.getTime())) return;
-    if (!prepSentAt || Number.isNaN(prepSentAt.getTime())) return;
-    if (row['Prep Form Submitted At']) return;
-    if (appointmentStart <= now) return;
+    rows.forEach(row => {
+      const appointmentStart = row['Appointment Start'] ? new Date(row['Appointment Start']) : null;
+      const prepSentAt = row['Prep Form Sent At'] ? new Date(row['Prep Form Sent At']) : null;
+      if (!appointmentStart || Number.isNaN(appointmentStart.getTime())) return;
+      if (!prepSentAt || Number.isNaN(prepSentAt.getTime())) return;
+      if (row['Prep Form Submitted At']) return;
+      if (appointmentStart <= now) return;
 
-    const patient = patientFromRow_(row);
-    const hoursSincePrepSent = (now.getTime() - prepSentAt.getTime()) / 3600000;
-    const hoursUntilAppointment = (appointmentStart.getTime() - now.getTime()) / 3600000;
-    const updates = {};
+      const patient = patientFromRow_(row);
+      const hoursSincePrepSent = (now.getTime() - prepSentAt.getTime()) / 3600000;
+      const hoursUntilAppointment = (appointmentStart.getTime() - now.getTime()) / 3600000;
+      const updates = {};
 
-    if (!row['Missing Forms Reminder At'] && hoursSincePrepSent >= CONFIG.prepReminderHoursAfterSend) {
-      updates.missingFormsReminderAt = now;
-      updates.whatsappDraftLink = shouldPrepareWhatsAppDraft_(patient, 'prep')
-        ? buildWhatsAppLink_(patient.phone, prepReminderWhatsAppText_(patient, appointmentStart))
-        : '';
-      updates.followUpTask = 'טפסי הכנה טרם מולאו - לשלוח תזכורת עדינה';
-      updates.clinicStatus = CONFIG.statuses.prepFormsMissing;
-    }
+      if (!row['Missing Forms Reminder At'] && hoursSincePrepSent >= CONFIG.prepReminderHoursAfterSend) {
+        updates.missingFormsReminderAt = now;
+        updates.whatsappDraftLink = shouldPrepareWhatsAppDraft_(patient, 'prep')
+          ? buildWhatsAppLink_(patient.phone, prepReminderWhatsAppText_(patient, appointmentStart))
+          : '';
+        updates.followUpTask = 'טפסי הכנה טרם מולאו - לשלוח תזכורת עדינה';
+        updates.clinicStatus = CONFIG.statuses.prepFormsMissing;
+      }
 
-    if (!row['Forms Escalation At'] && hoursUntilAppointment <= CONFIG.prepEscalationHoursBefore) {
-      updates.formsEscalationAt = now;
-      updates.followUpTask = 'טפסי הכנה חסרים פחות מ-3 שעות לפני הפגישה - ליצור קשר ידני';
-      updates.clinicStatus = CONFIG.statuses.prepFormsMissing;
-      updateCalendarEventStatus_(row['Calendar Event ID'], CONFIG.statuses.prepFormsMissing, [
-        '',
-        'טפסי הכנה עדיין לא מולאו.',
-        `עודכן אוטומטית: ${Utilities.formatDate(now, CONFIG.timezone, 'dd/MM/yyyy HH:mm')}`,
-      ].join('\n'));
-    }
+      if (!row['Forms Escalation At'] && hoursUntilAppointment <= CONFIG.prepEscalationHoursBefore) {
+        updates.formsEscalationAt = now;
+        updates.followUpTask = 'טפסי הכנה חסרים פחות מ-3 שעות לפני הפגישה - ליצור קשר ידני';
+        updates.clinicStatus = CONFIG.statuses.prepFormsMissing;
+        updateCalendarEventStatus_(row['Calendar Event ID'], CONFIG.statuses.prepFormsMissing, [
+          '',
+          'טפסי הכנה עדיין לא מולאו.',
+          `עודכן אוטומטית: ${Utilities.formatDate(now, CONFIG.timezone, 'dd/MM/yyyy HH:mm')}`,
+        ].join('\n'));
+      }
 
-    if (Object.keys(updates).length > 0) {
-      updateLeadStatus_(row['Row ID'], CONFIG.statuses.prepFormsMissing, updates);
-    }
+      if (Object.keys(updates).length > 0) {
+        updateLeadStatus_(row['Row ID'], CONFIG.statuses.prepFormsMissing, updates);
+      }
+    });
   });
 }
 
@@ -372,143 +397,155 @@ function onPrepFormSubmit(e) {
 }
 
 function processPatientJourneyMessages() {
-  const rows = getLeadRows_();
-  const now = new Date();
+  return withScriptLock_('processPatientJourneyMessages', () => {
+    if (isPatientQuietTime_()) return;
+    const rows = getLeadRows_();
+    const now = new Date();
 
-  rows.forEach(row => {
-    const patient = patientFromRow_(row);
-    if (!patient.email || !patient.name) return;
+    rows.forEach(row => {
+      const patient = patientFromRow_(row);
+      if (!patient.email || !patient.name) return;
 
-    if (row['Consultation Summary'] && !row['Consultation Summary Sent At']) {
-      if (shouldSendEmail_(patient, 'consultationSummary')) {
-        sendConsultationSummaryEmail_(patient, row['Consultation Summary'], row['Next Recommended Action']);
+      if (row['Consultation Summary'] && !row['Consultation Summary Sent At']) {
+        if (shouldSendEmail_(patient, 'consultationSummary')) {
+          sendConsultationSummaryEmail_(patient, row['Consultation Summary'], row['Next Recommended Action']);
+        }
+        updateLeadStatus_(row['Row ID'], CONFIG.statuses.consultationSummarySent, {
+          clinicStatus: CONFIG.statuses.consultationSummarySent,
+          consultationSummarySentAt: now,
+          whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'consultationSummary')
+            ? buildWhatsAppLink_(patient.phone, consultationSummaryWhatsAppText_(patient, row['Next Recommended Action']))
+            : '',
+        });
       }
-      updateLeadStatus_(row['Row ID'], CONFIG.statuses.consultationSummarySent, {
-        clinicStatus: CONFIG.statuses.consultationSummarySent,
-        consultationSummarySentAt: now,
-        whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'consultationSummary')
-          ? buildWhatsAppLink_(patient.phone, consultationSummaryWhatsAppText_(patient, row['Next Recommended Action']))
-          : '',
-      });
-    }
 
-    const treatmentDate = row['Treatment Date'] ? new Date(row['Treatment Date']) : null;
-    if (!treatmentDate || Number.isNaN(treatmentDate.getTime())) return;
-    if (!row['Treatment Type']) return;
+      const treatmentDate = row['Treatment Date'] ? new Date(row['Treatment Date']) : null;
+      if (!treatmentDate || Number.isNaN(treatmentDate.getTime())) return;
+      if (!row['Treatment Type']) return;
 
-    if (!row['Treatment Care Sent At'] && treatmentDate <= now) {
-      if (shouldSendEmail_(patient, 'postTreatmentCare')) {
-        sendPostTreatmentCareEmail_(patient, row['Treatment Type'], row['Care Notes']);
+      if (!row['Treatment Care Sent At'] && treatmentDate <= now) {
+        if (shouldSendEmail_(patient, 'postTreatmentCare')) {
+          sendPostTreatmentCareEmail_(patient, row['Treatment Type'], row['Care Notes']);
+        }
+        updateLeadStatus_(row['Row ID'], CONFIG.statuses.treatmentCareSent, {
+          clinicStatus: CONFIG.statuses.treatmentCareSent,
+          treatmentCareSentAt: now,
+          whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'postTreatmentCare')
+            ? buildWhatsAppLink_(patient.phone, postTreatmentCareWhatsAppText_(patient, row['Treatment Type']))
+            : '',
+        });
       }
-      updateLeadStatus_(row['Row ID'], CONFIG.statuses.treatmentCareSent, {
-        clinicStatus: CONFIG.statuses.treatmentCareSent,
-        treatmentCareSentAt: now,
-        whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'postTreatmentCare')
-          ? buildWhatsAppLink_(patient.phone, postTreatmentCareWhatsAppText_(patient, row['Treatment Type']))
-          : '',
-      });
-    }
 
-    const checkInTime = new Date(treatmentDate.getTime() + 48 * 60 * 60 * 1000);
-    if (!row['48h Check-in Sent At'] && now >= checkInTime) {
-      if (shouldSendEmail_(patient, 'checkIn48h')) {
-        sendTreatmentCheckInEmail_(patient, row['Treatment Type']);
+      const checkInTime = new Date(treatmentDate.getTime() + 48 * 60 * 60 * 1000);
+      if (!row['48h Check-in Sent At'] && now >= checkInTime) {
+        if (shouldSendEmail_(patient, 'checkIn48h')) {
+          sendTreatmentCheckInEmail_(patient, row['Treatment Type']);
+        }
+        updateLeadStatus_(row['Row ID'], CONFIG.statuses.treatmentCheckInSent, {
+          clinicStatus: CONFIG.statuses.treatmentCheckInSent,
+          checkIn48hSentAt: now,
+          satisfactionStatus: 'ממתין לתגובה',
+          whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'checkIn48h')
+            ? buildWhatsAppLink_(patient.phone, treatmentCheckInWhatsAppText_(patient, row['Treatment Type']))
+            : '',
+        });
       }
-      updateLeadStatus_(row['Row ID'], CONFIG.statuses.treatmentCheckInSent, {
-        clinicStatus: CONFIG.statuses.treatmentCheckInSent,
-        checkIn48hSentAt: now,
-        satisfactionStatus: 'ממתין לתגובה',
-        whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'checkIn48h')
-          ? buildWhatsAppLink_(patient.phone, treatmentCheckInWhatsAppText_(patient, row['Treatment Type']))
-          : '',
-      });
-    }
 
-    if (satisfactionNeedsDoctorReview_(row['Satisfaction Status']) && !isTruthy_(row['Doctor Review Flag'])) {
-      updateLeadStatus_(row['Row ID'], CONFIG.statuses.doctorReviewNeeded, {
-        clinicStatus: CONFIG.statuses.doctorReviewNeeded,
-        doctorReviewFlag: 'כן',
-        followUpTask: 'תגובה לאחר טיפול דורשת בדיקת רופא',
-      });
-    }
+      if (satisfactionNeedsDoctorReview_(row['Satisfaction Status']) && !isTruthy_(row['Doctor Review Flag'])) {
+        updateLeadStatus_(row['Row ID'], CONFIG.statuses.doctorReviewNeeded, {
+          clinicStatus: CONFIG.statuses.doctorReviewNeeded,
+          doctorReviewFlag: 'כן',
+          followUpTask: 'תגובה לאחר טיפול דורשת בדיקת רופא',
+        });
+      }
+    });
   });
 }
 
 function sendDailyClinicBrief(force) {
-  const localHour = Number(Utilities.formatDate(new Date(), CONFIG.timezone, 'H'));
-  if (!force && (localHour < 7 || localHour > 10)) return;
+  return withScriptLock_('sendDailyClinicBrief', () => {
+    const localHour = Number(Utilities.formatDate(new Date(), CONFIG.timezone, 'H'));
+    if (!force && (localHour < CONFIG.clinicBriefHourWindow.start || localHour > CONFIG.clinicBriefHourWindow.end)) return;
 
-  const todayKey = Utilities.formatDate(new Date(), CONFIG.timezone, 'yyyy-MM-dd');
-  const props = PropertiesService.getScriptProperties();
-  if (!force && props.getProperty('LINNEA_DAILY_BRIEF_SENT') === todayKey) return;
+    const todayKey = Utilities.formatDate(new Date(), CONFIG.timezone, 'yyyy-MM-dd');
+    const props = PropertiesService.getScriptProperties();
+    if (!force && props.getProperty('LINNEA_DAILY_BRIEF_SENT') === todayKey) return;
 
-  const rows = getLeadRows_();
-  const todayRows = rows.filter(row => isSameLocalDate_(row['Appointment Start'], new Date()));
-  const needsCall = rows.filter(row => String(row['Clinic Status'] || row.Status || '').indexOf('להתקשר') !== -1);
-  const missingForms = rows.filter(row => row['Prep Form Sent At'] && !row['Prep Form Submitted At'] && row['Appointment Start']);
-  const followUps = rows.filter(row => row['Follow-up Task']);
+    const rows = getLeadRows_();
+    const todayRows = rows.filter(row => isSameLocalDate_(row['Appointment Start'], new Date()));
+    const needsCall = rows.filter(row => String(row['Clinic Status'] || row.Status || '').indexOf('להתקשר') !== -1);
+    const missingForms = rows.filter(row => row['Prep Form Sent At'] && !row['Prep Form Submitted At'] && row['Appointment Start']);
+    const followUps = rows.filter(row => row['Follow-up Task']);
+    const hasActionableItems = todayRows.length || needsCall.length || missingForms.length || followUps.length;
+    if (!force && !CONFIG.sendEmptyDailyBrief && !hasActionableItems) {
+      props.setProperty('LINNEA_DAILY_BRIEF_SENT', todayKey);
+      return;
+    }
 
-  const body = [
-    `בוקר טוב, זה הבריף היומי של Linnéa ל-${todayKey}.`,
-    '',
-    `פגישות היום: ${todayRows.length}`,
-    formatRowsForBrief_(todayRows, ['Patient Name', 'Phone', 'Selected Slot', 'Clinic Status']),
-    '',
-    `צריך להתקשר: ${needsCall.length}`,
-    formatRowsForBrief_(needsCall, ['Patient Name', 'Phone', 'Clinic Status', 'Follow-up Task']),
-    '',
-    `טפסים חסרים: ${missingForms.length}`,
-    formatRowsForBrief_(missingForms, ['Patient Name', 'Phone', 'Appointment Start', 'Follow-up Task']),
-    '',
-    `משימות פתוחות: ${followUps.length}`,
-    formatRowsForBrief_(followUps, ['Patient Name', 'Phone', 'Follow-up Task']),
-  ].join('\n');
+    const body = [
+      `בוקר טוב, זה הבריף היומי של Linnéa ל-${todayKey}.`,
+      '',
+      `פגישות היום: ${todayRows.length}`,
+      formatRowsForBrief_(todayRows, ['Patient Name', 'Phone', 'Selected Slot', 'Clinic Status']),
+      '',
+      `צריך להתקשר: ${needsCall.length}`,
+      formatRowsForBrief_(needsCall, ['Patient Name', 'Phone', 'Clinic Status', 'Follow-up Task']),
+      '',
+      `טפסים חסרים: ${missingForms.length}`,
+      formatRowsForBrief_(missingForms, ['Patient Name', 'Phone', 'Appointment Start', 'Follow-up Task']),
+      '',
+      `משימות פתוחות: ${followUps.length}`,
+      formatRowsForBrief_(followUps, ['Patient Name', 'Phone', 'Follow-up Task']),
+    ].join('\n');
 
-  GmailApp.sendEmail(CONFIG.clinicEmail, `בריף יומי Linnéa - ${todayKey}`, body, {
-    name: CONFIG.clinicName,
+    GmailApp.sendEmail(CONFIG.clinicEmail, `בריף יומי Linnéa - ${todayKey}`, body, {
+      name: CONFIG.clinicName,
+    });
+    props.setProperty('LINNEA_DAILY_BRIEF_SENT', todayKey);
   });
-  props.setProperty('LINNEA_DAILY_BRIEF_SENT', todayKey);
 }
 
 function sendWeeklyPerformanceSummary(force) {
-  const now = new Date();
-  const dayOfWeek = Number(Utilities.formatDate(now, CONFIG.timezone, 'u'));
-  if (!force && dayOfWeek !== 1) return;
+  return withScriptLock_('sendWeeklyPerformanceSummary', () => {
+    const now = new Date();
+    const dayOfWeek = Number(Utilities.formatDate(now, CONFIG.timezone, 'u'));
+    if (!force && dayOfWeek !== 1) return;
 
-  const weekKey = Utilities.formatDate(now, CONFIG.timezone, 'yyyy-ww');
-  const props = PropertiesService.getScriptProperties();
-  if (!force && props.getProperty('LINNEA_WEEKLY_SUMMARY_SENT') === weekKey) return;
+    const weekKey = Utilities.formatDate(now, CONFIG.timezone, 'yyyy-ww');
+    const props = PropertiesService.getScriptProperties();
+    if (!force && props.getProperty('LINNEA_WEEKLY_SUMMARY_SENT') === weekKey) return;
 
-  const rows = getLeadRows_();
-  const since = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-  const recentRows = rows.filter(row => {
-    const createdAt = row['Created At'] ? new Date(row['Created At']) : null;
-    return createdAt && !Number.isNaN(createdAt.getTime()) && createdAt >= since;
+    const rows = getLeadRows_();
+    const since = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const recentRows = rows.filter(row => {
+      const createdAt = row['Created At'] ? new Date(row['Created At']) : null;
+      return createdAt && !Number.isNaN(createdAt.getTime()) && createdAt >= since;
+    });
+    const bookedRows = recentRows.filter(row => row['Appointment Start']);
+    const manualRows = recentRows.filter(row => row.Status === CONFIG.statuses.manualScheduling || row['Clinic Status'] === CONFIG.statuses.manualScheduling);
+    const prepSentRows = rows.filter(row => row['Prep Form Sent At']);
+    const prepSubmittedRows = prepSentRows.filter(row => row['Prep Form Submitted At']);
+    const treatmentCounts = countBy_(recentRows, 'Interest');
+
+    const body = [
+      `סיכום שבועי Linnéa - ${weekKey}`,
+      '',
+      `לידים חדשים: ${recentRows.length}`,
+      `תורים שנקבעו: ${bookedRows.length}`,
+      `תיאומים ידניים: ${manualRows.length}`,
+      `שיעור מילוי טפסים: ${prepSentRows.length ? Math.round((prepSubmittedRows.length / prepSentRows.length) * 100) : 0}%`,
+      '',
+      'תחומי עניין מובילים:',
+      Object.keys(treatmentCounts).length
+        ? Object.keys(treatmentCounts).map(key => `- ${key || 'לא צוין'}: ${treatmentCounts[key]}`).join('\n')
+        : '- אין נתונים השבוע',
+    ].join('\n');
+
+    GmailApp.sendEmail(CONFIG.clinicEmail, `סיכום שבועי Linnéa - ${weekKey}`, body, {
+      name: CONFIG.clinicName,
+    });
+    props.setProperty('LINNEA_WEEKLY_SUMMARY_SENT', weekKey);
   });
-  const bookedRows = recentRows.filter(row => row['Appointment Start']);
-  const manualRows = recentRows.filter(row => row.Status === CONFIG.statuses.manualScheduling || row['Clinic Status'] === CONFIG.statuses.manualScheduling);
-  const prepSentRows = rows.filter(row => row['Prep Form Sent At']);
-  const prepSubmittedRows = prepSentRows.filter(row => row['Prep Form Submitted At']);
-  const treatmentCounts = countBy_(recentRows, 'Interest');
-
-  const body = [
-    `סיכום שבועי Linnéa - ${weekKey}`,
-    '',
-    `לידים חדשים: ${recentRows.length}`,
-    `תורים שנקבעו: ${bookedRows.length}`,
-    `תיאומים ידניים: ${manualRows.length}`,
-    `שיעור מילוי טפסים: ${prepSentRows.length ? Math.round((prepSubmittedRows.length / prepSentRows.length) * 100) : 0}%`,
-    '',
-    'תחומי עניין מובילים:',
-    Object.keys(treatmentCounts).length
-      ? Object.keys(treatmentCounts).map(key => `- ${key || 'לא צוין'}: ${treatmentCounts[key]}`).join('\n')
-      : '- אין נתונים השבוע',
-  ].join('\n');
-
-  GmailApp.sendEmail(CONFIG.clinicEmail, `סיכום שבועי Linnéa - ${weekKey}`, body, {
-    name: CONFIG.clinicName,
-  });
-  props.setProperty('LINNEA_WEEKLY_SUMMARY_SENT', weekKey);
 }
 
 function doPost(e) {
@@ -586,26 +623,33 @@ function doGet(e) {
 }
 
 function processNewIntakeEmails() {
-  const label = ensureLabel_();
-  const threads = GmailApp.search(CONFIG.sourceQuery, 0, 10);
-
-  threads.forEach(thread => {
-    const messages = thread.getMessages();
-    const message = messages[messages.length - 1];
-    const patient = parseIntakeEmail_(message);
-
-    if (patient.email && patient.name) {
-      const duplicate = findDuplicateLead_(patient, CONFIG.duplicateWindowDays);
-      if (duplicate) {
-        updateDuplicateLead_(duplicate, patient, message);
-        thread.addLabel(label);
-        return;
-      }
-
-      const rowId = appendLeadRow_(patient, message, CONFIG.statuses.intakeReceived);
-      sendBookingOptions_(patient, rowId);
-      thread.addLabel(label);
+  return withScriptLock_('processNewIntakeEmails', () => {
+    if (isPatientQuietTime_()) {
+      Logger.log('Skipped intake processing during patient quiet hours.');
+      return;
     }
+
+    const label = ensureLabel_();
+    const threads = GmailApp.search(CONFIG.sourceQuery, 0, 10);
+
+    threads.forEach(thread => {
+      const messages = thread.getMessages();
+      const message = messages[messages.length - 1];
+      const patient = parseIntakeEmail_(message);
+
+      if (patient.email && patient.name) {
+        const duplicate = findDuplicateLead_(patient, CONFIG.duplicateWindowDays);
+        if (duplicate) {
+          updateDuplicateLead_(duplicate, patient, message);
+          thread.addLabel(label);
+          return;
+        }
+
+        const rowId = appendLeadRow_(patient, message, CONFIG.statuses.intakeReceived);
+        sendBookingOptions_(patient, rowId);
+        thread.addLabel(label);
+      }
+    });
   });
 }
 
@@ -1263,17 +1307,27 @@ function ensurePrepFormSubmitTrigger_(form) {
   }
 }
 
-function createTimeTriggerIfMissing_(handlerFunction, cadence) {
+function deleteTriggersForHandlers_(handlers) {
+  const handlerSet = new Set(handlers);
+  ScriptApp.getProjectTriggers().forEach(trigger => {
+    if (handlerSet.has(trigger.getHandlerFunction())) {
+      ScriptApp.deleteTrigger(trigger);
+    }
+  });
+}
+
+function createTimeTriggerIfMissing_(handlerFunction, cadence, interval) {
   const triggers = ScriptApp.getProjectTriggers();
   const hasTrigger = triggers.some(trigger => trigger.getHandlerFunction() === handlerFunction);
   if (hasTrigger) return;
 
   const builder = ScriptApp.newTrigger(handlerFunction).timeBased();
+  const safeInterval = Number(interval || 1);
   if (cadence === 'minutes') {
-    builder.everyMinutes(5).create();
+    builder.everyMinutes(safeInterval).create();
     return;
   }
-  builder.everyHours(1).create();
+  builder.everyHours(safeInterval).create();
 }
 
 function createPrefilledPrepFormUrl_(rowId, eventId, patient, appointmentStart) {
@@ -1719,6 +1773,31 @@ function isSameLocalDate_(value, date) {
   if (Number.isNaN(parsed.getTime())) return false;
   return Utilities.formatDate(parsed, CONFIG.timezone, 'yyyy-MM-dd') ===
     Utilities.formatDate(date, CONFIG.timezone, 'yyyy-MM-dd');
+}
+
+function isPatientQuietTime_() {
+  const quietHours = CONFIG.patientMessageQuietHours || {};
+  const start = Number(quietHours.start);
+  const end = Number(quietHours.end);
+  if (Number.isNaN(start) || Number.isNaN(end) || start === end) return false;
+
+  const hour = Number(Utilities.formatDate(new Date(), CONFIG.timezone, 'H'));
+  if (start < end) return hour >= start && hour < end;
+  return hour >= start || hour < end;
+}
+
+function withScriptLock_(name, callback) {
+  const lock = LockService.getScriptLock();
+  if (!lock.tryLock(5000)) {
+    Logger.log(`Skipped ${name}: another Linnea automation run is already active.`);
+    return null;
+  }
+
+  try {
+    return callback();
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 function formatRowsForBrief_(rows, fields) {

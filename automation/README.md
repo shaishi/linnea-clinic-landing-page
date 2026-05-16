@@ -94,6 +94,51 @@ https://script.google.com/macros/s/AKfy.../exec
    - `onPrepFormSubmit`
 5. לעשות `Deploy` ואז `Manage deployments` ולבחור `New version`.
 
+חשוב: בגרסה הזו `setupLinneaAutomation` כבר מנקה טריגרים כפולים ומתקין מחדש טריגר אחד מכל סוג. לכן אם בטעות מריצים אותה שוב, היא לא אמורה ליצור הצפה של מיילים.
+
+## אם מתחילים לקבל יותר מדי מיילים
+
+זה בדרך כלל קורה בגלל טריגרים כפולים שנוצרו בעבר או בגלל ריצות ידניות של פונקציות בדיקה.
+
+1. אם צריך לעצור מייד את כל המיילים המתוזמנים, להריץ:
+
+```text
+emergencyStopLinneaScheduledEmails
+```
+
+הפעולה הזו עוצרת את הטריגרים המתוזמנים בלבד. קישורי קביעת תור שכבר נשלחו עדיין יכולים לעבוד, והטריגר של טופס ההכנה נשאר מחובר.
+
+2. אחרי שמוודאים שהקוד העדכני שמור, להריץ:
+
+```text
+repairLinneaAutomationSchedule
+```
+
+3. להריץ:
+
+```text
+listLinneaTriggers
+```
+
+ולוודא שיש רק טריגר אחד לכל אחת מהפונקציות:
+
+- `processNewIntakeEmails`
+- `sendPrepEmails24HoursBefore`
+- `monitorPrepFormCompletion`
+- `processPatientJourneyMessages`
+- `sendDailyClinicBrief`
+- `sendWeeklyPerformanceSummary`
+- `onPrepFormSubmit`
+
+## תזמון שקט ויוקרתי
+
+כדי שהאוטומציה לא תרגיש אגרסיבית:
+
+- פניות חדשות נבדקות כל 10 דקות, לא כל 5 דקות.
+- מיילים מתוזמנים למטופלים לא נשלחים בין 21:00 ל-08:00 לפי שעון ישראל. אם פנייה נכנסת בלילה, היא תחכה לבוקר.
+- בריף יומי לרופאים נשלח רק בין 08:00 ל-09:00 ורק אם יש משהו שדורש תשומת לב.
+- לכל פונקציה מתוזמנת יש נעילה פנימית, כדי שריצה אחת לא תשלח כפול בזמן שריצה אחרת עדיין עובדת.
+
 אם רוצים לעדכן גם את מבנה טופס ההכנה הקיים, להריץ ידנית:
 
 ```text
@@ -135,7 +180,7 @@ createEndToEndTestFromLatestIntake
 
 אין צורך לשנות את האתר.
 
-הסקריפט מריץ כל 5 דקות חיפוש ב-Gmail לפי:
+הסקריפט מריץ כל 10 דקות חיפוש ב-Gmail לפי:
 
 ```text
 newer_than:14d -label:"Linnea/Processed Intake" (from:web3forms.com OR subject:("New form submission" OR "Book a Consultation" OR "Submit Request"))
