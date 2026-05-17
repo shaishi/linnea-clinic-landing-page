@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealSections.forEach(section => {
       const sectionTitle = section.querySelector('.section-title');
       const sectionDesc = section.querySelector('.section-description');
-      const cards = Array.from(section.querySelectorAll('.method-card, .journey-step, .standard-card, .faq-item, .treatment-card, .article-card, .review-card, .ba-container, .article-hero-img, .reveal, .article-content p'))
+      const cards = Array.from(section.querySelectorAll('.standard-card, .faq-item, .treatment-card, .article-card, .review-card, .ba-container, .article-hero-img, .reveal, .article-content p'))
         .filter(el => !el.classList.contains('section-title') && !el.classList.contains('section-description'));
 
       const sectionTl = gsap.timeline({
@@ -374,29 +374,6 @@ document.addEventListener('DOMContentLoaded', () => {
       "btn-book": "Book a Personal Consultation",
       "hero-title": "Linnéa | Medical Precision, Clean Lines",
       "hero-subtitle": "Dual-doctor consultations for natural, harmonious results.",
-      "method-kicker": "The Linnéa Method",
-      "method-title": "A quieter standard in aesthetics",
-      "method-desc": "Every consultation is built around medical clarity, facial harmony and restraint.",
-      "method-1-title": "Dual-doctor planning",
-      "method-1-desc": "Two doctors review the facial structure, treatment goals and safety considerations before creating a personal plan.",
-      "method-2-title": "Precise minimalism",
-      "method-2-desc": "The focus is on subtle refinement, preserving expression and proportion rather than changing identity.",
-      "method-3-title": "Medical continuity",
-      "method-3-desc": "Consultation, preparation, treatment and follow-up are connected into one calm, medically led patient journey.",
-      "journey-kicker": "The patient journey",
-      "journey-title": "A calm path from first contact to follow-up",
-      "journey-desc": "The experience is designed to feel considered at every step: discreet scheduling, medical preparation, dual-doctor consultation and attentive follow-up.",
-      "journey-1-title": "Initial request",
-      "journey-1-desc": "You share a few details, and our team receives the information needed to prepare thoughtfully.",
-      "journey-2-title": "Consultation time",
-      "journey-2-desc": "You receive selected consultation times and choose the option that feels most convenient.",
-      "journey-3-title": "Medical preparation",
-      "journey-3-desc": "Before the meeting, you complete preparation forms so the consultation can begin with clarity.",
-      "journey-4-title": "Dual-doctor consultation",
-      "journey-4-desc": "Two doctors review your goals, anatomy and safety considerations before recommending a plan.",
-      "journey-5-title": "Plan and follow-up",
-      "journey-5-desc": "You leave with a personal recommendation, clear next steps and discreet follow-up after treatment.",
-      "journey-cta": "Book a Personal Consultation",
       "standard-kicker": "The Linnéa Standard",
       "standard-title": "Medical restraint, personal care",
       "standard-desc": "A premium aesthetic result begins before any treatment: with planning, transparency, safety and a disciplined respect for natural expression.",
@@ -714,29 +691,6 @@ document.addEventListener('DOMContentLoaded', () => {
       "btn-book": "קביעת ייעוץ אישי",
       "hero-title": "Linnéa | דיוק רפואי בקו נקי",
       "hero-subtitle": "ייעוץ אסתטי אישי על ידי שני רופאים, בגישה נקייה ומדויקת לתוצאה טבעית והרמונית.",
-      "method-kicker": "שיטת Linnéa",
-      "method-title": "סטנדרט שקט ומדויק לרפואה אסתטית",
-      "method-desc": "כל ייעוץ נבנה סביב בהירות רפואית, הרמוניית פנים וריסון אסתטי, כדי שהתוצאה תרגיש מעודנת ולא מטופלת.",
-      "method-1-title": "תכנון על ידי שני רופאים",
-      "method-1-desc": "שני רופאים בוחנים את מבנה הפנים, מטרות הטיפול ושיקולי הבטיחות לפני בניית תוכנית אישית.",
-      "method-2-title": "מינימליזם מדויק",
-      "method-2-desc": "הדגש הוא על עידון עדין, שמירה על הבעה ופרופורציה, ולא על שינוי הזהות הפנימית של הפנים.",
-      "method-3-title": "רצף רפואי מלא",
-      "method-3-desc": "ייעוץ, הכנה, טיפול ומעקב מתחברים למסע מטופל רגוע, ברור ומובל רפואית.",
-      "journey-kicker": "מסע המטופל/ת",
-      "journey-title": "דרך רגועה מהפנייה הראשונה ועד המעקב",
-      "journey-desc": "החוויה בנויה כך שכל שלב ירגיש מדויק ומכבד: תיאום דיסקרטי, הכנה רפואית, ייעוץ עם שני רופאים ומעקב אישי לאחר הטיפול.",
-      "journey-1-title": "פנייה ראשונית",
-      "journey-1-desc": "משאירים כמה פרטים, והצוות מקבל את המידע הדרוש כדי להתכונן בצורה קשובה ומדויקת.",
-      "journey-2-title": "בחירת מועד ייעוץ",
-      "journey-2-desc": "נשלחות אפשרויות תיאום נבחרות, ובוחרים את המועד שנוח לך.",
-      "journey-3-title": "הכנה רפואית",
-      "journey-3-desc": "לפני הפגישה ממלאים טפסי הכנה, כדי שהייעוץ יתחיל מתוך בהירות ובטיחות.",
-      "journey-4-title": "ייעוץ עם שני רופאים",
-      "journey-4-desc": "שני רופאים בוחנים מטרות, אנטומיה ושיקולי בטיחות לפני המלצה על תוכנית.",
-      "journey-5-title": "תוכנית ומעקב",
-      "journey-5-desc": "יוצאים עם המלצה אישית, שלבים ברורים ומעקב דיסקרטי לאחר טיפול.",
-      "journey-cta": "לקביעת ייעוץ אישי",
       "standard-kicker": "הסטנדרט של Linnéa",
       "standard-title": "איפוק רפואי, ליווי אישי",
       "standard-desc": "תוצאה אסתטית יוקרתית מתחילה לפני כל טיפול: בתכנון, שקיפות, בטיחות וכבוד מדויק להבעה הטבעית.",
@@ -1206,7 +1160,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Modal logic
   const modal = document.getElementById('booking-modal');
-  const openModalBtns = document.querySelectorAll('.nav-btn, .hero-btn, .journey-cta .btn, a[href="#contact"], a[href="index.html#contact"], a[href="#book"], a[href="index.html#book"]');
+  const openModalBtns = document.querySelectorAll('.nav-btn, .hero-btn, a[href="#contact"], a[href="index.html#contact"], a[href="#book"], a[href="index.html#book"]');
   const closeModal = document.getElementById('close-modal');
   const form = document.getElementById('booking-form');
 
