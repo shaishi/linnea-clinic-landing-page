@@ -30,10 +30,10 @@ const CONFIG = {
   sendEmptyDailyBrief: true,
   calendarId: 'primary',
   webAppUrl: '', // Paste the deployed Web App URL ending with /exec after deployment.
-  spreadsheetId: '', // Leave empty: setupLinneaAutomation will create one and save its ID.
+  spreadsheetId: '', // Leave empty: installLinneaAutomation will create one and save its ID.
   spreadsheetName: 'Linnea Clinic - Consultation Leads',
   sheetName: 'Consultations',
-  prepFormId: '', // Leave empty: setupLinneaAutomation will create one Google Form for consent + medical history.
+  prepFormId: '', // Leave empty: installLinneaAutomation will create one Google Form for consent + medical history.
   prepFormName: 'Linnéa - טפסי הכנה ואישור הגעה',
   defaultCommunicationProfile: 'מייל בלבד',
   communicationProfiles: {
@@ -86,11 +86,50 @@ const LINNEA_SCHEDULED_TRIGGERS = [
   { handler: 'sendWeeklyPerformanceSummary', cadence: 'weekly', weekDay: CONFIG.weeklySummaryWeekDay, hour: CONFIG.weeklySummaryHour },
 ];
 
+function installLinneaAutomation() {
+  return withScriptLock_('installLinneaAutomation', () => {
+    const report = [
+      'Linnea plug-and-play install started.',
+      `Timezone: ${CONFIG.timezone}`,
+    ];
+
+    ensureLabel_();
+    report.push(`Gmail label ready: ${CONFIG.processedLabel}`);
+
+    const sheet = ensureLeadSheet_();
+    report.push(`Lead sheet ready: ${sheet.getParent().getUrl()}`);
+
+    const form = ensurePrepForm_();
+    report.push(`Prep form ready: ${form.getPublishedUrl()}`);
+
+    repairLinneaAutomationSchedule();
+    report.push('Clean triggers installed.');
+
+    const webAppUrl = getWebAppUrl_();
+    if (webAppUrl) {
+      try {
+        quickDeploymentCheck();
+        report.push(`Web app check passed: ${webAppUrl}`);
+      } catch (error) {
+        report.push(`Web app check needs attention: ${error.message}`);
+      }
+    } else {
+      report.push('Web app URL is not available yet. Deploy as Web app, then run installLinneaAutomation once more.');
+    }
+
+    report.push(auditLinneaAutomationHealth({
+      requireWebApp: Boolean(webAppUrl),
+      throwOnFailure: false,
+    }));
+
+    const output = report.join('\n');
+    Logger.log(output);
+    return output;
+  });
+}
+
 function setupLinneaAutomation() {
-  ensureLabel_();
-  ensureLeadSheet_();
-  ensurePrepForm_();
-  repairLinneaAutomationSchedule();
+  return installLinneaAutomation();
 }
 
 function quickDeploymentCheck() {
@@ -176,7 +215,11 @@ function listLinneaTriggers() {
   });
 }
 
-function auditLinneaAutomationHealth() {
+function auditLinneaAutomationHealth(options) {
+  const settings = Object.assign({
+    requireWebApp: true,
+    throwOnFailure: true,
+  }, options || {});
   const report = [];
   const scheduledHandlers = LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler);
   const triggers = ScriptApp.getProjectTriggers();
@@ -202,7 +245,8 @@ function auditLinneaAutomationHealth() {
   report.push(`Rows in lead sheet: ${Math.max(sheet.getLastRow() - 1, 0)}`);
 
   Logger.log(report.join('\n'));
-  if (!webAppUrl || duplicateTriggers.length || missingTriggers.length || missingHeaders.length) {
+  if ((settings.requireWebApp && !webAppUrl) || duplicateTriggers.length || missingTriggers.length || missingHeaders.length) {
+    if (!settings.throwOnFailure) return report.join('\n');
     throw new Error(report.join('\n'));
   }
 
@@ -396,19 +440,28 @@ function onPrepFormSubmit(e) {
 
   if (!rowId) throw new Error('Missing row ID in prep form submission.');
 
-  const nextStatus = attendance && attendance.indexOf('חדש') !== -1
+  const wantsReschedule = attendance && attendance.indexOf('חדש') !== -1;
+  const hasMedicalAlerts = Boolean(medicalAlerts);
+  const nextStatus = wantsReschedule
     ? CONFIG.statuses.rescheduleRequested
-    : CONFIG.statuses.arrivalConfirmed;
+    : hasMedicalAlerts
+      ? CONFIG.statuses.doctorReviewNeeded
+      : CONFIG.statuses.arrivalConfirmed;
 
   updateLeadStatus_(rowId, nextStatus, {
     clinicStatus: nextStatus,
-    leadStage: nextStatus === CONFIG.statuses.rescheduleRequested ? 'Reschedule requested' : 'Confirmed',
+    leadStage: wantsReschedule ? 'Reschedule requested' : hasMedicalAlerts ? 'Doctor review needed' : 'Confirmed',
     prepFormSubmittedAt: new Date(),
     attendanceConfirmation: attendance || CONFIG.statuses.arrivalConfirmed,
     medicalAlerts,
     prepNotes,
     consentSignature,
-    followUpTask: nextStatus === CONFIG.statuses.rescheduleRequested ? 'המטופל/ת ביקש/ה לתאם מועד חדש' : '',
+    doctorReviewFlag: hasMedicalAlerts ? 'כן' : '',
+    followUpTask: wantsReschedule
+      ? 'המטופל/ת ביקש/ה לתאם מועד חדש'
+      : hasMedicalAlerts
+        ? 'דגשים רפואיים בטופס ההכנה - בדיקת רופא לפני הפגישה'
+        : '',
   });
 
   updateCalendarEventStatus_(eventId, nextStatus, [
@@ -514,10 +567,11 @@ function sendDailyClinicBrief(force) {
 
     const rows = getLeadRows_();
     const todayRows = rows.filter(row => isSameLocalDate_(row['Appointment Start'], new Date()));
+    const tomorrowRows = rows.filter(row => isSameLocalDate_(row['Appointment Start'], addDays_(today, 1)));
     const needsCall = rows.filter(row => String(row['Clinic Status'] || row.Status || '').indexOf('להתקשר') !== -1);
     const missingForms = rows.filter(row => row['Prep Form Sent At'] && !row['Prep Form Submitted At'] && row['Appointment Start']);
     const followUps = rows.filter(row => row['Follow-up Task']);
-    const hasActionableItems = todayRows.length || needsCall.length || missingForms.length || followUps.length;
+    const hasActionableItems = todayRows.length || tomorrowRows.length || needsCall.length || missingForms.length || followUps.length;
     if (!force && !CONFIG.sendEmptyDailyBrief && !hasActionableItems) {
       props.setProperty('LINNEA_DAILY_BRIEF_SENT', todayKey);
       return;
@@ -544,6 +598,7 @@ function sendDailyClinicBrief(force) {
       yesterdayMetrics,
       sevenDayAverage,
       todayRows,
+      tomorrowRows,
       needsCall,
       missingForms,
       followUps,
@@ -558,6 +613,9 @@ function sendDailyClinicBrief(force) {
       '',
       `פגישות היום: ${todayRows.length}`,
       formatRowsForBrief_(todayRows, ['Patient Name', 'Phone', 'Selected Slot', 'Clinic Status']),
+      '',
+      `פגישות מחר: ${tomorrowRows.length}`,
+      formatRowsForBrief_(tomorrowRows, ['Patient Name', 'Phone', 'Selected Slot', 'Clinic Status', 'Prep Form Submitted At']),
       '',
       `צריך להתקשר: ${needsCall.length}`,
       formatRowsForBrief_(needsCall, ['Patient Name', 'Phone', 'Clinic Status', 'Follow-up Task']),
@@ -2051,6 +2109,7 @@ function dailyClinicBriefHtml_(data) {
       ]),
       data.chartCid ? `<img src="cid:${data.chartCid}" alt="Daily metrics chart" style="display:block;width:100%;max-width:760px;border-radius:14px;margin:18px 0;border:1px solid ${CONFIG.brand.blush};">` : '',
       reportTableHtml_('פגישות היום', data.todayRows, ['Patient Name', 'Phone', 'Selected Slot', 'Clinic Status']),
+      reportTableHtml_('הכנה למחר', data.tomorrowRows, ['Patient Name', 'Phone', 'Selected Slot', 'Clinic Status', 'Prep Form Submitted At']),
       reportTableHtml_('צריך להתקשר', data.needsCall, ['Patient Name', 'Phone', 'Clinic Status', 'Follow-up Task']),
       reportTableHtml_('טפסים חסרים', data.missingForms, ['Patient Name', 'Phone', 'Appointment Start', 'Follow-up Task']),
       reportTableHtml_('משימות פתוחות', data.followUps, ['Patient Name', 'Phone', 'Follow-up Task']),

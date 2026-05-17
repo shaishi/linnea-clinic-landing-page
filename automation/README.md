@@ -38,26 +38,53 @@
 
 ## הפעלה מהירה
 
+המטרה: כמה שפחות מקום לטעויות. יש רק פונקציה אחת להרצה:
+
+```text
+installLinneaAutomation
+```
+
+הדברים היחידים ש-Google מחייב לעשות ידנית הם אישור הרשאות ויצירת Web App deployment.
+
 1. להיכנס ל-[Google Apps Script](https://script.google.com/) כאשר מחוברים לחשבון `linneaclinic@gmail.com`.
 2. ליצור פרויקט חדש בשם `Linnea Appointment Automation`.
 3. למחוק את הקוד הקיים ולהדביק את כל התוכן של `Code.gs`.
-4. לשנות בתחילת הקובץ, אם צריך:
+4. ללחוץ `Save`.
+5. ללחוץ `Deploy` ואז `New deployment`.
+6. לבחור סוג `Web app`.
+7. להגדיר:
+   - Execute as: `Me`
+   - Who has access: `Anyone`
+8. ללחוץ `Deploy`.
+9. להריץ פעם אחת את הפונקציה:
+
+```text
+installLinneaAutomation
+```
+
+10. לאשר הרשאות Gmail + Calendar + Sheets + Forms.
+
+זהו. הפונקציה הזו:
+
+- יוצרת/בודקת Label ב-Gmail.
+- יוצרת/בודקת Google Sheet מרכזי.
+- יוצרת/בודקת Google Form לטפסי הכנה.
+- מוחקת טריגרים כפולים.
+- מתקינה טריגר אחד נקי מכל סוג.
+- בודקת את ה-Web App.
+- מריצה audit פנימי ומחזירה דוח ברור בלוג.
+
+אם משנים בתחילת הקובץ משהו כמו שעות פעילות או טלפון, פשוט שומרים ומריצים שוב `installLinneaAutomation`.
+
+שדות שאפשר לשנות בתחילת הקובץ, אם צריך:
    - `clinicPhone`
    - `clinicAddress`
    - שעות הפעילות תחת `workingHours`
    - `calendarId` אם רוצים להשתמש ביומן ייעודי במקום `primary`
    - `spreadsheetName` אם רוצים שם אחר ל-Google Sheet
-   - להשאיר בינתיים את `webAppUrl` ריק
-5. ללחוץ `Save`.
-6. להריץ פעם אחת את הפונקציה `setupLinneaAutomation`.
-7. לאשר הרשאות Gmail + Calendar + Sheets.
-8. ללחוץ `Deploy` ואז `New deployment`.
-9. לבחור סוג `Web app`.
-10. להגדיר:
-    - Execute as: `Me`
-    - Who has access: `Anyone`
-11. להעתיק את כתובת ה-Web App שנוצרה. היא צריכה להסתיים ב-`/exec`.
-12. לחזור לקוד ולהדביק אותה כאן:
+   - אפשר להשאיר את `webAppUrl` ריק. הסקריפט ינסה לזהות את כתובת ה-Web App לבד.
+
+אם בכל זאת רוצים להדביק ידנית את כתובת ה-Web App, היא צריכה להסתיים ב-`/exec`:
 
 ```js
 webAppUrl: 'https://script.google.com/macros/s/PASTE_DEPLOYMENT_ID_HERE/exec',
@@ -75,19 +102,21 @@ https://script.google.com/macros/u/4/s/AKfy.../exec
 https://script.google.com/macros/s/AKfy.../exec
 ```
 
-13. ללחוץ `Save`.
-14. לעשות `Deploy` ואז `Manage deployments`, לערוך את הפריסה הקיימת ולבחור `New version`.
-15. להריץ ידנית את הפונקציה `testWebAppUrl`.
-16. אם הבדיקה עוברת, לשלוח לעצמך פנייה חדשה לבדיקה. מיילים שכבר נשלחו לפני התיקון יכולים עדיין להכיל קישור שבור.
+לאחר עדכון קוד קיים ב-Apps Script, צריך לעשות `Deploy` ואז `Manage deployments` ולבחור `New version`, כי ה-Web App של Google עובד לפי גרסאות.
 
 ## סדר הפעלה מומלץ אחרי עדכון קוד
 
 בכל פעם שמעתיקים גרסה חדשה של `Code.gs` ל-Apps Script:
 
 1. ללחוץ `Save`.
-2. להריץ `quickDeploymentCheck`.
-3. להריץ `setupLinneaAutomation`.
-4. להריץ `listLinneaTriggers` ולוודא שקיימים טריגרים עבור:
+2. לעשות `Deploy` ואז `Manage deployments` ולבחור `New version`.
+3. להריץ:
+
+```text
+installLinneaAutomation
+```
+
+אם רוצים לבדוק ידנית, להריץ `listLinneaTriggers` ולוודא שקיימים טריגרים עבור:
    - `processNewIntakeEmails`
    - `sendPrepEmails24HoursBefore`
    - `monitorPrepFormCompletion`
@@ -95,10 +124,10 @@ https://script.google.com/macros/s/AKfy.../exec
    - `sendDailyClinicBrief`
    - `sendWeeklyPerformanceSummary`
    - `onPrepFormSubmit`
-5. להריץ `auditLinneaAutomationHealth` כדי לוודא שאין טריגרים כפולים, שאין עמודות חסרות, ושכתובת ה-Web App מוגדרת.
-6. לעשות `Deploy` ואז `Manage deployments` ולבחור `New version`.
 
-חשוב: בגרסה הזו `setupLinneaAutomation` כבר מנקה טריגרים כפולים ומתקינה מחדש טריגר אחד מכל סוג פעיל. לכן אם בטעות מריצים אותה שוב, היא לא אמורה ליצור הצפה של מיילים.
+אפשר גם להריץ `auditLinneaAutomationHealth` כדי לוודא שאין טריגרים כפולים, שאין עמודות חסרות, ושכתובת ה-Web App מוגדרת.
+
+חשוב: בגרסה הזו `installLinneaAutomation` כבר מנקה טריגרים כפולים ומתקינה מחדש טריגר אחד מכל סוג פעיל. לכן אם בטעות מריצים אותה שוב, היא לא אמורה ליצור הצפה של מיילים.
 
 ## אם מתחילים לקבל יותר מדי מיילים
 
@@ -143,6 +172,7 @@ listLinneaTriggers
 - פניות חדשות נבדקות כל 10 דקות, לא כל 5 דקות.
 - מיילים מתוזמנים למטופלים לא נשלחים בין 21:00 ל-08:00 לפי שעון ישראל. אם פנייה נכנסת בלילה, היא תחכה לבוקר.
 - בריף יומי נשלח פעם ביום סביב 08:00, רק פעם אחת ביום, עם גרף והשוואה לאתמול ולממוצע 7 ימים.
+- הבריף היומי כולל גם הכנה למחר: מי מגיע, מי צריך טפסים, ומה פתוח לצוות.
 - סיכום שבועי נשלח ביום שני סביב 08:00 ומסכם את השבוע שהסתיים, עם גרף והשוואה לשבועות קודמים.
 - לכל פונקציה מתוזמנת יש נעילה פנימית, כדי שריצה אחת לא תשלח כפול בזמן שריצה אחרת עדיין עובדת.
 
@@ -214,7 +244,7 @@ Message / Notes / Please specify / הערות / פירוט
 
 ## Google Sheet מרכזי
 
-בהרצה הראשונה של `setupLinneaAutomation`, הסקריפט ייצור Sheet בשם:
+בהרצה הראשונה של `installLinneaAutomation`, הסקריפט ייצור Sheet בשם:
 
 ```text
 Linnea Clinic - Consultation Leads
@@ -287,7 +317,7 @@ Linnea Clinic - Consultation Leads
 
 ## טפסי הכנה 24 שעות לפני
 
-בהרצה של `setupLinneaAutomation`, הסקריפט יוצר Google Form בשם:
+בהרצה של `installLinneaAutomation`, הסקריפט יוצר Google Form בשם:
 
 ```text
 Linnéa - טפסי הכנה ואישור הגעה
@@ -367,6 +397,37 @@ Communication Profile
 - מיילים: מסמכים, טפסים, סיכומים והנחיות שצריך לשמור.
 - WhatsApp: תזכורות קצרות, בדיקת מצב, וטון אישי מאוד.
 - לא שולחים הודעות שיווקיות אלא אם `Email Updates Consent` מסומן.
+
+## אוטומציות נוספות מומלצות
+
+המערכת כבר כוללת את השכבה הקריטית: תיאום ייעוץ, טפסי הכנה, סטטוסים לרופאים, מעקב אחרי טיפול, קישורי WhatsApp ידניים, ודוחות יומיים/שבועיים.
+
+השלבים הבאים שהייתי מוסיף למרפאת אסתטיקה high-end:
+
+1. `Doctor prep pack` לפני יום קליניקה:
+   - תקציר לכל מטופל/ת של מחר: תחום עניין, טפסים חסרים, דגלים רפואיים ומה צריך לשאול.
+   - כרגע זה כבר נכנס לבריף היומי תחת "הכנה למחר".
+
+2. `Clinical risk alert`:
+   - אם בטופס ההכנה מופיעים הריון/הנקה, מדללי דם, אלרגיות, מחלה פעילה, הרפס, רואקוטן או דגל רפואי אחר, המערכת תסמן `צריך בדיקת רופא` ותבליט את זה בבריף.
+
+3. `No-show / reschedule recovery`:
+   - אם מטופל/ת ביקש/ה תיאום מחדש או לא מילא/ה טפסים בזמן, לפתוח משימת Follow-up לצוות במקום לשלוח עוד מיילים.
+
+4. `Treatment outcome check`:
+   - 48 שעות אחרי טיפול: בדיקת מצב עדינה.
+   - אם התשובה כוללת מילים כמו כאב, נפיחות חריגה, דאגה או רופא, לעדכן `Doctor Review Flag`.
+
+5. `VIP relationship layer`:
+   - תיעוד העדפות תקשורת, טיפול אחרון, תאריך מומלץ לביקורת ומה חשוב למטופל/ת.
+   - לא קמפיין שיווקי אוטומטי, אלא משימות אישיות לצוות.
+
+6. `Consent and compliance archive`:
+   - שמירת קישור לטופס ההכנה, חתימה דיגיטלית, סטטוס הסכמה ואישור הגעה ברשומה אחת.
+
+7. `WhatsApp Business API` בהמשך:
+   - בשלב הנוכחי המערכת יוצרת קישורי WhatsApp ידניים כדי לשמור על שליטה ואיכות.
+   - בשלב הבא אפשר לחבר API רשמי, אבל רק אחרי opt-in ברור ותבניות מאושרות.
 
 ## תיקוני תצוגה
 
