@@ -35,6 +35,13 @@
 10. שולחת בריף יומי וסיכום שבועי לרופאים, כולל גרפים והשוואות:
    - בריף יומי: היום מול אתמול וממוצע 7 ימים.
    - סיכום שבועי: השבוע שהסתיים מול השבועות הקודמים.
+11. מנהלת חוויית לקוח מלאה:
+   - Concierge intake: המייל הראשון מסביר שהצוות יעבור על הפרטים לפני הייעוץ.
+   - Doctor prep pack: הבריף היומי כולל הכנה למחר ודגלים רפואיים.
+   - Treatment-specific aftercare: הנחיות אחרי טיפול לפי סוג טיפול.
+   - Review request gate: בקשת ביקורת נוצרת רק אם סומן שהמטופל/ת מרוצה.
+   - VIP memory: אפשר להגדיר מועד Follow-up אישי ולקבל משימה לצוות.
+   - No-show recovery: אם מסמנים אי-הגעה, נוצרת משימה וקישור WhatsApp עדין לתיאום מחדש.
 
 ## הפעלה מהירה
 
@@ -79,6 +86,7 @@ installLinneaAutomation
 שדות שאפשר לשנות בתחילת הקובץ, אם צריך:
    - `clinicPhone`
    - `clinicAddress`
+   - `googleReviewUrl` אם רוצים שקישור בקשת הביקורת יהיה מוכן מראש
    - שעות הפעילות תחת `workingHours`
    - `calendarId` אם רוצים להשתמש ביומן ייעודי במקום `primary`
    - `spreadsheetName` אם רוצים שם אחר ל-Google Sheet
@@ -280,9 +288,20 @@ Linnea Clinic - Consultation Leads
 - `Treatment Type`
 - `Treatment Date`
 - `Care Notes`
+- `Care Template Used`
 - `Treatment Care Sent At`
 - `48h Check-in Sent At`
 - `Satisfaction Status`
+- `Review Request Ready At`
+- `Review Request Draft Link`
+- `Review Request Sent At`
+- `VIP Notes`
+- `Preferred Follow-up Date`
+- `VIP Follow-up Ready At`
+- `VIP Follow-up Completed At`
+- `Last Personal Touch At`
+- `No-show Recovery At`
+- `No-show Recovery Completed At`
 
 סטטוסים אפשריים:
 
@@ -402,17 +421,18 @@ Communication Profile
 
 המערכת כבר כוללת את השכבה הקריטית: תיאום ייעוץ, טפסי הכנה, סטטוסים לרופאים, מעקב אחרי טיפול, קישורי WhatsApp ידניים, ודוחות יומיים/שבועיים.
 
-השלבים הבאים שהייתי מוסיף למרפאת אסתטיקה high-end:
+מה כבר הוטמע עכשיו:
 
 1. `Doctor prep pack` לפני יום קליניקה:
    - תקציר לכל מטופל/ת של מחר: תחום עניין, טפסים חסרים, דגלים רפואיים ומה צריך לשאול.
-   - כרגע זה כבר נכנס לבריף היומי תחת "הכנה למחר".
+   - מופיע בבריף היומי תחת "הכנה למחר".
 
 2. `Clinical risk alert`:
    - אם בטופס ההכנה מופיעים הריון/הנקה, מדללי דם, אלרגיות, מחלה פעילה, הרפס, רואקוטן או דגל רפואי אחר, המערכת תסמן `צריך בדיקת רופא` ותבליט את זה בבריף.
 
 3. `No-show / reschedule recovery`:
    - אם מטופל/ת ביקש/ה תיאום מחדש או לא מילא/ה טפסים בזמן, לפתוח משימת Follow-up לצוות במקום לשלוח עוד מיילים.
+   - אם הצוות מסמן אי-הגעה בסטטוס, נוצרת משימה וקישור WhatsApp עדין לתיאום מחדש.
 
 4. `Treatment outcome check`:
    - 48 שעות אחרי טיפול: בדיקת מצב עדינה.
@@ -425,9 +445,24 @@ Communication Profile
 6. `Consent and compliance archive`:
    - שמירת קישור לטופס ההכנה, חתימה דיגיטלית, סטטוס הסכמה ואישור הגעה ברשומה אחת.
 
-7. `WhatsApp Business API` בהמשך:
+7. `Review request gate`:
+   - אם הצוות מסמן ב-`Satisfaction Status` שהמטופל/ת מרוצה, נוצרת טיוטת WhatsApp לבקשת ביקורת.
+   - אם יש דגל רפואי או אי שביעות רצון, לא נוצרת בקשת ביקורת.
+
+8. `Treatment-specific aftercare`:
+   - אם `Care Notes` ריק, המערכת בוחרת תבנית הנחיות לפי `Treatment Type`: בוטוקס, חומצה/מילוי, סקין בוסטר, פילינג/לייזר או הנחיות כלליות.
+
+מה הייתי מוסיף בשלב הבא, אחרי כמה שבועות של שימוש:
+
+1. `WhatsApp Business API`:
    - בשלב הנוכחי המערכת יוצרת קישורי WhatsApp ידניים כדי לשמור על שליטה ואיכות.
    - בשלב הבא אפשר לחבר API רשמי, אבל רק אחרי opt-in ברור ותבניות מאושרות.
+
+2. `Revenue and conversion layer`:
+   - עמודות לטיפול שבוצע, מחיר, האם נקבע טיפול המשך, ומה יחס ההמרה מייעוץ לטיפול.
+
+3. `Personalized recall`:
+   - תזכורות ביקורת או טיפול חוזר לפי סוג טיפול, אבל כמשימת צוות ולא כמייל אוטומטי קר.
 
 ## תיקוני תצוגה
 

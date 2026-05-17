@@ -12,6 +12,7 @@ const CONFIG = {
   clinicAddress: 'דרך מנחם בגין 150, תל אביב',
   mapsUrl: 'https://maps.google.com/?q=Menachem+Begin+Road+150+Tel+Aviv+Israel',
   siteUrl: 'https://shaishi.github.io/linnea-clinic-landing-page/',
+  googleReviewUrl: '', // Optional: paste the clinic Google review URL. If empty, a draft asks the team to add the review link.
   timezone: 'Asia/Jerusalem',
   appointmentMinutes: 45,
   bookingLookaheadDays: 35,
@@ -65,6 +66,9 @@ const CONFIG = {
     treatmentCheckInSent: 'נשלחה בדיקת מצב 48 שעות',
     doctorReviewNeeded: 'צריך בדיקת רופא',
     whatsappDraftReady: 'טיוטת WhatsApp מוכנה',
+    reviewRequestReady: 'מוכן לבקשת ביקורת',
+    vipFollowUpDue: 'מעקב VIP לביצוע',
+    noShowRecovery: 'צריך חזרה לאחר אי-הגעה',
   },
   brand: {
     ink: '#263432',
@@ -504,6 +508,7 @@ function processPatientJourneyMessages() {
         updateLeadStatus_(row['Row ID'], CONFIG.statuses.consultationSummarySent, {
           clinicStatus: CONFIG.statuses.consultationSummarySent,
           consultationSummarySentAt: now,
+          lastPersonalTouchAt: now,
           whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'consultationSummary')
             ? buildWhatsAppLink_(patient.phone, consultationSummaryWhatsAppText_(patient, row['Next Recommended Action']))
             : '',
@@ -511,35 +516,39 @@ function processPatientJourneyMessages() {
       }
 
       const treatmentDate = row['Treatment Date'] ? new Date(row['Treatment Date']) : null;
-      if (!treatmentDate || Number.isNaN(treatmentDate.getTime())) return;
-      if (!row['Treatment Type']) return;
-
-      if (!row['Treatment Care Sent At'] && treatmentDate <= now) {
-        if (shouldSendEmail_(patient, 'postTreatmentCare')) {
-          sendPostTreatmentCareEmail_(patient, row['Treatment Type'], row['Care Notes']);
+      const hasTreatmentDate = treatmentDate && !Number.isNaN(treatmentDate.getTime());
+      if (hasTreatmentDate && row['Treatment Type']) {
+        if (!row['Treatment Care Sent At'] && treatmentDate <= now) {
+          const carePlan = buildTreatmentCarePlan_(row['Treatment Type'], row['Care Notes']);
+          if (shouldSendEmail_(patient, 'postTreatmentCare')) {
+            sendPostTreatmentCareEmail_(patient, row['Treatment Type'], carePlan.notes);
+          }
+          updateLeadStatus_(row['Row ID'], CONFIG.statuses.treatmentCareSent, {
+            clinicStatus: CONFIG.statuses.treatmentCareSent,
+            treatmentCareSentAt: now,
+            careTemplateUsed: carePlan.templateName,
+            lastPersonalTouchAt: now,
+            whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'postTreatmentCare')
+              ? buildWhatsAppLink_(patient.phone, postTreatmentCareWhatsAppText_(patient, row['Treatment Type']))
+              : '',
+          });
         }
-        updateLeadStatus_(row['Row ID'], CONFIG.statuses.treatmentCareSent, {
-          clinicStatus: CONFIG.statuses.treatmentCareSent,
-          treatmentCareSentAt: now,
-          whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'postTreatmentCare')
-            ? buildWhatsAppLink_(patient.phone, postTreatmentCareWhatsAppText_(patient, row['Treatment Type']))
-            : '',
-        });
-      }
 
-      const checkInTime = new Date(treatmentDate.getTime() + 48 * 60 * 60 * 1000);
-      if (!row['48h Check-in Sent At'] && now >= checkInTime) {
-        if (shouldSendEmail_(patient, 'checkIn48h')) {
-          sendTreatmentCheckInEmail_(patient, row['Treatment Type']);
+        const checkInTime = new Date(treatmentDate.getTime() + 48 * 60 * 60 * 1000);
+        if (!row['48h Check-in Sent At'] && now >= checkInTime) {
+          if (shouldSendEmail_(patient, 'checkIn48h')) {
+            sendTreatmentCheckInEmail_(patient, row['Treatment Type']);
+          }
+          updateLeadStatus_(row['Row ID'], CONFIG.statuses.treatmentCheckInSent, {
+            clinicStatus: CONFIG.statuses.treatmentCheckInSent,
+            checkIn48hSentAt: now,
+            satisfactionStatus: 'ממתין לתגובה',
+            lastPersonalTouchAt: now,
+            whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'checkIn48h')
+              ? buildWhatsAppLink_(patient.phone, treatmentCheckInWhatsAppText_(patient, row['Treatment Type']))
+              : '',
+          });
         }
-        updateLeadStatus_(row['Row ID'], CONFIG.statuses.treatmentCheckInSent, {
-          clinicStatus: CONFIG.statuses.treatmentCheckInSent,
-          checkIn48hSentAt: now,
-          satisfactionStatus: 'ממתין לתגובה',
-          whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'checkIn48h')
-            ? buildWhatsAppLink_(patient.phone, treatmentCheckInWhatsAppText_(patient, row['Treatment Type']))
-            : '',
-        });
       }
 
       if (satisfactionNeedsDoctorReview_(row['Satisfaction Status']) && !isTruthy_(row['Doctor Review Flag'])) {
@@ -547,6 +556,39 @@ function processPatientJourneyMessages() {
           clinicStatus: CONFIG.statuses.doctorReviewNeeded,
           doctorReviewFlag: 'כן',
           followUpTask: 'תגובה לאחר טיפול דורשת בדיקת רופא',
+        });
+      }
+
+      if (satisfactionLooksPositive_(row['Satisfaction Status']) && !row['Review Request Ready At']) {
+        updateLeadStatus_(row['Row ID'], CONFIG.statuses.reviewRequestReady, {
+          clinicStatus: CONFIG.statuses.reviewRequestReady,
+          reviewRequestReadyAt: now,
+          reviewRequestDraftLink: shouldPrepareWhatsAppDraft_(patient, 'reviewRequest')
+            ? buildWhatsAppLink_(patient.phone, reviewRequestWhatsAppText_(patient))
+            : '',
+          followUpTask: 'המטופל/ת מרוצה - לשלוח בקשת ביקורת עדינה רק לאחר שיקול צוות',
+        });
+      }
+
+      if (isVipFollowUpDue_(row, now) && !row['VIP Follow-up Ready At'] && !row['VIP Follow-up Completed At']) {
+        updateLeadStatus_(row['Row ID'], CONFIG.statuses.vipFollowUpDue, {
+          clinicStatus: CONFIG.statuses.vipFollowUpDue,
+          vipFollowUpReadyAt: now,
+          whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'vipFollowUp')
+            ? buildWhatsAppLink_(patient.phone, vipFollowUpWhatsAppText_(patient, row['VIP Notes']))
+            : row['WhatsApp Draft Link'],
+          followUpTask: 'מעקב VIP אישי הגיע למועד - ליצור קשר קצר ועדין',
+        });
+      }
+
+      if (isNoShowRow_(row) && !row['No-show Recovery At']) {
+        updateLeadStatus_(row['Row ID'], CONFIG.statuses.noShowRecovery, {
+          clinicStatus: CONFIG.statuses.noShowRecovery,
+          noShowRecoveryAt: now,
+          whatsappDraftLink: shouldPrepareWhatsAppDraft_(patient, 'noShowRecovery')
+            ? buildWhatsAppLink_(patient.phone, noShowRecoveryWhatsAppText_(patient))
+            : row['WhatsApp Draft Link'],
+          followUpTask: 'אי-הגעה או פספוס פגישה - ליצור קשר אישי לתיאום מחדש',
         });
       }
     });
@@ -570,8 +612,12 @@ function sendDailyClinicBrief(force) {
     const tomorrowRows = rows.filter(row => isSameLocalDate_(row['Appointment Start'], addDays_(today, 1)));
     const needsCall = rows.filter(row => String(row['Clinic Status'] || row.Status || '').indexOf('להתקשר') !== -1);
     const missingForms = rows.filter(row => row['Prep Form Sent At'] && !row['Prep Form Submitted At'] && row['Appointment Start']);
+    const doctorReview = rows.filter(row => isTruthy_(row['Doctor Review Flag']) || row['Clinic Status'] === CONFIG.statuses.doctorReviewNeeded);
+    const reviewRequests = rows.filter(row => row['Review Request Ready At'] && !row['Review Request Sent At']);
+    const vipFollowUps = rows.filter(row => row['VIP Follow-up Ready At'] && !row['VIP Follow-up Completed At']);
+    const noShowRecovery = rows.filter(row => row['No-show Recovery At'] && !row['No-show Recovery Completed At']);
     const followUps = rows.filter(row => row['Follow-up Task']);
-    const hasActionableItems = todayRows.length || tomorrowRows.length || needsCall.length || missingForms.length || followUps.length;
+    const hasActionableItems = todayRows.length || tomorrowRows.length || needsCall.length || missingForms.length || doctorReview.length || reviewRequests.length || vipFollowUps.length || noShowRecovery.length || followUps.length;
     if (!force && !CONFIG.sendEmptyDailyBrief && !hasActionableItems) {
       props.setProperty('LINNEA_DAILY_BRIEF_SENT', todayKey);
       return;
@@ -601,6 +647,10 @@ function sendDailyClinicBrief(force) {
       tomorrowRows,
       needsCall,
       missingForms,
+      doctorReview,
+      reviewRequests,
+      vipFollowUps,
+      noShowRecovery,
       followUps,
       chartCid: chartBlob ? 'dailyMetricsChart' : '',
     });
@@ -622,6 +672,15 @@ function sendDailyClinicBrief(force) {
       '',
       `טפסים חסרים: ${missingForms.length}`,
       formatRowsForBrief_(missingForms, ['Patient Name', 'Phone', 'Appointment Start', 'Follow-up Task']),
+      '',
+      `צריך בדיקת רופא: ${doctorReview.length}`,
+      formatRowsForBrief_(doctorReview, ['Patient Name', 'Phone', 'Medical Alerts', 'Follow-up Task']),
+      '',
+      `בקשת ביקורת מוכנה: ${reviewRequests.length}`,
+      formatRowsForBrief_(reviewRequests, ['Patient Name', 'Phone', 'Satisfaction Status', 'Review Request Draft Link']),
+      '',
+      `מעקב VIP: ${vipFollowUps.length}`,
+      formatRowsForBrief_(vipFollowUps, ['Patient Name', 'Phone', 'Preferred Follow-up Date', 'VIP Notes']),
       '',
       `משימות פתוחות: ${followUps.length}`,
       formatRowsForBrief_(followUps, ['Patient Name', 'Phone', 'Follow-up Task']),
@@ -999,8 +1058,8 @@ function bookingOptionsEmail_(patient, buttons) {
               </tr>
               <tr>
                 <td style="padding:28px 24px;">
-                  <p style="font-size:18px;line-height:1.7;margin:0 0 14px;">תודה שפנית ל-Linnéa. בדקנו עבורך את הזמינות הקרובה והכנו שלוש אפשרויות לפגישת ייעוץ אישית של 45 דקות.</p>
-                  <p style="font-size:15px;line-height:1.7;color:${CONFIG.brand.muted};margin:0 0 22px;">בחירה באחד המועדים תשמור עבורך את הפגישה ותשלח אישור מסודר למייל.</p>
+                  <p style="font-size:18px;line-height:1.7;margin:0 0 14px;">תודה שפנית ל-Linnéa. קיבלנו את הפרטים שמילאת, והצוות יעבור עליהם לפני הייעוץ כדי להגיע לפגישה מוכנים ומדויקים יותר.</p>
+                  <p style="font-size:15px;line-height:1.7;color:${CONFIG.brand.muted};margin:0 0 22px;">בדקנו עבורך את הזמינות הקרובה והכנו שלוש אפשרויות לפגישת ייעוץ אישית של 45 דקות. בחירה באחד המועדים תשמור עבורך את הפגישה ותשלח אישור מסודר למייל.</p>
                   <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${buttonHtml}</table>
                   <div style="margin-top:24px;padding:18px;border-radius:18px;background:${CONFIG.brand.ivory};border:1px solid ${CONFIG.brand.blush};">
                     <p style="margin:0;font-size:15px;line-height:1.7;">אם אף מועד לא מתאים, אפשר להשיב למייל הזה עם ימים ושעות שנוחים לך, ונחזור עם אפשרות אחרת.</p>
@@ -1142,12 +1201,7 @@ function sendPostTreatmentCareEmail_(patient, treatmentType, careNotes) {
 }
 
 function postTreatmentCareEmailHtml_(patient, treatmentType, careNotes) {
-  const notes = careNotes || [
-    'להימנע ממגע או עיסוי באזור הטיפול אלא אם קיבלת הנחיה אחרת מהצוות.',
-    'להימנע מפעילות גופנית מאומצת, סאונה או חום גבוה ב-24 השעות הראשונות.',
-    'אדמומיות, רגישות קלה או נפיחות מקומית יכולות להופיע לאחר טיפול אסתטי.',
-    'אם מופיע כאב חריג, שינוי צבע משמעותי, נפיחות חריגה או כל תחושה שמדאיגה אותך, יש ליצור איתנו קשר מיד.',
-  ].join('\n');
+  const notes = careNotes || buildTreatmentCarePlan_(treatmentType, '').notes;
 
   return premiumEmailShell_(
     'הנחיות לאחר הטיפול',
@@ -1159,6 +1213,70 @@ function postTreatmentCareEmailHtml_(patient, treatmentType, careNotes) {
       <p style="margin:0;">נבדוק איתך שוב בעוד כ-48 שעות.</p>
     `
   );
+}
+
+function buildTreatmentCarePlan_(treatmentType, careNotes) {
+  if (careNotes) return { templateName: 'Custom', notes: careNotes };
+
+  const normalized = String(treatmentType || '').toLowerCase();
+  const templates = [
+    {
+      name: 'Botox',
+      match: /(botox|בוטוקס|tox|נוירומודולטור)/i,
+      notes: [
+        'להימנע משכיבה מלאה ב-4 השעות הראשונות לאחר הטיפול.',
+        'להימנע מעיסוי או לחץ באזורי ההזרקה ב-24 השעות הראשונות.',
+        'להימנע מפעילות גופנית מאומצת, סאונה או חום גבוה עד מחר.',
+        'התוצאה מתפתחת בהדרגה, לרוב בתוך מספר ימים, וממשיכה להתייצב עד כשבועיים.',
+        'אם מופיע כאב חריג, חולשה שאינה צפויה או כל תחושה שמדאיגה אותך, יש ליצור איתנו קשר.',
+      ],
+    },
+    {
+      name: 'Dermal filler',
+      match: /(filler|fillers|חומצה|היאלורונית|מילוי|שפתיים|ליפס|lips)/i,
+      notes: [
+        'להימנע מעיסוי, לחץ או מגע מיותר באזור הטיפול אלא אם קיבלת הנחיה אחרת.',
+        'להימנע מפעילות גופנית מאומצת, אלכוהול, סאונה או חום גבוה ב-24 השעות הראשונות.',
+        'נפיחות, רגישות או שטפי דם קלים יכולים להופיע בימים הראשונים.',
+        'להימנע מטיפולי פנים, לייזר או טיפולים באזור ללא אישור המרפאה.',
+        'אם מופיע כאב חריג, שינוי צבע משמעותי, חיוורון, קור מקומי או החמרה לא רגילה, יש ליצור איתנו קשר מיד.',
+      ],
+    },
+    {
+      name: 'Skin booster',
+      match: /(skin booster|סקין|בוסטר|biostimulator|ביוסטימולטור|profhilo|פרופילו)/i,
+      notes: [
+        'להימנע ממגע או איפור כבד באזור הטיפול בשעות הראשונות.',
+        'בליטות קטנות, אדמומיות או רגישות מקומית יכולות להופיע ולרוב משתפרות בהדרגה.',
+        'להימנע מפעילות גופנית מאומצת, סאונה או חום גבוה ב-24 השעות הראשונות.',
+        'להקפיד על לחות והגנה מהשמש לפי ההנחיות שקיבלת.',
+        'אם מופיעה תגובה חריגה או תחושה שמדאיגה אותך, יש ליצור קשר עם המרפאה.',
+      ],
+    },
+    {
+      name: 'Peel / laser',
+      match: /(laser|לייזר|peel|פילינג|resurfacing|ריסרפייסינג)/i,
+      notes: [
+        'להימנע מחשיפה ישירה לשמש ולהקפיד על הגנה גבוהה מהשמש.',
+        'להימנע מחומרים פעילים כמו רטינול, חומצות או פילינגים ביתיים עד לקבלת אישור מהצוות.',
+        'אדמומיות, יובש או קילוף עדין יכולים להופיע בהתאם לסוג הטיפול.',
+        'לא לגרד או לקלף את העור באופן יזום.',
+        'אם מופיעה צריבה משמעותית, שלפוחיות או החמרה שמדאיגה אותך, יש ליצור איתנו קשר.',
+      ],
+    },
+  ];
+  const template = templates.find(item => item.match.test(normalized));
+  if (template) return { templateName: template.name, notes: template.notes.join('\n') };
+
+  return {
+    templateName: 'General aesthetic care',
+    notes: [
+      'להימנע ממגע או עיסוי באזור הטיפול אלא אם קיבלת הנחיה אחרת מהצוות.',
+      'להימנע מפעילות גופנית מאומצת, סאונה או חום גבוה ב-24 השעות הראשונות.',
+      'אדמומיות, רגישות קלה או נפיחות מקומית יכולות להופיע לאחר טיפול אסתטי.',
+      'אם מופיע כאב חריג, שינוי צבע משמעותי, נפיחות חריגה או כל תחושה שמדאיגה אותך, יש ליצור איתנו קשר מיד.',
+    ].join('\n'),
+  };
 }
 
 function sendTreatmentCheckInEmail_(patient, treatmentType) {
@@ -1637,10 +1755,21 @@ function ensureLeadSheet_() {
     'Treatment Type',
     'Treatment Date',
     'Care Notes',
+    'Care Template Used',
     'Treatment Care Sent At',
     '48h Check-in Sent At',
     'Satisfaction Status',
     'Doctor Review Flag',
+    'Review Request Ready At',
+    'Review Request Draft Link',
+    'Review Request Sent At',
+    'VIP Notes',
+    'Preferred Follow-up Date',
+    'VIP Follow-up Ready At',
+    'VIP Follow-up Completed At',
+    'Last Personal Touch At',
+    'No-show Recovery At',
+    'No-show Recovery Completed At',
     'Follow-up Task',
     'Last Error',
   ];
@@ -1757,10 +1886,21 @@ function updateLeadStatus_(rowId, status, fields) {
     whatsappConsent: 'WhatsApp Consent',
     whatsappDraftLink: 'WhatsApp Draft Link',
     consultationSummarySentAt: 'Consultation Summary Sent At',
+    careTemplateUsed: 'Care Template Used',
     treatmentCareSentAt: 'Treatment Care Sent At',
     checkIn48hSentAt: '48h Check-in Sent At',
     satisfactionStatus: 'Satisfaction Status',
     doctorReviewFlag: 'Doctor Review Flag',
+    reviewRequestReadyAt: 'Review Request Ready At',
+    reviewRequestDraftLink: 'Review Request Draft Link',
+    reviewRequestSentAt: 'Review Request Sent At',
+    vipNotes: 'VIP Notes',
+    preferredFollowUpDate: 'Preferred Follow-up Date',
+    vipFollowUpReadyAt: 'VIP Follow-up Ready At',
+    vipFollowUpCompletedAt: 'VIP Follow-up Completed At',
+    lastPersonalTouchAt: 'Last Personal Touch At',
+    noShowRecoveryAt: 'No-show Recovery At',
+    noShowRecoveryCompletedAt: 'No-show Recovery Completed At',
     followUpTask: 'Follow-up Task',
     lastError: 'Last Error',
   };
@@ -1815,6 +1955,9 @@ function shouldPrepareWhatsAppDraft_(patient, messageType) {
   if (patient.communicationProfile === CONFIG.communicationProfiles.emailOnly) return false;
   if (messageType === 'prep') return true;
   if (messageType === 'checkIn48h') return true;
+  if (messageType === 'reviewRequest') return true;
+  if (messageType === 'vipFollowUp') return true;
+  if (messageType === 'noShowRecovery') return true;
   return patient.communicationProfile === CONFIG.communicationProfiles.fullWhatsAppEmailForms;
 }
 
@@ -1860,6 +2003,30 @@ function treatmentCheckInWhatsAppText_(patient, treatmentType) {
   return [
     `היי ${patient.name}, רצינו לבדוק איך ההרגשה אחרי ${treatmentType || 'הטיפול'}.`,
     'אפשר לענות כאן בקצרה שהכול בסדר, ואם יש משהו שמדאיג אפשר לצרף שאלה או תמונה.',
+  ].join('\n');
+}
+
+function reviewRequestWhatsAppText_(patient) {
+  return [
+    `היי ${patient.name}, שמחנו לשמוע שהכול מרגיש טוב אחרי הביקור ב-Linnéa.`,
+    'אם החוויה שלך הייתה טובה, נשמח מאוד לביקורת קצרה בגוגל. זה עוזר למטופלים חדשים להכיר אותנו בצורה אמיתית.',
+    CONFIG.googleReviewUrl ? CONFIG.googleReviewUrl : '[להוסיף כאן קישור ביקורת Google]',
+    'תודה רבה, הצוות של Linnéa',
+  ].join('\n');
+}
+
+function vipFollowUpWhatsAppText_(patient, vipNotes) {
+  return [
+    `היי ${patient.name}, רצינו לבדוק לשלומך ולוודא שהכול מתקדם בנוחות.`,
+    vipNotes ? `רשמנו לעצמנו לחזור אליך בנושא: ${vipNotes}` : '',
+    'אם יש משהו שתרצו לדייק, לשאול או לתאם, אנחנו כאן.',
+  ].filter(Boolean).join('\n');
+}
+
+function noShowRecoveryWhatsAppText_(patient) {
+  return [
+    `היי ${patient.name}, שמנו לב שהפגישה לא הסתדרה בסוף.`,
+    'אם תרצו, נשמח לתאם מועד חדש שמתאים יותר. אפשר לשלוח כאן ימים ושעות נוחים ונחזור עם אפשרות מדויקת.',
   ].join('\n');
 }
 
@@ -1924,6 +2091,28 @@ function satisfactionNeedsDoctorReview_(value) {
   return ['needs attention', 'doctor', 'pain', 'concern', 'בעיה', 'כאב', 'מודאג', 'דחוף', 'רופא'].some(token =>
     normalized.indexOf(token) !== -1
   );
+}
+
+function satisfactionLooksPositive_(value) {
+  const normalized = String(value || '').trim().toLowerCase();
+  if (!normalized || satisfactionNeedsDoctorReview_(normalized)) return false;
+  return ['good', 'great', 'excellent', 'happy', 'satisfied', 'מרוצה', 'מצוין', 'מעולה', 'הכל טוב', 'הכול טוב', 'נהדר'].some(token =>
+    normalized.indexOf(token) !== -1
+  );
+}
+
+function isVipFollowUpDue_(row, now) {
+  if (!row['Preferred Follow-up Date']) return false;
+  const dueDate = row['Preferred Follow-up Date'] instanceof Date
+    ? row['Preferred Follow-up Date']
+    : new Date(row['Preferred Follow-up Date']);
+  if (Number.isNaN(dueDate.getTime())) return false;
+  return localDateKey_(dueDate) <= localDateKey_(now);
+}
+
+function isNoShowRow_(row) {
+  const text = `${row.Status || ''} ${row['Clinic Status'] || ''} ${row['Attendance Confirmation'] || ''}`.toLowerCase();
+  return ['no-show', 'no show', 'missed', 'לא הגיע', 'לא הגיעה', 'אי-הגעה', 'פספס'].some(token => text.indexOf(token) !== -1);
 }
 
 function normalizePhoneForCompare_(phone) {
@@ -2112,6 +2301,10 @@ function dailyClinicBriefHtml_(data) {
       reportTableHtml_('הכנה למחר', data.tomorrowRows, ['Patient Name', 'Phone', 'Selected Slot', 'Clinic Status', 'Prep Form Submitted At']),
       reportTableHtml_('צריך להתקשר', data.needsCall, ['Patient Name', 'Phone', 'Clinic Status', 'Follow-up Task']),
       reportTableHtml_('טפסים חסרים', data.missingForms, ['Patient Name', 'Phone', 'Appointment Start', 'Follow-up Task']),
+      reportTableHtml_('בדיקת רופא', data.doctorReview, ['Patient Name', 'Phone', 'Medical Alerts', 'Follow-up Task']),
+      reportTableHtml_('בקשת ביקורת מוכנה', data.reviewRequests, ['Patient Name', 'Phone', 'Satisfaction Status', 'Review Request Draft Link']),
+      reportTableHtml_('מעקב VIP', data.vipFollowUps, ['Patient Name', 'Phone', 'Preferred Follow-up Date', 'VIP Notes']),
+      reportTableHtml_('חזרה אחרי אי-הגעה', data.noShowRecovery, ['Patient Name', 'Phone', 'Clinic Status', 'No-show Recovery At']),
       reportTableHtml_('משימות פתוחות', data.followUps, ['Patient Name', 'Phone', 'Follow-up Task']),
     ].join('')
   );
