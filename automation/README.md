@@ -32,6 +32,9 @@
    - הנחיות לאחר טיפול, לפי `Treatment Date`.
    - בדיקת מצב 48 שעות לאחר טיפול.
    - יצירת קישור WhatsApp מוכן לשליחה ידנית על ידי הצוות, לפי פרופיל התקשורת של המטופל/ת.
+10. שולחת בריף יומי וסיכום שבועי לרופאים, כולל גרפים והשוואות:
+   - בריף יומי: היום מול אתמול וממוצע 7 ימים.
+   - סיכום שבועי: השבוע שהסתיים מול השבועות הקודמים.
 
 ## הפעלה מהירה
 
@@ -89,10 +92,13 @@ https://script.google.com/macros/s/AKfy.../exec
    - `sendPrepEmails24HoursBefore`
    - `monitorPrepFormCompletion`
    - `processPatientJourneyMessages`
+   - `sendDailyClinicBrief`
+   - `sendWeeklyPerformanceSummary`
    - `onPrepFormSubmit`
-5. לעשות `Deploy` ואז `Manage deployments` ולבחור `New version`.
+5. להריץ `auditLinneaAutomationHealth` כדי לוודא שאין טריגרים כפולים, שאין עמודות חסרות, ושכתובת ה-Web App מוגדרת.
+6. לעשות `Deploy` ואז `Manage deployments` ולבחור `New version`.
 
-חשוב: בגרסה הזו `setupLinneaAutomation` כבר מנקה טריגרים כפולים, מסירה טריגרים ישנים של בריף יומי/שבועי, ומתקינה מחדש טריגר אחד מכל סוג פעיל. לכן אם בטעות מריצים אותה שוב, היא לא אמורה ליצור הצפה של מיילים.
+חשוב: בגרסה הזו `setupLinneaAutomation` כבר מנקה טריגרים כפולים ומתקינה מחדש טריגר אחד מכל סוג פעיל. לכן אם בטעות מריצים אותה שוב, היא לא אמורה ליצור הצפה של מיילים.
 
 ## אם מתחילים לקבל יותר מדי מיילים
 
@@ -124,9 +130,11 @@ listLinneaTriggers
 - `sendPrepEmails24HoursBefore`
 - `monitorPrepFormCompletion`
 - `processPatientJourneyMessages`
+- `sendDailyClinicBrief`
+- `sendWeeklyPerformanceSummary`
 - `onPrepFormSubmit`
 
-לא אמור להופיע טריגר עבור `sendDailyClinicBrief` או `sendWeeklyPerformanceSummary`. הבריפים נשארו להרצה ידנית בלבד כדי שלא תקבלו מיילים מיותרים.
+אם אחת מהפונקציות מופיעה יותר מפעם אחת, להריץ שוב `repairLinneaAutomationSchedule`.
 
 ## תזמון שקט ויוקרתי
 
@@ -134,8 +142,16 @@ listLinneaTriggers
 
 - פניות חדשות נבדקות כל 10 דקות, לא כל 5 דקות.
 - מיילים מתוזמנים למטופלים לא נשלחים בין 21:00 ל-08:00 לפי שעון ישראל. אם פנייה נכנסת בלילה, היא תחכה לבוקר.
-- בריף יומי וסיכום שבועי לא נשלחים אוטומטית. אפשר להריץ אותם ידנית דרך `runDailyBriefOnceNow` או `runWeeklySummaryOnceNow`.
+- בריף יומי נשלח פעם ביום סביב 08:00, רק פעם אחת ביום, עם גרף והשוואה לאתמול ולממוצע 7 ימים.
+- סיכום שבועי נשלח ביום שני סביב 08:00 ומסכם את השבוע שהסתיים, עם גרף והשוואה לשבועות קודמים.
 - לכל פונקציה מתוזמנת יש נעילה פנימית, כדי שריצה אחת לא תשלח כפול בזמן שריצה אחרת עדיין עובדת.
+
+אפשר להריץ את הבריפים ידנית בכל רגע דרך:
+
+```text
+runDailyBriefOnceNow
+runWeeklySummaryOnceNow
+```
 
 אם רוצים לעדכן גם את מבנה טופס ההכנה הקיים, להריץ ידנית:
 

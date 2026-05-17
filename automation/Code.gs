@@ -22,9 +22,12 @@ const CONFIG = {
   intakeCheckEveryMinutes: 10,
   patientMessageQuietHours: { start: 21, end: 8 },
   clinicBriefHourWindow: { start: 8, end: 9 },
-  automaticClinicBriefsEnabled: false,
-  automaticWeeklySummaryEnabled: false,
-  sendEmptyDailyBrief: false,
+  dailyClinicBriefHour: 8,
+  weeklySummaryWeekDay: 'MONDAY',
+  weeklySummaryHour: 8,
+  automaticClinicBriefsEnabled: true,
+  automaticWeeklySummaryEnabled: true,
+  sendEmptyDailyBrief: true,
   calendarId: 'primary',
   webAppUrl: '', // Paste the deployed Web App URL ending with /exec after deployment.
   spreadsheetId: '', // Leave empty: setupLinneaAutomation will create one and save its ID.
@@ -79,11 +82,8 @@ const LINNEA_SCHEDULED_TRIGGERS = [
   { handler: 'sendPrepEmails24HoursBefore', cadence: 'hours', interval: 1 },
   { handler: 'monitorPrepFormCompletion', cadence: 'hours', interval: 1 },
   { handler: 'processPatientJourneyMessages', cadence: 'hours', interval: 1 },
-];
-
-const LINNEA_LEGACY_REPORT_TRIGGERS = [
-  'sendDailyClinicBrief',
-  'sendWeeklyPerformanceSummary',
+  { handler: 'sendDailyClinicBrief', cadence: 'daily', hour: CONFIG.dailyClinicBriefHour },
+  { handler: 'sendWeeklyPerformanceSummary', cadence: 'weekly', weekDay: CONFIG.weeklySummaryWeekDay, hour: CONFIG.weeklySummaryHour },
 ];
 
 function setupLinneaAutomation() {
@@ -176,17 +176,50 @@ function listLinneaTriggers() {
   });
 }
 
+function auditLinneaAutomationHealth() {
+  const report = [];
+  const scheduledHandlers = LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler);
+  const triggers = ScriptApp.getProjectTriggers();
+  const triggerCounts = countValues_(triggers.map(trigger => trigger.getHandlerFunction()));
+  const duplicateTriggers = Object.keys(triggerCounts)
+    .filter(handler => scheduledHandlers.includes(handler) && triggerCounts[handler] > 1)
+    .map(handler => `${handler}: ${triggerCounts[handler]}`);
+  const missingTriggers = scheduledHandlers
+    .filter(handler => !triggerCounts[handler])
+    .concat(triggerCounts.onPrepFormSubmit ? [] : ['onPrepFormSubmit']);
+  const sheet = ensureLeadSheet_();
+  const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const requiredHeaders = ['Row ID', 'Status', 'Clinic Status', 'Patient Name', 'Email', 'Phone', 'Appointment Start', 'Calendar Event ID', 'Follow-up Task'];
+  const missingHeaders = requiredHeaders.filter(header => !headers.includes(header));
+  const webAppUrl = getWebAppUrl_();
+
+  report.push('Linnea automation health check');
+  report.push(`Web App URL: ${webAppUrl ? 'configured' : 'missing'}`);
+  report.push(`Scheduled handlers: ${scheduledHandlers.join(', ')}`);
+  report.push(`Missing triggers: ${missingTriggers.length ? missingTriggers.join(', ') : 'none'}`);
+  report.push(`Duplicate triggers: ${duplicateTriggers.length ? duplicateTriggers.join(', ') : 'none'}`);
+  report.push(`Missing sheet headers: ${missingHeaders.length ? missingHeaders.join(', ') : 'none'}`);
+  report.push(`Rows in lead sheet: ${Math.max(sheet.getLastRow() - 1, 0)}`);
+
+  Logger.log(report.join('\n'));
+  if (!webAppUrl || duplicateTriggers.length || missingTriggers.length || missingHeaders.length) {
+    throw new Error(report.join('\n'));
+  }
+
+  return report.join('\n');
+}
+
 function repairLinneaAutomationSchedule() {
-  deleteTriggersForHandlers_(LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler).concat(LINNEA_LEGACY_REPORT_TRIGGERS, 'onPrepFormSubmit'));
+  deleteTriggersForHandlers_(LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler).concat('onPrepFormSubmit'));
   LINNEA_SCHEDULED_TRIGGERS.forEach(item => {
-    createTimeTriggerIfMissing_(item.handler, item.cadence, item.interval);
+    createTimeTriggerIfMissing_(item);
   });
   ensurePrepFormSubmitTrigger_(ensurePrepForm_());
-  Logger.log('Linnea schedule repaired: duplicate triggers removed, legacy report triggers removed, and clean cadence installed.');
+  Logger.log('Linnea schedule repaired: duplicate triggers removed and clean cadence installed.');
 }
 
 function emergencyStopLinneaScheduledEmails() {
-  deleteTriggersForHandlers_(LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler).concat(LINNEA_LEGACY_REPORT_TRIGGERS));
+  deleteTriggersForHandlers_(LINNEA_SCHEDULED_TRIGGERS.map(item => item.handler));
   Logger.log('Scheduled Linnea email triggers stopped. Web app booking links and form-submit trigger remain active.');
 }
 
@@ -472,9 +505,10 @@ function sendDailyClinicBrief(force) {
     if (!force && !CONFIG.automaticClinicBriefsEnabled) return;
 
     const localHour = Number(Utilities.formatDate(new Date(), CONFIG.timezone, 'H'));
-    if (!force && (localHour < CONFIG.clinicBriefHourWindow.start || localHour > CONFIG.clinicBriefHourWindow.end)) return;
+    if (!force && (localHour < CONFIG.clinicBriefHourWindow.start || localHour >= CONFIG.clinicBriefHourWindow.end)) return;
 
-    const todayKey = Utilities.formatDate(new Date(), CONFIG.timezone, 'yyyy-MM-dd');
+    const today = new Date();
+    const todayKey = localDateKey_(today);
     const props = PropertiesService.getScriptProperties();
     if (!force && props.getProperty('LINNEA_DAILY_BRIEF_SENT') === todayKey) return;
 
@@ -489,8 +523,38 @@ function sendDailyClinicBrief(force) {
       return;
     }
 
-    const body = [
+    const yesterday = addDays_(today, -1);
+    const dailyMetrics = dailyMetricsForDate_(rows, today);
+    const yesterdayMetrics = dailyMetricsForDate_(rows, yesterday);
+    const sevenDayAverage = averageDailyMetrics_(rows, addDays_(today, -7), today);
+    const chartBlob = buildColumnChartBlob_(
+      'Linnéa daily activity',
+      ['מדד', 'היום', 'אתמול', 'ממוצע 7 ימים'],
+      [
+        ['פניות חדשות', dailyMetrics.newLeads, yesterdayMetrics.newLeads, sevenDayAverage.newLeads],
+        ['ייעוצים ביומן', dailyMetrics.consultations, yesterdayMetrics.consultations, sevenDayAverage.consultations],
+        ['טפסים מולאו', dailyMetrics.formsSubmitted, yesterdayMetrics.formsSubmitted, sevenDayAverage.formsSubmitted],
+        ['תיאום ידני', dailyMetrics.manualScheduling, yesterdayMetrics.manualScheduling, sevenDayAverage.manualScheduling],
+      ]
+    );
+    const inlineImages = chartBlob ? { dailyMetricsChart: chartBlob } : {};
+    const htmlBody = dailyClinicBriefHtml_({
+      todayKey,
+      dailyMetrics,
+      yesterdayMetrics,
+      sevenDayAverage,
+      todayRows,
+      needsCall,
+      missingForms,
+      followUps,
+      chartCid: chartBlob ? 'dailyMetricsChart' : '',
+    });
+    const textBody = [
       `בוקר טוב, זה הבריף היומי של Linnéa ל-${todayKey}.`,
+      '',
+      `פניות חדשות היום: ${dailyMetrics.newLeads} | אתמול: ${yesterdayMetrics.newLeads} | ממוצע 7 ימים: ${sevenDayAverage.newLeads}`,
+      `ייעוצים ביומן היום: ${dailyMetrics.consultations} | אתמול: ${yesterdayMetrics.consultations} | ממוצע 7 ימים: ${sevenDayAverage.consultations}`,
+      `טפסים מולאו היום: ${dailyMetrics.formsSubmitted} | אתמול: ${yesterdayMetrics.formsSubmitted} | ממוצע 7 ימים: ${sevenDayAverage.formsSubmitted}`,
       '',
       `פגישות היום: ${todayRows.length}`,
       formatRowsForBrief_(todayRows, ['Patient Name', 'Phone', 'Selected Slot', 'Clinic Status']),
@@ -505,8 +569,10 @@ function sendDailyClinicBrief(force) {
       formatRowsForBrief_(followUps, ['Patient Name', 'Phone', 'Follow-up Task']),
     ].join('\n');
 
-    GmailApp.sendEmail(CONFIG.clinicEmail, `בריף יומי Linnéa - ${todayKey}`, body, {
+    GmailApp.sendEmail(CONFIG.clinicEmail, `בריף יומי Linnéa - ${todayKey}`, textBody, {
       name: CONFIG.clinicName,
+      htmlBody,
+      inlineImages,
     });
     props.setProperty('LINNEA_DAILY_BRIEF_SENT', todayKey);
   });
@@ -520,38 +586,55 @@ function sendWeeklyPerformanceSummary(force) {
     const dayOfWeek = Number(Utilities.formatDate(now, CONFIG.timezone, 'u'));
     if (!force && dayOfWeek !== 1) return;
 
-    const weekKey = Utilities.formatDate(now, CONFIG.timezone, 'yyyy-ww');
+    const weekStart = addDays_(startOfWeek_(now), -7);
+    const weekEnd = addDays_(weekStart, 7);
+    const weekKey = localDateKey_(weekStart);
     const props = PropertiesService.getScriptProperties();
     if (!force && props.getProperty('LINNEA_WEEKLY_SUMMARY_SENT') === weekKey) return;
 
     const rows = getLeadRows_();
-    const since = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const recentRows = rows.filter(row => {
-      const createdAt = row['Created At'] ? new Date(row['Created At']) : null;
-      return createdAt && !Number.isNaN(createdAt.getTime()) && createdAt >= since;
-    });
-    const bookedRows = recentRows.filter(row => row['Appointment Start']);
-    const manualRows = recentRows.filter(row => row.Status === CONFIG.statuses.manualScheduling || row['Clinic Status'] === CONFIG.statuses.manualScheduling);
-    const prepSentRows = rows.filter(row => row['Prep Form Sent At']);
-    const prepSubmittedRows = prepSentRows.filter(row => row['Prep Form Submitted At']);
+    const weeklyBuckets = weeklyMetricsBuckets_(rows, weekStart, 5);
+    const currentWeek = weeklyBuckets[weeklyBuckets.length - 1];
+    const previousWeek = weeklyBuckets[weeklyBuckets.length - 2] || emptyWeeklyMetrics_('', weekStart, weekEnd);
+    const recentRows = rows.filter(row => isLocalDateInRange_(row['Created At'], weekStart, weekEnd));
     const treatmentCounts = countBy_(recentRows, 'Interest');
-
-    const body = [
-      `סיכום שבועי Linnéa - ${weekKey}`,
+    const chartRows = weeklyBuckets.map(bucket => [
+      bucket.label,
+      bucket.newLeads,
+      bucket.consultations,
+      bucket.formsSubmitted,
+    ]);
+    const chartBlob = buildLineChartBlob_(
+      'Linnéa weekly trend',
+      ['שבוע', 'פניות חדשות', 'ייעוצים ביומן', 'טפסים מולאו'],
+      chartRows
+    );
+    const inlineImages = chartBlob ? { weeklyMetricsChart: chartBlob } : {};
+    const htmlBody = weeklySummaryHtml_({
+      weekKey,
+      currentWeek,
+      previousWeek,
+      treatmentCounts,
+      chartCid: chartBlob ? 'weeklyMetricsChart' : '',
+    });
+    const textBody = [
+      `סיכום שבועי Linnéa - שבוע שמתחיל ב-${weekKey}`,
       '',
-      `לידים חדשים: ${recentRows.length}`,
-      `תורים שנקבעו: ${bookedRows.length}`,
-      `תיאומים ידניים: ${manualRows.length}`,
-      `שיעור מילוי טפסים: ${prepSentRows.length ? Math.round((prepSubmittedRows.length / prepSentRows.length) * 100) : 0}%`,
+      `פניות חדשות: ${currentWeek.newLeads} | שבוע קודם: ${previousWeek.newLeads}`,
+      `ייעוצים ביומן: ${currentWeek.consultations} | שבוע קודם: ${previousWeek.consultations}`,
+      `טפסים מולאו: ${currentWeek.formsSubmitted} | שבוע קודם: ${previousWeek.formsSubmitted}`,
+      `תיאומים ידניים: ${currentWeek.manualScheduling} | שבוע קודם: ${previousWeek.manualScheduling}`,
       '',
       'תחומי עניין מובילים:',
       Object.keys(treatmentCounts).length
         ? Object.keys(treatmentCounts).map(key => `- ${key || 'לא צוין'}: ${treatmentCounts[key]}`).join('\n')
-        : '- אין נתונים השבוע',
+      : '- אין נתונים השבוע',
     ].join('\n');
 
-    GmailApp.sendEmail(CONFIG.clinicEmail, `סיכום שבועי Linnéa - ${weekKey}`, body, {
+    GmailApp.sendEmail(CONFIG.clinicEmail, `סיכום שבועי Linnéa - ${weekKey}`, textBody, {
       name: CONFIG.clinicName,
+      htmlBody,
+      inlineImages,
     });
     props.setProperty('LINNEA_WEEKLY_SUMMARY_SENT', weekKey);
   });
@@ -1325,15 +1408,29 @@ function deleteTriggersForHandlers_(handlers) {
   });
 }
 
-function createTimeTriggerIfMissing_(handlerFunction, cadence, interval) {
+function createTimeTriggerIfMissing_(scheduleItem) {
+  const handlerFunction = scheduleItem.handler;
   const triggers = ScriptApp.getProjectTriggers();
   const hasTrigger = triggers.some(trigger => trigger.getHandlerFunction() === handlerFunction);
   if (hasTrigger) return;
 
   const builder = ScriptApp.newTrigger(handlerFunction).timeBased();
-  const safeInterval = Number(interval || 1);
-  if (cadence === 'minutes') {
+  const safeInterval = Number(scheduleItem.interval || 1);
+  if (scheduleItem.cadence === 'minutes') {
     builder.everyMinutes(safeInterval).create();
+    return;
+  }
+  if (scheduleItem.cadence === 'daily') {
+    builder.everyDays(1).atHour(Number(scheduleItem.hour || 8)).nearMinute(0).create();
+    return;
+  }
+  if (scheduleItem.cadence === 'weekly') {
+    builder
+      .everyWeeks(1)
+      .onWeekDay(weekDayFromName_(scheduleItem.weekDay || 'MONDAY'))
+      .atHour(Number(scheduleItem.hour || 8))
+      .nearMinute(0)
+      .create();
     return;
   }
   builder.everyHours(safeInterval).create();
@@ -1542,7 +1639,9 @@ function appendLeadRow_(patient, message, status) {
     'WhatsApp Consent': patient.whatsappConsent || '',
   };
 
-  sheet.appendRow(headers.map(header => valuesByHeader[header] || ''));
+  sheet.appendRow(headers.map(header =>
+    Object.prototype.hasOwnProperty.call(valuesByHeader, header) ? valuesByHeader[header] : ''
+  ));
 
   return rowId;
 }
@@ -1809,6 +1908,264 @@ function withScriptLock_(name, callback) {
   }
 }
 
+function dailyMetricsForDate_(rows, date) {
+  return {
+    newLeads: countRowsByLocalDate_(rows, 'Created At', date),
+    consultations: countRowsByLocalDate_(rows, 'Appointment Start', date),
+    formsSubmitted: countRowsByLocalDate_(rows, 'Prep Form Submitted At', date),
+    manualScheduling: rows.filter(row =>
+      isSameLocalDate_(row['Created At'], date) &&
+      (row.Status === CONFIG.statuses.manualScheduling || row['Clinic Status'] === CONFIG.statuses.manualScheduling)
+    ).length,
+  };
+}
+
+function averageDailyMetrics_(rows, startDate, endDateExclusive) {
+  const days = Math.max(1, Math.round((endDateExclusive.getTime() - startDate.getTime()) / 86400000));
+  const totals = { newLeads: 0, consultations: 0, formsSubmitted: 0, manualScheduling: 0 };
+
+  for (let i = 0; i < days; i++) {
+    const metrics = dailyMetricsForDate_(rows, addDays_(startDate, i));
+    totals.newLeads += metrics.newLeads;
+    totals.consultations += metrics.consultations;
+    totals.formsSubmitted += metrics.formsSubmitted;
+    totals.manualScheduling += metrics.manualScheduling;
+  }
+
+  return {
+    newLeads: roundOne_(totals.newLeads / days),
+    consultations: roundOne_(totals.consultations / days),
+    formsSubmitted: roundOne_(totals.formsSubmitted / days),
+    manualScheduling: roundOne_(totals.manualScheduling / days),
+  };
+}
+
+function weeklyMetricsBuckets_(rows, currentWeekStart, bucketCount) {
+  const buckets = [];
+  for (let i = bucketCount - 1; i >= 0; i--) {
+    const start = addDays_(currentWeekStart, -7 * i);
+    const end = addDays_(start, 7);
+    const bucket = emptyWeeklyMetrics_(formatShortDateRange_(start, end), start, end);
+    bucket.newLeads = countRowsInLocalRange_(rows, 'Created At', start, end);
+    bucket.consultations = countRowsInLocalRange_(rows, 'Appointment Start', start, end);
+    bucket.formsSubmitted = countRowsInLocalRange_(rows, 'Prep Form Submitted At', start, end);
+    bucket.manualScheduling = rows.filter(row =>
+      isLocalDateInRange_(row['Created At'], start, end) &&
+      (row.Status === CONFIG.statuses.manualScheduling || row['Clinic Status'] === CONFIG.statuses.manualScheduling)
+    ).length;
+    buckets.push(bucket);
+  }
+  return buckets;
+}
+
+function emptyWeeklyMetrics_(label, start, end) {
+  return {
+    label,
+    start,
+    end,
+    newLeads: 0,
+    consultations: 0,
+    formsSubmitted: 0,
+    manualScheduling: 0,
+  };
+}
+
+function countRowsByLocalDate_(rows, field, date) {
+  return rows.filter(row => isSameLocalDate_(row[field], date)).length;
+}
+
+function countRowsInLocalRange_(rows, field, startDate, endDateExclusive) {
+  return rows.filter(row => isLocalDateInRange_(row[field], startDate, endDateExclusive)).length;
+}
+
+function isLocalDateInRange_(value, startDate, endDateExclusive) {
+  if (!value) return false;
+  const dateKey = localDateKey_(value);
+  return dateKey >= localDateKey_(startDate) && dateKey < localDateKey_(endDateExclusive);
+}
+
+function localDateKey_(value) {
+  const parsed = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(parsed.getTime())) return '';
+  return Utilities.formatDate(parsed, CONFIG.timezone, 'yyyy-MM-dd');
+}
+
+function startOfWeek_(date) {
+  const dayOfWeek = Number(Utilities.formatDate(date, CONFIG.timezone, 'u'));
+  const start = addDays_(date, -(dayOfWeek - 1));
+  start.setHours(0, 0, 0, 0);
+  return start;
+}
+
+function roundOne_(value) {
+  return Math.round(Number(value || 0) * 10) / 10;
+}
+
+function formatShortDateRange_(start, endExclusive) {
+  const end = addDays_(endExclusive, -1);
+  return `${Utilities.formatDate(start, CONFIG.timezone, 'dd/MM')}-${Utilities.formatDate(end, CONFIG.timezone, 'dd/MM')}`;
+}
+
+function buildColumnChartBlob_(title, headers, rows) {
+  return buildChartBlob_(title, headers, rows, 'column');
+}
+
+function buildLineChartBlob_(title, headers, rows) {
+  return buildChartBlob_(title, headers, rows, 'line');
+}
+
+function buildChartBlob_(title, headers, rows, type) {
+  try {
+    const data = Charts.newDataTable();
+    headers.forEach((header, index) => {
+      data.addColumn(index === 0 ? Charts.ColumnType.STRING : Charts.ColumnType.NUMBER, header);
+    });
+    rows.forEach(row => data.addRow(row));
+
+    const chartBuilder = type === 'line' ? Charts.newLineChart() : Charts.newColumnChart();
+    return chartBuilder
+      .setDataTable(data.build())
+      .setDimensions(760, 360)
+      .setTitle(title)
+      .setColors([CONFIG.brand.sageDark, CONFIG.brand.sage, CONFIG.brand.ink, CONFIG.brand.blush])
+      .setLegendPosition(Charts.Position.BOTTOM)
+      .build()
+      .getAs('image/png')
+      .setName(`${title}.png`);
+  } catch (error) {
+    Logger.log(`Chart build skipped: ${error}`);
+    return null;
+  }
+}
+
+function dailyClinicBriefHtml_(data) {
+  return clinicReportShell_(
+    `בריף יומי Linnéa - ${data.todayKey}`,
+    'תמונת מצב תפעולית קצרה לרופאים',
+    [
+      comparisonCardsHtml_([
+        ['פניות חדשות', data.dailyMetrics.newLeads, data.yesterdayMetrics.newLeads, data.sevenDayAverage.newLeads],
+        ['ייעוצים ביומן', data.dailyMetrics.consultations, data.yesterdayMetrics.consultations, data.sevenDayAverage.consultations],
+        ['טפסים מולאו', data.dailyMetrics.formsSubmitted, data.yesterdayMetrics.formsSubmitted, data.sevenDayAverage.formsSubmitted],
+        ['תיאום ידני', data.dailyMetrics.manualScheduling, data.yesterdayMetrics.manualScheduling, data.sevenDayAverage.manualScheduling],
+      ]),
+      data.chartCid ? `<img src="cid:${data.chartCid}" alt="Daily metrics chart" style="display:block;width:100%;max-width:760px;border-radius:14px;margin:18px 0;border:1px solid ${CONFIG.brand.blush};">` : '',
+      reportTableHtml_('פגישות היום', data.todayRows, ['Patient Name', 'Phone', 'Selected Slot', 'Clinic Status']),
+      reportTableHtml_('צריך להתקשר', data.needsCall, ['Patient Name', 'Phone', 'Clinic Status', 'Follow-up Task']),
+      reportTableHtml_('טפסים חסרים', data.missingForms, ['Patient Name', 'Phone', 'Appointment Start', 'Follow-up Task']),
+      reportTableHtml_('משימות פתוחות', data.followUps, ['Patient Name', 'Phone', 'Follow-up Task']),
+    ].join('')
+  );
+}
+
+function weeklySummaryHtml_(data) {
+  const treatmentHtml = Object.keys(data.treatmentCounts).length
+    ? Object.keys(data.treatmentCounts).map(key => `
+      <tr>
+        <td style="padding:10px;border-bottom:1px solid ${CONFIG.brand.blush};">${escapeHtml_(key || 'לא צוין')}</td>
+        <td style="padding:10px;border-bottom:1px solid ${CONFIG.brand.blush};text-align:left;">${data.treatmentCounts[key]}</td>
+      </tr>
+    `).join('')
+    : `<tr><td colspan="2" style="padding:14px;color:${CONFIG.brand.muted};">אין נתונים השבוע</td></tr>`;
+
+  return clinicReportShell_(
+    `סיכום שבועי Linnéa - ${data.weekKey}`,
+    'מגמות קצרות והשוואה לשבוע הקודם',
+    [
+      comparisonCardsHtml_([
+        ['פניות חדשות', data.currentWeek.newLeads, data.previousWeek.newLeads, null],
+        ['ייעוצים ביומן', data.currentWeek.consultations, data.previousWeek.consultations, null],
+        ['טפסים מולאו', data.currentWeek.formsSubmitted, data.previousWeek.formsSubmitted, null],
+        ['תיאום ידני', data.currentWeek.manualScheduling, data.previousWeek.manualScheduling, null],
+      ], 'שבוע קודם'),
+      data.chartCid ? `<img src="cid:${data.chartCid}" alt="Weekly metrics chart" style="display:block;width:100%;max-width:760px;border-radius:14px;margin:18px 0;border:1px solid ${CONFIG.brand.blush};">` : '',
+      `<h2 style="font-size:20px;margin:28px 0 10px;color:${CONFIG.brand.ink};">תחומי עניין מובילים</h2>
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;background:#fff;border:1px solid ${CONFIG.brand.blush};border-radius:14px;overflow:hidden;">
+        ${treatmentHtml}
+      </table>`,
+    ].join('')
+  );
+}
+
+function clinicReportShell_(title, subtitle, bodyHtml) {
+  return `
+    <!doctype html>
+    <html lang="he" dir="rtl">
+    <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+    <body dir="rtl" style="margin:0;padding:0;background:${CONFIG.brand.ivory};font-family:Arial,'Helvetica Neue',sans-serif;color:${CONFIG.brand.ink};">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${CONFIG.brand.ivory};padding:26px 12px;">
+        <tr>
+          <td align="center">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:820px;background:#fff;border:1px solid ${CONFIG.brand.blush};border-radius:22px;overflow:hidden;">
+              <tr>
+                <td style="background:${CONFIG.brand.sageDark};padding:26px 26px;text-align:right;color:${CONFIG.brand.ink};">
+                  <div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:${CONFIG.brand.ink};">Linnéa operations</div>
+                  <h1 style="font-size:28px;line-height:1.3;margin:8px 0 4px;font-weight:500;">${escapeHtml_(title)}</h1>
+                  <p style="font-size:15px;line-height:1.6;margin:0;color:${CONFIG.brand.ink};">${escapeHtml_(subtitle)}</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:26px;">
+                  ${bodyHtml}
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  `;
+}
+
+function comparisonCardsHtml_(items, previousLabel) {
+  const label = previousLabel || 'אתמול';
+  return `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+      <tr>
+        ${items.map(item => `
+          <td style="width:25%;padding:6px;vertical-align:top;">
+            <div style="border:1px solid ${CONFIG.brand.blush};border-radius:14px;padding:16px;background:${CONFIG.brand.ivory};min-height:112px;">
+              <div style="font-size:13px;line-height:1.4;color:${CONFIG.brand.muted};">${escapeHtml_(item[0])}</div>
+              <div style="font-size:30px;line-height:1.2;margin-top:8px;color:${CONFIG.brand.ink};font-weight:700;">${formatMetric_(item[1])}</div>
+              <div style="font-size:12px;line-height:1.5;margin-top:8px;color:${CONFIG.brand.muted};">${label}: ${formatMetric_(item[2])}${item[3] === null ? '' : ` · ממוצע: ${formatMetric_(item[3])}`}</div>
+            </div>
+          </td>
+        `).join('')}
+      </tr>
+    </table>
+  `;
+}
+
+function reportTableHtml_(title, rows, fields) {
+  const body = rows.length
+    ? rows.slice(0, 12).map(row => `
+      <tr>
+        ${fields.map(field => `<td style="padding:10px;border-bottom:1px solid ${CONFIG.brand.blush};vertical-align:top;">${escapeHtml_(formatReportValue_(row[field]))}</td>`).join('')}
+      </tr>
+    `).join('')
+    : `<tr><td colspan="${fields.length}" style="padding:14px;color:${CONFIG.brand.muted};">אין</td></tr>`;
+
+  return `
+    <h2 style="font-size:20px;margin:28px 0 10px;color:${CONFIG.brand.ink};">${escapeHtml_(title)} <span style="color:${CONFIG.brand.muted};font-weight:400;">(${rows.length})</span></h2>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;background:#fff;border:1px solid ${CONFIG.brand.blush};border-radius:14px;overflow:hidden;">
+      <tr>
+        ${fields.map(field => `<th align="right" style="padding:10px;background:${CONFIG.brand.ivory};border-bottom:1px solid ${CONFIG.brand.blush};font-size:12px;color:${CONFIG.brand.muted};">${escapeHtml_(field)}</th>`).join('')}
+      </tr>
+      ${body}
+    </table>
+  `;
+}
+
+function formatMetric_(value) {
+  return String(Number(value || 0) % 1 === 0 ? Number(value || 0) : roundOne_(value));
+}
+
+function formatReportValue_(value) {
+  if (value instanceof Date) return Utilities.formatDate(value, CONFIG.timezone, 'dd/MM/yyyy HH:mm');
+  return String(value || '');
+}
+
 function formatRowsForBrief_(rows, fields) {
   if (!rows.length) return '- אין';
   return rows.slice(0, 12).map(row => {
@@ -1825,6 +2182,13 @@ function countBy_(rows, field) {
   return rows.reduce((acc, row) => {
     const key = String(row[field] || '').trim() || 'לא צוין';
     acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+}
+
+function countValues_(values) {
+  return values.reduce((acc, value) => {
+    acc[value] = (acc[value] || 0) + 1;
     return acc;
   }, {});
 }
@@ -1852,6 +2216,12 @@ function addMinutes_(date, minutes) {
   return new Date(date.getTime() + minutes * 60000);
 }
 
+function addDays_(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
 function nextDateAtTime_(dayOfWeek, time) {
   const now = new Date();
   const cursor = new Date(now);
@@ -1865,6 +2235,19 @@ function nextDateAtTime_(dayOfWeek, time) {
   }
 
   return dateAtTime_(addMinutes_(now, 24 * 60), time);
+}
+
+function weekDayFromName_(name) {
+  const days = {
+    SUNDAY: ScriptApp.WeekDay.SUNDAY,
+    MONDAY: ScriptApp.WeekDay.MONDAY,
+    TUESDAY: ScriptApp.WeekDay.TUESDAY,
+    WEDNESDAY: ScriptApp.WeekDay.WEDNESDAY,
+    THURSDAY: ScriptApp.WeekDay.THURSDAY,
+    FRIDAY: ScriptApp.WeekDay.FRIDAY,
+    SATURDAY: ScriptApp.WeekDay.SATURDAY,
+  };
+  return days[String(name || '').toUpperCase()] || ScriptApp.WeekDay.MONDAY;
 }
 
 function formatSlotForButton_(date) {
