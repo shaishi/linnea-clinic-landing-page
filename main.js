@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     revealSections.forEach(section => {
       const sectionTitle = section.querySelector('.section-title');
       const sectionDesc = section.querySelector('.section-description');
-      const cards = Array.from(section.querySelectorAll('.standard-card, .faq-item, .treatment-card, .article-card, .review-card, .ba-container, .article-hero-img, .reveal, .article-content p'))
+      const cards = Array.from(section.querySelectorAll('.faq-item, .treatment-card, .article-card, .review-card, .ba-container, .article-hero-img, .reveal, .article-content p'))
         .filter(el => !el.classList.contains('section-title') && !el.classList.contains('section-description'));
 
       const sectionTl = gsap.timeline({
@@ -198,6 +198,56 @@ document.addEventListener('DOMContentLoaded', () => {
         );
       }
     });
+  }
+
+  const standardSteps = Array.from(document.querySelectorAll('[data-standard-step]'));
+
+  if (standardSteps.length) {
+    const setActiveStandardStep = (activeStep) => {
+      standardSteps.forEach(step => {
+        step.classList.toggle('is-active', step === activeStep);
+      });
+    };
+
+    if (hasGsap && hasScrollTrigger) {
+      gsap.set(standardSteps, {
+        opacity: 0,
+        y: 44,
+        filter: 'blur(8px)'
+      });
+
+      gsap.to(standardSteps, {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 0.9,
+        stagger: 0.16,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.standard-grid',
+          start: 'top 78%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      standardSteps.forEach(step => {
+        ScrollTrigger.create({
+          trigger: step,
+          start: 'top center+=12%',
+          end: 'bottom center-=8%',
+          onEnter: () => setActiveStandardStep(step),
+          onEnterBack: () => setActiveStandardStep(step)
+        });
+      });
+    } else {
+      const standardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActiveStandardStep(entry.target);
+        });
+      }, { rootMargin: '-35% 0px -35% 0px', threshold: 0.2 });
+
+      standardSteps.forEach(step => standardObserver.observe(step));
+    }
   }
 
   // Specific about-section parallax/reveal
@@ -383,12 +433,6 @@ document.addEventListener('DOMContentLoaded', () => {
       "standard-2-desc": "We clarify goals, anatomy, timing and safety before recommending any procedure.",
       "standard-3-title": "Natural-first results",
       "standard-3-desc": "The aim is not to look treated, but to look balanced, rested and unmistakably yourself.",
-      "standard-4-title": "Approved materials",
-      "standard-4-desc": "Treatments are performed with carefully selected, approved materials and a safety-led approach.",
-      "standard-5-title": "Informed consent",
-      "standard-5-desc": "Preparation forms and consent are part of the process, not paperwork afterthoughts.",
-      "standard-6-title": "Attentive follow-up",
-      "standard-6-desc": "Follow-up after treatment helps the experience remain calm, clear and medically responsible.",
       "about-title": "Precision, Harmony, Restraint",
       "about-p1": "We believe that aesthetics is not about altering, but rather refining existing beauty. At Linnéa, we combine advanced science with a refined, human-centered approach, providing you with a space of tranquility and complete confidence throughout your journey.",
       "about-p2": "Our professional core beats within our joint consultation model: every treatment plan is developed by two doctors working in complete synergy. This collaboration ensures an in-depth diagnosis, meticulous planning, and a harmonious result that respects your unique facial features.",
@@ -700,12 +744,6 @@ document.addEventListener('DOMContentLoaded', () => {
       "standard-2-desc": "מבהירים מטרות, אנטומיה, תזמון ושיקולי בטיחות לפני כל המלצה טיפולית.",
       "standard-3-title": "תוצאה טבעית לפני הכול",
       "standard-3-desc": "המטרה אינה להיראות מטופל/ת, אלא מאוזן/ת, רענן/ה ונאמן/ה לעצמך.",
-      "standard-4-title": "חומרים מאושרים",
-      "standard-4-desc": "הטיפולים מבוצעים עם חומרים שנבחרו בקפידה ובגישה שמובלת על ידי בטיחות.",
-      "standard-5-title": "הסכמה מדעת",
-      "standard-5-desc": "טפסי הכנה והסכמה הם חלק מהתהליך, לא פעולה טכנית בסוף הדרך.",
-      "standard-6-title": "מעקב קשוב",
-      "standard-6-desc": "מעקב לאחר טיפול עוזר לחוויה להישאר רגועה, ברורה ואחראית רפואית.",
       "about-title": "Linnéa: אמנות הדיוק וההרמוניה",
       "about-p1": "אנו מאמינים שאסתטיקה אינה שינוי, אלא זיקוק של היופי הקיים. ב-Linnéa אנו מחברים בין מדע מתקדם לגישה אנושית ומעודנת, המעניקה לך מרחב של שקט וביטחון מלא לאורך כל הדרך.",
       "about-p2": "הלב המקצועי שלנו פועם במודל הייעוץ המשותף: כל תוכנית טיפול נבנית על ידי שני רופאים הפועלים בסינרגיה מלאה. שיתוף פעולה זה מבטיח אבחון עומק, תכנון קפדני ותוצאה הרמונית המכבדת את תווי הפנים הייחודיים שלך.",
