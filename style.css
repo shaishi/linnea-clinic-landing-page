@@ -2889,7 +2889,7 @@ html[dir="rtl"] .ba-label-after {
 }
 
 .review-stars {
-  color: var(--accent-light);
+  color: #d4af37;
   font-size: 1.25rem;
   margin-bottom: 0.65rem;
 }

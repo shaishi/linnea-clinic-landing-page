@@ -45,7 +45,7 @@
   <link rel="preload" as="image" href="./images/hero-bg.jpg" fetchpriority="high" />
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23617d78'/><text x='50' y='70' font-family='serif' font-size='60' fill='%23f4efdf' text-anchor='middle'>L</text></svg>" />
-  <link rel="stylesheet" href="./style.css?v=11" />
+  <link rel="stylesheet" href="./style.css?v=12" />
   
   <!-- Critical Libraries (CDN for Local/GH Pages) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -687,7 +687,35 @@
                 </div>
                 <h3 style="color: var(--text-heading); font-size: 1.5rem; margin-top: 1rem;" data-i18n="article2-title">Dermal Fillers</h3>
               </div>
-              <!-- Item 3: Jawline -->
+              <!-- Item 3: Temples -->
+              <div class="ba-container">
+                <div class="ba-slider" id="ba-slider-temples">
+                  <div class="ba-image-wrapper">
+                    <img src="./images/temples-after.jpg" alt="After temple filler refinement"
+                      data-i18n-alt="alt-temples-after" class="ba-after-img">
+                    <div class="ba-before-clip">
+                      <img src="./images/temples-before.jpg" alt="Before temple filler refinement"
+                        data-i18n-alt="alt-temples-before" class="ba-before-img">
+                    </div>
+                    <div class="ba-handle">
+                      <div class="ba-handle-line"></div>
+                      <div class="ba-handle-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <polyline points="9,6 15,12 9,18" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                          <polyline points="15,6 9,12 15,18" />
+                        </svg>
+                      </div>
+                      <div class="ba-handle-line"></div>
+                    </div>
+                    <span class="ba-label ba-label-before" data-i18n="slider-before">Before</span>
+                    <span class="ba-label ba-label-after" data-i18n="slider-after">After</span>
+                  </div>
+                </div>
+                <h3 style="color: var(--text-heading); font-size: 1.5rem; margin-top: 1rem;" data-i18n="temples-fillers-title">Filler Control - Temples</h3>
+              </div>
+              <!-- Item 4: Jawline -->
               <div class="ba-container">
                 <div class="ba-slider" id="ba-slider-jaw">
                   <div class="ba-image-wrapper">
@@ -1668,7 +1696,7 @@
     </svg>
   </button>
 
-  <script src="./main.js?v=10" type="module"></script>
+  <script src="./main.js?v=11" type="module"></script>
 </body>
 
 </html>
