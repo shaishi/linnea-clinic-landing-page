@@ -6,14 +6,14 @@ try {
   if (typeof Lenis !== 'undefined') {
     // Initialize Smooth Scrolling (Lenis)
     lenis = new Lenis({
-      duration: 0.9,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1,
+      wheelMultiplier: 0.9,
       smoothTouch: false,
-      touchMultiplier: 2,
+      touchMultiplier: 1.5,
       infinite: false,
     });
 
@@ -54,16 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Hero Intro Animation ---
-  const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.0 } });
+  const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out', duration: 1.1 } });
 
   heroTl
-    .fromTo('.hero-title', { opacity: 0, y: 20 }, { opacity: 1, y: 0, delay: 0.15 })
-    .fromTo('.hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8')
+    .fromTo('.hero-title', { opacity: 0, y: 30 }, { opacity: 1, y: 0, delay: 0.15 })
+    .fromTo('.hero-subtitle', { opacity: 0, y: 25 }, { opacity: 1, y: 0 }, '-=0.8')
     .fromTo('.hero-btn', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8');
 
-  // --- Pre-loader Removal (GSAP block removed in favor of CSS transition below) ---
-
-  // --- GSAP Scroll Reveals ---
+  // --- GSAP Scroll Reveals (Graceful Upward Entrance) ---
   const revealSections = document.querySelectorAll('section');
 
   revealSections.forEach(section => {
@@ -75,31 +73,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const sectionTl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: 'top 80%',
+        start: 'top 82%',
         toggleActions: 'play none none none'
       }
     });
 
     if (sectionTitle) {
       sectionTl.fromTo(sectionTitle,
-        { opacity: 0, y: -50 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
+        { opacity: 0, y: 35 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
       );
     }
 
     if (sectionDesc) {
       sectionTl.fromTo(sectionDesc,
-        { opacity: 0, y: -30 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
+        { opacity: 0, y: 25 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' },
         '-=0.6'
       );
     }
 
     if (cards.length > 0) {
       sectionTl.fromTo(cards,
-        { opacity: 0, y: -60 },
-        { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out' },
-        '-=0.6'
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' },
+        '-=0.5'
       );
     }
   });
