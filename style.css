@@ -63,7 +63,6 @@
 
 html {
   font-size: 16px;
-  scroll-behavior: smooth;
   background-color: var(--bg-main);
   color: var(--text-primary);
   font-family: var(--font-sans);
@@ -76,6 +75,20 @@ body {
   background-color: var(--bg-main);
   color: var(--text-primary);
   line-height: 1.6;
+}
+
+/* Lenis Smooth Scroll Setup */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
 /* Custom Scrollbar - Minimalist Japanese Washi */
@@ -100,42 +113,43 @@ body {
 }
 
 /* Custom Cursor - Refined Wabi Sabi Ring */
-.custom-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  border: 1px solid rgba(71, 89, 79, 0.5);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.15s ease-out, width 0.3s, height 0.3s, background-color 0.3s;
-}
-
-.custom-cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 5px;
-  height: 5px;
+.cursor-dot {
+  width: 8px;
+  height: 8px;
   background-color: #47594f;
+  position: fixed;
+  top: 0;
+  left: 0;
   border-radius: 50%;
   pointer-events: none;
   z-index: 10000;
   transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
 }
 
-.custom-cursor.hovered {
-  width: 44px;
-  height: 44px;
+.cursor-outline {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(71, 89, 79, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s ease-out;
+}
+
+.cursor-hover {
+  width: 52px;
+  height: 52px;
   background-color: rgba(71, 89, 79, 0.08);
   border-color: #47594f;
 }
 
-@media (pointer: coarse) {
-  .custom-cursor, .custom-cursor-dot {
+@media (max-width: 1024px) {
+  .cursor-dot, .cursor-outline {
     display: none !important;
   }
 }
