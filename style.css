@@ -587,12 +587,15 @@ a {
 /* Doctors Section - Clean Champagne & Pure White Card */
 .doctors {
   background-color: var(--bg-main);
-  padding: 5rem 0;
+  padding: 5.5rem 0;
 }
 
-.doctors .carousel-wrapper {
+.doctors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
   max-width: 980px;
-  margin: 0 auto;
+  margin: 2.5rem auto 0 auto;
 }
 
 .doctor-card {
@@ -705,10 +708,11 @@ a {
 
 .treatment-img {
   width: 100%;
-  aspect-ratio: 4/3;
-  height: auto;
+  height: 230px;
+  min-height: 230px;
   object-fit: cover;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
 }
 
 .treatment-card:hover .treatment-img {
