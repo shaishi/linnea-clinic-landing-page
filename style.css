@@ -2378,82 +2378,117 @@ html[dir="rtl"] .ba-label-after {
 
 /* Reviews Section */
 .reviews {
-  background-color: var(--aura-cream);
-  color: var(--text-dark);
-  padding: 4rem 0;
+  background-color: var(--bg-oat);
+  color: #24332d;
+  padding: 5.5rem 0;
 }
 
 .reviews .section-title {
-  color: var(--clinique-teal-dark);
+  color: #24332d;
+  font-size: 2.75rem;
+  margin-bottom: 0.5rem;
 }
 
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 0;
+.google-rating-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 1.2rem;
+  background: #ffffff;
+  border: 1px solid rgba(36, 51, 45, 0.12);
+  border-radius: 30px;
+  box-shadow: 0 6px 20px -4px rgba(36, 51, 45, 0.04);
+  margin-bottom: 1.5rem;
 }
 
-/* Reviews carousel wrapper needs margin-bottom instead of the grid */
+.google-rating-score .rating-num {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #24332d;
+}
+
+.google-rating-score .stars-gold {
+  color: #fbbc04;
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+
 .reviews .carousel-wrapper {
-  margin-bottom: 4rem;
-}
-
-/* Arrow buttons on cream background need dark styling */
-.reviews .carousel-btn {
-  background: rgba(97, 125, 120, 0.15);
-  border-color: rgba(97, 125, 120, 0.35);
-  color: var(--clinique-teal-dark);
-}
-.reviews .carousel-btn:hover {
-  background: rgba(97, 125, 120, 0.3);
-}
-
-/* Dots on cream background */
-.reviews .carousel-dot {
-  background: rgba(97, 125, 120, 0.25);
-}
-.reviews .carousel-dot.active {
-  background: var(--clinique-teal-dark);
+  margin-bottom: 2rem;
 }
 
 .review-card {
-  background: white;
-  padding: 1.75rem;
+  background: #ffffff;
+  padding: 2rem 2.2rem;
   border-radius: var(--border-radius-md);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.09);
-  border: 1px solid rgba(126, 156, 150, 0.25);
-  /* text-align handled per-element via carousel rules */
+  box-shadow: 0 10px 28px -6px rgba(36, 51, 45, 0.05);
+  border: 1px solid rgba(36, 51, 45, 0.08);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.review-stars {
-  color: #fbbc04; /* Google Gold */
-  font-size: 1.25rem;
+.review-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 1rem;
 }
 
-.review-text {
-  font-style: italic;
-  font-size: 1.05rem;
-  margin-bottom: 1.5rem;
-  color: #4a5c59;
+.reviewer-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #24332d;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reviewer-meta {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
 }
 
 .review-author {
   font-weight: 600;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--clinique-teal-dark);
+  font-size: 1.05rem;
+  color: #24332d;
+  margin: 0;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.verified-badge {
+  font-size: 0.75rem;
+  color: #586b63;
+  font-weight: 500;
+}
+
+.review-stars {
+  color: #fbbc04;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+}
+
+.review-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #586b63;
+  margin-bottom: 0;
+  font-style: normal;
 }
 
 .google-review-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  max-width: fit-content;
-  margin: 0 auto;
 }
 
 /* --- Drill-Down Nested Carousels --- */
