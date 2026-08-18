@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 
 export default defineConfig({
-  base: '/linnea-clinic-landing-page/',
+  base: process.env.VERCEL ? '/' : './',
   build: {
     rollupOptions: {
       input: {
