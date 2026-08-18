@@ -584,41 +584,109 @@ a {
   filter: contrast(1.05) saturate(1.05);
 }
 
-/* Doctors Section - Clean Champagne & Pure White Card */
+/* Trust Pillars Bar - 4 Pill Cards Grid */
+.trust-bar-section {
+  background-color: var(--bg-main);
+  padding: 3rem 0;
+  width: 100%;
+}
+
+.trust-bar-container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .trust-bar-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .trust-bar-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.trust-item {
+  background-color: #ffffff;
+  border: 1px solid rgba(36, 51, 45, 0.08);
+  border-radius: var(--border-radius-md);
+  padding: 1.6rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  box-shadow: 0 8px 24px -5px rgba(36, 51, 45, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.trust-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px -5px rgba(36, 51, 45, 0.08);
+  border-color: rgba(68, 88, 80, 0.25);
+}
+
+.trust-bullet {
+  color: #445850;
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.trust-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #24332d;
+  margin-bottom: 0.35rem;
+  line-height: 1.25;
+}
+
+.trust-desc {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: #586b63;
+  line-height: 1.5;
+}
+
+/* Doctors Section - Clean 2-Column Side-by-Side Grid on Desktop */
 .doctors {
   background-color: var(--bg-main);
   padding: 5.5rem 0;
 }
 
 .doctors-list {
-  display: flex;
-  flex-direction: column;
-  gap: 3.5rem;
-  max-width: 980px;
-  margin: 2.5rem auto 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+  max-width: var(--container-width);
+  margin: 3rem auto 0 auto;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .doctors-list {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
 }
 
 .doctor-card {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 3rem;
+  display: flex;
+  flex-direction: column;
   background-color: #ffffff;
   border: 1px solid rgba(36, 51, 45, 0.08);
   border-radius: var(--border-radius-lg);
-  padding: 3.5rem 3rem;
-  align-items: start;
-  text-align: start;
+  padding: 3rem 2.2rem;
+  align-items: center;
+  text-align: center;
   box-shadow: 0 12px 32px -8px rgba(36, 51, 45, 0.05);
-  width: 100%;
-}
-
-@media (max-width: 850px) {
-  .doctor-card {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 2.5rem 1.8rem;
-    text-align: center;
-  }
+  height: 100%;
 }
 
 .doctor-image-wrapper {
@@ -626,6 +694,7 @@ a {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-bottom: 1.5rem;
 }
 
 .doctor-eyebrow {
@@ -640,7 +709,7 @@ a {
 
 .doctor-img {
   width: 100%;
-  max-width: 250px;
+  max-width: 220px;
   aspect-ratio: 3/4;
   object-fit: cover;
   border-radius: 18px;
@@ -652,22 +721,23 @@ a {
 .doctor-info {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  flex: 1;
 }
 
 .doctor-name {
   font-family: var(--font-serif);
-  font-size: 2.3rem;
+  font-size: 1.95rem;
   color: #24332d;
   margin: 0 0 1.25rem;
-  line-height: 1.2;
+  line-height: 1.25;
 }
 
 .doctor-bio {
-  font-size: 1.02rem;
-  line-height: 1.8;
+  font-size: 0.96rem;
+  line-height: 1.75;
   color: #586b63;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
+  text-align: start;
 }
 
 .treatment-content {
