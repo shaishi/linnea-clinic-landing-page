@@ -584,6 +584,67 @@ a {
   filter: contrast(1.05) saturate(1.05);
 }
 
+/* Doctors Section - Clean Champagne & Pure White Card */
+.doctors {
+  background-color: var(--bg-main);
+  padding: 5rem 0;
+}
+
+.doctor-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(36, 51, 45, 0.08);
+  border-radius: var(--border-radius-md);
+  padding: 2.5rem;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 8px 24px -5px rgba(36, 51, 45, 0.04);
+}
+
+.doctor-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #445850;
+  margin-bottom: 1rem;
+}
+
+.doctor-img {
+  width: 100%;
+  max-width: 250px;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(36, 51, 45, 0.08);
+  margin: 0 auto 1.5rem auto;
+  display: block;
+}
+
+.doctor-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.doctor-name {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  color: #24332d;
+  margin: 0 0 1.25rem;
+  line-height: 1.2;
+}
+
+.doctor-bio {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #586b63;
+  margin-bottom: 1.25rem;
+}
+
 .treatment-content {
   padding: 1.4rem 1.6rem;
 }
@@ -593,12 +654,12 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-grow: 1; /* Stretch content box to fill available space */
+  flex-grow: 1;
 }
 
 .article-card .btn {
-  margin-top: auto; /* Push button to the very bottom */
-  align-self: center; /* Center horizontally in both languages */
+  margin-top: auto;
+  align-self: center;
 }
 
 .treatment-card {
