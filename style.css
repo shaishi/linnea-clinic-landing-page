@@ -1,32 +1,32 @@
 /* Linnéa High-End Japandi & K-Beauty Design System */
 :root {
   /* Soft Soothing Luxury Neutral Palette */
-  --bg-main: #f7f5f0;           /* Soft Washi Linen Alabaster Silk */
-  --bg-surface: #fcfbfa;        /* Clean Soft Off-White Card Surface */
-  --bg-oat: #efece6;            /* Warm Oat Sand for quiet section contrast */
-  --bg-dark: #222b28;           /* Grounded Hinoki Obsidian Cedar */
+  --bg-main: #f5f3ee;           /* Soft Washi Linen Alabaster Silk */
+  --bg-surface: #ffffff;        /* Pristine White Card Surface */
+  --bg-oat: #ece8df;            /* Quiet Warm Oat Sand for section contrast */
+  --bg-dark: #1b2722;           /* Grounded Hinoki Obsidian Cedar */
 
-  --clinique-teal: #f7f5f0;
-  --clinique-teal-dark: #222b28;
-  --clinique-teal-light: #4a5d54;
+  --clinique-teal: #f5f3ee;
+  --clinique-teal-dark: #24332d;
+  --clinique-teal-light: #445850;
 
-  --sage-accent: #4a5d54;       /* Organic Japanese Matcha Sage */
-  --sage-dark: #32423b;         /* Primary Button Fill & Accent Headings */
-  --sage-light: #708479;
+  --sage-accent: #445850;       /* Organic Japanese Matcha Sage */
+  --sage-dark: #24332d;         /* Primary Button Fill & Main Headings */
+  --sage-light: #6e827a;
 
-  --aura-cream: #222b28;
-  --aura-cream-dark: #19201e;
+  --aura-cream: #24332d;        /* Primary dark heading text */
+  --aura-cream-dark: #192420;
 
-  --gold-accent: #4a5d54;
-  --gold-light: #708479;
+  --gold-accent: #445850;
+  --gold-light: #6e827a;
 
-  --pearl-luminescence: #fcfbfa;
+  --pearl-luminescence: #ffffff;
 
   /* Text Colors */
-  --text-primary: #222b28;      /* Deep Hinoki Obsidian Charcoal */
-  --text-dark: #222b28;
-  --text-muted: #55685f;        /* Soft Editorial Sage Charcoal */
-  --text-muted-dark: #55685f;
+  --text-primary: #24332d;      /* Deep Hinoki Charcoal Moss */
+  --text-dark: #24332d;
+  --text-muted: #586b63;        /* Soft Editorial Sage Charcoal */
+  --text-muted-dark: #586b63;
 
   /* Typography */
   --font-serif: "DM Serif Display", "Frank Ruhl Libre", Georgia, serif;
@@ -46,11 +46,11 @@
   --navbar-height: 85px;
 
   /* Elevation & Glassmorphism */
-  --glass-bg: rgba(247, 245, 240, 0.94);
-  --glass-border: rgba(50, 66, 59, 0.08);
+  --glass-bg: rgba(245, 243, 238, 0.94);
+  --glass-border: rgba(36, 51, 45, 0.08);
   --glass-blur: 16px;
-  --luxury-shadow: 0 12px 32px -8px rgba(34, 43, 40, 0.05);
-  --light-shadow: 0 8px 24px -5px rgba(34, 43, 40, 0.04);
+  --luxury-shadow: 0 12px 32px -8px rgba(36, 51, 45, 0.05);
+  --light-shadow: 0 8px 24px -5px rgba(36, 51, 45, 0.04);
 }
 
 /* Reset & Base */
@@ -61,41 +61,48 @@
 }
 
 html {
+  font-size: 16px;
   scroll-behavior: smooth;
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--clinique-teal);
+  overflow-x: hidden;
+  background-color: var(--bg-main);
   color: var(--text-primary);
   line-height: 1.6;
-  overflow-x: hidden;
-  max-width: 100vw;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-wrap: break-word; /* Prevent long text overflow */
-  cursor: none; /* Hide default cursor */
 }
 
-/* Lenis Scroll Tweaks */
-html.lenis,
-html.lenis body {
-  height: auto;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-main);
+}
+::-webkit-scrollbar-thumb {
+  background: #c2bbb0;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9e9588;
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
+/* Selection */
+::selection {
+  background: rgba(68, 88, 80, 0.2);
+  color: #24332d;
 }
 
 /* Custom Cursor */
 .cursor-dot {
   width: 8px;
   height: 8px;
-  background-color: #ffffff;
+  background-color: #24332d;
   position: fixed;
   top: 0;
   left: 0;
@@ -104,13 +111,12 @@ html.lenis body {
   z-index: 10000;
   transform: translate(-50%, -50%);
   transition: width 0.3s ease, height 0.3s ease;
-  mix-blend-mode: difference;
 }
 
 .cursor-outline {
-  width: 40px;
-  height: 40px;
-  border: 1px solid #ffffff;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(36, 51, 45, 0.4);
   position: fixed;
   top: 0;
   left: 0;
@@ -119,31 +125,27 @@ html.lenis body {
   z-index: 9999;
   transform: translate(-50%, -50%);
   transition: all 0.2s ease-out;
-  opacity: 0.8;
-  mix-blend-mode: difference;
 }
 
 .cursor-hover {
-  width: 60px;
-  height: 60px;
-  background-color: rgba(244, 239, 223, 0.1);
-  border-width: 0;
-  opacity: 1;
+  width: 52px;
+  height: 52px;
+  background-color: rgba(36, 51, 45, 0.08);
+  border-color: #24332d;
 }
 
 @media (max-width: 1024px) {
-  body {
-    cursor: auto;
-  }
   .cursor-dot, .cursor-outline {
-    display: none;
+    display: none !important;
   }
 }
 
-/* Global Media Reset */
-img, video {
-  max-width: 100%;
-  height: auto;
+/* Typography Utilites */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.25;
+  color: #24332d;
 }
 
 .container {
@@ -156,56 +158,24 @@ img, video {
   padding: var(--section-spacing) 0;
 }
 
-/* Typography elements */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  line-height: 1.2;
-}
-
 .section-title {
-  font-size: 2.6rem;
-  margin-bottom: 1rem;
-  color: var(--aura-cream);
-}
-
-.text-center {
+  font-size: 2.75rem;
   text-align: center;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+  color: #24332d;
 }
 
-/* Skip Navigation — WCAG 2.0 AA / IS 5568 Requirement */
-.skip-nav {
-  position: absolute;
-  top: -100px;
-  left: 1rem;
-  z-index: 99999;
-  background: var(--clinique-teal-dark);
-  color: var(--aura-cream);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 500;
-  text-decoration: none;
-  transition: top 0.2s ease;
-}
-
-.skip-nav:focus {
-  top: 0;
-  outline: 3px solid var(--aura-cream);
+:focus-visible {
+  outline: 2px solid #24332d;
   outline-offset: 2px;
 }
 
 .section-description {
-  font-size: 1.125rem;
+  font-size: 1.1rem;
   max-width: 600px;
   margin: 0 auto 3rem auto;
-  color: var(--text-muted);
+  color: #586b63;
 }
 
 a {
@@ -214,39 +184,50 @@ a {
   transition: var(--transition-fast);
 }
 
-/* Buttons */
+/* Buttons - Crystal Clear Legibility & High Contrast */
 .btn {
-  display: inline-block;
-  padding: 0.875rem 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.95rem 2.2rem;
   font-family: var(--font-sans);
-  font-weight: 500;
-  font-size: 1rem;
-  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 50px;
   cursor: pointer;
-  transition: var(--transition-smooth);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   border: none;
   text-align: center;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 
 .btn-primary {
-  background-color: var(--aura-cream);
-  color: var(--clinique-teal-dark);
+  background-color: #24332d !important;
+  color: #ffffff !important;
+  border: 1px solid #24332d !important;
+  box-shadow: 0 6px 20px -4px rgba(36, 51, 45, 0.25);
 }
 
 .btn-primary:hover {
-  background-color: var(--pearl-luminescence);
+  background-color: #16201c !important;
+  color: #ffffff !important;
+  border-color: #16201c !important;
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 24px -4px rgba(36, 51, 45, 0.35);
 }
 
 .btn-secondary {
-  background-color: transparent;
-  color: var(--aura-cream);
-  border: 1px solid var(--aura-cream);
+  background-color: transparent !important;
+  color: #24332d !important;
+  border: 1px solid rgba(36, 51, 45, 0.3) !important;
 }
 
 .btn-secondary:hover {
-  background-color: rgba(244, 239, 223, 0.1);
+  background-color: rgba(36, 51, 45, 0.08) !important;
+  border-color: #24332d !important;
+  color: #24332d !important;
   transform: translateY(-2px);
 }
 
@@ -258,7 +239,7 @@ a {
   margin-top: 2rem;
 }
 
-/* Navbar */
+/* Navbar - Pristine Frosted Glass */
 .navbar {
   position: fixed;
   top: 0;
@@ -269,47 +250,26 @@ a {
   transition: var(--transition-smooth);
   display: flex;
   align-items: center;
-  justify-content: center; /* Center the container */
-  padding: 0; /* Remove padding to avoid width/centering issues */
+  justify-content: center;
+  padding: 0;
+  background: rgba(245, 243, 238, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(36, 51, 45, 0.08);
 }
 
 .navbar.scrolled {
-  height: 70px; /* Dinamically shrinks */
-  background: rgba(126, 156, 150, 0.90); /* Restored main branch greenish/teal with enhanced transparency */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  height: 72px;
+  background: rgba(245, 243, 238, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(36, 51, 45, 0.12);
+  box-shadow: 0 6px 24px rgba(36, 51, 45, 0.04);
 }
 
-/* Always-readable navbar: dark gradient + subtle text shadow so cream text shows on any background */
 .navbar:not(.scrolled) {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
+  background: rgba(245, 243, 238, 0.92);
 }
-
-/* Removed text-shadow that caused the dark effect the user disliked */
-/* acc-light-bg override */
-body.acc-light-bg .navbar {
-  background: rgba(244, 239, 223, 0.95) !important;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(97, 125, 120, 0.2);
-}
-
-body.acc-light-bg .navbar .brand-logo,
-body.acc-light-bg .navbar .nav-links a,
-body.acc-light-bg .navbar .nav-phone,
-body.acc-light-bg .navbar svg {
-  color: #1a2e2b;
-  stroke: #1a2e2b;
-  text-shadow: none;
-}
-
-/* Remove old ::before if any leftover */
-.navbar::before {
-  display: none;
-}
-
 
 .nav-container {
   display: flex;
@@ -317,20 +277,22 @@ body.acc-light-bg .navbar svg {
   align-items: center;
   gap: 2rem;
   height: 100%;
-  width: 100%; /* Force fill up to max-width */
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-/* Logo with baseline correction */
 .brand-logo {
   font-family: var(--font-serif);
   font-size: 2.2rem;
   font-weight: 400;
-  color: var(--aura-cream);
+  color: #24332d;
   letter-spacing: -0.02em;
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: baseline; /* Align by text baseline */
+  align-items: baseline;
   gap: 0.4rem;
   direction: ltr;
   line-height: 1;
@@ -340,13 +302,97 @@ body.acc-light-bg .navbar svg {
 .brand-subtitle {
   font-family: var(--font-sans);
   font-size: 0.75rem;
-  font-weight: 300;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0.9;
-  transform: translateY(-0.12em); /* Fine-tuned for perfect baseline with Linnéa */
+  letter-spacing: 0.12em;
+  color: #586b63;
+  transform: translateY(-0.12em);
   white-space: nowrap;
   transition: var(--transition-smooth);
+}
+
+.navbar.scrolled .brand-logo {
+  font-size: 1.7rem;
+}
+
+.navbar.scrolled .brand-subtitle {
+  font-size: 0.6rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.nav-links a {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #24332d;
+  opacity: 0.9;
+  position: relative;
+  display: inline-block;
+  line-height: normal;
+  transition: var(--transition-smooth);
+}
+
+.nav-links a:hover {
+  transform: translateY(-2px);
+  color: #445850;
+  opacity: 1;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #24332d;
+  transition: var(--transition-smooth);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  direction: ltr;
+}
+
+.nav-phone {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #24332d;
+  text-decoration: none;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  display: inline-block;
+}
+
+.lang-btn {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 32px;
+  border-radius: 20px;
+  border: 1px solid rgba(36, 51, 45, 0.25);
+  background: transparent;
+  color: #24332d;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.lang-btn:hover {
+  background: rgba(36, 51, 45, 0.08);
+  border-color: #24332d;
 }
 
 /* Dynamic scroll scaling */
@@ -363,93 +409,16 @@ body.acc-light-bg .navbar svg {
 .navbar.scrolled .nav-links a,
 .navbar.scrolled .nav-phone,
 .navbar.scrolled .mobile-nav-toggle {
-  color: var(--aura-cream) !important;
+  color: #24332d !important;
 }
 
 .mobile-nav-toggle:focus {
   outline: none !important;
 }
 
-.navbar.scrolled .nav-actions .nav-btn {
-  background: var(--aura-cream) !important;
-  color: #7e9c96 !important;
-  border: none !important;
-}
-
 .navbar.scrolled .lang-btn {
-  border-color: var(--aura-cream);
-  color: var(--aura-cream);
-}
-
-.nav-links {
-  display: flex;
-  gap: 3rem;
-  align-items: center; /* Vertical center links */
-}
-
-.nav-links a {
-  font-size: 0.95rem;
-  font-weight: 400;
-  color: var(--text-primary);
-  opacity: 0.9;
-  position: relative;
-  display: inline-block;
-  line-height: normal;
-  transition: var(--transition-smooth);
-}
-
-.nav-links a:hover {
-  transform: translateY(-2px);
-  opacity: 1;
-}
-
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background-color: var(--aura-cream);
-  transition: var(--transition-smooth);
-}
-
-.nav-links a:hover::after {
-  width: 100%;
-}
-
-.nav-actions {
-  display: flex;
-  gap: 2.5rem;
-  align-items: center;
-  direction: ltr;
-}
-
-.nav-phone {
-  font-weight: 600;
-  font-size: 1.05rem;
-  color: var(--aura-cream);
-  text-decoration: none;
-  white-space: nowrap;
-  letter-spacing: 0.5px;
-  display: inline-block;
-}
-
-.lang-btn {
-  padding: 0.35rem 0.75rem;
-  font-size: 0.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  height: 32px;
-  border-radius: 20px;
-  border: 1px solid var(--aura-cream);
-  background: transparent;
-  color: var(--aura-cream);
-  cursor: pointer;
-  transition: var(--transition-smooth);
-  margin: 0; /* Reset margins */
+  border-color: rgba(36, 51, 45, 0.25);
+  color: #24332d;
 }
 
 .mobile-nav-toggle {
@@ -458,35 +427,57 @@ body.acc-light-bg .navbar svg {
 
 /* Hero Section */
 .hero {
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
   position: relative;
-  padding-top: 6rem;
+  padding-top: 8rem;
+  padding-bottom: 5rem;
+  background: var(--bg-main);
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 800px;
+  max-width: 850px;
   text-align: center;
   margin: 0 auto;
 }
 
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.3rem;
+  background: rgba(36, 51, 45, 0.06);
+  border: 1px solid rgba(36, 51, 45, 0.18);
+  border-radius: 30px;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #24332d;
+  margin-bottom: 1.8rem;
+}
+
 .hero-title {
-  font-size: 5rem;
-  color: var(--aura-cream);
+  font-size: 4.8rem;
+  color: #24332d;
   margin-bottom: 1.5rem;
   line-height: 1.1;
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
-  color: var(--text-muted);
+  color: #586b63;
   margin-bottom: 2.5rem;
-  max-width: 600px;
+  max-width: 650px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.7;
 }
 
 [dir="rtl"] .hero-subtitle {
@@ -494,33 +485,48 @@ body.acc-light-bg .navbar svg {
   margin-left: auto;
 }
 
-
 /* About Section */
 .about {
-  background-color: var(--aura-cream);
-  color: var(--text-dark);
-  border-radius: 40px;
-  width: calc(100% - 4rem);
+  background-color: var(--bg-oat);
+  color: #24332d;
+  border-radius: var(--border-radius-lg);
+  width: calc(100% - 3rem);
   max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 2.5rem 0;
+  margin: 0 auto 5rem auto;
+  padding: 4.5rem 3.5rem;
+  border: 1px solid rgba(36, 51, 45, 0.08);
+  box-shadow: 0 12px 32px -8px rgba(36, 51, 45, 0.04);
 }
 
 .about .section-title {
-  color: var(--clinique-teal-dark);
+  color: #24332d;
+  font-size: 2.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.about-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #445850;
+  margin-bottom: 0.8rem;
+  display: block;
 }
 
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  gap: 3.5rem;
   align-items: center;
 }
 
 .about-text p {
   margin-bottom: 1.5rem;
-  font-size: 1.1rem;
-  color: #4a5c59;
+  font-size: 1.08rem;
+  line-height: 1.8;
+  color: #384a43;
 }
 
 .about-image {
@@ -533,13 +539,11 @@ body.acc-light-bg .navbar svg {
   background-image: url("./images/about-harmony.png");
   background-size: cover;
   background-position: center;
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-md);
   overflow: hidden;
   position: relative;
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
-  transform: translateZ(0);
-  filter: contrast(1.05) saturate(1.05);
+  border: 1px solid rgba(36, 51, 45, 0.15);
+  box-shadow: 0 12px 30px rgba(36, 51, 45, 0.08);
 }
 
 /* Treatments Section */
@@ -597,11 +601,23 @@ body.acc-light-bg .navbar svg {
   align-self: center; /* Center horizontally in both languages */
 }
 
+.treatment-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(36, 51, 45, 0.08);
+  border-radius: var(--border-radius-md);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 0 8px 24px -5px rgba(36, 51, 45, 0.04);
+}
+
 .treatment-card:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-15px) scale(1.02);
-  border-color: rgba(244, 239, 223, 0.4);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  transform: translateY(-6px);
+  border-color: rgba(68, 88, 80, 0.35);
+  box-shadow: 0 16px 36px -8px rgba(36, 51, 45, 0.1);
 }
 
 .treatment-img {
@@ -609,22 +625,25 @@ body.acc-light-bg .navbar svg {
   aspect-ratio: 4/3;
   height: auto;
   object-fit: cover;
-  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .treatment-card:hover .treatment-img {
-  transform: scale(1.1);
+  transform: scale(1.06);
 }
 
 .treatment-card h3 {
-  font-size: 1.75rem;
-  color: var(--aura-cream);
+  font-size: 1.6rem;
+  color: #24332d;
   margin-bottom: 0.6rem;
+  font-family: var(--font-serif);
 }
 
 .treatment-card p {
-  color: var(--text-muted);
+  color: #586b63;
   margin-bottom: 1.25rem;
+  font-size: 0.98rem;
+  line-height: 1.6;
 }
 
 [dir="rtl"] .arrow {
@@ -648,9 +667,9 @@ body.acc-light-bg .navbar svg {
 
 .detail-item strong {
   display: block;
-  color: var(--aura-cream);
+  color: #24332d;
   font-family: var(--font-sans);
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 0.25rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -660,24 +679,24 @@ body.acc-light-bg .navbar svg {
 .map-placeholder {
   width: 100%;
   aspect-ratio: 1;
-  background-color: var(--aura-cream);
+  background-color: #efece6;
   border-radius: var(--border-radius-lg);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--clinique-teal-dark);
+  color: #24332d;
   font-family: var(--font-serif);
   font-size: 1.5rem;
 }
 
-/* --- Pre-loader Logic (Restored to GH Pages Brand) --- */
+/* Pre-loader */
 .loader-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--clinique-teal);
+  background: var(--bg-main);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -686,7 +705,6 @@ body.acc-light-bg .navbar svg {
   visibility: visible;
   pointer-events: all;
   transform: translateY(0);
-  /* CSS Safety Valve: Hard fallback in case JS fails */
   animation: preloaderSafetyBypass 0.1s forwards 3.5s;
 }
 
@@ -721,6 +739,7 @@ body.loaded .loader-overlay {
 .loader-logo {
   font-size: 4rem;
   margin-bottom: 1rem;
+  color: #24332d;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUpLoader 0.8s forwards 0.2s;
@@ -729,13 +748,14 @@ body.loaded .loader-overlay {
 
 .loader-logo .brand-subtitle {
   font-size: 1.25rem;
+  color: #586b63;
   transform: translateY(-0.15em);
 }
 
 .loader-bar {
   width: 0;
   height: 2px;
-  background: var(--aura-cream);
+  background: #445850;
   margin: 0 auto;
   animation: loadBar 1.5s cubic-bezier(0.85, 0, 0.15, 1) forwards 0.5s;
 }
