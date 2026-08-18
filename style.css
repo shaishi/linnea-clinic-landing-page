@@ -1,57 +1,46 @@
-/* Linnéa Authentic Japanese Nordic (Japandi) Design System */
+/* Linnéa Design System */
 :root {
-  /* Warm Organic Japanese Washi Paper & Nordic Birch Palette */
-  --bg-main: #f7f4ee;           /* Warm Washi Sand / Soft Organic Linen */
-  --bg-surface: #faf8f5;        /* Soft Porcelain Off-White Card Surface */
-  --bg-oat: #efebe1;            /* Warm Oat Sand for quiet section contrast */
-  --bg-dark: #232c27;           /* Grounded Hinoki Obsidian Cedar */
+  /* Brand Colors */
+  --clinique-teal: #7e9c96; /* Darkened for better contrast */
+  --clinique-teal-dark: #617d78;
+  --clinique-teal-light: #98b4af;
 
-  --clinique-teal: #f7f4ee;
-  --clinique-teal-dark: #28332d;
-  --clinique-teal-light: #5b6c62;
+  --aura-cream: #f4efdf;
+  --aura-cream-dark: #e8e2d0;
 
-  --sage-accent: #47594f;       /* Japanese Organic Matcha Sage */
-  --sage-dark: #37473e;         /* Deep Matcha Slate */
-  --sage-light: #708479;
-
-  --sand-accent: #a49989;       /* Wabi-Sabi Sand Clay */
-  --aura-cream: #28332d;
-  --aura-cream-dark: #1b241f;
-
-  --gold-accent: #47594f;
-  --gold-light: #708479;
-
-  --pearl-luminescence: #faf8f5;
+  --pearl-luminescence: #fdfbf6;
 
   /* Text Colors */
-  --text-primary: #28332d;      /* Deep Hinoki Charcoal Moss */
-  --text-dark: #28332d;
-  --text-muted: #5b6c62;        /* Soft Japanese Sage Gray */
-  --text-muted-dark: #5b6c62;
+  --text-primary: #f4efdf; /* Main text on teal background */
+  --text-dark: #2c3a38; /* Text on cream/pearl background */
+  --text-muted: rgba(
+    244,
+    239,
+    223,
+    0.95
+  ); /* Adjusted for WCAG AA contrast against teal */
 
   /* Typography */
-  --font-serif: "DM Serif Display", "Frank Ruhl Libre", Georgia, serif;
-  --font-sans: "Outfit", "Assistant", "Heebo", sans-serif;
+  --font-serif: "DM Serif Display", "Heebo", sans-serif;
+  --font-sans: "Outfit", "Heebo", sans-serif;
 
   /* Layout */
   --container-width: 1200px;
-  --section-spacing: 5.5rem;
-  --border-radius-sm: 6px;
-  --border-radius-md: 16px;
-  --border-radius-lg: 24px;
+  --section-spacing: 3rem;
+  --border-radius-sm: 4px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 30px;
 
   /* Transitions */
-  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 0.2s ease;
+  --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  --transition-bounce: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   --navbar-height: 85px;
 
-  /* Glassmorphism & Elevation */
-  --glass-bg: rgba(247, 244, 238, 0.94);
-  --glass-border: rgba(71, 89, 79, 0.1);
-  --glass-blur: 16px;
-  --luxury-shadow: 0 10px 30px -5px rgba(40, 51, 45, 0.05);
-  --light-shadow: 0 6px 20px -4px rgba(40, 51, 45, 0.04);
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 15px;
 }
 
 /* Reset & Base */
@@ -62,22 +51,23 @@
 }
 
 html {
-  font-size: 16px;
-  background-color: var(--bg-main);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
-  overflow-x: hidden;
-  background-color: var(--bg-main);
+  font-family: var(--font-sans);
+  background-color: var(--clinique-teal);
   color: var(--text-primary);
   line-height: 1.6;
+  overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word; /* Prevent long text overflow */
+  cursor: none; /* Hide default cursor */
 }
 
-/* Lenis Smooth Scroll Setup */
+/* Lenis Scroll Tweaks */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -91,32 +81,11 @@ html.lenis body {
   overscroll-behavior: contain;
 }
 
-/* Custom Scrollbar - Minimalist Japanese Washi */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-main);
-}
-::-webkit-scrollbar-thumb {
-  background: #c8c2b7;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #a49989;
-}
-
-/* Selection */
-::selection {
-  background: rgba(71, 89, 79, 0.2);
-  color: #28332d;
-}
-
-/* Custom Cursor - Refined Wabi Sabi Ring */
+/* Custom Cursor */
 .cursor-dot {
   width: 8px;
   height: 8px;
-  background-color: #47594f;
+  background-color: #ffffff;
   position: fixed;
   top: 0;
   left: 0;
@@ -125,12 +94,13 @@ html.lenis body {
   z-index: 10000;
   transform: translate(-50%, -50%);
   transition: width 0.3s ease, height 0.3s ease;
+  mix-blend-mode: difference;
 }
 
 .cursor-outline {
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(71, 89, 79, 0.4);
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ffffff;
   position: fixed;
   top: 0;
   left: 0;
@@ -139,27 +109,31 @@ html.lenis body {
   z-index: 9999;
   transform: translate(-50%, -50%);
   transition: all 0.2s ease-out;
+  opacity: 0.8;
+  mix-blend-mode: difference;
 }
 
 .cursor-hover {
-  width: 52px;
-  height: 52px;
-  background-color: rgba(71, 89, 79, 0.08);
-  border-color: #47594f;
+  width: 60px;
+  height: 60px;
+  background-color: rgba(244, 239, 223, 0.1);
+  border-width: 0;
+  opacity: 1;
 }
 
 @media (max-width: 1024px) {
+  body {
+    cursor: auto;
+  }
   .cursor-dot, .cursor-outline {
-    display: none !important;
+    display: none;
   }
 }
 
-/* Typography Utilites */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  line-height: 1.25;
-  color: var(--text-primary);
+/* Global Media Reset */
+img, video {
+  max-width: 100%;
+  height: auto;
 }
 
 .container {
@@ -172,21 +146,53 @@ h1, h2, h3, h4, h5, h6 {
   padding: var(--section-spacing) 0;
 }
 
-.section-title {
-  font-size: 2.75rem;
-  text-align: center;
-  margin-bottom: 1rem;
-  letter-spacing: -0.01em;
-  color: #28332d;
+/* Typography elements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  line-height: 1.2;
 }
 
-:focus-visible {
-  outline: 2px solid #47594f;
+.section-title {
+  font-size: 2.6rem;
+  margin-bottom: 1rem;
+  color: var(--aura-cream);
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Skip Navigation — WCAG 2.0 AA / IS 5568 Requirement */
+.skip-nav {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 99999;
+  background: var(--clinique-teal-dark);
+  color: var(--aura-cream);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0 0 var(--border-radius-sm) var(--border-radius-sm);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-nav:focus {
+  top: 0;
+  outline: 3px solid var(--aura-cream);
   outline-offset: 2px;
 }
 
 .section-description {
-  font-size: 1.1rem;
+  font-size: 1.125rem;
   max-width: 600px;
   margin: 0 auto 3rem auto;
   color: var(--text-muted);
@@ -198,49 +204,39 @@ a {
   transition: var(--transition-fast);
 }
 
-/* Buttons & Action Triggers */
+/* Buttons */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.95rem 2.2rem;
+  display: inline-block;
+  padding: 0.875rem 2rem;
   font-family: var(--font-sans);
   font-weight: 500;
-  font-size: 0.95rem;
-  border-radius: 50px;
+  font-size: 1rem;
+  border-radius: 100px;
   cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: var(--transition-smooth);
   border: none;
   text-align: center;
-  letter-spacing: 0.03em;
-  white-space: nowrap;
 }
 
 .btn-primary {
-  background: #47594f;
-  color: #f7f4ee;
-  border: 1px solid #47594f;
-  box-shadow: 0 6px 20px -4px rgba(71, 89, 79, 0.25);
+  background-color: var(--aura-cream);
+  color: var(--clinique-teal-dark);
 }
 
 .btn-primary:hover {
-  background: #37473e;
-  border-color: #37473e;
+  background-color: var(--pearl-luminescence);
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px -4px rgba(71, 89, 79, 0.35);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
 }
 
 .btn-secondary {
-  background: transparent;
-  color: #28332d;
-  border: 1px solid rgba(71, 89, 79, 0.3);
+  background-color: transparent;
+  color: var(--aura-cream);
+  border: 1px solid var(--aura-cream);
 }
 
 .btn-secondary:hover {
-  background: rgba(71, 89, 79, 0.08);
-  border-color: #47594f;
-  color: #28332d;
+  background-color: rgba(244, 239, 223, 0.1);
   transform: translateY(-2px);
 }
 
@@ -252,7 +248,7 @@ a {
   margin-top: 2rem;
 }
 
-/* Navbar - Clean Frosted Glass Washi */
+/* Navbar */
 .navbar {
   position: fixed;
   top: 0;
@@ -263,26 +259,47 @@ a {
   transition: var(--transition-smooth);
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0;
-  background: rgba(247, 244, 238, 0.94);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(71, 89, 79, 0.1);
+  justify-content: center; /* Center the container */
+  padding: 0; /* Remove padding to avoid width/centering issues */
 }
 
 .navbar.scrolled {
-  height: 72px;
-  background: rgba(247, 244, 238, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(71, 89, 79, 0.14);
-  box-shadow: 0 6px 24px rgba(40, 51, 45, 0.04);
+  height: 70px; /* Dinamically shrinks */
+  background: rgba(126, 156, 150, 0.90); /* Restored main branch greenish/teal with enhanced transparency */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
+/* Always-readable navbar: dark gradient + subtle text shadow so cream text shows on any background */
 .navbar:not(.scrolled) {
-  background: rgba(247, 244, 238, 0.92);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
 }
+
+/* Removed text-shadow that caused the dark effect the user disliked */
+/* acc-light-bg override */
+body.acc-light-bg .navbar {
+  background: rgba(244, 239, 223, 0.95) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(97, 125, 120, 0.2);
+}
+
+body.acc-light-bg .navbar .brand-logo,
+body.acc-light-bg .navbar .nav-links a,
+body.acc-light-bg .navbar .nav-phone,
+body.acc-light-bg .navbar svg {
+  color: #1a2e2b;
+  stroke: #1a2e2b;
+  text-shadow: none;
+}
+
+/* Remove old ::before if any leftover */
+.navbar::before {
+  display: none;
+}
+
 
 .nav-container {
   display: flex;
@@ -290,22 +307,20 @@ a {
   align-items: center;
   gap: 2rem;
   height: 100%;
-  width: 100%;
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 0 2rem;
+  width: 100%; /* Force fill up to max-width */
 }
 
+/* Logo with baseline correction */
 .brand-logo {
   font-family: var(--font-serif);
   font-size: 2.2rem;
   font-weight: 400;
-  color: #28332d;
+  color: var(--aura-cream);
   letter-spacing: -0.02em;
   position: relative;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
+  align-items: baseline; /* Align by text baseline */
   gap: 0.4rem;
   direction: ltr;
   line-height: 1;
@@ -315,33 +330,57 @@ a {
 .brand-subtitle {
   font-family: var(--font-sans);
   font-size: 0.75rem;
-  font-weight: 400;
+  font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: #5b6c62;
-  transform: translateY(-0.12em);
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+  transform: translateY(-0.12em); /* Fine-tuned for perfect baseline with Linnéa */
   white-space: nowrap;
   transition: var(--transition-smooth);
 }
 
+/* Dynamic scroll scaling */
 .navbar.scrolled .brand-logo {
   font-size: 1.7rem;
 }
 
 .navbar.scrolled .brand-subtitle {
   font-size: 0.6rem;
+  transform: translateY(-0.1em);
+}
+
+.navbar.scrolled .brand-logo,
+.navbar.scrolled .nav-links a,
+.navbar.scrolled .nav-phone,
+.navbar.scrolled .mobile-nav-toggle {
+  color: var(--aura-cream) !important;
+}
+
+.mobile-nav-toggle:focus {
+  outline: none !important;
+}
+
+.navbar.scrolled .nav-actions .nav-btn {
+  background: var(--aura-cream) !important;
+  color: #7e9c96 !important;
+  border: none !important;
+}
+
+.navbar.scrolled .lang-btn {
+  border-color: var(--aura-cream);
+  color: var(--aura-cream);
 }
 
 .nav-links {
   display: flex;
-  gap: 2.5rem;
-  align-items: center;
+  gap: 3rem;
+  align-items: center; /* Vertical center links */
 }
 
 .nav-links a {
   font-size: 0.95rem;
-  font-weight: 500;
-  color: #28332d;
+  font-weight: 400;
+  color: var(--text-primary);
   opacity: 0.9;
   position: relative;
   display: inline-block;
@@ -351,7 +390,6 @@ a {
 
 .nav-links a:hover {
   transform: translateY(-2px);
-  color: #47594f;
   opacity: 1;
 }
 
@@ -361,8 +399,8 @@ a {
   bottom: -4px;
   left: 0;
   width: 0;
-  height: 2px;
-  background-color: #47594f;
+  height: 1px;
+  background-color: var(--aura-cream);
   transition: var(--transition-smooth);
 }
 
@@ -372,18 +410,18 @@ a {
 
 .nav-actions {
   display: flex;
-  gap: 1.5rem;
+  gap: 2.5rem;
   align-items: center;
   direction: ltr;
 }
 
 .nav-phone {
-  font-weight: 500;
-  font-size: 0.95rem;
-  color: #47594f;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--aura-cream);
   text-decoration: none;
   white-space: nowrap;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
   display: inline-block;
 }
 
@@ -396,75 +434,49 @@ a {
   min-width: 44px;
   height: 32px;
   border-radius: 20px;
-  border: 1px solid rgba(71, 89, 79, 0.25);
+  border: 1px solid var(--aura-cream);
   background: transparent;
-  color: #28332d;
+  color: var(--aura-cream);
   cursor: pointer;
   transition: var(--transition-smooth);
-}
-
-.lang-btn:hover {
-  background: rgba(71, 89, 79, 0.1);
-  border-color: #47594f;
+  margin: 0; /* Reset margins */
 }
 
 .mobile-nav-toggle {
   display: none;
 }
 
-/* Hero Section - Japandi Soft Washi Clean */
+/* Hero Section */
 .hero {
-  min-height: 85vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
-  padding-top: 8.5rem;
-  padding-bottom: 5rem;
-  background: var(--bg-main);
+  padding-top: 6rem;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 850px;
+  max-width: 800px;
   text-align: center;
   margin: 0 auto;
 }
 
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 1.3rem;
-  background: rgba(71, 89, 79, 0.08);
-  border: 1px solid rgba(71, 89, 79, 0.2);
-  border-radius: 30px;
-  font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: #47594f;
-  margin-bottom: 1.8rem;
-}
-
 .hero-title {
-  font-size: 4.5rem;
-  color: #2a3531;
+  font-size: 5rem;
+  color: var(--aura-cream);
   margin-bottom: 1.5rem;
-  line-height: 1.12;
-  font-family: var(--font-serif);
-  letter-spacing: -0.01em;
+  line-height: 1.1;
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
-  color: #5e6f69;
+  font-size: 1.25rem;
+  color: var(--text-muted);
   margin-bottom: 2.5rem;
-  max-width: 680px;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 1.75;
 }
 
 [dir="rtl"] .hero-subtitle {
@@ -472,131 +484,33 @@ a {
   margin-left: auto;
 }
 
-/* Floating Trust & Clinical Excellence Pillars Bar */
-.trust-bar-section {
-  position: relative;
-  z-index: 10;
-  margin-top: -3rem;
-  margin-bottom: 4rem;
-  padding: 0 1.5rem;
-}
 
-.trust-bar-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  background: #ffffff;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(118, 141, 131, 0.18);
-  border-radius: var(--border-radius-md);
-  padding: 1.8rem 2rem;
-  box-shadow: 0 15px 35px -8px rgba(42, 53, 49, 0.08);
+/* About Section */
+.about {
+  background-color: var(--aura-cream);
+  color: var(--text-dark);
+  border-radius: 40px;
+  width: calc(100% - 4rem);
   max-width: var(--container-width);
   margin: 0 auto;
-}
-
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.4rem 0.8rem;
-  border-right: 1px solid rgba(118, 141, 131, 0.15);
-}
-
-[dir="rtl"] .trust-item {
-  border-right: none;
-  border-left: 1px solid rgba(118, 141, 131, 0.15);
-}
-
-.trust-item:last-child {
-  border-right: none;
-  border-left: none;
-}
-
-.trust-bullet {
-  font-size: 1.1rem;
-  color: #5c7268;
-  flex-shrink: 0;
-  margin-top: 0.1rem;
-}
-
-.trust-title {
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  color: #242c29;
-  margin-bottom: 0.2rem;
-}
-
-.trust-desc {
-  font-size: 0.82rem;
-  color: #5a6b64;
-  line-height: 1.38;
-}
-
-@media (max-width: 992px) {
-  .trust-bar-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem;
-  }
-  .trust-item {
-    border: none !important;
-  }
-}
-
-@media (max-width: 576px) {
-  .trust-bar-container {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 1.2rem;
-  }
-  .hero-title {
-    font-size: 3rem;
-  }
-}
-
-/* About Section - Soothing Warm Oat Card */
-.about {
-  background-color: var(--bg-oat);
-  color: #242c29;
-  border-radius: var(--border-radius-lg);
-  width: calc(100% - 3rem);
-  max-width: var(--container-width);
-  margin: 0 auto 5rem auto;
-  padding: 4.5rem 3.5rem;
-  border: 1px solid rgba(36, 44, 41, 0.07);
-  box-shadow: 0 12px 32px -8px rgba(36, 44, 41, 0.04);
+  padding: 2.5rem 0;
 }
 
 .about .section-title {
-  color: #242c29;
-  font-size: 2.8rem;
-  margin-bottom: 1.2rem;
-}
-
-.about-eyebrow {
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: #5c7268;
-  margin-bottom: 0.8rem;
-  display: block;
+  color: var(--clinique-teal-dark);
 }
 
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3.5rem;
+  gap: 2.5rem;
   align-items: center;
 }
 
 .about-text p {
   margin-bottom: 1.5rem;
-  font-size: 1.08rem;
-  line-height: 1.8;
-  color: #424f4a;
+  font-size: 1.1rem;
+  color: #4a5c59;
 }
 
 .about-image {
@@ -609,25 +523,16 @@ a {
   background-image: url("./images/about-harmony.png");
   background-size: cover;
   background-position: center;
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-lg);
   overflow: hidden;
   position: relative;
-  border: 1px solid rgba(92, 114, 104, 0.2);
-  box-shadow: 0 12px 30px rgba(36, 44, 41, 0.08);
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
+  filter: contrast(1.05) saturate(1.05);
 }
 
-/* Treatments Section - Warm Linen Background */
-.treatments {
-  background-color: var(--bg-main);
-  color: #242c29;
-  padding: 5rem 0;
-}
-
-.treatments .section-title {
-  color: #242c29;
-  font-size: 2.8rem;
-}
-
+/* Treatments Section */
 .treatments-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -643,15 +548,15 @@ a {
 }
 
 .treatment-card {
-  background-color: var(--bg-surface);
-  border: 1px solid rgba(36, 44, 41, 0.08);
-  border-radius: var(--border-radius-md);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(244, 239, 223, 0.22);
+  border-radius: var(--border-radius-lg);
+  transition: var(--transition-smooth);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   height: 100%;
-  box-shadow: 0 8px 24px -5px rgba(36, 44, 41, 0.04);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
 }
 
 .treatment-img {
@@ -662,12 +567,11 @@ a {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   transform: translateZ(0);
-  filter: contrast(1.03) saturate(1.02);
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: contrast(1.05) saturate(1.05);
 }
 
 .treatment-content {
-  padding: 1.6rem;
+  padding: 1.4rem 1.6rem;
 }
 
 .article-card .treatment-content {
@@ -675,37 +579,42 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-grow: 1;
+  flex-grow: 1; /* Stretch content box to fill available space */
 }
 
 .article-card .btn {
-  margin-top: auto;
-  align-self: center;
+  margin-top: auto; /* Push button to the very bottom */
+  align-self: center; /* Center horizontally in both languages */
 }
 
 .treatment-card:hover {
-  background-color: #ffffff;
-  transform: translateY(-6px);
-  border-color: rgba(92, 114, 104, 0.35);
-  box-shadow: 0 16px 36px -8px rgba(36, 44, 41, 0.1);
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-15px) scale(1.02);
+  border-color: rgba(244, 239, 223, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.treatment-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .treatment-card:hover .treatment-img {
-  transform: scale(1.06);
+  transform: scale(1.1);
 }
 
 .treatment-card h3 {
-  font-size: 1.6rem;
-  color: #242c29;
+  font-size: 1.75rem;
+  color: var(--aura-cream);
   margin-bottom: 0.6rem;
-  font-family: var(--font-serif);
 }
 
 .treatment-card p {
-  color: #5a6b64;
+  color: var(--text-muted);
   margin-bottom: 1.25rem;
-  font-size: 0.98rem;
-  line-height: 1.6;
 }
 
 [dir="rtl"] .arrow {
@@ -751,14 +660,14 @@ a {
   font-size: 1.5rem;
 }
 
-/* --- Pre-loader Logic --- */
+/* --- Pre-loader Logic (Restored to GH Pages Brand) --- */
 .loader-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--bg-main);
+  background: var(--clinique-teal);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -767,6 +676,7 @@ a {
   visibility: visible;
   pointer-events: all;
   transform: translateY(0);
+  /* CSS Safety Valve: Hard fallback in case JS fails */
   animation: preloaderSafetyBypass 0.1s forwards 3.5s;
 }
 
@@ -801,7 +711,6 @@ body.loaded .loader-overlay {
 .loader-logo {
   font-size: 4rem;
   margin-bottom: 1rem;
-  color: #242c29;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUpLoader 0.8s forwards 0.2s;
@@ -810,14 +719,13 @@ body.loaded .loader-overlay {
 
 .loader-logo .brand-subtitle {
   font-size: 1.25rem;
-  color: #5a6b64;
   transform: translateY(-0.15em);
 }
 
 .loader-bar {
   width: 0;
   height: 2px;
-  background: #5c7268;
+  background: var(--aura-cream);
   margin: 0 auto;
   animation: loadBar 1.5s cubic-bezier(0.85, 0, 0.15, 1) forwards 0.5s;
 }
@@ -1007,11 +915,9 @@ body.acc-high-contrast .article-content {
   }
 }
 
-/* ===== FOOTER (Organic Hinoki Obsidian Cedar) ===== */
+/* ===== FOOTER ===== */
 .footer {
   padding: 5rem 0 0;
-  background-color: #232c27;
-  color: #f7f4ee;
 }
 
 .footer-grid {
@@ -1022,38 +928,50 @@ body.acc-high-contrast .article-content {
   align-items: start;
 }
 
+.footer-map {
+  grid-column: 1 / -1;
+  margin-top: 1.5rem;
+  width: 100%;
+  height: 250px;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  opacity: 0.85;
+}
+
 .footer-title {
   font-family: var(--font-sans);
   font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #8c9e93;
+  color: var(--aura-cream);
   margin-bottom: 1.5rem;
+  opacity: 0.6;
 }
 
 .footer-logo {
   margin-bottom: 1rem;
   font-size: 2rem;
-  color: #f7f4ee !important;
 }
 
 .footer-tagline {
-  color: #a6b8af;
+  color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.7;
-  max-width: 220px;
+  max-width: 200px;
 }
 
+/* Unified h3/h4 in footer */
 .footer h3,
 .footer h4 {
   font-family: var(--font-sans);
   font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #a6b8af;
+  color: var(--aura-cream);
   margin-bottom: 1.5rem;
+  opacity: 0.6;
 }
 
 .footer-links ul {
@@ -1070,19 +988,19 @@ body.acc-high-contrast .article-content {
 .footer-contact a {
   display: block;
   margin-bottom: 0.75rem;
-  color: #d1dad5;
+  color: var(--text-muted);
   font-size: 0.95rem;
   transition: color 0.2s ease;
 }
 
 .footer-links a:hover,
 .footer-contact a:hover {
-  color: #ffffff;
+  color: var(--aura-cream);
   text-decoration: none;
 }
 
 .footer-contact p {
-  color: #d1dad5;
+  color: var(--text-muted);
   font-size: 0.95rem;
   line-height: 1.7;
   margin-bottom: 0.8rem;
@@ -1104,10 +1022,9 @@ html[dir="rtl"] .footer-logo {
   margin-top: 1.5rem;
   width: 100%;
   height: 250px;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(166, 184, 175, 0.25);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  opacity: 0.85;
 }
 
 .social-links {
@@ -1117,33 +1034,28 @@ html[dir="rtl"] .footer-logo {
 }
 
 .social-icon {
-  color: #a6b8af;
+  color: var(--text-muted);
   transition: var(--transition-smooth);
   display: inline-flex;
 }
 
 .social-icon:hover {
-  color: #ffffff;
+  color: var(--aura-cream);
   transform: translateY(-2px);
 }
 
 .footer-bottom {
-  border-top: 1px solid rgba(166, 184, 175, 0.2);
+  border-top: 1px solid rgba(244, 239, 223, 0.1);
   padding: 1.75rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #a6b8af;
+  color: rgba(244, 239, 223, 0.4);
   font-size: 0.85rem;
 }
 
 .footer-bottom p {
   margin: 0;
-}
-
-.footer-bottom .lang-btn {
-  border-color: #a6b8af;
-  color: #f9f8f6;
 }
 
 @media (max-width: 1024px) {
@@ -1167,6 +1079,7 @@ html[dir="rtl"] .footer-logo {
     text-align: center;
   }
 
+  /* Brand spans full width, centered */
   .footer-brand {
     grid-column: 1 / -1;
     display: flex;
@@ -1174,6 +1087,7 @@ html[dir="rtl"] .footer-logo {
     align-items: center;
   }
 
+  /* Force logo to center even in RTL */
   .footer-logo,
   html[dir="rtl"] .footer-logo {
     display: flex !important;
@@ -1186,6 +1100,7 @@ html[dir="rtl"] .footer-logo {
     text-align: center;
   }
 
+  /* Explore + Legal side by side, each centered */
   .footer-links {
     display: flex;
     flex-direction: column;
@@ -1205,6 +1120,7 @@ html[dir="rtl"] .footer-logo {
     unicode-bidi: normal !important;
   }
 
+  /* Contact spans full width */
   .footer-contact {
     grid-column: 1 / -1;
     display: flex;
@@ -1221,6 +1137,7 @@ html[dir="rtl"] .footer-logo {
     justify-content: center;
   }
 
+  /* Map full width */
   .footer-map {
     grid-column: 1 / -1;
     height: 200px;
@@ -1233,15 +1150,15 @@ html[dir="rtl"] .footer-logo {
   }
 }
 
-/* Modal - Clean Japandi Off-White */
+/* Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(42, 53, 49, 0.65);
-  backdrop-filter: blur(8px);
+  background-color: rgba(44, 58, 56, 0.8);
+  backdrop-filter: blur(5px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1257,14 +1174,12 @@ html[dir="rtl"] .footer-logo {
 }
 
 .modal-content {
-  background-color: #ffffff;
-  color: #2a3531;
+  background-color: var(--aura-cream);
+  color: var(--text-dark);
   padding: 3rem;
   border-radius: var(--border-radius-lg);
-  border: 1px solid rgba(118, 141, 131, 0.2);
-  box-shadow: 0 25px 60px rgba(42, 53, 49, 0.2);
   width: 90%;
-  max-width: 520px;
+  max-width: 500px;
   position: relative;
   transform: translateY(20px);
   transition: var(--transition-smooth);
@@ -1282,14 +1197,8 @@ html[dir="rtl"] .footer-logo {
   border: none;
   font-size: 2rem;
   line-height: 1;
-  color: #4e635a;
+  color: var(--clinique-teal-dark);
   cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.close-modal:hover {
-  transform: scale(1.1);
-  color: #2a3531;
 }
 
 [dir="rtl"] .close-modal {
@@ -1298,14 +1207,13 @@ html[dir="rtl"] .footer-logo {
 }
 
 .modal-title {
-  color: #2a3531;
+  color: var(--clinique-teal-dark);
   margin-bottom: 0.5rem;
-  font-size: 2.2rem;
-  font-family: var(--font-serif);
+  font-size: 2.5rem;
 }
 
 .modal-desc {
-  color: #5e6f69;
+  color: #4a5c59;
   margin-bottom: 2rem;
 }
 
@@ -1317,19 +1225,19 @@ html[dir="rtl"] .footer-logo {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: #2a3531;
+  color: var(--clinique-teal-dark);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
-  padding: 0.9rem 1.1rem;
-  border: 1px solid rgba(118, 141, 131, 0.25);
+  padding: 0.875rem 1rem;
+  border: 1px solid rgba(160, 189, 184, 0.5);
   border-radius: var(--border-radius-sm);
-  background-color: #f9f8f6;
+  background-color: var(--pearl-luminescence);
   font-family: var(--font-sans);
-  color: #2a3531;
+  color: var(--text-dark);
   transition: var(--transition-fast);
 }
 
@@ -1337,9 +1245,8 @@ html[dir="rtl"] .footer-logo {
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #4e635a;
-  box-shadow: 0 0 0 3px rgba(78, 99, 90, 0.15);
-  background-color: #ffffff;
+  border-color: var(--clinique-teal);
+  box-shadow: 0 0 0 3px rgba(160, 189, 184, 0.2);
 }
 
 /* Animations */

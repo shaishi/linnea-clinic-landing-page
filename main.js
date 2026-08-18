@@ -6,25 +6,22 @@ try {
   if (typeof Lenis !== 'undefined') {
     // Initialize Smooth Scrolling (Lenis)
     lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.9,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
       smoothTouch: false,
+      touchMultiplier: 2,
       infinite: false,
     });
 
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
     }
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
   }
 } catch (e) {
   console.warn("Smooth scroll initialization failed:", e);
@@ -57,14 +54,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Hero Intro Animation ---
-  const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out', duration: 1.1 } });
+  const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.0 } });
 
   heroTl
-    .fromTo('.hero-title', { opacity: 0, y: 30 }, { opacity: 1, y: 0, delay: 0.15 })
-    .fromTo('.hero-subtitle', { opacity: 0, y: 25 }, { opacity: 1, y: 0 }, '-=0.8')
+    .fromTo('.hero-title', { opacity: 0, y: 20 }, { opacity: 1, y: 0, delay: 0.15 })
+    .fromTo('.hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8')
     .fromTo('.hero-btn', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8');
 
-  // --- GSAP Scroll Reveals (Graceful Upward Entrance) ---
+  // --- Pre-loader Removal (GSAP block removed in favor of CSS transition below) ---
+
+  // --- GSAP Scroll Reveals ---
   const revealSections = document.querySelectorAll('section');
 
   revealSections.forEach(section => {
@@ -76,31 +75,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const sectionTl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: 'top 82%',
+        start: 'top 80%',
         toggleActions: 'play none none none'
       }
     });
 
     if (sectionTitle) {
       sectionTl.fromTo(sectionTitle,
-        { opacity: 0, y: 35 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
+        { opacity: 0, y: -50 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
       );
     }
 
     if (sectionDesc) {
       sectionTl.fromTo(sectionDesc,
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' },
+        { opacity: 0, y: -30 },
+        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
         '-=0.6'
       );
     }
 
     if (cards.length > 0) {
       sectionTl.fromTo(cards,
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' },
-        '-=0.5'
+        { opacity: 0, y: -60 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out' },
+        '-=0.6'
       );
     }
   });
@@ -468,19 +467,10 @@ document.addEventListener('DOMContentLoaded', () => {
       "botxadv-desc": "Treating bruxism (teeth grinding) or sculpting the jawline and neck.",
       "botxadv-time-val": "20 Minutes",
       "botxadv-pain-val": "Minimal",
-      "botxadv-mat-val": "Botulinum Toxin",
-      "btn-back": "Back",
-      "view-treatments": "View Treatments",
-      "hero-eyebrow": "✦ CLINICAL EXCELLENCE & NATURAL BEAUTY | WE TOWER TEL AVIV",
-      "trust-1-title": "FDA & CE Approved",
-      "trust-1-desc": "Only authentic premium materials with strict international certification.",
-      "trust-2-title": "Dual Doctor Care",
-      "trust-2-desc": "Every consultation & plan is led by two specialist physicians.",
-      "trust-3-title": "Minimalist Precision",
-      "trust-3-desc": "Subtle enhancements preserving natural facial expressions.",
-      "trust-4-title": "Tel Aviv Center",
-      "trust-4-desc": "WE Tower, 150 Menachem Begin Rd, private parking & serene spa ambiance.",
-      "about-eyebrow": "ABOUT THE CLINIC"
+      "botxadv-mat-val": "Botulinum Toxin"
+      ,"btn-back": "Back",
+      "view-treatments": "View Treatments"
+
     },
     he: {
       "nav-about": "אודות",
@@ -489,18 +479,8 @@ document.addEventListener('DOMContentLoaded', () => {
       "nav-directions": "הגעה",
       "nav-contact": "צור קשר",
       "btn-book": "קביעת פגישה",
-      "hero-eyebrow": "✦ מצוינות רפואית וזוהר טבעי | מגדל WE תל אביב",
       "hero-title": "Linnéa | דיוק רפואי בקו נקי",
-      "hero-subtitle": "טיפולי רפואה אסתטית ברמה הגבוהה ביותר, המותאמים אישית לשמירה על התווי הטבעי שלך. תכנון וייעוץ קליני כפול ע״י צמד רופאים מומחים לדיוק מקסימלי ותוצאה הרמונית.",
-      "trust-1-title": "חומרי פרימיום FDA/CE",
-      "trust-1-desc": "שימוש בלעדי בחומרים מקוריים בעלי התקנים המחמירים בעולם",
-      "trust-2-title": "ייעוץ רפואי כפול",
-      "trust-2-desc": "תכנון וליווי משותף של 2 רופאים מומחים בכל שלב",
-      "trust-3-title": "מינימליזם מדויק",
-      "trust-3-desc": "תוצאות עדינות וטבעיות השומרות על ההבעה האישית שלך",
-      "trust-4-title": "מגדל WE תל אביב",
-      "trust-4-desc": "דרך מנחם בגין 150, תל אביב, חנייה פרטית צמודה ואווירת ספא מרגיעה",
-      "about-eyebrow": "תפיסה רפואית | אודות הקליניקה",
+      "hero-subtitle": "טיפולים אסתטיים ברמה הגבוהה ביותר, המותאמים אישית להעצמת היופי הייחודי שלך באווירה מרגיעה ומקצועית. הייעוץ בקליניקה מבוצע על ידי צמד רופאים לדיוק מקסימלי ותוצאה הרמונית.",
       "about-title": "Linnéa: אמנות הדיוק וההרמוניה",
       "about-p1": "אנו מאמינים שאסתטיקה אינה שינוי, אלא זיקוק של היופי הקיים. ב-Linnéa אנו מחברים בין מדע מתקדם לגישה אנושית ומעודנת, המעניקה לך מרחב של שקט וביטחון מלא לאורך כל הדרך.",
       "about-p2": "הלב המקצועי שלנו פועם במודל הייעוץ המשותף: כל תוכנית טיפול נבנית על ידי שני רופאים הפועלים בסינרגיה מלאה. שיתוף פעולה זה מבטיח אבחון עומק, תכנון קפדני ותוצאה הרמונית המכבדת את תווי הפנים הייחודיים שלך.",
