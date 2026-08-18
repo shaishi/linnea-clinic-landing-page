@@ -1048,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getIpv() {
       if (window.innerWidth <= 768) return 1;
-      return type === 'transformations' ? 1 : (type === 'doctors' ? 2 : 3);
+      return (type === 'transformations' || type === 'doctors') ? 1 : 3;
     }
 
     function getGap() {

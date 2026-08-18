@@ -590,17 +590,39 @@ a {
   padding: 5rem 0;
 }
 
+.doctors .carousel-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
 .doctor-card {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 3rem;
   background-color: #ffffff;
   border: 1px solid rgba(36, 51, 45, 0.08);
-  border-radius: var(--border-radius-md);
-  padding: 2.5rem;
+  border-radius: var(--border-radius-lg);
+  padding: 3.5rem 3rem;
+  align-items: start;
+  text-align: start;
+  box-shadow: 0 12px 32px -8px rgba(36, 51, 45, 0.05);
+  width: 100%;
+}
+
+@media (max-width: 850px) {
+  .doctor-card {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2.5rem 1.8rem;
+    text-align: center;
+  }
+}
+
+.doctor-image-wrapper {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  text-align: center;
-  box-shadow: 0 8px 24px -5px rgba(36, 51, 45, 0.04);
+  width: 100%;
 }
 
 .doctor-eyebrow {
@@ -618,29 +640,29 @@ a {
   max-width: 250px;
   aspect-ratio: 3/4;
   object-fit: cover;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(36, 51, 45, 0.08);
-  margin: 0 auto 1.5rem auto;
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(36, 51, 45, 0.08);
+  margin: 0 auto;
   display: block;
 }
 
 .doctor-info {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .doctor-name {
   font-family: var(--font-serif);
-  font-size: 2.2rem;
+  font-size: 2.3rem;
   color: #24332d;
   margin: 0 0 1.25rem;
   line-height: 1.2;
 }
 
 .doctor-bio {
-  font-size: 1rem;
-  line-height: 1.75;
+  font-size: 1.02rem;
+  line-height: 1.8;
   color: #586b63;
   margin-bottom: 1.25rem;
 }
