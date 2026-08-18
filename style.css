@@ -1,46 +1,56 @@
-/* Linnéa Design System */
+/* Linnéa High-End Japandi & K-Beauty Design System */
 :root {
-  /* Brand Colors */
-  --clinique-teal: #7e9c96; /* Darkened for better contrast */
-  --clinique-teal-dark: #617d78;
-  --clinique-teal-light: #98b4af;
+  /* Soft Soothing Luxury Neutral Palette */
+  --bg-main: #f7f5f0;           /* Soft Washi Linen Alabaster Silk */
+  --bg-surface: #fcfbfa;        /* Clean Soft Off-White Card Surface */
+  --bg-oat: #efece6;            /* Warm Oat Sand for quiet section contrast */
+  --bg-dark: #222b28;           /* Grounded Hinoki Obsidian Cedar */
 
-  --aura-cream: #f4efdf;
-  --aura-cream-dark: #e8e2d0;
+  --clinique-teal: #f7f5f0;
+  --clinique-teal-dark: #222b28;
+  --clinique-teal-light: #4a5d54;
 
-  --pearl-luminescence: #fdfbf6;
+  --sage-accent: #4a5d54;       /* Organic Japanese Matcha Sage */
+  --sage-dark: #32423b;         /* Primary Button Fill & Accent Headings */
+  --sage-light: #708479;
+
+  --aura-cream: #222b28;
+  --aura-cream-dark: #19201e;
+
+  --gold-accent: #4a5d54;
+  --gold-light: #708479;
+
+  --pearl-luminescence: #fcfbfa;
 
   /* Text Colors */
-  --text-primary: #f4efdf; /* Main text on teal background */
-  --text-dark: #2c3a38; /* Text on cream/pearl background */
-  --text-muted: rgba(
-    244,
-    239,
-    223,
-    0.95
-  ); /* Adjusted for WCAG AA contrast against teal */
+  --text-primary: #222b28;      /* Deep Hinoki Obsidian Charcoal */
+  --text-dark: #222b28;
+  --text-muted: #55685f;        /* Soft Editorial Sage Charcoal */
+  --text-muted-dark: #55685f;
 
   /* Typography */
-  --font-serif: "DM Serif Display", "Heebo", sans-serif;
-  --font-sans: "Outfit", "Heebo", sans-serif;
+  --font-serif: "DM Serif Display", "Frank Ruhl Libre", Georgia, serif;
+  --font-sans: "Outfit", "Assistant", "Heebo", sans-serif;
 
   /* Layout */
   --container-width: 1200px;
-  --section-spacing: 3rem;
-  --border-radius-sm: 4px;
-  --border-radius-md: 12px;
-  --border-radius-lg: 30px;
+  --section-spacing: 5.5rem;
+  --border-radius-sm: 8px;
+  --border-radius-md: 18px;
+  --border-radius-lg: 28px;
 
   /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  --transition-bounce: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
   --navbar-height: 85px;
 
-  /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-blur: 15px;
+  /* Elevation & Glassmorphism */
+  --glass-bg: rgba(247, 245, 240, 0.94);
+  --glass-border: rgba(50, 66, 59, 0.08);
+  --glass-blur: 16px;
+  --luxury-shadow: 0 12px 32px -8px rgba(34, 43, 40, 0.05);
+  --light-shadow: 0 8px 24px -5px rgba(34, 43, 40, 0.04);
 }
 
 /* Reset & Base */

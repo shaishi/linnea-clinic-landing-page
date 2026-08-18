@@ -1,30 +1,6 @@
 // --- Imports Disabled for CDN / Direct Browser Compatibility ---
-if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') { gsap.registerPlugin(ScrollTrigger); }
-
-let lenis;
-try {
-  if (typeof Lenis !== 'undefined') {
-    // Initialize Smooth Scrolling (Lenis)
-    lenis = new Lenis({
-      duration: 0.9,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-    });
-
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      lenis.on('scroll', ScrollTrigger.update);
-      gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-      gsap.ticker.lagSmoothing(0);
-    }
-  }
-} catch (e) {
-  console.warn("Smooth scroll initialization failed:", e);
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') { 
+  gsap.registerPlugin(ScrollTrigger); 
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -54,14 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- Hero Intro Animation ---
-  const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.0 } });
+  const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out', duration: 1.0 } });
 
   heroTl
-    .fromTo('.hero-title', { opacity: 0, y: 20 }, { opacity: 1, y: 0, delay: 0.15 })
-    .fromTo('.hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8')
-    .fromTo('.hero-btn', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.8');
-
-  // --- Pre-loader Removal (GSAP block removed in favor of CSS transition below) ---
+    .fromTo('.hero-title', { opacity: 0, y: 25 }, { opacity: 1, y: 0, delay: 0.15 })
+    .fromTo('.hero-subtitle', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.7')
+    .fromTo('.hero-btn', { opacity: 0, y: 20 }, { opacity: 1, y: 0 }, '-=0.7');
 
   // --- GSAP Scroll Reveals ---
   const revealSections = document.querySelectorAll('section');
@@ -75,31 +49,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const sectionTl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: 'top 80%',
+        start: 'top 82%',
         toggleActions: 'play none none none'
       }
     });
 
     if (sectionTitle) {
       sectionTl.fromTo(sectionTitle,
-        { opacity: 0, y: -50 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }
       );
     }
 
     if (sectionDesc) {
       sectionTl.fromTo(sectionDesc,
-        { opacity: 0, y: -30 },
-        { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' },
-        '-=0.6'
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+        '-=0.5'
       );
     }
 
     if (cards.length > 0) {
       sectionTl.fromTo(cards,
-        { opacity: 0, y: -60 },
-        { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out' },
-        '-=0.6'
+        { opacity: 0, y: 35 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out' },
+        '-=0.4'
       );
     }
   });
