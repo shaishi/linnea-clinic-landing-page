@@ -28,31 +28,6 @@ try {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // --- Custom Cursor Logic ---
-  const cursorDot = document.querySelector('.cursor-dot');
-  const cursorOutline = document.querySelector('.cursor-outline');
-  const interactiveElements = document.querySelectorAll('a, button, .treatment-card, .ba-handle');
-
-  if (cursorDot && cursorOutline) {
-    window.addEventListener('mousemove', (e) => {
-      const posX = e.clientX;
-      const posY = e.clientY;
-
-      // Use GSAP for smooth cursor trailing
-      gsap.to(cursorDot, { x: posX, y: posY, duration: 0.1 });
-      gsap.to(cursorOutline, { x: posX, y: posY, duration: 0.25 });
-    });
-
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursorOutline.classList.add('cursor-hover');
-      });
-      el.addEventListener('mouseleave', () => {
-        cursorOutline.classList.remove('cursor-hover');
-      });
-    });
-  }
-
   // --- Hero Intro Animation ---
   const heroTl = gsap.timeline({ paused: true, defaults: { ease: 'power4.out', duration: 1.0 } });
 
@@ -69,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   revealSections.forEach(section => {
     const sectionTitle = section.querySelector('.section-title');
     const sectionDesc = section.querySelector('.section-description');
-    const cards = Array.from(section.querySelectorAll('.treatment-card, .article-card, .review-card, .ba-container, .article-hero-img, .reveal, .article-content p'))
+    const cards = Array.from(section.querySelectorAll('.doctor, .article-card, .review, .ba-container, .t-category, .article-hero-img, .reveal, .article-content p'))
       .filter(el => !el.classList.contains('section-title') && !el.classList.contains('section-description'));
 
     const sectionTl = gsap.timeline({
@@ -140,33 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   );
 
-
-  // --- Magnetic Buttons ---
-  const magneticBtns = document.querySelectorAll('.btn-primary, .btn-secondary, .social-icon');
-
-  magneticBtns.forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-
-      gsap.to(btn, {
-        x: x * 0.3,
-        y: y * 0.3,
-        duration: 0.5,
-        ease: 'power2.out'
-      });
-    });
-
-    btn.addEventListener('mouseleave', () => {
-      gsap.to(btn, {
-        x: 0,
-        y: 0,
-        duration: 0.5,
-        ease: 'elastic.out(1, 0.3)'
-      });
-    });
-  });
 
   // --- Preloader ---
   const preloaderEl = document.getElementById('preloader');
@@ -260,15 +208,16 @@ document.addEventListener('DOMContentLoaded', () => {
       "location-title": "Visit Our Clinic",
       "location-desc": "Located in the heart of the city, Linnéa offers a hygienic, soothing sanctuary away from the bustle. We invite you to step into our luxurious space.",
       "address-label": "Address:",
-      "address-val": "116 Herzl Blvd, Jerusalem",
+      "address-val": "Menachem Begin 150, Tel Aviv",
       "hours-label": "Hours:",
+      "hours-val": "Mon–Thu 09:00–19:00 · Fri 09:00–14:00",
       "phone-label": "Phone:",
       "get-directions": "Get Directions",
       "map-placeholder": "Map View",
       "footer-tagline": "Warm, luxurious, inviting, human.",
       "footer-explore": "Explore",
       "footer-contact": "Contact Us",
-      "footer-address": "116 Herzl Blvd, Jerusalem, Israel",
+      "footer-address": "Menachem Begin 150, Tel Aviv, Israel",
       "footer-discuss": "Let's discuss your journey.",
       "footer-rights": "© 2026 Linnéa Aesthetic Clinic. All rights reserved.",
       "modal-title": "Book a Consultation",
@@ -357,21 +306,21 @@ document.addEventListener('DOMContentLoaded', () => {
       "article3-title": "The Science of Longevity",
       "article3-subtitle": "Evidence-based approaches to cellular health and graceful aging.",
       "article3-desc": "Delve into our evidence-based approach combining aesthetic treatments with cellular health and graceful aging.",
-      "alt-dr-shilo": "Dr. Shiloh DMD MSc, Expert Aesthetic Doctor at Linnéa Aesthetic Clinic Jerusalem, Israel",
+      "alt-dr-shilo": "Dr. Shiloh DMD MSc, Expert Aesthetic Doctor at Linnéa Aesthetic Clinic Tel Aviv, Israel",
       "alt-skin": "Professional Skin Rejuvenation and Advanced Laser Treatments at Linnéa Aesthetic Clinic Israel",
-      "alt-botox": "Expert Botox Injections and Dermal Fillers at Premium Aesthetic Clinic Jerusalem",
-      "alt-contouring": "Facial Contouring and Aesthetic Sculpting Specialist in Jerusalem, Israel",
+      "alt-botox": "Expert Botox Injections and Dermal Fillers at Premium Aesthetic Clinic Tel Aviv",
+      "alt-contouring": "Facial Contouring and Aesthetic Sculpting Specialist in Tel Aviv, Israel",
       "alt-article-botox": "The Art of Botox: Expert Anti-Aging and Wrinkle Treatments in Israel",
       "alt-article-fillers": "Mastering Dermal Fillers: Advanced Volume Restoration at Linnéa Aesthetic Clinic",
       "alt-article-scientific": "Science of Longevity: Evidence-Based Aesthetic Medicine in Israel",
       "alt-skin-after": "After Results of Skin Rejuvenation Treatment at Linnéa Clinic Israel",
-      "alt-skin-before": "Before Skin Rejuvenation Treatment at Aesthetic Clinic Jerusalem",
+      "alt-skin-before": "Before Skin Rejuvenation Treatment at Aesthetic Clinic Tel Aviv",
       "alt-lips-after": "After Results of Lip Enhancement Fillers in Israel",
       "alt-lips-before": "Before Lip Enhancement Fillers at Linnéa Clinic",
       "alt-jawline-after": "After Jawline Contouring and Facial Sculpting Results",
-      "alt-jawline-before": "Before Jawline Contouring at Jerusalem Aesthetic Clinic",
+      "alt-jawline-before": "Before Jawline Contouring at Tel Aviv Aesthetic Clinic",
       "alt-article1-hero": "Botox and Neuromodulator Treatment for Natural Results in Israel",
-      "alt-article2-hero": "Dermal Fillers and Facial Balancing for Elegant Aging in Jerusalem",
+      "alt-article2-hero": "Dermal Fillers and Facial Balancing for Elegant Aging in Tel Aviv",
       "alt-article3-hero": "Cellular Health and Longevity Science in Modern Aesthetic Medicine Israel",
       "article3-p1": "True aesthetic beauty radiates from within, reflecting optimal cellular health. At Linnéa, we look beyond the surface, integrating cutting-edge longevity science with our aesthetic treatments to ensure age-defying results that last.",
       "article3-p2": "Our scientific approach focuses on bio-stimulation and regenerative medicine. By triggering the body's natural collagen and elastin production through advanced technologies like microneedling, laser therapies, and polynucleotides, we effectively repair the skin at a molecular level.",
@@ -496,15 +445,16 @@ document.addEventListener('DOMContentLoaded', () => {
       "location-title": "בקרו בקליניקה שלנו",
       "location-desc": "ממוקמת בלב העיר, לינאה מציעה מקלט היגייני ומרגיע הרחק מההמולה. אנו מזמינים אתכם להיכנס לחלל היוקרתי שלנו.",
       "address-label": "כתובת:",
-      "address-val": "שדרות הרצל 116, ירושלים",
+      "address-val": "מנחם בגין 150, תל אביב",
       "hours-label": "שעות פתיחה:",
+      "hours-val": "ב׳–ה׳ 09:00–19:00 · ו׳ 09:00–14:00",
       "phone-label": "טלפון:",
       "get-directions": "ניווט לקליניקה",
       "map-placeholder": "מפה",
       "footer-tagline": "חם, יוקרתי, מזמין, אנושי.",
       "footer-explore": "ניווט",
       "footer-contact": "צרו קשר",
-      "footer-address": "שדרות הרצל 116, ירושלים, ישראל",
+      "footer-address": "מנחם בגין 150, תל אביב, ישראל",
       "footer-discuss": "בואו נדבר על המסע שלכן.",
       "footer-rights": "© 2026 לינאה קליניקה אסתטית. כל הזכויות שמורות.",
       "modal-title": "קביעת פגישת ייעוץ",
@@ -595,21 +545,21 @@ document.addEventListener('DOMContentLoaded', () => {
       "article3-title": "מדע אריכות הימים",
       "article3-subtitle": "גישות מבוססות-ראיות לבריאות התא והזדקנות בחן.",
       "article3-desc": "חקרו את הגישה המדעית שלנו המשלבת טיפולים אסתטיים עם בריאות תאית לאריכות ימים.",
-      "alt-dr-shilo": "ד\"ר שילה DMD MSc, מומחה לאסתטיקה רפואית במרפאת לינאה ירושלים, ישראל",
+      "alt-dr-shilo": "ד\"ר שילה DMD MSc, מומחה לאסתטיקה רפואית במרפאת לינאה תל אביב, ישראל",
       "alt-skin": "חידוש העור וטיפולי לייזר מתקדמים במרפאת האסתטיקה לינאה ישראל",
-      "alt-botox": "הזרקות בוטוקס וחומרי מילוי מומחים במרפאת בוטיק לאסתטיקה בירושלים",
-      "alt-contouring": "מומחה לפיסול פנים וקו לסת במרפאת אסתטיקה בירושלים, ישראל",
+      "alt-botox": "הזרקות בוטוקס וחומרי מילוי מומחים במרפאת בוטיק לאסתטיקה בתל אביב",
+      "alt-contouring": "מומחה לפיסול פנים וקו לסת במרפאת אסתטיקה בתל אביב, ישראל",
       "alt-article-botox": "אמנות הבוטוקס: טיפולי אנטי-אייג'ינג והחלקת קמטים מומחים בישראל",
       "alt-article-fillers": "מומחיות בחומרי מילוי: שחזור נפח מתקדם במרפאת לינאה אסתטיקה",
       "alt-article-scientific": "מדע אריכות הימים: רפואה אסתטית מבוססת מדע בישראל",
       "alt-skin-after": "תוצאות אחרי טיפול חידוש עור במרפאת לינאה ישראל",
-      "alt-skin-before": "לפני טיפול חידוש עור במרפאת אסתטיקה בירושלים",
+      "alt-skin-before": "לפני טיפול חידוש עור במרפאת אסתטיקה בתל אביב",
       "alt-lips-after": "תוצאות אחרי עיבוי שפתיים עם חומרי מילוי בישראל",
       "alt-lips-before": "לפני עיבוי שפתיים במרפאת לינאה",
       "alt-jawline-after": "תוצאות אחרי פיסול קו לסת ועיצוב פנים",
-      "alt-jawline-before": "לפני פיסול קו לסת במרפאת אסתטיקה ירושלים",
+      "alt-jawline-before": "לפני פיסול קו לסת במרפאת אסתטיקה בתל אביב",
       "alt-article1-hero": "טיפול בוטוקס ונוירומודולטורים לתוצאות טבעיות בישראל",
-      "alt-article2-hero": "חומרי מילוי ואיזון פנים להזדקנות אלגנטית בירושלים",
+      "alt-article2-hero": "חומרי מילוי ואיזון פנים להזדקנות אלגנטית בתל אביב",
       "alt-article3-hero": "בריאות תאית ומדע אריכות הימים ברפואה אסתטית מודרנית בישראל",
       "article3-p1": "יופי אסתטי אמיתי זוהר מבפנים ומשקף בריאות תאית אופטימלית. בלינאה, אנו מסתכלים מעבר לפני השטח ומשלבים מדע מתקדם של אריכות ימים עם טיפולי האסתטיקה שלנו כדי להבטיח תוצאות המחזיקות לאורך זמן ומאטות את תהליך ההזדקנות.",
       "article3-p2": "הגישה המדעית שלנו מתמקדת בביו-סטימולציה ורפואה רנרטיבית. על ידי גירוי ייצור הקולגן והאלסטין הטבעי של הגוף באמצעות טכנולוגיות מתקדמות כמו מיקרונידלינג, טיפולי לייזר ופולינוקלאוטידים, אנו מתקנים את העור ברמה המולקולרית.",
@@ -820,7 +770,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Modal logic
   const modal = document.getElementById('booking-modal');
-  const openModalBtns = document.querySelectorAll('.nav-btn, .hero-btn, a[href="#contact"], a[href="index.html#contact"], a[href="#book"], a[href="index.html#book"]');
+  const openModalBtns = document.querySelectorAll('.nav-btn, .hero-btn, .book-trigger, a[href="#contact"], a[href="index.html#contact"], a[href="#book"], a[href="index.html#book"]');
   const closeModal = document.getElementById('close-modal');
   const form = document.getElementById('booking-form');
 
@@ -875,8 +825,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (response.ok) {
           form.innerHTML = `
             <div style="text-align: center; padding: 2.5rem 0;">
-              <h3 style="font-family: var(--font-serif); font-size: 2.5rem; color: var(--clinique-teal-dark); margin-bottom: 1rem;" data-i18n="success-title">Thank You!</h3>
-              <p style="font-size: 1.1rem; color: var(--text-dark);" data-i18n="success-msg">Your request has been received. We will contact you shortly.</p>
+              <h3 style="font-family: var(--font-display); font-weight: 500; font-size: 2rem; color: var(--blue-deep); margin-bottom: 1rem;" data-i18n="success-title">Thank You!</h3>
+              <p style="font-size: 1.05rem; color: var(--ink-soft);" data-i18n="success-msg">Your request has been received. We will contact you shortly.</p>
             </div>
           `;
           applyLanguage(currentLang);
@@ -909,44 +859,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // Drill-Down / Nested Carousel Logic
-  const categoryTriggers = document.querySelectorAll('.category-trigger');
-  const backBtns = document.querySelectorAll('.btn-back-categories');
-  const drillViews = document.querySelectorAll('.drill-view');
-  
-  const switchDrillView = (targetId) => {
-    drillViews.forEach(view => {
-      view.classList.remove('active');
-    });
-    const targetView = document.getElementById(targetId);
-    if (targetView) {
-      targetView.classList.add('active');
-      // Trigger resize event or layout recalculation so the hidden carousels calculate correct widths!
-      setTimeout(() => {
-        const wrapper = targetView.querySelector('.carousel-wrapper');
-        if (wrapper && wrapper._carouselLayout) {
-          wrapper._carouselLayout();
-        }
-        window.dispatchEvent(new Event('resize'));
-      }, 50);
-    }
-  };
-
-  categoryTriggers.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = btn.getAttribute('data-target-sub');
-      switchDrillView(targetId);
-      // Optional: scroll slightly to center the view
-      const section = document.getElementById('treatments');
-      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // --- Treatments Index Accordion (categories + individual treatment detail) ---
+  document.querySelectorAll('.t-category').forEach(category => {
+    const trigger = category.querySelector('.t-category-trigger');
+    trigger.addEventListener('click', () => {
+      const isOpen = category.getAttribute('aria-expanded') === 'true';
+      category.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
     });
   });
 
-  backBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      switchDrillView('treatments-categories-view');
+  document.querySelectorAll('.t-item').forEach(item => {
+    const trigger = item.querySelector('.t-item-trigger');
+    trigger.addEventListener('click', () => {
+      const isOpen = item.getAttribute('aria-expanded') === 'true';
+      item.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
     });
   });
 
@@ -1074,7 +1000,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getIpv() {
       if (window.innerWidth <= 768) return 1;
-      return type === 'transformations' ? 1 : (type === 'doctors' ? 2 : 3);
+      return 3;
     }
 
     function getGap() {
