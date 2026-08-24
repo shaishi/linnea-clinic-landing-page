@@ -6,7 +6,7 @@
   enormous quiet, the client's own ink, exact type, nothing performing.
   OWN-WORLD: The client's own brand ink and paper (Claude Design logo canvas: #293939 ink, #F0E9D7 paper),
   committed across full-bleed panels (hero, doctors, footer, preloader) alongside pale ink-tints for section
-  rhythm; Rubik (display) + Assistant (body) for bilingual copy, DM Serif Display + Jost for the wordmark only;
+  rhythm; Frank Ruhl Libre (headings) + Assistant (body) + Rubik (UI chrome) for bilingual copy, DM Serif Display + Jost for the wordmark only;
   pill controls; 1px hairlines; no cards-as-default, no cursor gimmick, one reveal grammar.
   STORY: A visitor scanning Israeli aesthetic clinics for someone credentialed and unhurried lands on a page that
   reads like a real clinical practice, not a sales funnel — two real doctors, an evidence-based treatment index,
@@ -22,7 +22,7 @@
   -->
 */
 
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&family=Assistant:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Jost:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700&family=DM+Serif+Display:ital@0;1&family=Jost:wght@400;500&display=swap");
 
 :root {
   /* ── Color: the client's own brand ink + paper (Claude Design logo canvas), extended as one tonal family — no separate accent hue ── */
@@ -47,9 +47,11 @@
   --line: rgba(41, 57, 57, 0.14);
   --line-soft: rgba(41, 57, 57, 0.08);
 
-  /* ── Type ── */
-  --font-display: "Rubik", "Segoe UI", system-ui, sans-serif;
+  /* ── Type: one grotesk (Assistant) carries both body and UI chrome — no separate display sans ── */
+  --font-display: "Assistant", "Segoe UI", system-ui, sans-serif;
   --font-body: "Assistant", "Segoe UI", system-ui, sans-serif;
+  /* Headings (bilingual Hebrew+Latin serif) — echoes the DM Serif Display wordmark */
+  --font-heading: "Frank Ruhl Libre", "Georgia", serif;
   /* Brand wordmark only (always Latin "Linnéa" — no Hebrew coverage) */
   --font-wordmark: "DM Serif Display", Georgia, serif;
   --font-wordmark-tag: "Jost", "Segoe UI", sans-serif;
@@ -60,6 +62,7 @@
   --radius-sm: 6px;
   --radius-md: 14px;
   --radius-pill: 999px;
+  --radius-btn: 3px;
   --navbar-height: 84px;
 
   /* ── Motion: one grammar — exponential ease-out, no bounce ── */
@@ -129,10 +132,10 @@ input, select, textarea { font-family: inherit; font-size: 1rem; }
 
 /* ───────────────────────── Typography ───────────────────────── */
 h1, h2, h3, h4 {
-  font-family: var(--font-display);
+  font-family: var(--font-heading);
   font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.12;
+  letter-spacing: 0;
+  line-height: 1.15;
   text-wrap: balance;
 }
 
@@ -164,7 +167,7 @@ p.measure-none { max-width: none; }
   font-family: var(--font-display);
   font-size: 0.95rem; font-weight: 500;
   padding: 0.95rem 2rem;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-btn);
   transition: transform 0.35s var(--ease-out), background-color 0.3s var(--ease-out), color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
   white-space: nowrap;
 }
@@ -236,7 +239,7 @@ p.measure-none { max-width: none; }
 
 .lang-btn {
   font-size: 0.82rem; padding: 0.5rem 1.1rem;
-  border: 1.5px solid var(--line); border-radius: var(--radius-pill);
+  border: 1.5px solid var(--line); border-radius: var(--radius-btn);
   color: var(--ink-soft); font-family: var(--font-display); font-weight: 500;
 }
 .lang-btn:hover { border-color: var(--ink); color: var(--ink); }
@@ -272,6 +275,11 @@ p.measure-none { max-width: none; }
   display: flex; align-items: center; justify-content: center;
 }
 .loader-content { text-align: center; display: flex; flex-direction: column; align-items: center; }
+.loader-monogram {
+  width: 60px; height: 60px; border: 1.5px solid var(--on-ink-line); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; margin-bottom: 1.6rem;
+  font-family: var(--font-wordmark); font-weight: 400; font-size: 1.7rem; color: var(--on-ink);
+}
 .loader-logo {
   font-family: var(--font-wordmark); font-weight: 400; font-size: 3.4rem; color: var(--on-ink);
   letter-spacing: -0.005em; line-height: 1; margin-bottom: 1.1rem;
@@ -331,34 +339,42 @@ html[dir="rtl"] .hero-visual::after {
 .hero-mark { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; color: var(--ink-faint); margin-bottom: 2.6rem; letter-spacing: -0.01em; }
 .hero-title {
   font-size: clamp(2.3rem, 4vw, 3.4rem);
-  font-weight: 500; color: var(--ink); margin-bottom: 1.6rem; line-height: 1.14;
+  font-weight: 500; color: var(--ink); margin-bottom: 1.4rem; line-height: 1.14;
+}
+.hero-lead {
+  font-family: var(--font-display); font-weight: 500; font-size: 1.05rem;
+  color: var(--ink); margin-bottom: 0.9rem;
 }
 .hero-subtitle {
-  font-size: 1.08rem; color: var(--ink-soft); max-width: 42ch; margin-bottom: 2.6rem;
+  font-size: 1.05rem; color: var(--ink-soft); max-width: 42ch; margin-bottom: 2.6rem;
 }
-.hero-btn { align-self: flex-start; }
+.hero-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.hero-btn, .hero-btn-secondary { align-self: flex-start; }
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; grid-template-rows: 46vh auto; }
   .hero-panel { padding: 3rem 1.5rem 3.5rem; }
 }
 
-/* ───────────────────────── About ───────────────────────── */
-.about-grid {
-  display: grid; grid-template-columns: 0.95fr 1.05fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: center;
+/* ───────────────────────── About / Approach ───────────────────────── */
+.about-intro { margin-bottom: clamp(3rem, 6vw, 4.5rem); }
+.about-intro .section-description { margin-bottom: 0; }
+
+.principles-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 3rem);
 }
-.about-image {
-  position: relative; border-radius: var(--radius-md); overflow: hidden; aspect-ratio: 4/5;
-  box-shadow: var(--shadow-md);
+.principle {
+  padding-top: 1.75rem; border-top: 1px solid var(--line);
 }
-.about-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(0.3) saturate(0.9); }
-.about-text .section-title { max-width: 14ch; }
-.about-text p { margin-bottom: 1.4rem; font-size: 1.02rem; }
-.about-text p:last-child { margin-bottom: 0; }
+.principle-index {
+  display: block; font-family: var(--font-display); font-size: 0.78rem; font-weight: 500;
+  color: var(--ink-faint); letter-spacing: 0.1em; margin-bottom: 1rem;
+}
+.principle h3 { font-size: 1.3rem; font-weight: 500; color: var(--ink); margin-bottom: 0.6rem; }
+.principle p { font-size: 0.98rem; margin: 0; }
 
 @media (max-width: 860px) {
-  .about-grid { grid-template-columns: 1fr; }
-  .about-image { order: -1; aspect-ratio: 16/10; }
+  .principles-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
 /* ───────────────────────── Doctors ───────────────────────── */
@@ -399,7 +415,6 @@ html[dir="rtl"] .hero-visual::after {
   font-size: clamp(1.3rem, 2.4vw, 1.7rem); font-weight: 500; color: var(--ink);
 }
 .t-category-meta { display: flex; align-items: center; gap: 1.1rem; flex-shrink: 0; }
-.t-category-count { font-size: 0.85rem; color: var(--ink-faint); font-family: var(--font-display); }
 .t-category-icon {
   width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--line);
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
@@ -502,7 +517,9 @@ html[dir="rtl"] .article-card:hover .article-link::after { transform: translateX
 .google-review-btn { display: inline-flex; align-items: center; gap: 0.6rem; }
 .google-review-btn svg { width: 18px; height: 18px; }
 
-[class^="elfsight-app-"] { margin-top: 1rem; }
+[class^="elfsight-app-"] {
+  margin: 2.5rem auto 0; max-width: 900px; padding-top: 2rem; border-top: 1px solid var(--line);
+}
 
 /* ───────────────────────── Visit / Location ───────────────────────── */
 .visit { background: var(--ink); color: var(--on-ink); }
@@ -525,7 +542,7 @@ html[dir="rtl"] .article-card:hover .article-link::after { transform: translateX
 }
 .footer-brand .brand-logo { margin-bottom: 1rem; }
 .footer-tagline { font-size: 0.95rem; color: var(--ink-faint); max-width: 26ch; }
-.footer-title { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); margin-bottom: 1.2rem; font-weight: 500; }
+.footer-title { font-family: var(--font-display); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); margin-bottom: 1.2rem; font-weight: 500; }
 .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
 .footer-links a, .footer-links .legal-link { font-size: 0.95rem; color: var(--ink-soft); display: block; }
 .footer-links a:hover, .footer-links .legal-link:hover { color: var(--ink); }
@@ -627,7 +644,7 @@ html[dir="rtl"] .article-card:hover .article-link::after { transform: translateX
 }
 .accessibility-panel.active { opacity: 1; visibility: visible; transform: translateY(0); }
 .acc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-.acc-header h3 { font-size: 1rem; font-weight: 500; }
+.acc-header h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 500; }
 .acc-close { font-size: 1.3rem; color: var(--ink-soft); line-height: 1; }
 .acc-body { display: flex; flex-direction: column; gap: 0.5rem; }
 .acc-btn {

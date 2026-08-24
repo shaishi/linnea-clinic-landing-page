@@ -44,7 +44,7 @@
   <link rel="preload" as="image" href="./images/about-harmony.png" fetchpriority="high" />
   <link rel="icon" type="image/svg+xml"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='5' y='5' width='90' height='90' fill='%23F0E9D7' stroke='%23293939' stroke-width='5'/><text x='50' y='69' font-family='Georgia, serif' font-size='58' fill='%23293939' text-anchor='middle'>L</text></svg>" />
-  <link rel="stylesheet" href="./style.css?v=15" />
+  <link rel="stylesheet" href="./style.css?v=18" />
 
   <!-- Critical Libraries (CDN for Local/GH Pages) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -96,13 +96,6 @@
       "https://www.instagram.com/linneaclinic",
       "https://www.facebook.com/linneaclinic"
     ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5",
-      "reviewCount": "3",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
       "name": "Aesthetic Treatments",
@@ -125,6 +118,7 @@
   <!-- Pre-loader -->
   <div class="loader-overlay" id="preloader">
     <div class="loader-content">
+      <div class="loader-monogram">L</div>
       <div class="loader-logo">Linnéa</div>
       <div class="loader-tag">Aesthetic Medicine</div>
       <div class="loader-bar"></div>
@@ -169,322 +163,50 @@
       <div class="hero-panel">
         <div class="hero-mark">Linnéa</div>
         <h1 class="hero-title" data-i18n="hero-title">Linnéa | Medical Precision, Clean Lines</h1>
+        <p class="hero-lead" data-i18n="hero-lead">Two doctors. One considered treatment plan.</p>
         <p class="hero-subtitle" data-i18n="hero-subtitle">
-          High-end aesthetic treatments tailored to enhance your unique beauty in a soothing, professional environment.
+          Every treatment at Linnéa is planned collaboratively, combining two medical perspectives with a focus on precision, restraint and natural results.
         </p>
-        <button class="btn btn-primary hero-btn" data-i18n="btn-book">Book Consultation</button>
+        <div class="hero-actions">
+          <button class="btn btn-primary hero-btn" data-i18n="btn-book">Book Consultation</button>
+          <a href="#results" class="btn btn-secondary hero-btn-secondary" data-i18n="btn-view-results">View Our Results</a>
+        </div>
       </div>
     </section>
 
-    <!-- About -->
+    <!-- Approach -->
     <section class="about section" id="about">
-      <div class="about-grid container">
-        <div class="about-image reveal">
-          <img src="./images/aesthetic_skin.png" alt="" loading="lazy" />
-        </div>
-        <div class="about-text">
-          <h2 class="section-title" data-i18n="about-title">Linnéa: The Art of Precision and Harmony</h2>
-          <p data-i18n="about-p1">
-            We believe that aesthetics is not about altering, but rather refining existing beauty. At Linnéa, we combine advanced science with a refined, human-centered approach, providing you with a space of tranquility and complete confidence throughout your journey.
-          </p>
-          <p data-i18n="about-p2">
-            Our professional core beats within our joint consultation model: every treatment plan is developed by two doctors working in complete synergy. This collaboration ensures an in-depth diagnosis, meticulous planning, and a harmonious result that respects your unique facial features.
-          </p>
-          <p data-i18n="about-p3">
-            Beyond medical excellence, the professional dialogue between us allows us to examine every angle and detail of the treatment plan, with dual oversight guaranteeing maximum precision and uncompromising safety. We are committed to results that are not only aesthetic but balanced and natural.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Doctors -->
-    <section class="doctors section" id="doctors">
-      <div class="container">
-        <h2 class="section-title text-center" data-i18n="doc-title">Our Doctors</h2>
-
-        <div class="doctors-grid">
-          <div class="doctor reveal">
-            <div class="doctor-photo">
-              <img src="./images/doctor_shilo.png" alt="Dr. Shiloh DMD MSc, Lead Physician at Linnéa Aesthetic Clinic Tel Aviv"
-                data-i18n-alt="alt-dr-shilo" loading="lazy" />
-            </div>
-            <div class="doctor-bio">
-              <h3 class="doctor-name" data-i18n="doc-name">Dr. Shmuel Shai Shiloh DMD, MSc</h3>
-              <p data-i18n="doc-p1">Dr. Shiloh is a graduate of the Hebrew University of Jerusalem and Hadassah Medical Center, holding both a DMD degree and an MSc in Medical Big Data.</p>
-              <p data-i18n="doc-p2">Dr. Shiloh's philosophy is rooted in precise minimalism — clean, refined, and natural-looking treatments that preserve facial harmony and authenticity.</p>
-              <p data-i18n="doc-p3">Alongside his clinical practice, Dr. Shiloh is passionate about education, instructing students and practitioners in aesthetic medicine.</p>
-            </div>
-          </div>
-
-          <div class="doctor reveal">
-            <div class="doctor-photo">
-              <img src="./images/dr_yasmine_khoury.png" alt="Dr. Yasmine Khoury DMD, MSc, Physician at Linnéa Aesthetic Clinic Tel Aviv"
-                loading="lazy" />
-            </div>
-            <div class="doctor-bio">
-              <h3 class="doctor-name" data-i18n="doc2-name">Dr. Yasmine Khoury DMD, MSc</h3>
-              <p data-i18n="doc2-p1">Dr. Yasmine Khoury, a dental physician and biomedical researcher, graduated with honors from the Hebrew University of Jerusalem.</p>
-              <p data-i18n="doc2-p2">Dr. Khoury's professional approach focuses on dental aesthetics with a minimalist and precise touch — gentle, clean, and natural treatments.</p>
-              <p data-i18n="doc2-p3">Alongside her clinical work, Dr. Khoury is involved in instructing students and professionals, driven by uncompromising safety and continuous development.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Treatments -->
-    <section class="treatments section" id="treatments">
-      <div class="container">
-        <h2 class="section-title text-center" data-i18n="treatments-title">Our Treatments</h2>
-        <p class="section-description text-center" data-i18n="treatments-desc">
-          A curated selection of high-end procedures designed to rejuvenate and refine.
+      <div class="container-narrow about-intro">
+        <h2 class="section-title text-center" data-i18n="about-title">Our Approach</h2>
+        <p class="section-description text-center" data-i18n="about-p1">
+          Linnéa approaches aesthetic medicine through careful assessment, collaborative planning and restrained intervention — refining what is already there, without overworking it.
         </p>
-
-        <div class="treatment-index">
-          <!-- Skin Rejuvenation -->
-          <div class="t-category" aria-expanded="false">
-            <button class="t-category-trigger">
-              <h3 data-i18n="cat-skin">Skin Rejuvenation</h3>
-              <span class="t-category-meta">
-                <span class="t-category-count">05</span>
-                <span class="t-category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="4" y1="12" x2="20" y2="12"></line></svg></span>
-              </span>
-            </button>
-            <div class="t-category-panel">
-              <div class="t-category-panel-inner">
-                <div class="t-category-list">
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="pn-title">Polynucleotides (PN)</h4><p data-i18n="pn-desc">Innovative biological molecules promoting deep cellular regeneration and skin vitality.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="pn-time-val">30-45 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="pn-pain-val">Minimal</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="pn-mat-val">Polynucleotides</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="sculptra-title">Sculptra</h4><p data-i18n="sculptra-desc">A bio-stimulator that rebuilds your body's natural collagen for long-lasting firmness.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="sculptra-time-val">45-60 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="sculptra-pain-val">Minimal</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="sculptra-mat-val">Poly-L-Lactic Acid</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="radiesse-title">Radiesse</h4><p data-i18n="radiesse-desc">Dual-action treatment offering immediate volume while stimulating collagen and elastin.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="radiesse-time-val">30-45 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="radiesse-pain-val">Mild</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="radiesse-mat-val">Calcium Hydroxylapatite</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="skinbooster-title">Skin Booster</h4><p data-i18n="skinbooster-desc">Deep hydration treatment improving skin elasticity for a radiant, glowing complexion.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="skinbooster-time-val">20-30 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="skinbooster-pain-val">Minimal</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="skinbooster-mat-val">Lightweight Hyaluronic Acid</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="acne-title">Acne Scars Treatment</h4><p data-i18n="acne-desc">Combined injection techniques to blur scars and significantly improve skin texture.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="acne-time-val">45-60 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="acne-pain-val">Moderate</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="acne-mat-val">Bio-stimulators / Fillers</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Facial Contouring -->
-          <div class="t-category" aria-expanded="false">
-            <button class="t-category-trigger">
-              <h3 data-i18n="cat-contouring">Facial Contouring</h3>
-              <span class="t-category-meta">
-                <span class="t-category-count">05</span>
-                <span class="t-category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="4" y1="12" x2="20" y2="12"></line></svg></span>
-              </span>
-            </button>
-            <div class="t-category-panel">
-              <div class="t-category-panel-inner">
-                <div class="t-category-list">
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="ffr-title">Full Face Restoration</h4><p data-i18n="ffr-desc">A holistic approach combining fillers and Botox for complete facial harmony and lift.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="ffr-time-val">60-90 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="ffr-pain-val">Mild</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="ffr-mat-val">Hyaluronic Acid, Botox, Bio-stimulators</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="lips-title">Lip Enhancement</h4><p data-i18n="lips-desc">Emphasizing lip borders, correcting asymmetry, and adding balanced natural volume.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="lips-time-val">30-45 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="lips-pain-val">Mild</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="lips-mat-val">Dedicated Hyaluronic Acid</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="jawline-title">Jawline &amp; Chin Sculpting</h4><p data-i18n="jawline-desc">Defining the facial frame to create a sculpted, lifted, and sharper profile.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="jawline-time-val">45 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="jawline-pain-val">Mild</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="jawline-mat-val">High-Density Hyaluronic Acid</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="nose-title">Non-Surgical Rhinoplasty</h4><p data-i18n="nose-desc">Correcting asymmetry and lifting the nasal tip precisely without surgery.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="nose-time-val">20-30 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="nose-pain-val">Minimal</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="nose-mat-val">Hyaluronic Acid</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="teartrough-title">Tear Trough Filler</h4><p data-i18n="teartrough-desc">Delicate treatment to reduce dark circles and under-eye hollows for a rested look.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="teartrough-time-val">30 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="teartrough-pain-val">Minimal</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="teartrough-mat-val">Hyaluronic Acid</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Botox & Neuromodulators -->
-          <div class="t-category" aria-expanded="false">
-            <button class="t-category-trigger">
-              <h3 data-i18n="cat-botox">Botox &amp; Neuromodulators</h3>
-              <span class="t-category-meta">
-                <span class="t-category-count">02</span>
-                <span class="t-category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="4" y1="12" x2="20" y2="12"></line></svg></span>
-              </span>
-            </button>
-            <div class="t-category-panel">
-              <div class="t-category-panel-inner">
-                <div class="t-category-list">
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="botx-title">Classic Botox</h4><p data-i18n="botx-desc">Relaxing expression lines in the forehead and eyes for a smooth, serene appearance.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="botx-time-val">15-20 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="botx-pain-val">Virtually None</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="botx-mat-val">Botulinum Toxin</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                  <div class="t-item" aria-expanded="false">
-                    <button class="t-item-trigger">
-                      <span><h4 data-i18n="botxadv-title">Advanced Botox</h4><p data-i18n="botxadv-desc">Treating bruxism (teeth grinding) or sculpting the jawline and neck.</p></span>
-                      <span class="t-item-plus">+</span>
-                    </button>
-                    <div class="t-item-detail"><div class="t-item-detail-inner">
-                      <dl class="t-detail-row">
-                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="botxadv-time-val">20 Minutes</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-pain-lbl">Pain Level</dt><dd data-i18n="botxadv-pain-val">Minimal</dd></div>
-                        <div class="t-detail-field"><dt data-i18n="modal-mat-lbl">Materials</dt><dd data-i18n="botxadv-mat-val">Botulinum Toxin</dd></div>
-                      </dl>
-                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
-                    </div></div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-          </div>
-
+      </div>
+      <div class="container principles-grid">
+        <div class="principle reveal">
+          <span class="principle-index">01</span>
+          <h3 data-i18n="principle-1-title">Dual Perspective</h3>
+          <p data-i18n="principle-1-desc">Every treatment plan is reviewed by two doctors.</p>
+        </div>
+        <div class="principle reveal">
+          <span class="principle-index">02</span>
+          <h3 data-i18n="principle-2-title">Medical Precision</h3>
+          <p data-i18n="principle-2-desc">Evidence-based treatments, carefully selected and precisely performed.</p>
+        </div>
+        <div class="principle reveal">
+          <span class="principle-index">03</span>
+          <h3 data-i18n="principle-3-title">Natural Restraint</h3>
+          <p data-i18n="principle-3-desc">Enhancement without changing what makes you look like you.</p>
         </div>
       </div>
     </section>
 
-    <!-- Transformations -->
-    <section class="transformations section" id="transformations">
+    <!-- Results -->
+    <section class="transformations section" id="results">
       <div class="container">
-        <h2 class="section-title text-center" data-i18n="transformations-title">Visible Transformations</h2>
+        <h2 class="section-title text-center" data-i18n="transformations-title">Subtle Changes. Considered Results.</h2>
         <p class="section-description text-center" data-i18n="transformations-desc">
-          Slide to explore our natural-looking results.
+          Real results from considered treatment plans.
         </p>
         <div class="carousel-wrapper" data-carousel="transformations">
           <button class="carousel-btn carousel-prev" aria-label="Previous">
@@ -565,30 +287,303 @@
       </div>
     </section>
 
+    <!-- Doctors -->
+    <section class="doctors section" id="doctors">
+      <div class="container">
+        <h2 class="section-title text-center" data-i18n="doc-title">Our Doctors</h2>
+        <p class="section-description text-center" data-i18n="doc-intro">Two perspectives. One treatment philosophy.</p>
+
+        <div class="doctors-grid">
+          <div class="doctor reveal">
+            <div class="doctor-photo">
+              <img src="./images/doctor_shilo.png" alt="Dr. Shiloh DMD MSc, Lead Physician at Linnéa Aesthetic Clinic Tel Aviv"
+                data-i18n-alt="alt-dr-shilo" loading="lazy" />
+            </div>
+            <div class="doctor-bio">
+              <h3 class="doctor-name" data-i18n="doc-name">Dr. Shmuel Shai Shiloh DMD, MSc</h3>
+              <p data-i18n="doc-p1">Dr. Shiloh is a graduate of the Hebrew University of Jerusalem and Hadassah Medical Center, holding both a DMD degree and an MSc in Medical Big Data.</p>
+              <p data-i18n="doc-p2">Dr. Shiloh's philosophy is rooted in precise minimalism — clean, refined, and natural-looking treatments that preserve facial harmony and authenticity.</p>
+              <p data-i18n="doc-p3">Every case is planned jointly with Dr. Khoury, combining two clinical perspectives before a treatment begins.</p>
+            </div>
+          </div>
+
+          <div class="doctor reveal">
+            <div class="doctor-photo">
+              <img src="./images/dr_yasmine_khoury.png" alt="Dr. Yasmine Khoury DMD, MSc, Physician at Linnéa Aesthetic Clinic Tel Aviv"
+                loading="lazy" />
+            </div>
+            <div class="doctor-bio">
+              <h3 class="doctor-name" data-i18n="doc2-name">Dr. Yasmine Khoury DMD, MSc</h3>
+              <p data-i18n="doc2-p1">Dr. Yasmine Khoury, a dental physician and biomedical researcher, graduated with honors from the Hebrew University of Jerusalem.</p>
+              <p data-i18n="doc2-p2">Dr. Khoury's professional approach focuses on dental aesthetics with a minimalist and precise touch — gentle, clean, and natural treatments.</p>
+              <p data-i18n="doc2-p3">Every treatment plan is reviewed jointly with Dr. Shiloh, so each decision reflects two medical perspectives, not one.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Treatments -->
+    <section class="treatments section" id="treatments">
+      <div class="container">
+        <h2 class="section-title text-center" data-i18n="treatments-title">Our Treatments</h2>
+        <p class="section-description text-center" data-i18n="treatments-desc">
+          Four treatment areas, organised by clinical goal.
+        </p>
+
+        <div class="treatment-index">
+          <!-- Skin Quality -->
+          <div class="t-category" aria-expanded="false">
+            <button class="t-category-trigger">
+              <h3 data-i18n="cat-skin-quality">Skin Quality</h3>
+              <span class="t-category-meta">
+                <span class="t-category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="4" y1="12" x2="20" y2="12"></line></svg></span>
+              </span>
+            </button>
+            <div class="t-category-panel">
+              <div class="t-category-panel-inner">
+                <div class="t-category-list">
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="skinbooster-title">Skin Booster</h4><p data-i18n="skinbooster-desc">Deep hydration that improves skin elasticity and texture.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="skinbooster-time-val">20-30 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="pn-title">Polynucleotides (PN)</h4><p data-i18n="pn-desc">Biological molecules that support cellular regeneration and skin quality.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="pn-time-val">30-45 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="acne-title">Acne Scars Treatment</h4><p data-i18n="acne-desc">Combined injection techniques that soften scarring and refine skin texture.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="acne-time-val">45-60 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Facial Harmonisation -->
+          <div class="t-category" aria-expanded="false">
+            <button class="t-category-trigger">
+              <h3 data-i18n="cat-facial-harmonisation">Facial Harmonisation</h3>
+              <span class="t-category-meta">
+                <span class="t-category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="4" y1="12" x2="20" y2="12"></line></svg></span>
+              </span>
+            </button>
+            <div class="t-category-panel">
+              <div class="t-category-panel-inner">
+                <div class="t-category-list">
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="ffr-title">Full Face Harmonisation</h4><p data-i18n="ffr-desc">Fillers and neuromodulators planned together across the full face for balanced results.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="ffr-time-val">60-90 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="lips-title">Lip Enhancement</h4><p data-i18n="lips-desc">Emphasising lip borders, correcting asymmetry, and adding balanced natural volume.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="lips-time-val">30-45 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="jawline-title">Jawline &amp; Chin Sculpting</h4><p data-i18n="jawline-desc">Defining the facial frame to create a sculpted, lifted profile.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="jawline-time-val">45 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="nose-title">Non-Surgical Rhinoplasty</h4><p data-i18n="nose-desc">Correcting asymmetry and lifting the nasal tip precisely, without surgery.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="nose-time-val">20-30 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="teartrough-title">Tear Trough Filler</h4><p data-i18n="teartrough-desc">A delicate treatment to reduce under-eye hollows for a rested look.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="teartrough-time-val">30 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Neuromodulators -->
+          <div class="t-category" aria-expanded="false">
+            <button class="t-category-trigger">
+              <h3 data-i18n="cat-neuromodulators">Neuromodulators</h3>
+              <span class="t-category-meta">
+                <span class="t-category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="4" y1="12" x2="20" y2="12"></line></svg></span>
+              </span>
+            </button>
+            <div class="t-category-panel">
+              <div class="t-category-panel-inner">
+                <div class="t-category-list">
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="botx-title">Classic Botox</h4><p data-i18n="botx-desc">Relaxing expression lines in the forehead and eyes for a smooth, serene appearance.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="botx-time-val">15-20 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="botxadv-title">Advanced Botox</h4><p data-i18n="botxadv-desc">Treating bruxism (teeth grinding), or sculpting the jawline and neck.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="botxadv-time-val">20 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Regenerative Treatments -->
+          <div class="t-category" aria-expanded="false">
+            <button class="t-category-trigger">
+              <h3 data-i18n="cat-regenerative">Regenerative Treatments</h3>
+              <span class="t-category-meta">
+                <span class="t-category-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="4" x2="12" y2="20"></line><line x1="4" y1="12" x2="20" y2="12"></line></svg></span>
+              </span>
+            </button>
+            <div class="t-category-panel">
+              <div class="t-category-panel-inner">
+                <div class="t-category-list">
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="sculptra-title">Sculptra</h4><p data-i18n="sculptra-desc">A bio-stimulator that rebuilds natural collagen for long-lasting firmness.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="sculptra-time-val">45-60 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                  <div class="t-item" aria-expanded="false">
+                    <button class="t-item-trigger">
+                      <span><h4 data-i18n="radiesse-title">Radiesse</h4><p data-i18n="radiesse-desc">Dual-action treatment offering immediate volume while stimulating collagen.</p></span>
+                      <span class="t-item-plus">+</span>
+                    </button>
+                    <div class="t-item-detail"><div class="t-item-detail-inner">
+                      <dl class="t-detail-row">
+                        <div class="t-detail-field"><dt data-i18n="modal-time-lbl">Time</dt><dd data-i18n="radiesse-time-val">30-45 Minutes</dd></div>
+                      </dl>
+                      <div class="t-detail-cta"><button class="btn btn-primary book-trigger" data-i18n="btn-book">Book Consultation</button></div>
+                    </div></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
     <!-- Articles -->
     <section class="articles section" id="articles">
       <div class="container">
         <h2 class="section-title text-center" data-i18n="articles-title">Insights &amp; Science</h2>
         <p class="section-description text-center" data-i18n="articles-desc">
-          Explore our expert articles on aesthetic medicine, treatments, and the science of longevity.
+          Notes on treatments, technique and the evidence behind them.
         </p>
         <div class="articles-grid">
           <a href="article-botox.html" class="article-card reveal">
             <div class="article-img"><img src="./images/botox_article.png" alt="" data-i18n-alt="alt-article-botox" loading="lazy" /></div>
             <h3 data-i18n="article1-title">The Art of Botox</h3>
-            <p data-i18n="article1-desc">Discover how precise neuromodulator treatments can smooth wrinkles while maintaining your natural expressions.</p>
+            <p data-i18n="article1-desc">How precise neuromodulator dosing softens expression lines without flattening them.</p>
             <span class="article-link" data-i18n="read-more">Read More</span>
           </a>
           <a href="article-fillers.html" class="article-card reveal">
             <div class="article-img"><img src="./images/fillers_article.png" alt="" data-i18n-alt="alt-article-fillers" loading="lazy" /></div>
             <h3 data-i18n="article2-title">Mastering Dermal Fillers</h3>
-            <p data-i18n="article2-desc">Learn about the subtleties of facial contouring and restoring volume for a youthful, balanced appearance.</p>
+            <p data-i18n="article2-desc">Restoring volume and structure with hyaluronic acid, guided by facial anatomy.</p>
             <span class="article-link" data-i18n="read-more">Read More</span>
           </a>
           <a href="article-scientific.html" class="article-card reveal">
             <div class="article-img"><img src="./images/skin.png" alt="" data-i18n-alt="alt-article-scientific" loading="lazy" /></div>
             <h3 data-i18n="article3-title">The Science of Longevity</h3>
-            <p data-i18n="article3-desc">Delve into our evidence-based approach combining aesthetic treatments with cellular health and graceful aging.</p>
+            <p data-i18n="article3-desc">An evidence-based look at skin health at the cellular level.</p>
             <span class="article-link" data-i18n="read-more">Read More</span>
           </a>
         </div>
@@ -611,7 +606,7 @@
         <div>
           <h2 class="section-title" data-i18n="location-title">Visit Our Clinic</h2>
           <p class="section-description" data-i18n="location-desc">
-            Located in the heart of the city, Linnéa offers a hygienic, soothing sanctuary away from the bustle.
+            Linnéa is located on Menachem Begin Road, in central Tel Aviv.
           </p>
           <dl class="visit-facts">
             <div>
@@ -642,7 +637,7 @@
         <a href="#" class="brand-logo footer-logo">
           <span class="brand-word">Linn&eacute;a</span>
         </a>
-        <p class="footer-tagline" data-i18n="footer-tagline">Warm, luxurious, inviting, human.</p>
+        <p class="footer-tagline" data-i18n="footer-tagline">Considered aesthetic medicine, shaped by precision and restraint.</p>
       </div>
 
       <div class="footer-links">
@@ -701,7 +696,7 @@
     <div class="modal-content">
       <button class="close-modal" id="close-modal" aria-label="סגור חלון">&times;</button>
       <h2 class="modal-title" id="booking-modal-title" data-i18n="modal-title">Book a Consultation</h2>
-      <p class="modal-desc" data-i18n="modal-desc">Take the first step towards your natural radiance.</p>
+      <p class="modal-desc" data-i18n="modal-desc">Share a few details and our team will be in touch to arrange your visit.</p>
       <form class="booking-form" id="booking-form" action="https://api.web3forms.com/submit" method="POST">
         <input type="hidden" name="access_key" value="bca92b9b-baac-4310-b928-30a07b87720d" />
         <input type="hidden" name="subject" value="New Consultation Request!" />
@@ -941,6 +936,6 @@
     </svg>
   </button>
 
-  <script src="./main.js?v=11" type="module"></script>
+  <script src="./main.js?v=12" type="module"></script>
 </body>
 </html>
